@@ -82,12 +82,12 @@ export const Blog = () => {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10" dir="rtl">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-           {blogPosts.map((post) => (
-             <div 
-               key={post.id} 
-               className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-2xl overflow-hidden hover:border-[var(--color-primary)] hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 flex-shrink-0 group/card text-right shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] flex flex-col"
+            <div className="relative z-10 overflow-hidden w-full" dir="ltr">
+        <div className="flex w-max animate-marquee hover:[animation-play-state:paused] gap-4 sm:gap-6 px-4">
+           {[...blogPosts, ...blogPosts, ...blogPosts].map((post, index) => (
+             <div
+                key={`${post.id}-${index}`}
+                dir="rtl" className="w-[300px] sm:w-[400px] bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-2xl overflow-hidden hover:border-[var(--color-primary)] hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 flex-shrink-0 group/card text-right shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] flex flex-col"
              >
                 <div className="h-40 sm:h-48 overflow-hidden relative border-b border-[var(--border-default)]">
                   <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 bg-[var(--surface-primary)]/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold text-[var(--color-primary)] border border-[var(--color-primary)]/30 drop-shadow-md">
@@ -111,7 +111,7 @@ export const Blog = () => {
                     <h3 className="text-sm sm:text-xl font-bold text-[var(--text-primary)] mb-2 sm:mb-3 line-clamp-2 leading-snug group-hover/card:text-[var(--color-primary)] transition-colors">{post.title}</h3>
                     <p className="text-[var(--text-muted)] text-xs sm:text-sm line-clamp-2 sm:line-clamp-3 leading-relaxed mb-4 sm:mb-6">{post.excerpt}</p>
                   </div>
-                  <button className="text-[var(--text-primary)] bg-[var(--surface-primary)] border border-[var(--border-default)] hover:bg-[var(--color-primary)] hover:border-[var(--color-primary)] px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-between group/btn transition-all duration-300 w-full mt-auto">
+                  <button className="text-[var(--text-primary)] bg-[var(--surface-primary)] border border-[var(--border-default)] hover:bg-[var(--color-primary)] hover:border-[var(--color-primary)] px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-between group/btn transition-all duration-300 w-full mt-auto cursor-pointer">
                     <span>قراءة المزيد</span>
                     <span className="text-base sm:text-lg group-hover/btn:-translate-x-1 transition-transform">&larr;</span>
                   </button>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSite } from '../context/SiteContext';
 import { motion, AnimatePresence } from 'motion/react';
-import { Globe, Moon, Sun, Menu, X } from 'lucide-react';
+import { Globe, Moon, Sun, Menu, X, Bookmark } from 'lucide-react';
 import { triggerBookingModal } from './BookingModal';
 
 export const Header = () => {
@@ -108,7 +108,7 @@ export const Header = () => {
         <div className="flex items-center gap-2 cursor-pointer" onClick={() => handleScroll('hero')}>
           <span className="font-bold text-xl tracking-wide font-english text-[var(--text-primary)]">{config.logoText || 'NMOLABS'}</span>
         </div>
-        <nav className="hidden lg:flex items-center gap-1 relative" onMouseLeave={() => setHoveredNav(null)}>
+        <nav className="hidden lg:flex items-center gap-1 relative border border-[var(--interactive-border-hover)] p-1 rounded-2xl" onMouseLeave={() => setHoveredNav(null)}>
           {mainNavItems.map((item, idx) => {
             const isHovered = hoveredNav === idx;
             const isActive = activeNav === idx;
@@ -119,7 +119,7 @@ export const Header = () => {
                 onClick={() => handleNavClick(item, idx)}
                 onMouseEnter={() => setHoveredNav(idx)}
                 onFocus={() => setHoveredNav(idx)}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors z-10 border border-transparent rounded-xl ${hasLiquid ? 'text-[var(--text-primary)] border-[var(--interactive-border-active)]' : 'text-[var(--text-secondary)] hover:border-[var(--interactive-border-hover)]'}`}
+                className={`relative px-4 py-2 text-sm font-medium transition-colors z-10 border border-transparent rounded-xl flex items-center justify-center gap-1.5 ${hasLiquid ? 'text-[var(--text-primary)] border-[var(--interactive-border-active)]' : 'text-[var(--text-secondary)] hover:border-[var(--interactive-border-hover)]'}`}
               >
                 {hasLiquid && (
                   <motion.div
@@ -128,6 +128,7 @@ export const Header = () => {
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
+                {hasLiquid && <Bookmark size={14} className="shrink-0" />}
                 {isEn ? item.nameEn : item.nameAr}
               </button>
             );

@@ -311,7 +311,7 @@ export const ToolsGrid = () => {
             <p className="text-sm sm:text-base text-[var(--text-muted)]">اختر الباقة التي تناسب حجم نشاطك</p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-7xl mx-auto">
             {pricingPackages.map((pkg, i) => (
               <PricingPackageCard key={i} pkg={pkg} index={i} />
             ))}

@@ -18,7 +18,7 @@ const TYPEWRITER_PHRASES = [
 
 const SHOWCASE_ITEMS = [
   { id: 'web', icon: Monitor, label: 'موقع إلكتروني', color: 'var(--color-primary)', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80' },
-  { id: 'store', icon: ShoppingBag, label: 'متجر إلكتروني', color: 'var(--color-secondary)', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80' },
+  { id: 'store', icon: ShoppingBag, label: 'Online Shop', color: 'var(--color-secondary)', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80' },
   { id: 'market', icon: ShoppingBag, label: 'سوق إلكتروني', color: 'var(--color-accent)', image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&q=80' },
   { id: 'app', icon: Smartphone, label: 'تطبيق مخصص', color: 'var(--color-purple)', image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80' },
   { id: 'erp', icon: Database, label: 'نظام إداري ERP', color: 'var(--color-primary)', image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80' },
@@ -96,18 +96,11 @@ const InteractiveShowcase = () => {
             onMouseLeave={() => setHovered(false)}
           >
             {/* Top Bar for Mockup */}
-            <div className="absolute top-0 left-0 right-0 h-10 border-b border-[var(--border-default)] bg-[var(--surface-secondary)] flex items-center px-4 gap-2 z-20">
+            <div className="absolute top-0 left-0 right-0 h-10 border-b border-[var(--border-default)] bg-[var(--surface-secondary)]/50 backdrop-blur-md flex items-center px-4 gap-2 z-20 rounded-t-2xl">
               <div className="w-3 h-3 rounded-full bg-red-400/80" />
               <div className="w-3 h-3 rounded-full bg-amber-400/80" />
               <div className="w-3 h-3 rounded-full bg-green-400/80" />
             </div>
-
-            {/* Background Image */}
-            <div 
-              className="absolute inset-0 z-0 opacity-40 bg-cover bg-center transition-transform duration-1000 scale-105"
-              style={{ backgroundImage: `url(${SHOWCASE_ITEMS[activeIndex].image})` }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface-primary)] via-[var(--surface-primary)]/80 to-transparent z-10" />
 
             {/* Content */}
             <div className="relative z-20 flex flex-col items-center justify-center p-8 mt-12 text-center h-full">
@@ -138,7 +131,17 @@ export const Hero = () => {
 
   return (
     <section className="relative min-h-auto py-16 sm:py-20 md:py-24 lg:min-h-screen flex items-center overflow-hidden bg-[var(--surface-brand)]" id="hero">
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-20 dark:opacity-[0.25] pointer-events-none"
+      >
+        <source src="https://b.top4top.io/m_37896jjzf1.mp4" type="video/mp4" />
+      </video>
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-brand)] via-transparent to-[var(--surface-brand)] opacity-80 pointer-events-none" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.1] pointer-events-none" />
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
         

@@ -16,6 +16,7 @@
   --spacing-128: 32rem;
   
   --animate-marquee: marquee 150s linear infinite;
+  --animate-marquee-rtl: marquee-rtl 150s linear infinite;
   --animate-glow: glow 3s ease-in-out infinite alternate;
   --animate-float: float 6s ease-in-out infinite;
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -40,7 +41,7 @@
   --liquid-indicator-bg: rgba(30, 58, 138, 0.1);
   --liquid-indicator-border: rgba(30, 58, 138, 0.25);
 
-  --color-primary: #1E3A8A; /* Navy Blue for Light Mode */
+  --color-primary: #0F62FE; /* Brand Blue for Light Mode */
   --color-secondary: #06B6D4; /* Cyan */
   --color-accent: #10B981; /* Emerald */
   --color-purple: #7C3AED;
@@ -84,7 +85,7 @@
 
 .theme-dark {
   /* Dark Theme Brand Colors */
-  --color-primary: #3B82F6; /* Bright Blue for Dark Mode */
+  --color-primary: #4589FF; /* Brand Blue for Dark Mode */
   --interactive-border: rgba(59, 130, 246, 0.3);
   --interactive-border-hover: rgba(59, 130, 246, 0.6);
   --interactive-border-active: #3B82F6;
@@ -131,6 +132,10 @@
 @keyframes marquee {
   0% { transform: translateX(0%); }
   100% { transform: translateX(-50%); } 
+}
+@keyframes marquee-rtl {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(50%); }
 }
 
 @keyframes glow {
@@ -288,13 +293,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .bg-grid-pattern {
   background-size: 40px 40px;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-image: linear-gradient(to right, var(--border-default) 1px, transparent 1px),
+                    linear-gradient(to bottom, var(--border-default) 1px, transparent 1px);
   background-attachment: fixed;
 }
 
 .bg-dots-pattern {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-image: radial-gradient(var(--border-default) 1px, transparent 1px);
   background-size: 20px 20px;
   background-attachment: fixed;
 }

@@ -90,16 +90,16 @@ export const Footer = () => {
           </div>
 
           {/* Company Links (الشركة) */}
-          <div className="bg-[var(--footer-surface)] border border-[var(--interactive-border)] hover:border-[var(--interactive-border-hover)] p-5 md:p-6 rounded-3xl relative backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-colors overflow-hidden" onMouseLeave={() => setHoveredLink(null)}>
-            <button onClick={() => toggleSection('company')} className="w-full flex items-center justify-between md:cursor-default focus:outline-none">
-              <h4 className="text-[var(--text-primary)] font-bold mb-0 md:mb-4 text-sm uppercase tracking-wider">
+          <div className="relative transition-colors" onMouseLeave={() => setHoveredLink(null)}>
+            <button onClick={() => toggleSection('company')} className="w-full flex items-center justify-between cursor-pointer focus:outline-none border-b border-[var(--border-default)] pb-4 mb-4">
+              <h4 className="text-[var(--text-primary)] font-bold mb-0 text-sm uppercase tracking-wider">
                 {isEn ? 'Company' : 'الشركة'}
               </h4>
-              <span className="md:hidden text-[var(--color-primary)]">
+              <span className="text-[var(--color-primary)] font-bold text-lg">
                 {openSection === 'company' ? '-' : '+'}
               </span>
             </button>
-            <div className={`flex-col gap-1 relative z-10 mt-4 md:mt-0 ${openSection === 'company' ? 'flex' : 'hidden md:flex'}`}>
+            <div className={`flex-col gap-1 relative z-10 mt-4 ${openSection === 'company' ? 'flex' : 'hidden'}`}>
               {companyLinks.map((link, idx) => {
                 const id = 'company-link-' + idx;
                 const isHovered = hoveredLink === id;
@@ -108,7 +108,7 @@ export const Footer = () => {
                     key={idx}
                     onMouseEnter={() => setHoveredLink(id)}
                     onClick={() => link.route ? (() => {updateConfig({currentRoute: link.route}); window.scrollTo(0,0)})() : handleScroll(link.act!)} 
-                    className={`relative flex items-center gap-2 w-full text-right rtl:text-right ltr:text-left p-2.5 rounded-xl text-sm transition-colors ${isHovered ? 'text-[var(--text-primary)]' : 'text-[var(--text-muted)]'}`}
+                    className={`relative flex items-center gap-2 w-full text-right rtl:text-right ltr:text-left p-3 mb-2 border rounded-xl text-sm transition-colors ${isHovered ? 'text-[var(--text-primary)] border-[var(--color-primary)]' : 'text-[var(--text-muted)] border-[var(--border-default)] hover:border-[var(--interactive-border-hover)]'}`}
                   >
                     {isHovered && (
                        <motion.div
@@ -125,14 +125,14 @@ export const Footer = () => {
           </div>
 
           {/* Policies */}
-          <div className="bg-[var(--footer-surface)] border border-[var(--interactive-border)] hover:border-[var(--interactive-border-hover)] p-5 md:p-6 rounded-3xl relative backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-colors overflow-hidden" onMouseLeave={() => setHoveredLink(null)}>
-            <button onClick={() => toggleSection('policies')} className="w-full flex items-center justify-between md:cursor-default focus:outline-none">
-              <h4 className="text-[var(--text-primary)] font-bold mb-0 md:mb-4 text-sm uppercase tracking-wider">السياسات</h4>
-              <span className="md:hidden text-[var(--color-primary)]">
+          <div className="relative transition-colors" onMouseLeave={() => setHoveredLink(null)}>
+            <button onClick={() => toggleSection('policies')} className="w-full flex items-center justify-between cursor-pointer focus:outline-none border-b border-[var(--border-default)] pb-4 mb-4">
+              <h4 className="text-[var(--text-primary)] font-bold mb-0 text-sm uppercase tracking-wider">السياسات</h4>
+              <span className="text-[var(--color-primary)] font-bold text-lg">
                 {openSection === 'policies' ? '-' : '+'}
               </span>
             </button>
-            <div className={`flex-col gap-1 relative z-10 mt-4 md:mt-0 ${openSection === 'policies' ? 'flex' : 'hidden md:flex'}`}>
+            <div className={`flex-col gap-1 relative z-10 mt-4 ${openSection === 'policies' ? 'flex' : 'hidden'}`}>
               {[
                 { name: 'سياسة الخصوصية', route: 'privacy' },
                 { name: 'شروط الاستخدام', route: 'terms' },
@@ -146,7 +146,7 @@ export const Footer = () => {
                     key={idx}
                     onMouseEnter={() => setHoveredLink(id)}
                     onClick={() => { updateConfig({ currentRoute: link.route }); window.scrollTo(0, 0); }}
-                    className={`relative w-full text-right p-2.5 rounded-xl text-sm transition-colors ${isHovered ? 'text-[var(--text-primary)]' : 'text-[var(--text-muted)]'}`}
+                    className={`relative w-full text-right p-3 mb-2 border rounded-xl text-sm transition-colors ${isHovered ? 'text-[var(--text-primary)] border-[var(--color-primary)]' : 'text-[var(--text-muted)] border-[var(--border-default)] hover:border-[var(--interactive-border-hover)]'}`}
                   >
                     {isHovered && (
                        <motion.div
@@ -163,23 +163,23 @@ export const Footer = () => {
           </div>
 
           {/* Contact Info */}
-          <div className="bg-[var(--footer-surface)] border border-[var(--interactive-border)] hover:border-[var(--interactive-border-hover)] p-5 md:p-6 rounded-3xl relative backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-colors overflow-hidden">
-            <button onClick={() => toggleSection('contact')} className="w-full flex items-center justify-between md:cursor-default focus:outline-none">
-              <h4 className="text-[var(--text-primary)] font-bold mb-0 md:mb-4 text-sm uppercase tracking-wider">التواصل</h4>
-              <span className="md:hidden text-[var(--color-primary)]">
+          <div className="relative transition-colors">
+            <button onClick={() => toggleSection('contact')} className="w-full flex items-center justify-between cursor-pointer focus:outline-none border-b border-[var(--border-default)] pb-4 mb-4">
+              <h4 className="text-[var(--text-primary)] font-bold mb-0 text-sm uppercase tracking-wider">التواصل</h4>
+              <span className="text-[var(--color-primary)] font-bold text-lg">
                 {openSection === 'contact' ? '-' : '+'}
               </span>
             </button>
-            <ul className={`space-y-4 text-sm text-[var(--text-muted)] mt-6 md:mt-2 ${openSection === 'contact' ? 'block' : 'hidden md:block'}`}>
-              <li className="flex items-start gap-3 p-2">
+            <ul className={`space-y-4 text-sm text-[var(--text-muted)] mt-6 ${openSection === 'contact' ? 'block' : 'hidden'}`}>
+              <li className="flex items-start gap-3 p-3 mb-2 border border-[var(--border-default)] rounded-xl transition-colors hover:border-[var(--interactive-border-hover)]">
                 <MapPin size={18} className="text-[var(--color-primary)] shrink-0 mt-0.5" />
                 <span dir="ltr" className="text-right w-full">المملكة العربية السعودية، الرياض</span>
               </li>
-              <li className="flex items-center gap-3 p-2">
+              <li className="flex items-center gap-3 p-3 mb-2 border border-[var(--border-default)] rounded-xl transition-colors hover:border-[var(--interactive-border-hover)]">
                 <Phone size={18} className="text-[var(--color-primary)] shrink-0" />
                 <span dir="ltr" className="font-english">{config.contactNumber}</span>
               </li>
-              <li className="flex items-center gap-3 p-2">
+              <li className="flex items-center gap-3 p-3 mb-2 border border-[var(--border-default)] rounded-xl transition-colors hover:border-[var(--interactive-border-hover)]">
                 <Mail size={18} className="text-[var(--color-primary)] shrink-0" />
                 <span dir="ltr" className="font-english">hello@nmolabs.com</span>
               </li>

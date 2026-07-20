@@ -127,18 +127,60 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ title, content, isOpen, o
   );
 };
 
+
+const FlipCard = ({ title, detailsList, colorHex }: { title: string, detailsList: any[], colorHex: string }) => {
+  const [flipped, setFlipped] = React.useState(false);
+
+  return (
+    <div 
+      className="relative w-full aspect-[4/5] sm:aspect-[4/3] md:aspect-square lg:aspect-[4/3] rounded-3xl cursor-pointer group [perspective:1000px]"
+      onClick={() => setFlipped(!flipped)}
+    >
+      <motion.div 
+        className="w-full h-full relative [transform-style:preserve-3d] transition-all duration-700"
+        animate={{ rotateY: flipped ? 180 : 0 }}
+      >
+        {/* Front */}
+        <div className="absolute inset-0 [backface-visibility:hidden] bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-3xl flex items-center justify-center p-8 group-hover:-translate-y-2 group-hover:shadow-xl transition-all duration-300">
+           <div className="absolute top-0 right-0 w-64 h-64 opacity-10 blur-[60px] rounded-full pointer-events-none transition-opacity group-hover:opacity-20" style={{ backgroundColor: colorHex }} />
+           <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-center text-[var(--text-primary)] text-shadow-sm z-10 leading-snug">
+             {title}
+           </h3>
+           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-50 group-hover:opacity-100 transition-opacity">
+             <span className="text-sm font-bold tracking-widest uppercase">انقر للتفاصيل</span>
+           </div>
+        </div>
+
+        {/* Back */}
+        <div 
+          className="absolute inset-0 [backface-visibility:hidden] bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-3xl p-6 sm:p-8 overflow-y-auto custom-scrollbar"
+          style={{ transform: 'rotateY(180deg)' }}
+        >
+           <h4 className="text-xl sm:text-2xl font-bold mb-6 pb-4 border-b border-[var(--border-default)] sticky top-0 bg-[var(--surface-secondary)] z-10" style={{ color: colorHex }}>{title}</h4>
+           <ul className="space-y-4">
+             {detailsList.map((item, idx) => (
+               <li key={idx} className="flex gap-3 text-sm sm:text-base text-[var(--text-secondary)]">
+                 <div className="w-2 h-2 mt-2 rounded-full shrink-0" style={{ backgroundColor: colorHex }} />
+                 <div>
+                   <strong className="text-[var(--text-primary)] block mb-1">{item.title}</strong>
+                   <p className="leading-relaxed font-light">{item.desc}</p>
+                 </div>
+               </li>
+             ))}
+           </ul>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
 export const Solutions = () => {
   const { config } = useSite();
-  const [branchTab, setBranchTab] = useState<'challenges' | 'values'>('challenges');
-  const [ecoTab, setEcoTab] = useState<'challenges' | 'values'>('challenges');
-  const [openChallengeId, setOpenChallengeId] = useState<number | null>(0);
-  const [openValueId, setOpenValueId] = useState<number | null>(0);
-  const [openEcoId, setOpenEcoId] = useState<number | null>(0);
 
   // Typewriter effect component for Navigator of Growth
   const TypewriterText = ({ text, speed = 50, delay = 0 }: { text: string; speed?: number, delay?: number }) => {
-    const [displayedText, setDisplayedText] = useState('');
-    const [start, setStart] = useState(false);
+    const [displayedText, setDisplayedText] = React.useState('');
+    const [start, setStart] = React.useState(false);
 
     React.useEffect(() => {
       const t = setTimeout(() => setStart(true), delay);
@@ -161,6 +203,9 @@ export const Solutions = () => {
   };
 
   if (!config.sections.solutions) return null;
+
+  const branchDetails = [...branchChallenges, ...branchValues];
+  const ecommerceDetails = [...ecommerceChallenges, ...ecommerceValues];
 
   return (
     <section className="py-16 sm:py-24 md:py-32 relative bg-dots-pattern" id="solutions">
@@ -189,185 +234,10 @@ export const Solutions = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 relative items-start">
-          
-          {/* Card 1: Retail Branches */}
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="p-6 sm:p-8 md:p-10 rounded-3xl border border-black/80 bg-[var(--surface-secondary)] relative overflow-hidden group hover:-translate-y-1 hover:shadow-[0_0_50px_rgba(79,142,247,0.15)] transition-all duration-500 shadow-md"
-          >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-primary)] opacity-10 blur-[60px] rounded-full group-hover:opacity-20 transition-all duration-700 pointer-events-none" />
-            
-            <div className="relative z-10">
-              <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between mb-6 gap-4">
-                <div className="w-32 h-32 sm:w-40 sm:h-40 relative group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-500 shrink-0">
-                  <div className="absolute inset-0 bg-[var(--color-primary)] opacity-20 blur-[30px] rounded-full group-hover:opacity-40 transition-opacity duration-500 pointer-events-none"></div>
-                  <img 
-                    src={branchImg} 
-                    alt="البائع الذكي للفروع" 
-                    loading="lazy"
-                    className="w-full h-full object-contain relative z-10 drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]" 
-                    referrerPolicy="no-referrer"
-                    onError={(e) => {
-                      e.currentTarget.src = "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=400&h=400";
-                      e.currentTarget.classList.add("rounded-2xl");
-                    }}
-                  />
-                </div>
-                <a 
-                  href="#contact" 
-                  className="mt-2 sm:mt-4 px-6 py-2.5 bg-[var(--color-primary)] hover:brightness-110 text-[var(--text-primary)] rounded-full font-bold text-sm shadow-[0_0_15px_rgba(43,194,194,0.3)] transition-transform hover:-translate-y-1 block text-center w-full sm:w-auto"
-                >
-                  كن أول من يحصل على الخدمة
-                </a>
-              </div>
-              
-              <h3 className="text-2xl md:text-3xl font-bold mb-4 text-[var(--text-primary)] text-shadow-sm text-center sm:text-right">البائع الذكي للفروع</h3>
-              <p className="text-[var(--text-muted)] mb-6 leading-relaxed font-light text-center sm:text-right">
-                إليك التحديات التي واجهناها والتي دفعتنا للابتكار، بالإضافة إلى القيمة المضافة لعلامتك التجارية.
-              </p>
-
-              <div className="flex gap-1 sm:gap-2 mb-6 bg-[var(--surface-secondary)] p-1.5 rounded-full border border-[var(--border-default)] w-full sm:w-max relative z-20">
-                <button 
-                  onClick={() => setBranchTab('challenges')} 
-                  className={`flex-1 sm:flex-none px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 ${branchTab === 'challenges' ? 'bg-[var(--color-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'}`}
-                >
-                  التحديات
-                </button>
-                <button 
-                  onClick={() => setBranchTab('values')} 
-                  className={`flex-1 sm:flex-none px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 ${branchTab === 'values' ? 'bg-[var(--color-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'}`}
-                >
-                  القيمة المضافة
-                </button>
-              </div>
-              
-              <div className="w-full">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={branchTab}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {branchTab === 'challenges' && branchChallenges.map((challenge, i) => (
-                      <AccordionItem 
-                        key={i}
-                        title={challenge.title}
-                        content={challenge.desc}
-                        isOpen={openChallengeId === i}
-                        onClick={() => setOpenChallengeId(openChallengeId === i ? null : i)}
-                        colorClass="text-[var(--color-primary)] shrink-0"
-                      />
-                    ))}
-                    {branchTab === 'values' && branchValues.map((val, i) => (
-                      <AccordionItem 
-                        key={i}
-                        title={val.title}
-                        content={val.desc}
-                        isOpen={openValueId === i}
-                        onClick={() => setOpenValueId(openValueId === i ? null : i)}
-                        colorClass="text-[var(--color-primary)] shrink-0"
-                      />
-                    ))}
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Card 2: E-commerce */}
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="p-6 sm:p-8 md:p-10 rounded-3xl border border-black/80 bg-[var(--surface-secondary)] relative overflow-hidden group hover:-translate-y-1 hover:shadow-[0_0_50px_rgba(124,58,237,0.15)] transition-all duration-500 shadow-md mt-8 md:mt-0"
-          >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-secondary)] opacity-10 blur-[60px] rounded-full group-hover:opacity-20 transition-all duration-700 pointer-events-none" />
-            
-            <div className="relative z-10">
-              <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between mb-6 gap-4">
-                <div className="w-32 h-32 sm:w-40 sm:h-40 relative group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-500 shrink-0">
-                  <div className="absolute inset-0 bg-[var(--color-secondary)] opacity-20 blur-[30px] rounded-full group-hover:opacity-40 transition-opacity duration-500 pointer-events-none"></div>
-                  <img 
-                    src={ecommerceImg} 
-                    alt="البائع الذكي للمتاجر الإلكترونية" 
-                    loading="lazy"
-                    className="w-full h-full object-contain relative z-10 drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]" 
-                    referrerPolicy="no-referrer"
-                    onError={(e) => {
-                      e.currentTarget.src = "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&q=80&w=400&h=400";
-                      e.currentTarget.classList.add("rounded-2xl");
-                    }}
-                  />
-                </div>
-                <a 
-                  href="#contact" 
-                  className="mt-2 sm:mt-4 px-6 py-2.5 bg-[var(--color-secondary)] hover:brightness-110 text-[var(--text-primary)] rounded-full font-bold text-sm shadow-[0_0_15px_rgba(19,80,91,0.3)] transition-transform hover:-translate-y-1 block text-center w-full sm:w-auto"
-                >
-                  تواصل معنا
-                </a>
-              </div>
-              
-              <h3 className="text-2xl md:text-3xl font-bold mb-4 text-[var(--text-primary)] text-shadow-sm text-center sm:text-right">البائع الذكي للمتاجر الإلكترونية</h3>
-              <p className="text-[var(--text-muted)] mb-6 leading-relaxed font-light text-center sm:text-right">
-                أداة تضعك في الريادة؛ توسع شرائح عملائك، وتعمل على مدار الساعة وتحفظ التفضيلات لتقديم خدمة شخصية لا تُنسى.
-              </p>
-              
-              <div className="flex gap-1 sm:gap-2 mb-6 bg-[var(--surface-secondary)] p-1.5 rounded-full border border-[var(--border-default)] w-full sm:w-max relative z-20">
-                <button 
-                  onClick={() => setEcoTab('challenges')} 
-                  className={`flex-1 sm:flex-none px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 ${ecoTab === 'challenges' ? 'bg-[var(--color-secondary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'}`}
-                >
-                  التحديات
-                </button>
-                <button 
-                  onClick={() => setEcoTab('values')} 
-                  className={`flex-1 sm:flex-none px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 ${ecoTab === 'values' ? 'bg-[var(--color-secondary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'}`}
-                >
-                  القيمة المضافة
-                </button>
-              </div>
-              
-              <div className="w-full">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={ecoTab}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {ecoTab === 'challenges' && ecommerceChallenges.map((challenge, i) => (
-                      <AccordionItem 
-                        key={i}
-                        title={challenge.title}
-                        content={challenge.desc}
-                        isOpen={openEcoId === i}
-                        onClick={() => setOpenEcoId(openEcoId === i ? null : i)}
-                        colorClass="text-[var(--color-secondary)] shrink-0"
-                      />
-                    ))}
-                    {ecoTab === 'values' && ecommerceValues.map((val, i) => (
-                      <AccordionItem 
-                        key={i}
-                        title={val.title}
-                        content={val.desc}
-                        isOpen={openEcoId === i}
-                        onClick={() => setOpenEcoId(openEcoId === i ? null : i)}
-                        colorClass="text-[var(--color-secondary)] shrink-0"
-                      />
-                    ))}
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </div>
-          </motion.div>
-
+          <FlipCard title="البائع الذكي للفروع" detailsList={branchDetails} colorHex="var(--color-primary)" />
+          <FlipCard title="البائع الذكي للمتاجر الإلكترونية" detailsList={ecommerceDetails} colorHex="var(--color-secondary)" />
         </div>
+
 
         {/* Navigator of Growth Section */}
         <motion.div 

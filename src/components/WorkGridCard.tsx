@@ -146,7 +146,7 @@ export const WorkGridCard: React.FC<Props> = ({ project, isEn, updateConfig, get
 
   if (hasDetails && !project.projectUrl) {
     return (
-      <motion.button
+      <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-10%" }}
@@ -161,7 +161,7 @@ export const WorkGridCard: React.FC<Props> = ({ project, isEn, updateConfig, get
         aria-label={isEn ? `View case study for ${project.titleEn}` : `عرض دراسة الحالة لمشروع ${project.titleAr}`}
       >
         {cardContent}
-      </motion.button>
+      </motion.div>
     );
   }
 
