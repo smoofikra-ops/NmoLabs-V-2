@@ -3,6 +3,8 @@ import { useSite } from '../context/SiteContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, ArrowLeft, Monitor, ShoppingBag, Smartphone, Database, LineChart, BrainCircuit, Bot } from 'lucide-react';
 import { triggerBookingModal } from './BookingModal';
+import siteLogo from '../assets/images/site-logo.png';
+
 
 const TYPEWRITER_PHRASES = [
   "نبني لك موقع يبيّن قوة بزنسك.",

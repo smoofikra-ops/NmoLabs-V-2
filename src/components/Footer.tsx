@@ -67,15 +67,7 @@ export const Footer = () => {
           {/* Logo and About Us */}
           <div className="space-y-6">
             <div className="flex items-center gap-2 cursor-pointer" onClick={() => handleScroll('hero')}>
-              <img src={siteLogo} alt="NMOLABS Logo" className="h-12 object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                }}
-              />
-              <div className="hidden text-2xl font-english font-black text-[var(--text-primary)] tracking-wider">
-                NMOLABS<span className="text-[var(--color-primary)]">.</span>
-              </div>
+              <img src={siteLogo} alt="NMOLABS Logo" className="h-24 md:h-32 object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" />
             </div>
             <p className="text-[var(--text-muted)] text-sm leading-relaxed">
               {config.footerDescription}
@@ -91,7 +83,7 @@ export const Footer = () => {
 
           {/* Company Links (الشركة) */}
           <div className="relative transition-colors" onMouseLeave={() => setHoveredLink(null)}>
-            <button onClick={() => toggleSection('company')} className="w-full flex items-center justify-between cursor-pointer focus:outline-none border-b border-[var(--border-default)] pb-4 mb-4">
+            <button onClick={() => toggleSection('company')} className="w-full flex md:hidden items-center justify-between cursor-pointer focus:outline-none border-b border-[var(--border-default)] pb-4 mb-4">
               <h4 className="text-[var(--text-primary)] font-bold mb-0 text-sm uppercase tracking-wider">
                 {isEn ? 'Company' : 'الشركة'}
               </h4>
@@ -99,7 +91,12 @@ export const Footer = () => {
                 {openSection === 'company' ? '-' : '+'}
               </span>
             </button>
-            <div className={`flex-col gap-1 relative z-10 mt-4 ${openSection === 'company' ? 'flex' : 'hidden'}`}>
+            <div className="hidden md:block mb-6 text-right ltr:text-left">
+              <h4 className="inline-block text-[var(--text-primary)] font-bold mb-0 text-lg uppercase tracking-wider pb-2">
+                {isEn ? 'Company' : 'الشركة'}
+              </h4>
+            </div>
+            <div className={`flex-col gap-1 relative z-10 mt-4 md:mt-0 md:flex ${openSection === 'company' ? 'flex' : 'hidden'}`}>
               {companyLinks.map((link, idx) => {
                 const id = 'company-link-' + idx;
                 const isHovered = hoveredLink === id;
@@ -108,12 +105,12 @@ export const Footer = () => {
                     key={idx}
                     onMouseEnter={() => setHoveredLink(id)}
                     onClick={() => link.route ? (() => {updateConfig({currentRoute: link.route}); window.scrollTo(0,0)})() : handleScroll(link.act!)} 
-                    className={`relative flex items-center gap-2 w-full text-right rtl:text-right ltr:text-left p-3 mb-2 border rounded-xl text-sm transition-colors ${isHovered ? 'text-[var(--text-primary)] border-[var(--color-primary)]' : 'text-[var(--text-muted)] border-[var(--border-default)] hover:border-[var(--interactive-border-hover)]'}`}
+                    className={`relative flex items-center gap-2 w-fit text-right rtl:text-right ltr:text-left px-4 py-2 mb-2 border rounded-full text-sm transition-colors ${isHovered ? 'text-[var(--text-primary)] border-[var(--color-primary)] bg-[var(--surface-secondary)]' : 'text-[var(--text-muted)] border-[var(--border-default)] hover:border-[var(--interactive-border-hover)]'}`}
                   >
                     {isHovered && (
                        <motion.div
                          layoutId="footer-liquid-indicator-1"
-                         className="absolute inset-0 bg-[var(--liquid-indicator-bg)] border border-[var(--liquid-indicator-border)] shadow-[var(--interactive-glow)] rounded-xl -z-10"
+                         className="absolute inset-0 bg-[var(--liquid-indicator-bg)] border border-[var(--liquid-indicator-border)] shadow-[var(--interactive-glow)] rounded-full -z-10"
                          transition={{ type: "spring", stiffness: 400, damping: 30 }}
                        />
                     )}
@@ -126,13 +123,16 @@ export const Footer = () => {
 
           {/* Policies */}
           <div className="relative transition-colors" onMouseLeave={() => setHoveredLink(null)}>
-            <button onClick={() => toggleSection('policies')} className="w-full flex items-center justify-between cursor-pointer focus:outline-none border-b border-[var(--border-default)] pb-4 mb-4">
+            <button onClick={() => toggleSection('policies')} className="w-full flex md:hidden items-center justify-between cursor-pointer focus:outline-none border-b border-[var(--border-default)] pb-4 mb-4">
               <h4 className="text-[var(--text-primary)] font-bold mb-0 text-sm uppercase tracking-wider">السياسات</h4>
               <span className="text-[var(--color-primary)] font-bold text-lg">
                 {openSection === 'policies' ? '-' : '+'}
               </span>
             </button>
-            <div className={`flex-col gap-1 relative z-10 mt-4 ${openSection === 'policies' ? 'flex' : 'hidden'}`}>
+            <div className="hidden md:block mb-6 text-right ltr:text-left">
+              <h4 className="inline-block text-[var(--text-primary)] font-bold mb-0 text-lg uppercase tracking-wider pb-2">السياسات</h4>
+            </div>
+            <div className={`flex-col gap-1 relative z-10 mt-4 md:mt-0 md:flex ${openSection === 'policies' ? 'flex' : 'hidden'}`}>
               {[
                 { name: 'سياسة الخصوصية', route: 'privacy' },
                 { name: 'شروط الاستخدام', route: 'terms' },
@@ -146,12 +146,12 @@ export const Footer = () => {
                     key={idx}
                     onMouseEnter={() => setHoveredLink(id)}
                     onClick={() => { updateConfig({ currentRoute: link.route }); window.scrollTo(0, 0); }}
-                    className={`relative w-full text-right p-3 mb-2 border rounded-xl text-sm transition-colors ${isHovered ? 'text-[var(--text-primary)] border-[var(--color-primary)]' : 'text-[var(--text-muted)] border-[var(--border-default)] hover:border-[var(--interactive-border-hover)]'}`}
+                    className={`relative w-fit text-right px-4 py-2 mb-2 border rounded-full text-sm transition-colors ${isHovered ? 'text-[var(--text-primary)] border-[var(--color-primary)] bg-[var(--surface-secondary)]' : 'text-[var(--text-muted)] border-[var(--border-default)] hover:border-[var(--interactive-border-hover)]'}`}
                   >
                     {isHovered && (
                        <motion.div
                          layoutId="footer-liquid-indicator-2"
-                         className="absolute inset-0 bg-[var(--liquid-indicator-bg)] border border-[var(--liquid-indicator-border)] shadow-[var(--interactive-glow)] rounded-xl -z-10"
+                         className="absolute inset-0 bg-[var(--liquid-indicator-bg)] border border-[var(--liquid-indicator-border)] shadow-[var(--interactive-glow)] rounded-full -z-10"
                          transition={{ type: "spring", stiffness: 400, damping: 30 }}
                        />
                     )}
@@ -164,22 +164,25 @@ export const Footer = () => {
 
           {/* Contact Info */}
           <div className="relative transition-colors">
-            <button onClick={() => toggleSection('contact')} className="w-full flex items-center justify-between cursor-pointer focus:outline-none border-b border-[var(--border-default)] pb-4 mb-4">
+            <button onClick={() => toggleSection('contact')} className="w-full flex md:hidden items-center justify-between cursor-pointer focus:outline-none border-b border-[var(--border-default)] pb-4 mb-4">
               <h4 className="text-[var(--text-primary)] font-bold mb-0 text-sm uppercase tracking-wider">التواصل</h4>
               <span className="text-[var(--color-primary)] font-bold text-lg">
                 {openSection === 'contact' ? '-' : '+'}
               </span>
             </button>
-            <ul className={`space-y-4 text-sm text-[var(--text-muted)] mt-6 ${openSection === 'contact' ? 'block' : 'hidden'}`}>
-              <li className="flex items-start gap-3 p-3 mb-2 border border-[var(--border-default)] rounded-xl transition-colors hover:border-[var(--interactive-border-hover)]">
+            <div className="hidden md:block mb-6 text-right ltr:text-left">
+              <h4 className="inline-block text-[var(--text-primary)] font-bold mb-0 text-lg uppercase tracking-wider pb-2">التواصل</h4>
+            </div>
+            <ul className={`space-y-4 text-sm text-[var(--text-muted)] mt-6 md:mt-0 md:block ${openSection === 'contact' ? 'block' : 'hidden'}`}>
+              <li className="flex w-fit items-start gap-3 px-4 py-2 mb-2 border border-[var(--border-default)] rounded-full transition-colors hover:border-[var(--interactive-border-hover)] hover:bg-[var(--surface-secondary)]">
                 <MapPin size={18} className="text-[var(--color-primary)] shrink-0 mt-0.5" />
                 <span dir="ltr" className="text-right w-full">المملكة العربية السعودية، الرياض</span>
               </li>
-              <li className="flex items-center gap-3 p-3 mb-2 border border-[var(--border-default)] rounded-xl transition-colors hover:border-[var(--interactive-border-hover)]">
+              <li className="flex w-fit items-center gap-3 px-4 py-2 mb-2 border border-[var(--border-default)] rounded-full transition-colors hover:border-[var(--interactive-border-hover)] hover:bg-[var(--surface-secondary)]">
                 <Phone size={18} className="text-[var(--color-primary)] shrink-0" />
                 <span dir="ltr" className="font-english">{config.contactNumber}</span>
               </li>
-              <li className="flex items-center gap-3 p-3 mb-2 border border-[var(--border-default)] rounded-xl transition-colors hover:border-[var(--interactive-border-hover)]">
+              <li className="flex w-fit items-center gap-3 px-4 py-2 mb-2 border border-[var(--border-default)] rounded-full transition-colors hover:border-[var(--interactive-border-hover)] hover:bg-[var(--surface-secondary)]">
                 <Mail size={18} className="text-[var(--color-primary)] shrink-0" />
                 <span dir="ltr" className="font-english">hello@nmolabs.com</span>
               </li>

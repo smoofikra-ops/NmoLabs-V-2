@@ -3,6 +3,8 @@ import { useSite } from '../context/SiteContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { Globe, Moon, Sun, Menu, X, Bookmark } from 'lucide-react';
 import { triggerBookingModal } from './BookingModal';
+import siteLogo from '../assets/images/site-logo.png';
+
 
 export const Header = () => {
   const { config, updateConfig } = useSite();
@@ -106,7 +108,7 @@ export const Header = () => {
         </button>
 
         <div className="flex items-center gap-2 cursor-pointer" onClick={() => handleScroll('hero')}>
-          <span className="font-bold text-xl tracking-wide font-english text-[var(--text-primary)]">{config.logoText || 'NMOLABS'}</span>
+          <img src={siteLogo} alt="NMOLABS Logo" className="h-[40px] lg:h-[44px] object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" />
         </div>
         <nav className="hidden lg:flex items-center gap-1 relative border border-[var(--interactive-border-hover)] p-1 rounded-2xl" onMouseLeave={() => setHoveredNav(null)}>
           {mainNavItems.map((item, idx) => {
@@ -179,7 +181,9 @@ export const Header = () => {
               dir={config.language === 'en' ? 'ltr' : 'rtl'}
             >
               <div className="flex items-center justify-between mb-8 pb-4 border-b border-[var(--border-default)]">
-                <span className="font-bold text-lg tracking-wide font-english text-[var(--text-primary)]">{config.logoText || 'NMOLABS'}</span>
+                <div className="flex items-center gap-2">
+                  <img src={siteLogo} alt="NMOLABS Logo" className="h-[40px] lg:h-[44px] object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" />
+                </div>
                 <button 
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-all bg-[var(--surface-secondary)] rounded-full"
