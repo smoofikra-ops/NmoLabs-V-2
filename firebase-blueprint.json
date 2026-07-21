@@ -50,12 +50,55 @@
         }
       },
       "required": ["fullName", "mobileNumber", "clientType", "serviceType", "appointmentDate", "appointmentTime", "createdAt"]
+    },
+    "Partner": {
+      "title": "Partner",
+      "description": "A business partner",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        },
+        "linkUrl": {
+          "type": "string"
+        },
+        "types": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "year": {
+          "type": "string"
+        },
+        "order": {
+          "type": "number"
+        },
+        "isHidden": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": ["name"]
     }
   },
   "firestore": {
     "/bookings/{bookingId}": {
       "schema": "Booking",
       "description": "Collection of active and historic customer consulting bookings"
+    },
+    "/partners/{partnerId}": {
+      "schema": "Partner",
+      "description": "Collection of partners"
     }
   }
 }

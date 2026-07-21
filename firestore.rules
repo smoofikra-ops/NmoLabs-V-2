@@ -1,17 +1,14 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    // Global Safety Net default catch-all
     match /{document=**} {
       allow read, write: if false;
     }
 
-    // Helper functions
     function isSignedIn() {
       return request.auth != null;
     }
-
+    
     function isVerifiedUser() {
       return isSignedIn() && request.auth.token.email_verified == true;
     }
@@ -32,7 +29,6 @@ service cloud.firestore {
       return resource.data;
     }
 
-    // Validation helper for Booking entity
     function isValidBooking(data) {
       return data.keys().hasAll(['fullName', 'mobileNumber', 'clientType', 'serviceType', 'appointmentDate', 'appointmentTime', 'createdAt'])
         && data.keys().size() <= 9
@@ -52,23 +48,22 @@ service cloud.firestore {
         && (!data.keys().hasAny(['googleEventId']) || data.googleEventId is string);
     }
 
-    // Bookings collection
     match /bookings/{bookingId} {
       allow get: if isAdmin() || (isSignedIn() && existing().userId == request.auth.uid);
       allow list: if isAdmin();
       
-      // Allow creation by any client so they can book, with structural validation
       allow create: if isValidId(bookingId) 
         && isValidBooking(incoming())
         && incoming().createdAt == request.time;
-
-      // Allow updates only by admin
       allow update: if isAdmin()
         && isValidBooking(incoming())
         && incoming().createdAt == existing().createdAt;
-
-      // Allow deletion only by admin
       allow delete: if isAdmin();
+    }
+    
+    match /partners/{partnerId} {
+      allow read: if true;
+      allow write: if isAdmin();
     }
   }
 }

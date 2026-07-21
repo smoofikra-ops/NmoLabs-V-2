@@ -40,14 +40,23 @@ export const AdminPanel = () => {
 
   if (!isAdminMode) return null;
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setIsSaving(true);
-    setTimeout(() => {
+    try {
+      if (config.partners) {
+        const { savePartnersToFirestore } = await import('../lib/partners');
+        await savePartnersToFirestore(config.partners);
+      }
       saveConfig();
-      setIsSaving(false);
       setSaveMessage('تم الحفظ بنجاح!');
       setTimeout(() => setSaveMessage(''), 3000);
-    }, 800);
+    } catch (error) {
+      console.error(error);
+      setSaveMessage('حدث خطأ أثناء الحفظ');
+      setTimeout(() => setSaveMessage(''), 3000);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleClose = () => {
