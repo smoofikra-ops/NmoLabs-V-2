@@ -67,7 +67,7 @@ export const Footer = () => {
           {/* Logo and About Us */}
           <div className="space-y-6">
             <div className="flex items-center gap-2 cursor-pointer" onClick={() => handleScroll('hero')}>
-              <img src={siteLogo} alt="NMOLABS Logo" className="h-24 md:h-32 object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" />
+              <img src={config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="h-24 md:h-32 object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" />
             </div>
             <p className="text-[var(--text-muted)] text-sm leading-relaxed">
               {config.footerDescription}

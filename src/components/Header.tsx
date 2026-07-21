@@ -108,7 +108,8 @@ export const Header = () => {
         </button>
 
         <div className="flex items-center gap-2 cursor-pointer" onClick={() => handleScroll('hero')}>
-          <img src={siteLogo} alt="NMOLABS Logo" className="h-[40px] lg:h-[44px] object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" />
+          <img src={config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="hidden lg:block object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" style={{ height: `${config.desktopLogoHeight || 44}px` }} />
+          <img src={config.mobileLogoUrl || config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="block lg:hidden object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" style={{ height: `${config.mobileLogoHeight || 40}px` }} />
         </div>
         <nav className="hidden lg:flex items-center gap-1 relative border border-[var(--interactive-border-hover)] p-1 rounded-2xl" onMouseLeave={() => setHoveredNav(null)}>
           {mainNavItems.map((item, idx) => {
@@ -182,7 +183,7 @@ export const Header = () => {
             >
               <div className="flex items-center justify-between mb-8 pb-4 border-b border-[var(--border-default)]">
                 <div className="flex items-center gap-2">
-                  <img src={siteLogo} alt="NMOLABS Logo" className="h-[40px] lg:h-[44px] object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" />
+                  <img src={config.mobileLogoUrl || config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" style={{ height: `${config.mobileLogoHeight || 40}px` }} />
                 </div>
                 <button 
                   onClick={() => setIsMobileMenuOpen(false)}

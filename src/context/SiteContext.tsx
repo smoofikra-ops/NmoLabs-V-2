@@ -89,6 +89,10 @@ export type SiteConfig = {
   footerDescription: string;
   currentRoute?: string;
   logoText?: string;
+  desktopLogoUrl?: string;
+  mobileLogoUrl?: string;
+  desktopLogoHeight?: number;
+  mobileLogoHeight?: number;
   language?: 'ar' | 'en';
   testimonialsTitle?: string;
   testimonialsSubtitle?: string;
@@ -228,6 +232,8 @@ const defaultConfig: SiteConfig = {
   footerDescription: 'منصة وشريك نمو تقني لرواد الأعمال والمتاجر الإلكترونية في السعودية.',
   currentRoute: 'home',
   logoText: 'NMOLABS',
+  desktopLogoHeight: 44,
+  mobileLogoHeight: 40,
   language: 'ar',
   testimonialsTitle: 'متاجر حققت نمو معنا',
   testimonialsSubtitle: 'شركاء النجاح الذين حققنا معهم قفزات نوعية في التحويل والمبيعات.',
@@ -257,6 +263,10 @@ const getInitialConfig = () => {
         footerDescription: parsed.footerDescription || defaultConfig.footerDescription,
         currentRoute: 'home',
         logoText: parsed.logoText || defaultConfig.logoText,
+        desktopLogoUrl: parsed.desktopLogoUrl,
+        mobileLogoUrl: parsed.mobileLogoUrl,
+        desktopLogoHeight: parsed.desktopLogoHeight || defaultConfig.desktopLogoHeight,
+        mobileLogoHeight: parsed.mobileLogoHeight || defaultConfig.mobileLogoHeight,
         language: parsed.language || 'ar',
         testimonialsTitle: parsed.testimonialsTitle || defaultConfig.testimonialsTitle,
         testimonialsSubtitle: parsed.testimonialsSubtitle || defaultConfig.testimonialsSubtitle,

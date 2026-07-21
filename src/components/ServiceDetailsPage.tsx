@@ -135,6 +135,34 @@ export const ServiceDetailsPage = ({ slug }: Props) => {
           </motion.div>
         )}
 
+        {service.pricing && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="mb-16">
+            <div className="p-8 md:p-10 bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-3xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--color-primary)] opacity-10 blur-[50px] rounded-full pointer-events-none" />
+              <h2 className="text-2xl font-bold mb-4 text-[var(--text-primary)] flex items-center gap-3">
+                 <div className="w-2 h-2 rounded-full bg-[var(--color-primary)] shadow-[0_0_8px_var(--color-primary)]" />
+                 {isEn ? service.pricing.titleEn || service.pricing.title : service.pricing.title}
+              </h2>
+              <p className="text-[var(--text-muted)] mb-8 leading-relaxed">
+                {isEn ? service.pricing.descEn || service.pricing.desc : service.pricing.desc}
+              </p>
+              
+              {((isEn ? service.pricing.itemsEn : service.pricing.items) || []).length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {(isEn ? service.pricing.itemsEn || service.pricing.items : service.pricing.items)!.map((item, i) => (
+                    <div key={i} className="bg-[var(--surface-primary)] border border-[var(--border-default)] p-5 rounded-2xl flex flex-col gap-2">
+                      <div className="flex justify-between items-start gap-4">
+                        <h4 className="font-bold text-[var(--text-primary)]">{item.label}</h4>
+                        <span className="font-bold text-[var(--color-primary)] whitespace-nowrap">{item.value}</span>
+                      </div>
+                      {item.desc && <p className="text-[var(--text-muted)] text-sm leading-relaxed">{item.desc}</p>}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="p-8 md:p-12 bg-gradient-to-br from-[var(--surface-secondary)] to-[var(--surface-primary)] border border-[var(--border-default)] rounded-3xl text-center shadow-lg relative overflow-hidden">
            <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-primary)] opacity-10 blur-[100px] rounded-full pointer-events-none" />
            <h3 className="text-3xl font-bold text-[var(--text-primary)] mb-4">{isEn ? 'Ready to Start?' : 'مستعد للبدء؟'}</h3>

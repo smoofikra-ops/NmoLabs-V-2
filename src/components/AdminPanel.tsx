@@ -250,14 +250,66 @@ export const AdminPanel = () => {
             >
               {activeTab === 'header' && (
                 <div className="space-y-5">
-                  <div>
-                    <label className="block text-sm text-[var(--text-muted)] mb-2">النص التعريفي (Logo)</label>
-                    <input 
-                      type="text" 
-                      value={config.logoText || 'NMOLABS'}
-                      onChange={(e) => updateConfig({ logoText: e.target.value })}
-                      className="w-full bg-[var(--surface-tertiary)] border border-[var(--border-default)] p-3 rounded-xl focus:border-[var(--color-primary)] outline-none transition-colors"
-                    />
+                  <div className="bg-[var(--surface-secondary)] p-5 border border-[var(--border-default)] rounded-xl space-y-5">
+                    <h4 className="font-bold border-b border-[var(--border-default)] pb-2 mb-4">إعدادات الشعار (Logo)</h4>
+                    
+                    <div>
+                      <label className="block text-sm text-[var(--text-muted)] mb-2">النص التعريفي (Logo Text)</label>
+                      <input 
+                        type="text" 
+                        value={config.logoText || 'NMOLABS'}
+                        onChange={(e) => updateConfig({ logoText: e.target.value })}
+                        className="w-full bg-[var(--surface-tertiary)] border border-[var(--border-default)] p-3 rounded-xl focus:border-[var(--color-primary)] outline-none transition-colors"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm text-[var(--text-muted)] mb-2">رابط شعار سطح المكتب (Desktop Logo)</label>
+                      <input 
+                        type="text" 
+                        value={config.desktopLogoUrl || ''}
+                        onChange={(e) => updateConfig({ desktopLogoUrl: e.target.value })}
+                        placeholder="رابط صورة الشعار (مثال: https://.../logo.png)"
+                        className="w-full bg-[var(--surface-tertiary)] border border-[var(--border-default)] p-3 rounded-xl focus:border-[var(--color-primary)] outline-none transition-colors font-english text-left mb-2"
+                        dir="ltr"
+                      />
+                      <div className="flex items-center gap-4">
+                        <label className="text-sm text-[var(--text-muted)] whitespace-nowrap">مقاس الشعار (الارتفاع):</label>
+                        <input 
+                          type="range" 
+                          min="20" 
+                          max="120" 
+                          value={config.desktopLogoHeight || 44}
+                          onChange={(e) => updateConfig({ desktopLogoHeight: parseInt(e.target.value) })}
+                          className="flex-grow h-2 bg-[var(--surface-tertiary)] rounded-lg appearance-none cursor-pointer"
+                        />
+                        <span className="text-sm font-bold w-12 text-center">{config.desktopLogoHeight || 44}px</span>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm text-[var(--text-muted)] mb-2">رابط شعار الجوال (Mobile Logo)</label>
+                      <input 
+                        type="text" 
+                        value={config.mobileLogoUrl || ''}
+                        onChange={(e) => updateConfig({ mobileLogoUrl: e.target.value })}
+                        placeholder="رابط صورة الشعار للجوال"
+                        className="w-full bg-[var(--surface-tertiary)] border border-[var(--border-default)] p-3 rounded-xl focus:border-[var(--color-primary)] outline-none transition-colors font-english text-left mb-2"
+                        dir="ltr"
+                      />
+                      <div className="flex items-center gap-4">
+                        <label className="text-sm text-[var(--text-muted)] whitespace-nowrap">مقاس الشعار (الارتفاع):</label>
+                        <input 
+                          type="range" 
+                          min="20" 
+                          max="120" 
+                          value={config.mobileLogoHeight || 40}
+                          onChange={(e) => updateConfig({ mobileLogoHeight: parseInt(e.target.value) })}
+                          className="flex-grow h-2 bg-[var(--surface-tertiary)] rounded-lg appearance-none cursor-pointer"
+                        />
+                        <span className="text-sm font-bold w-12 text-center">{config.mobileLogoHeight || 40}px</span>
+                      </div>
+                    </div>
                   </div>
                   <div>
                      <label className="block text-sm text-[var(--text-muted)] mb-2">رقم التواصل (واتساب)</label>

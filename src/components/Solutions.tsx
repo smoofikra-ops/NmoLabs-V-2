@@ -4,8 +4,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown, Code } from 'lucide-react';
 import branchImg from '../assets/images/regenerated_image_1779062361308.png';
 import ecommerceImg from '../assets/images/regenerated_image_1779062368023.png';
-import sallaLogo from '../assets/images/regenerated_image_1779415116970.png';
-import zidLogo from '../assets/images/regenerated_image_1779415117734.svg';
+import sallaLogo from '../assets/images/regenerated_image_1784602783544.jpg';
+import zidLogo from '../assets/images/regenerated_image_1784602784358.jpg';
 
 const branchChallenges = [
   {
