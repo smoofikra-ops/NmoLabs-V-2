@@ -196,6 +196,25 @@ export const AdminPanel = () => {
             نسخ الإعدادات الحالية
           </button>
 
+          <button
+            onClick={() => {
+              const cfg = prompt('قم بلصق كود الإعدادات هنا:');
+              if (cfg) {
+                try {
+                  JSON.parse(cfg);
+                  localStorage.setItem('nmo_site_config', cfg);
+                  window.location.reload();
+                } catch(e) {
+                  alert('صيغة الإعدادات غير صحيحة');
+                }
+              }
+            }}
+            className="w-full bg-[var(--surface-secondary)] border border-[var(--border-default)] hover:bg-[var(--surface-tertiary)] text-[var(--text-primary)] p-3 rounded-xl flex items-center justify-center gap-2 transition-colors text-sm"
+          >
+            <Settings size={16} />
+            استيراد الإعدادات
+          </button>
+
           <button 
             onClick={hasUnsavedChanges ? handleSaveAndClose : handleClose}
             className="w-full bg-[var(--surface-secondary)] border border-[var(--border-default)] hover:bg-[var(--surface-tertiary)] text-[var(--text-primary)] p-3 rounded-xl flex items-center justify-center gap-2 transition-colors"
@@ -807,6 +826,72 @@ export const AdminPanel = () => {
                                  dir="ltr"
                                />
                              </div>
+                           </div>
+                           <div className="md:col-span-2">
+                             <label className="block text-sm text-[var(--text-muted)] mb-1">نوع المشروع</label>
+                             <div className="flex flex-wrap gap-4 mt-2">
+                               {['متجر إلكتروني', 'موقع شركة', 'نظام', 'شريك نجاح', 'مشروع مميز', 'متجر حقق نمو'].map(type => (
+                                 <label key={type} className="flex items-center gap-2 text-sm cursor-pointer">
+                                   <input
+                                     type="checkbox"
+                                     checked={partner.types?.includes(type) || false}
+                                     onChange={(e) => {
+                                       const newArray = [...config.partners];
+                                       const currentTypes = partner.types || [];
+                                       if (e.target.checked) {
+                                         newArray[index] = { ...partner, types: [...currentTypes, type] };
+                                       } else {
+                                         newArray[index] = { ...partner, types: currentTypes.filter(t => t !== type) };
+                                       }
+                                       updateConfig({ partners: newArray });
+                                     }}
+                                     className="rounded border-[var(--border-default)] text-[var(--color-primary)] focus:ring-[var(--color-primary)]"
+                                   />
+                                   {type}
+                                 </label>
+                               ))}
+                             </div>
+                           </div>
+                           <div>
+                             <label className="block text-sm text-[var(--text-muted)] mb-1">سنة التنفيذ</label>
+                             <input 
+                               type="text" 
+                               value={partner.year || ''}
+                               onChange={(e) => {
+                                 const newArray = [...config.partners];
+                                 newArray[index] = { ...partner, year: e.target.value };
+                                 updateConfig({ partners: newArray });
+                               }}
+                               className="w-full bg-[var(--surface-tertiary)] border border-[var(--border-default)] p-2 text-sm rounded focus:border-[var(--color-primary)] outline-none transition-colors font-english text-left"
+                               dir="ltr"
+                             />
+                           </div>
+                           <div className="md:col-span-2">
+                             <label className="flex items-center gap-2 text-sm text-[var(--text-muted)] cursor-pointer">
+                               <input 
+                                 type="checkbox" 
+                                 checked={partner.isHidden || false}
+                                 onChange={(e) => {
+                                   const newArray = [...config.partners];
+                                   newArray[index] = { ...partner, isHidden: e.target.checked };
+                                   updateConfig({ partners: newArray });
+                                 }}
+                                 className="rounded border-[var(--border-default)] text-[var(--color-primary)] focus:ring-[var(--color-primary)]"
+                               />
+                               إخفاء المشروع/الشريك
+                             </label>
+                           </div>
+                           <div className="md:col-span-2">
+                             <label className="block text-sm text-[var(--text-muted)] mb-1">وصف مختصر</label>
+                             <textarea 
+                               value={partner.description || ''}
+                               onChange={(e) => {
+                                 const newArray = [...config.partners];
+                                 newArray[index] = { ...partner, description: e.target.value };
+                                 updateConfig({ partners: newArray });
+                               }}
+                               className="w-full bg-[var(--surface-tertiary)] border border-[var(--border-default)] p-2 text-sm rounded focus:border-[var(--color-primary)] outline-none transition-colors h-20"
+                             />
                            </div>
                         </div>
                         <div className="flex justify-end gap-2 mt-2 border-t border-[var(--border-default)] pt-2">

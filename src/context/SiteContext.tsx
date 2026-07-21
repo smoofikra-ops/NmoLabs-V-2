@@ -18,6 +18,11 @@ export type Partner = {
   color?: string;
   imageUrl: string;
   linkUrl?: string;
+  types?: string[];
+  year?: string;
+  order?: number;
+  isHidden?: boolean;
+  description?: string;
 };
 
 export type SectionData = {

@@ -8,7 +8,7 @@ export const Testimonials = () => {
 
   if (!config.sections.testimonials) return null;
 
-  const basePartners = config.partners || [];
+  const basePartners = (config.partners || []).filter(p => !p.isHidden).sort((a, b) => (a.order || 0) - (b.order || 0));
   const partnersLoop = Array.from({ length: 20 }, () => basePartners).flat();
 
   const getPartnerStyle = () => {
@@ -41,11 +41,20 @@ export const Testimonials = () => {
       className="mx-4 lg:mx-8 relative group/partner flex flex-col items-center justify-center cursor-pointer w-32 h-32 md:w-40 md:h-40 rounded-3xl"
       style={{ '--partner-color': partner.color || config.primaryColor } as React.CSSProperties}
     >
-      {/* Tooltip */}
-      <div className="absolute -top-14 left-1/2 -translate-x-1/2 opacity-0 group-hover/partner:opacity-100 transition-all duration-300 pointer-events-none z-50 transform group-hover/partner:-translate-y-2 w-max max-w-[250px]">
+            {/* Tooltip */}
+      <div className="absolute -top-14 left-1/2 -translate-x-1/2 opacity-0 group-hover/partner:opacity-100 transition-all duration-300 pointer-events-none z-50 transform group-hover/partner:-translate-y-2 w-max max-w-[250px] flex flex-col items-center gap-1">
         <div className="bg-[var(--surface-primary)]/90 backdrop-blur text-[var(--text-primary)] px-4 py-2 rounded-xl text-sm font-bold border border-[var(--border-default)] shadow-[0_0_15px_var(--partner-color)] text-center break-words">
           {partner.name}
         </div>
+        {partner.types && partner.types.length > 0 && (
+          <div className="flex gap-1 flex-wrap justify-center">
+            {partner.types.map((type: string) => (
+              <span key={type} className="text-[10px] bg-[var(--color-primary)]/20 text-[var(--color-primary)] px-2 py-0.5 rounded-full whitespace-nowrap">
+                {type}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Logo Container */}
