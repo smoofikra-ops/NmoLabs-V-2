@@ -19,10 +19,10 @@ export const Workflow = () => {
           {/* Subtle background glow */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-40 bg-gradient-to-b from-[var(--color-primary)]/10 to-transparent blur-3xl pointer-events-none" />
           
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-black mb-6 tracking-tight text-[var(--text-primary)] leading-tight relative z-10">
+          <h2 className="text-2xl sm:text-3xl md:text-[50px] font-black mb-6 tracking-tight text-[var(--text-primary)] leading-tight md:leading-[76px] relative z-10">
             نحن لسنا شركة تسويق فقط..
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] block mt-4 text-3xl sm:text-4xl md:text-6xl whitespace-nowrap">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] block mt-4 text-3xl sm:text-4xl md:text-[50px] md:leading-[79px] whitespace-nowrap">
               نحن شريك نمو
             </span>
           </h2>
