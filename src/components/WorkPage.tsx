@@ -82,8 +82,12 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
               <div className="flex flex-wrap items-center gap-4">
                 <button
                   onClick={() => {
-                    updateConfig({ currentRoute: `work/${project.slug}` });
-                    window.scrollTo({top: 0, behavior: 'smooth'});
+                    if (project.projectUrl) {
+                      window.open(project.projectUrl, '_blank');
+                    } else {
+                      updateConfig({ currentRoute: `work/${project.slug}` });
+                      window.scrollTo({top: 0, behavior: 'smooth'});
+                    }
                   }}
                   className="px-8 py-4 rounded-full font-bold text-white transition-all bg-white/10 hover:bg-white/20 border border-white/20 hover:scale-105 flex items-center gap-2"
                 >
@@ -103,13 +107,17 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="aspect-[4/3] rounded-[2rem] overflow-hidden border border-white/10 relative group shadow-2xl cursor-pointer bg-[#111]"
               onClick={() => {
-                updateConfig({ currentRoute: `work/${project.slug}` });
-                window.scrollTo({top: 0, behavior: 'smooth'});
+                if (project.projectUrl) {
+                  window.open(project.projectUrl, '_blank');
+                } else {
+                  updateConfig({ currentRoute: `work/${project.slug}` });
+                  window.scrollTo({top: 0, behavior: 'smooth'});
+                }
               }}
             >
               <div className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-700 blur-3xl" style={{ backgroundColor: project.brandColor }} />
               {project.coverImage ? (
-                <img src={project.coverImage} alt={isEn ? project.titleEn : project.titleAr} className="relative z-10 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <img src={project.coverImage} alt={isEn ? project.titleEn : project.titleAr} className="relative z-10 w-full h-full object-cover object-top group-hover:object-bottom transition-all duration-[8000ms] ease-in-out" />
               ) : (
                 <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
                    <div className="w-32 h-32 rounded-3xl blur-[40px] absolute" style={{ backgroundColor: project.brandColor }} />

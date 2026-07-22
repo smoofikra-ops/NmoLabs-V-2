@@ -7,6 +7,7 @@ export type ServiceItem = {
   title: string;
   titleEn: string;
   icon: React.ReactNode;
+  image?: string;
   desc: string;
   descEn: string;
   deliverables: string[];
@@ -29,6 +30,7 @@ export const servicesList: ServiceItem[] = [
     title: 'تأسيس المتاجر الإلكترونية',
     titleEn: 'E-Commerce Setup',
     icon: <LayoutIcon className="w-10 h-10" />,
+    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=1000',
     desc: 'من اختيار الاسم والهوية لين التشغيل والتسويق — نضبط لك متجر احترافي جاهز للبيع.',
     descEn: 'From naming and branding to operations and marketing — we build a professional, ready-to-sell store.',
     deliverables: ['باقة الانطلاقة', 'باقة النمو', 'باقة التشغيل الكامل', 'باقة مخصصة'],
@@ -45,6 +47,7 @@ export const servicesList: ServiceItem[] = [
     title: 'إدارة الحملات الإعلانية',
     titleEn: 'Ads Management',
     icon: <Megaphone className="w-10 h-10" />,
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1000',
     desc: 'نوجه ميزانيتك للجمهور الصح. استهداف دقيق يعتمد على الأرقام عشان نرفع مبيعاتك ROAS.',
     descEn: 'Direct your budget to the right audience. Data-driven targeting to increase your ROAS.',
     deliverables: ['دراسة السوق والمنافسين', 'إطلاق وإدارة الإعلانات', 'تحسين مستمر (A/B Testing)'],
@@ -80,6 +83,7 @@ export const servicesList: ServiceItem[] = [
     title: 'إدارة السوشيال ميديا',
     titleEn: 'Social Media Management',
     icon: <Share2 className="w-10 h-10" />,
+    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=1000',
     desc: 'ما ننزل بوستات وبس، نبني لك مجتمع يتفاعل ويشتري. ندير حساباتك من الألف للياء.',
     descEn: 'We do not just post; we build an engaging community that buys. End-to-end account management.',
     deliverables: ['خطة محتوى شهرية', 'تصميم بوستات وفيديوهات', 'إدارة التفاعل', 'توثيق الحسابات'],
@@ -105,6 +109,7 @@ export const servicesList: ServiceItem[] = [
     title: 'تحسين محركات البحث SEO',
     titleEn: 'SEO Optimization',
     icon: <Search className="w-10 h-10" />,
+    image: 'https://images.unsplash.com/photo-1572177812156-58036aae439c?auto=format&fit=crop&q=80&w=1000',
     desc: 'نمسك لك الصدارة ببحث جوجل عشان تضمن زوار حقيقيين ومجانيين يدورون على منتجاتك.',
     descEn: 'Secure the top spots on Google search to ensure real, free traffic looking for your products.',
     deliverables: ['تدقيق فني للمتجر', 'تحليل كلمات مفتاحية', 'بناء روابط (Backlinks)', 'تحسين سرعة الموقع'],
@@ -130,6 +135,7 @@ export const servicesList: ServiceItem[] = [
     title: 'كتابة المحتوى البيعي',
     titleEn: 'Sales Copywriting',
     icon: <PenTool className="w-10 h-10" />,
+    image: 'https://images.unsplash.com/photo-1455390582262-044cdead2708?auto=format&fit=crop&q=80&w=1000',
     desc: 'نكتب الكلمات اللي تقنع العميل يفتح محفظته ويدفع بدون أي تردد.',
     descEn: 'We write the words that convince the customer to open their wallet and pay without hesitation.',
     deliverables: ['وصف منتجات احترافي', 'نصوص الإعلانات (Copywriting)', 'إيميلات تسويقية', 'صفحات هبوط'],
@@ -146,6 +152,7 @@ export const servicesList: ServiceItem[] = [
     title: 'تصميم واجهات المتجر (UI/UX)',
     titleEn: 'UI/UX Design',
     icon: <LayoutIcon className="w-10 h-10" />,
+    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=1000',
     desc: 'نصمم لك واجهات مو بس شكلها حلو، لكن تسهّل الشراء وترفع نسبة التحويل.',
     descEn: 'We design interfaces that are not only beautiful but also facilitate purchases and increase conversion rates.',
     deliverables: ['خرائط حرارية لتحليل السلوك', 'تصميم صفحات المنتجات', 'تحسين خطوات الدفع', 'اختبار المستخدمين'],

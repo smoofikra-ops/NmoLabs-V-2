@@ -138,7 +138,7 @@ export const Hero = () => {
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover opacity-20 dark:opacity-[0.25] pointer-events-none"
+        className="hidden md:block absolute inset-0 w-full h-full object-cover opacity-20 dark:opacity-[0.25] pointer-events-none"
       >
         <source src="https://b.top4top.io/m_37896jjzf1.mp4" type="video/mp4" />
       </video>
@@ -207,6 +207,30 @@ export const Hero = () => {
         </motion.div>
         
       </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer text-[var(--text-muted)] hover:text-[var(--color-primary)] transition-colors"
+        onClick={() => {
+          const nextSection = document.getElementById('about') || document.getElementById('services');
+          if (nextSection) {
+            nextSection.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+          }
+        }}
+      >
+        <span className="text-xs font-medium tracking-widest uppercase mb-2">{isEn ? 'Scroll' : 'اكتشف المزيد'}</span>
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+        >
+          <ArrowLeft className={`w-5 h-5 ${isEn ? '-rotate-90' : '-rotate-90'}`} />
+        </motion.div>
+      </motion.div>
     </section>
   );
 };

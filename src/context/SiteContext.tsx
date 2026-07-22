@@ -145,7 +145,7 @@ const defaultConfig: SiteConfig = {
     analyzer: true,
     blog: true
   },
-  sectionOrder: ['hero', 'aboutPreview', 'whatToBuild', 'services', 'workPreview', 'productsPreview', 'solutions', 'tools', 'workflow', 'testimonials', 'faq', 'blog'],
+  sectionOrder: ['hero', 'testimonials', 'aboutPreview', 'whatToBuild', 'services', 'workPreview', 'productsPreview', 'solutions', 'tools', 'workflow', 'faq', 'blog'],
   apiLinks: {
     semrush: '',
     hotjar: '',
@@ -232,8 +232,10 @@ const defaultConfig: SiteConfig = {
   footerDescription: 'منصة وشريك نمو تقني لرواد الأعمال والمتاجر الإلكترونية في السعودية.',
   currentRoute: 'home',
   logoText: 'NMOLABS',
-  desktopLogoHeight: 44,
-  mobileLogoHeight: 40,
+  desktopLogoUrl: 'https://eqwcrgiqghjewnltnsce.supabase.co/storage/v1/object/sign/NmoLabs%20V-2/N%20(3).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82Njk4MWE2Yy1hMWNkLTRiYjUtODkyNS01OGUxYjdmODgxNzUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJObW9MYWJzIFYtMi9OICgzKS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg0NjgwOTQ2LCJleHAiOjE4MTYyMTY5NDZ9.ADM9I-DCuOJR3uTH8fcBSb6pB68eu-eBfUsMtA4t00o',
+  mobileLogoUrl: 'https://eqwcrgiqghjewnltnsce.supabase.co/storage/v1/object/sign/NmoLabs%20V-2/N%20(3).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82Njk4MWE2Yy1hMWNkLTRiYjUtODkyNS01OGUxYjdmODgxNzUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJObW9MYWJzIFYtMi9OICgzKS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg0NjgwOTQ2LCJleHAiOjE4MTYyMTY5NDZ9.ADM9I-DCuOJR3uTH8fcBSb6pB68eu-eBfUsMtA4t00o',
+  desktopLogoHeight: 64,
+  mobileLogoHeight: 52,
   language: 'ar',
   testimonialsTitle: 'متاجر حققت نمو معنا',
   testimonialsSubtitle: 'شركاء النجاح الذين حققنا معهم قفزات نوعية في التحويل والمبيعات.',
@@ -251,6 +253,19 @@ const getInitialConfig = () => {
       if (!order.includes('blog')) {
         order.push('blog');
       }
+      
+      // Force migration of testimonials to index 1 if it's currently later in the array
+      // This ensures the update applies even for returning users
+      const testimonialsIndex = order.indexOf('testimonials');
+      if (testimonialsIndex > 1) {
+        order.splice(testimonialsIndex, 1);
+        const heroIndex = order.indexOf('hero');
+        if (heroIndex !== -1) {
+           order.splice(heroIndex + 1, 0, 'testimonials');
+        } else {
+           order.splice(1, 0, 'testimonials');
+        }
+      }
       return {
         ...defaultConfig,
         ...parsed,
@@ -263,8 +278,8 @@ const getInitialConfig = () => {
         footerDescription: parsed.footerDescription || defaultConfig.footerDescription,
         currentRoute: 'home',
         logoText: parsed.logoText || defaultConfig.logoText,
-        desktopLogoUrl: parsed.desktopLogoUrl,
-        mobileLogoUrl: parsed.mobileLogoUrl,
+        desktopLogoUrl: parsed.desktopLogoUrl || defaultConfig.desktopLogoUrl,
+        mobileLogoUrl: parsed.mobileLogoUrl || defaultConfig.mobileLogoUrl,
         desktopLogoHeight: parsed.desktopLogoHeight || defaultConfig.desktopLogoHeight,
         mobileLogoHeight: parsed.mobileLogoHeight || defaultConfig.mobileLogoHeight,
         language: parsed.language || 'ar',

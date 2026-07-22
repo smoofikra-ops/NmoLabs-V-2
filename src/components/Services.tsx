@@ -81,7 +81,20 @@ export const Services = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none z-0" />
                   
                   {/* Animated Border Top */}
-                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out opacity-0 group-hover:opacity-100" />
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out opacity-0 group-hover:opacity-100 z-20" />
+                  
+                  {service.image && (
+                    <>
+                      <div className="absolute inset-0 z-0 overflow-hidden">
+                        <img 
+                          src={service.image} 
+                          alt={service.title} 
+                          className="w-full h-full object-cover transition-all duration-700 group-hover:blur-sm group-hover:scale-105 opacity-60 group-hover:opacity-40" 
+                        />
+                      </div>
+                      <div className="absolute inset-0 z-0 bg-gradient-to-t from-[var(--surface-secondary)] via-[var(--surface-secondary)]/80 to-[var(--surface-secondary)]/60 pointer-events-none" />
+                    </>
+                  )}
                   
                   <div className="p-4 sm:p-8 relative z-10 flex flex-col h-full">
                     <div className="flex items-start justify-between mb-8">

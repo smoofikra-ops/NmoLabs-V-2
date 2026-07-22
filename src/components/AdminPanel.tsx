@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSite } from '../context/SiteContext';
 import { motion, AnimatePresence } from 'motion/react';
-import { Settings, Save, Layout, Type, Palette, Link as LinkIcon, X, LineChart, ExternalLink, ArrowUp, ArrowDown, Plus, Sparkles, Check, Users, Trash, Wrench, ChevronDown, Info } from 'lucide-react';
+import { Settings, Save, Globe, Layout, Type, Palette, Link as LinkIcon, X, LineChart, ExternalLink, ArrowUp, ArrowDown, Plus, Sparkles, Check, Users, Trash, Wrench, ChevronDown, Info } from 'lucide-react';
 
 const Tooltip = ({ text, children }: { text: string, children: React.ReactNode }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -31,14 +31,24 @@ const Tooltip = ({ text, children }: { text: string, children: React.ReactNode }
 
 export const AdminPanel = () => {
   const { config, updateConfig, saveConfig, hasUnsavedChanges, isAdminMode, setIsAdminMode, resetConfig } = useSite();
-  const [activeTab, setActiveTab] = useState<'header' | 'hero' | 'body' | 'footer' | 'colors' | 'links' | 'reports' | 'partners' | 'tools'>('header');
+  const [activeTab, setActiveTab] = useState<'header' | 'hero' | 'body' | 'footer' | 'colors' | 'links' | 'reports' | 'partners' | 'tools' | 'seo'>('header');
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [showCloseModal, setShowCloseModal] = useState(false);
   const [openToolCategory, setOpenToolCategory] = useState<number | null>(null);
+  const [seoSuggestion, setSeoSuggestion] = useState('');
 
   if (!isAdminMode) return null;
+
+  const generateSeoSuggestion = () => {
+    setIsGenerating(true);
+    setTimeout(() => {
+      // Simulate generating SEO suggestion based on page content
+      setSeoSuggestion(`موقع ${config.logoText || 'المتجر'} يقدم أفضل الخدمات والمنتجات بأسعار تنافسية. اكتشف المزيد عن ${config.heroTitle || 'خدماتنا المميزة'}.`);
+      setIsGenerating(false);
+    }, 1000);
+  };
 
   const handleSave = async () => {
     setIsSaving(true);
@@ -140,6 +150,7 @@ export const AdminPanel = () => {
     { id: 'links', icon: <LinkIcon size={18} />, label: 'الروابط' },
     { id: 'partners', icon: <Users size={18} />, label: 'شركاء النجاح' },
     { id: 'tools', icon: <Wrench size={18} />, label: 'الأدوات والخدمات' },
+    { id: 'seo', icon: <Globe size={18} />, label: 'تحسين محركات البحث (SEO)' },
     { id: 'reports', icon: <LineChart size={18} />, label: 'التقارير' },
   ];
 
@@ -1085,6 +1096,60 @@ export const AdminPanel = () => {
                       </div>
                     );
                   })}
+                </div>
+              )}
+
+              {activeTab === 'seo' && (
+                <div className="space-y-6">
+                  <div className="bg-[var(--surface-secondary)] p-6 rounded-xl border border-[var(--border-default)]">
+                    <h4 className="text-lg font-bold mb-4 flex items-center gap-2">
+                      <Globe size={20} className="text-[var(--color-primary)]" />
+                      مساعد تحسين محركات البحث (SEO Helper)
+                    </h4>
+                    <p className="text-[var(--text-muted)] text-sm mb-6 leading-relaxed">
+                      هذه الأداة تقوم بتحليل محتوى الصفحة الرئيسي (الاسم والعنوان) لاقتراح وصف تعريفي (Meta Description) مناسب ومحسّن لمحركات البحث.
+                    </p>
+                    
+                    <div className="bg-[var(--surface-primary)] p-5 rounded-lg border border-[var(--border-default)] mb-6">
+                      <div className="flex justify-between items-center mb-4">
+                        <label className="text-sm font-bold text-[var(--text-primary)]">الاقتراح المُولد (Meta Description)</label>
+                        <button
+                          onClick={generateSeoSuggestion}
+                          disabled={isGenerating}
+                          className="flex items-center gap-2 text-xs font-bold text-white bg-[var(--color-primary)] hover:bg-[var(--color-primary)]/80 px-4 py-2 rounded-full transition-colors disabled:opacity-50"
+                        >
+                          {isGenerating ? (
+                            <span className="flex items-center gap-2"><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div> جاري التوليد...</span>
+                          ) : (
+                            <><Sparkles size={14} /> توليد اقتراح ذكي</>
+                          )}
+                        </button>
+                      </div>
+                      <textarea
+                        value={seoSuggestion}
+                        onChange={(e) => setSeoSuggestion(e.target.value)}
+                        placeholder="اضغط على 'توليد اقتراح ذكي' للحصول على وصف محسّن لمحركات البحث..."
+                        className="w-full bg-[var(--surface-tertiary)] border border-[var(--border-default)] rounded-xl p-4 text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)] min-h-[100px] resize-y text-sm leading-relaxed"
+                      />
+                    </div>
+
+                    <div className="flex justify-end">
+                       <button
+                          onClick={() => {
+                            if (seoSuggestion) {
+                               updateConfig({ footerDescription: seoSuggestion });
+                               setSaveMessage('تم تطبيق الوصف بنجاح كجزء من وصف الموقع!');
+                               setTimeout(() => setSaveMessage(''), 3000);
+                            }
+                          }}
+                          disabled={!seoSuggestion || isGenerating}
+                          className="flex items-center gap-2 px-6 py-3 bg-[var(--color-secondary)] hover:bg-[var(--color-secondary)]/80 text-[var(--bg-color)] font-bold rounded-xl transition-all disabled:opacity-50"
+                        >
+                          <Check size={18} />
+                          تطبيق الاقتراح
+                        </button>
+                    </div>
+                  </div>
                 </div>
               )}
 

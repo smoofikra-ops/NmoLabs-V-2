@@ -46,11 +46,11 @@
   --color-accent: #10B981; /* Emerald */
   --color-purple: #7C3AED;
   
-  /* Light Theme Surfaces (Default) */
-  --surface-primary: #FFFFFF;
-  --surface-secondary: #F8FAFC;
-  --surface-tertiary: #F1F5F9;
-  --surface-brand: #F0F4F8;
+  /* Light Theme Surfaces (Calm & Soft Default) */
+  --surface-primary: #FAFBFD;
+  --surface-secondary: #F1F5F9;
+  --surface-tertiary: #E2E8F0;
+  --surface-brand: #F8FAFC;
 
   /* Text Colors */
   --text-primary: #0F172A; /* Headings */
@@ -58,25 +58,25 @@
   --text-muted: #64748B; /* Small text */
   
   /* Borders & UI */
-  --border-default: rgba(15, 23, 42, 0.1);
-  --border-hover: rgba(30, 58, 138, 0.3);
+  --border-default: rgba(15, 23, 42, 0.08);
+  --border-hover: rgba(30, 58, 138, 0.25);
   
   /* Old variables for compatibility */
   --color-brand-blue-val: #1E3A8A;
   --color-brand-purple-val: #7C3AED;
   --color-brand-green-val: #10B981;
-  --bg-color: #FFFFFF;
-  --bg-color-darker: #F8FAFC;
+  --bg-color: #FAFBFD;
+  --bg-color-darker: #F1F5F9;
   --text-color: #0F172A;
   
   /* Glassmorphism */
-  --glass-bg: rgba(255, 255, 255, 0.8);
-  --glass-border: rgba(15, 23, 42, 0.08);
-  --glass-panel-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.7) 100%);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(15, 23, 42, 0.06);
+  --glass-panel-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.85) 100%);
   
   /* Shadows */
-  --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
-  --shadow-hover: 0 10px 30px -5px rgba(30, 58, 138, 0.15);
+  --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+  --shadow-hover: 0 10px 30px -5px rgba(30, 58, 138, 0.12);
   
   /* Radii */
   --radius-card: 1.5rem;
@@ -84,49 +84,48 @@
 }
 
 .theme-dark {
-  /* Dark Theme Brand Colors */
+  /* Dark Theme Brand Colors - Soft, calm dark slate/navy instead of harsh pitch black */
   --color-primary: #4589FF; /* Brand Blue for Dark Mode */
   --interactive-border: rgba(59, 130, 246, 0.3);
   --interactive-border-hover: rgba(59, 130, 246, 0.6);
   --interactive-border-active: #3B82F6;
-  --interactive-glass: rgba(10, 10, 18, 0.7);
-  --interactive-glass-hover: rgba(10, 10, 18, 0.85);
-  --interactive-glow: 0 0 18px rgba(59, 130, 246, 0.25);
-  --footer-surface: #07070F;
-  --nav-surface: rgba(4, 4, 8, 0.85);
+  --interactive-glass: rgba(30, 41, 59, 0.7);
+  --interactive-glass-hover: rgba(30, 41, 59, 0.85);
+  --interactive-glow: 0 0 18px rgba(59, 130, 246, 0.2);
+  --footer-surface: #0F172A;
+  --nav-surface: rgba(15, 23, 42, 0.85);
   --liquid-indicator-bg: rgba(59, 130, 246, 0.15);
   --liquid-indicator-border: rgba(59, 130, 246, 0.35);
 
-
-  /* Dark Theme Surfaces */
-  --surface-primary: #040408;
-  --surface-secondary: #0A0A12;
-  --surface-tertiary: #12121A;
-  --surface-brand: #07070F;
+  /* Dark Theme Surfaces - Soft Slate / Charcoal */
+  --surface-primary: #0F172A;
+  --surface-secondary: #1E293B;
+  --surface-tertiary: #334155;
+  --surface-brand: #111827;
 
   /* Text Colors */
   --text-primary: #F8FAFC;
-  --text-secondary: #CBD5E1;
+  --text-secondary: #E2E8F0;
   --text-muted: #94A3B8;
 
   /* Borders & UI */
-  --border-default: rgba(255, 255, 255, 0.08);
+  --border-default: rgba(255, 255, 255, 0.1);
   --border-hover: rgba(59, 130, 246, 0.5);
 
   /* Old variables */
   --color-brand-blue-val: #3B82F6;
-  --bg-color: #07070F;
-  --bg-color-darker: #040408;
+  --bg-color: #0F172A;
+  --bg-color-darker: #0A0F1D;
   --text-color: #ffffff;
   
   /* Glassmorphism */
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.05);
-  --glass-panel-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  --glass-bg: rgba(30, 41, 59, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-panel-bg: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.6) 100%);
   
   /* Shadows */
-  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
-  --shadow-hover: 0 10px 30px -5px rgba(59, 130, 246, 0.25);
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 10px 30px -5px rgba(59, 130, 246, 0.2);
 }
 
 @keyframes marquee {
@@ -551,5 +550,25 @@ div#root:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-o
 @media (min-width: 1200px) {
   div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > section:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1) > span:nth-of-type(1) {
     height: auto;
+  }
+}
+
+
+/* Desktop 3D embossed shadow for icons (Disabled on mobile for buttery smooth scrolling) */
+@media (min-width: 1024px) {
+  svg.lucide, footer a svg {
+    filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.2)) !important;
+  }
+}
+
+/* Mobile Performance Optimizations */
+@media (max-width: 768px) {
+  .glass, .glass-card, header, nav {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+  * {
+    /* Prevent webkit touch scroll lag */
+    -webkit-tap-highlight-color: transparent;
   }
 }

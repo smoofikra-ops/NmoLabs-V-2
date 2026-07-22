@@ -56,6 +56,8 @@ export const projects: Project[] = [
     size: 'featured',
     cardSize: 'large',
     services: ['تطوير المتجر', 'تجربة المستخدم', 'إدارة المحتوى', 'تحسين محركات البحث', 'التسويق الرقمي', 'تحسين التحويل'],
+    coverImage: '/src/assets/images/regenerated_image_1784602783544.jpg',
+    projectUrl: 'https://regine-sa.com/',
     resultsAvailable: false,
     brandColor: '#0ea5e9',
     secondaryColor: '#f3f4f6',

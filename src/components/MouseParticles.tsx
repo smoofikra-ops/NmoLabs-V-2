@@ -4,6 +4,11 @@ export const MouseParticles: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    // Disable canvas animation on mobile devices for optimal scroll performance
+    if (window.innerWidth < 768 || 'ontouchstart' in window) {
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');

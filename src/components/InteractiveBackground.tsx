@@ -20,8 +20,18 @@ export const InteractiveBackground: React.FC = () => {
   const { scrollYProgress } = useScroll();
   const { config } = useSite();
   const [currentBg, setCurrentBg] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   
   const backgrounds = config.theme === 'dark' ? darkBackgrounds : lightBackgrounds;
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Use a spring to make the scroll transition smooth
   const smoothProgress = useSpring(scrollYProgress, {
@@ -31,6 +41,7 @@ export const InteractiveBackground: React.FC = () => {
   });
 
   useEffect(() => {
+    if (isMobile) return;
     return smoothProgress.on("change", (latest) => {
       // Divide the page into chunks based on the number of backgrounds
       const index = Math.min(
@@ -41,7 +52,7 @@ export const InteractiveBackground: React.FC = () => {
         setCurrentBg(index);
       }
     });
-  }, [smoothProgress, currentBg]);
+  }, [smoothProgress, currentBg, isMobile, backgrounds.length]);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
@@ -51,23 +62,25 @@ export const InteractiveBackground: React.FC = () => {
         style={{ backgroundColor: 'var(--surface-primary)' }}
       />
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentBg}
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: config.theme === 'dark' ? 0.3 : 0.25, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 1.2, ease: 'easeInOut' }}
-          className="absolute inset-0"
-        >
-          <img 
-            src={backgrounds[currentBg]} 
-            alt="Background" 
-            className={`w-full h-full object-cover ${config.theme === 'light' ? 'mix-blend-multiply' : ''}`}
-            loading="lazy"
-          />
-        </motion.div>
-      </AnimatePresence>
+      {!isMobile && (
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentBg}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: config.theme === 'dark' ? 0.2 : 0.15, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 1.2, ease: 'easeInOut' }}
+            className="absolute inset-0"
+          >
+            <img 
+              src={backgrounds[currentBg]} 
+              alt="Background" 
+              className={`w-full h-full object-cover ${config.theme === 'light' ? 'mix-blend-multiply' : ''}`}
+              loading="lazy"
+            />
+          </motion.div>
+        </AnimatePresence>
+      )}
       
       {/* Gradient overlay for better text readability */}
       <div className={`absolute inset-0 bg-gradient-to-b from-[var(--surface-primary)] via-transparent to-[var(--surface-primary)] ${config.theme === 'dark' ? 'opacity-80' : 'opacity-90'}`} />
