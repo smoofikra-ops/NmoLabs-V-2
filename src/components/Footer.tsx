@@ -36,7 +36,7 @@ export const Footer = () => {
 
   const handleScroll = (id: string) => {
     if (id === 'contact' && config.contactNumber) {
-      window.open(`https://wa.me/${config.contactNumber.replace(/[^0-9]/g, '')}`, '_blank');
+      let num = config.contactNumber.replace(/[^0-9]/g, ''); if(num.startsWith('05')) num = '966' + num.substring(1); window.open(`https://wa.me/${num}`, '_blank');
       return;
     }
     if (config.currentRoute && config.currentRoute !== 'home') {
@@ -62,17 +62,17 @@ export const Footer = () => {
   return (
     <footer className="border-t border-[var(--border-default)] pt-12 md:pt-20 pb-8 relative z-20 bg-[var(--surface-primary)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-16">
           
           {/* Logo and About Us */}
           <div className="space-y-6">
-            <div className="flex items-center gap-2 cursor-pointer" onClick={() => handleScroll('hero')}>
+            <div className="flex items-center justify-center lg:justify-start gap-2 cursor-pointer" onClick={() => handleScroll('hero')}>
               <img src={config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="h-24 md:h-32 object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" />
             </div>
-            <p className="text-[var(--text-muted)] text-sm leading-relaxed">
+            <p className="text-[var(--text-muted)] text-sm leading-relaxed text-center lg:text-start">
               {config.footerDescription}
             </p>
-            <div className="flex gap-4 flex-wrap">
+            <div className="flex gap-4 flex-wrap justify-center lg:justify-start">
               {config.socialLinks?.map((link, idx) => (
                 <a key={idx} href={link.url} target="_blank" rel="noreferrer" title={link.name} className="w-10 h-10 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] flex items-center justify-center text-[var(--text-muted)] hover:bg-[var(--color-primary)] hover:text-[var(--text-primary)] hover:border-transparent transition-all duration-300">
                   {getSocialSvg(link.icon)}

@@ -48,7 +48,7 @@ export const WhatToBuild = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               onClick={() => triggerBookingModal(option.title)}
-              className="relative overflow-hidden rounded-2xl cursor-pointer group transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl glass-card min-h-[220px]"
+              className="relative overflow-hidden rounded-2xl cursor-pointer group transition-all duration-500 hover:-translate-y-2  glass-card min-h-[220px]"
             >
               {/* Background Image that appears on hover */}
               <div 

@@ -28,7 +28,7 @@ export const Services = () => {
   if (!config.sections.services) return null;
 
   return (
-    <section className="py-16 sm:py-24 md:py-32 relative z-10 bg-radial-glow" id="services" ref={sectionRef}>
+    <section className="py-12 sm:py-16 relative z-10 bg-radial-glow" id="services" ref={sectionRef}>
       {/* Dark gradient fade from top */}
       <div className="absolute top-0 w-full h-32 bg-gradient-to-b from-[var(--surface-primary)] to-transparent pointer-events-none" />
 

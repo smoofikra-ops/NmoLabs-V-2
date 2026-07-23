@@ -44,7 +44,7 @@ export const Header = () => {
       setTimeout(() => {
         if(id === 'hero') window.scrollTo({top: 0, behavior: 'smooth'});
         else if(id === 'contact' && config.contactNumber) {
-          window.open(`https://wa.me/${config.contactNumber.replace(/[^0-9]/g, '')}`, '_blank');
+          let num = config.contactNumber.replace(/[^0-9]/g, ''); if(num.startsWith('05')) num = '966' + num.substring(1); window.open(`https://wa.me/${num}`, '_blank');
         } else {
           document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
         }
@@ -63,6 +63,7 @@ export const Header = () => {
   const toggleTheme = () => {
     const newTheme = config.theme === 'dark' ? 'light' : 'dark';
     updateConfig({ theme: newTheme });
+    localStorage.setItem('nmo_user_theme', newTheme);
   };
 
   // Removed theme useEffect as it is now in SiteProvider
@@ -92,6 +93,7 @@ export const Header = () => {
   };
 
   return (
+    <>
     <motion.header 
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -107,9 +109,9 @@ export const Header = () => {
           <Menu size={24} />
         </button>
 
-        <div className="flex items-center gap-2 cursor-pointer" onClick={() => handleScroll('hero')}>
-          <img src={config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="hidden lg:block object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" style={{ height: `${config.desktopLogoHeight || 44}px` }} />
-          <img src={config.mobileLogoUrl || config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="block lg:hidden object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" style={{ height: `${config.mobileLogoHeight || 40}px` }} />
+        <div className="flex items-center justify-center absolute left-1/2 -translate-x-1/2 lg:relative lg:left-0 lg:translate-x-0 gap-2 cursor-pointer" onClick={() => handleScroll('hero')}>
+          <img src={config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="hidden lg:block object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" style={{ height: `${config.desktopLogoHeight || 40}px` }} />
+          <img src={config.mobileLogoUrl || config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="block lg:hidden object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" style={{ height: `${config.mobileLogoHeight || 30}px` }} />
         </div>
         <nav className="hidden lg:flex items-center gap-1 relative border border-[var(--interactive-border-hover)] p-1 rounded-2xl" onMouseLeave={() => setHoveredNav(null)}>
           {mainNavItems.map((item, idx) => {
@@ -161,7 +163,7 @@ export const Header = () => {
           </button>
         </div>
       </div>
-
+    </motion.header>
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
@@ -174,16 +176,16 @@ export const Header = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             />
             <motion.div
-              initial={{ x: config.language === 'en' ? '-120%' : '120%' }}
+              initial={{ x: config.language === 'en' ? '-100%' : '100%' }}
               animate={{ x: 0 }}
-              exit={{ x: config.language === 'en' ? '-120%' : '120%' }}
+              exit={{ x: config.language === 'en' ? '-100%' : '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className={`fixed top-4 bottom-4 w-[85%] max-w-[320px] bg-[var(--surface-primary)] border border-[var(--border-default)] shadow-2xl z-[70] lg:hidden flex flex-col p-6 overflow-y-auto rounded-3xl ${config.language === 'en' ? 'left-4' : 'right-4'}`}
+              className={`fixed top-0 w-[85%] max-w-[320px] h-[100dvh] bg-[var(--surface-primary)] border-[var(--border-default)] shadow-2xl z-[70] lg:hidden flex flex-col p-6 overflow-y-auto overscroll-none touch-pan-y ${config.language === 'en' ? 'left-0 border-r rounded-r-3xl' : 'right-0 border-l rounded-l-3xl'}`}
               dir={config.language === 'en' ? 'ltr' : 'rtl'}
             >
-              <div className="flex items-center justify-between mb-8 pb-4 border-b border-[var(--border-default)]">
+              <div className="flex items-center justify-between mb-6 pb-4 border-b border-[var(--border-default)] shrink-0">
                 <div className="flex items-center gap-2">
-                  <img src={config.mobileLogoUrl || config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" style={{ height: `${config.mobileLogoHeight || 40}px` }} />
+                  <img src={config.mobileLogoUrl || config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" style={{ height: `${config.mobileLogoHeight || 30}px` }} />
                 </div>
                 <button 
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -194,12 +196,12 @@ export const Header = () => {
                 </button>
               </div>
 
-              <div className="flex flex-col gap-1.5 flex-1">
+              <div className="flex flex-col gap-1.5 flex-1 justify-center overflow-y-auto">
                 {mainNavItems.map((item, idx) => (
                   <button
                     key={idx}
                     onClick={() => handleNavClick(item, idx)}
-                    className="text-right rtl:text-right ltr:text-left text-[var(--text-secondary)] hover:text-[var(--color-primary)] hover:bg-[var(--surface-secondary)] py-3 px-3.5 rounded-xl w-full font-bold transition-all text-sm flex items-center gap-3 border border-transparent"
+                    className="text-right rtl:text-right ltr:text-left text-[var(--text-secondary)] hover:text-[var(--color-primary)] bg-[var(--surface-primary)] hover:bg-[var(--surface-secondary)] py-2.5 px-3.5 rounded-xl w-full font-bold transition-all duration-300 text-sm flex items-center gap-3 border border-[var(--border-default)] shadow-sm hover:shadow-md hover:-translate-y-0.5 min-h-[40px]"
                   >
                     <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] shrink-0" />
                     <span className="truncate">{isEn ? item.nameEn : item.nameAr}</span>
@@ -207,16 +209,16 @@ export const Header = () => {
                 ))}
               </div>
 
-              <div className="mt-8 pt-8 border-t border-[var(--border-default)] flex flex-col gap-4">
+              <div className="mt-4 pt-4 border-t border-[var(--border-default)] flex flex-col gap-2.5 shrink-0">
                 <div className="flex items-center justify-center gap-4">
                   {config.showThemeToggle && (
-                    <button onClick={toggleTheme} className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors p-3.5 bg-[var(--surface-secondary)] rounded-xl flex-1 flex justify-center cursor-pointer">
+                    <button onClick={toggleTheme} className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors p-3 bg-[var(--surface-secondary)] rounded-xl flex-1 flex justify-center cursor-pointer">
                       {config.theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                     </button>
                   )}
                   <button 
                     onClick={handleToggleLanguage}
-                    className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors font-english text-sm font-bold flex items-center justify-center gap-2 p-3.5 bg-[var(--surface-secondary)] rounded-xl flex-1 cursor-pointer"
+                    className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors font-english text-sm font-bold flex items-center justify-center gap-2 p-3 bg-[var(--surface-secondary)] rounded-xl flex-1 cursor-pointer"
                   >
                     <Globe size={18} />
                     {config.language === 'en' ? 'عربي' : 'English'}
@@ -227,7 +229,7 @@ export const Header = () => {
                     setIsMobileMenuOpen(false);
                     { updateConfig({ currentRoute: 'start-project' }); window.scrollTo(0, 0); }
                   }}
-                  className="w-full py-4 rounded-xl font-bold text-[var(--text-primary)] transition-transform active:scale-95 cursor-pointer shadow-lg relative overflow-hidden group"
+                  className="w-full py-3.5 rounded-xl font-bold text-[var(--text-primary)] transition-transform active:scale-95 cursor-pointer shadow-lg relative overflow-hidden group text-sm"
                   style={{ backgroundColor: 'var(--color-primary)' }}
                 >
                   <span className="relative z-10">{config.language === 'en' ? 'Start Project' : 'ابدأ مشروعك'}</span>
@@ -237,6 +239,6 @@ export const Header = () => {
           </>
         )}
       </AnimatePresence>
-    </motion.header>
+    </>
   );
 };

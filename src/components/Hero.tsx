@@ -133,26 +133,38 @@ export const Hero = () => {
 
   return (
     <section className="relative min-h-auto py-16 sm:py-20 md:py-24 lg:min-h-screen flex items-center overflow-hidden bg-[var(--surface-brand)]" id="hero">
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="hidden md:block absolute inset-0 w-full h-full object-cover opacity-20 dark:opacity-[0.25] pointer-events-none"
-      >
-        <source src="https://b.top4top.io/m_37896jjzf1.mp4" type="video/mp4" />
-      </video>
-      <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-brand)] via-transparent to-[var(--surface-brand)] opacity-80 pointer-events-none" />
+      {config.heroVideoUrl ? (
+        <video
+          autoPlay
+          loop={config.heroVideoLoop !== false}
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-40 dark:opacity-50 pointer-events-none"
+          src={config.heroVideoUrl}
+          poster={config.heroVideoPoster}
+        />
+      ) : (
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-20 dark:opacity-[0.25] pointer-events-none"
+        >
+          <source src="https://b.top4top.io/m_37896jjzf1.mp4" type="video/mp4" />
+        </video>
+      )}
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-brand)]/80 via-[var(--surface-brand)]/40 to-[var(--surface-brand)] pointer-events-none" />
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.1] pointer-events-none" />
       
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 w-full flex flex-col items-center justify-center text-center mt-10 lg:mt-0">
         
         {/* Text Content */}
         <motion.div
            initial={{ opacity: 0, x: isEn ? -20 : 20 }}
            animate={{ opacity: 1, x: 0 }}
            transition={{ duration: 0.7 }}
-           className="rtl:text-right ltr:text-left flex flex-col items-start w-full max-w-full overflow-hidden"
+           className="flex flex-col items-center text-center w-full max-w-full overflow-hidden"
            dir={isEn ? 'ltr' : 'rtl'}
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-xs sm:text-sm font-medium mb-5 text-[var(--color-primary)] shrink-0 max-w-full">
@@ -164,15 +176,15 @@ export const Hero = () => {
             {config.heroTitle}
           </h1>
           
-          <div className="text-base sm:text-xl md:text-2xl text-[var(--color-primary)] mb-4 font-bold min-h-[3rem] sm:min-h-[4rem] flex items-center w-full break-words overflow-wrap-anywhere">
+          <div className="text-base sm:text-xl md:text-2xl text-[var(--color-primary)] mb-4 font-bold min-h-[3rem] sm:min-h-[4rem] flex items-center justify-center w-full break-words overflow-wrap-anywhere">
             <DynamicTypewriter />
           </div>
 
-          <p className="text-sm sm:text-base md:text-lg text-[var(--text-secondary)] mb-6 sm:mb-8 leading-relaxed font-medium max-w-lg w-full break-words">
+          <p className="text-sm sm:text-base md:text-lg text-[var(--text-secondary)] mb-6 sm:mb-8 leading-relaxed font-medium max-w-2xl w-full break-words mx-auto">
             {config.heroSubtitle}
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center gap-3.5 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full sm:w-auto">
             <button
               onClick={() => { updateConfig({ currentRoute: 'start-project' }); window.scrollTo(0, 0); }}
               className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold text-base text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
@@ -196,15 +208,7 @@ export const Hero = () => {
           </div>
         </motion.div>
 
-        {/* Visual Content */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="w-full max-w-full overflow-hidden"
-        >
-          <InteractiveShowcase />
-        </motion.div>
+        
         
       </div>
 

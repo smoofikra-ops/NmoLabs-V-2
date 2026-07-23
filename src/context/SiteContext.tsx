@@ -117,7 +117,7 @@ const defaultConfig: SiteConfig = {
   heroThumbVideoUrl: '',
   heroVideoLoop: true,
   heroVideoPlaybackRate: 1,
-  contactNumber: '+966545698905',
+  contactNumber: '0500804990',
   primaryColor: '#2563EB',
   secondaryColor: '#06B6D4',
   accentColor: '#10B981',
@@ -245,6 +245,7 @@ const defaultConfig: SiteConfig = {
 
 const getInitialConfig = () => {
   const saved = localStorage.getItem('nmo_site_config');
+  const savedUserTheme = localStorage.getItem('nmo_user_theme');
   if (saved) {
     try {
       const parsed = JSON.parse(saved);
@@ -269,6 +270,7 @@ const getInitialConfig = () => {
       return {
         ...defaultConfig,
         ...parsed,
+        theme: savedUserTheme || parsed.theme || defaultConfig.theme,
         sectionOrder: order,
         sections: { ...defaultConfig.sections, ...(parsed.sections || {}) },
         customSections: parsed.customSections || [],
@@ -292,7 +294,7 @@ const getInitialConfig = () => {
       console.error("Failed to load config", e);
     }
   }
-  return defaultConfig;
+  return { ...defaultConfig, theme: (savedUserTheme as 'light' | 'dark') || defaultConfig.theme };
 };
 
 type SiteContextType = {

@@ -3,6 +3,8 @@ import { useSite } from '../context/SiteContext';
 import { motion } from 'motion/react';
 import { ExternalLink } from 'lucide-react';
 
+import { InteractiveStatsCard } from "./InteractiveStatsCard";
+
 export const Testimonials = () => {
   const { config, updateConfig } = useSite();
 
@@ -92,7 +94,7 @@ export const Testimonials = () => {
   );
 
   return (
-    <section className="py-32 relative overflow-hidden bg-[color:var(--glass-bg)] bg-dots-pattern" id="testimonials">
+    <section className="py-16 relative overflow-hidden bg-[color:var(--glass-bg)] bg-dots-pattern" id="testimonials">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--surface-primary)] opacity-50 pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6 mb-24 text-center relative z-10">
@@ -127,47 +129,8 @@ export const Testimonials = () => {
         </div>
       </div>
       
-      <div className="max-w-7xl mx-auto px-6 mt-32 relative z-10">
-         <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { num: '+300%', title: 'زيادة في المبيعات', desc: 'لأحد عملائنا بقطاع التجزئة، بعد ما عدنا بناء رحلة العميل بالكامل في 3 شهور بس.' },
-              { num: '8X-26X', title: 'نمو العائد الإعلاني (ROAS)', desc: 'قد يصل العائد في الحالات المؤهلة من 8X إلى 26X وفقًا لطبيعة المشروع وأداء الحملات.' },
-              { num: '-40%', title: 'تقليل المرتجعات', desc: 'بفضل التحليل الدقيق لسلوك العميل وتوضيح المنتجات صح.' }
-            ].map((stat, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className="p-10 rounded-3xl text-center relative overflow-hidden group hover:-translate-y-2 transition-all duration-500 bg-[var(--surface-secondary)] border border-[var(--border-default)] hover:border-[var(--color-primary)] hover:shadow-[inset_0_4px_15px_rgba(0,0,0,1),0_0_20px_rgba(79,142,247,0.3)] shadow-[inset_0_4px_15px_rgba(0,0,0,1),0_0_20px_rgba(0,0,0,0.5)]"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none z-0" />
-                  
-                {/* Animated Border Top */}
-                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out opacity-0 group-hover:opacity-100" />
-                
-                <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--color-primary)] opacity-5 blur-[40px] rounded-full group-hover:opacity-10 transition-opacity" />
-                
-                <div className="relative z-10">
-                  {/* Dynamic Counter Effect */}
-                <motion.div 
-                  initial={{ scale: 0.5, opacity: 0, y: 20 }}
-                  whileInView={{ scale: 1, opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.1, textShadow: "0px 0px 20px rgba(255,255,255,0.8)" }}
-                  transition={{ type: "spring", stiffness: 100, delay: i * 0.2 }}
-                  className="text-6xl font-black tracking-tighter mb-6 font-english relative inline-block drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] text-[var(--text-primary)] animate-[pulse_4s_ease-in-out_infinite]" 
-                >
-                  {stat.num}
-                </motion.div>
-                
-                <h3 className="text-2xl font-bold mb-4 text-[var(--text-primary)] group-hover:text-[var(--color-primary)] transition-colors duration-300">{stat.title}</h3>
-                <p className="text-[var(--text-muted)] leading-relaxed font-light">{stat.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-         </div>
+      <div className="max-w-7xl mx-auto px-6 mt-16 relative z-10">
+         <InteractiveStatsCard />
       </div>
     </section>
   );
