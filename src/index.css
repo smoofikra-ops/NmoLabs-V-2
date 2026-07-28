@@ -15,7 +15,7 @@
   
   --spacing-128: 32rem;
   
-  --animate-marquee: marquee 150s linear infinite;
+  --animate-marquee: marquee 50s linear infinite;
   --animate-marquee-rtl: marquee-rtl 150s linear infinite;
   --animate-glow: glow 3s ease-in-out infinite alternate;
   --animate-float: float 6s ease-in-out infinite;
@@ -584,8 +584,8 @@ div#root:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-o
 /* Mobile Section Spacing & Dividers */
 @media (max-width: 768px) {
   #root > div > main > section {
-    padding-top: 3.5rem !important;
-    padding-bottom: 3.5rem !important;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
     position: relative;
   }
   

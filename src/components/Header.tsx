@@ -97,9 +97,23 @@ export const Header = () => {
     <motion.header 
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="fixed top-0 left-0 right-0 z-50 px-4 md:px-6 py-4"
+      className="fixed top-0 left-0 right-0 z-50"
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between bg-[var(--surface-primary)]/85 shadow-[0_4px_30px_rgba(0,0,0,0.05)] border border-[var(--border-default)]/60 rounded-2xl px-4 md:px-6 py-3 transition-colors backdrop-blur-xl">
+      {/* Announcement Bar */}
+      <div className="bg-[var(--surface-primary)] border-b border-[var(--border-default)] px-4 py-1.5 flex items-center justify-between text-xs sm:text-sm text-[var(--text-secondary)] font-medium">
+        
+
+        <div className="overflow-hidden whitespace-nowrap flex-1 ml-4 lg:ml-8 relative">
+           <div className={isEn ? "inline-block animate-marquee" : "inline-block animate-marquee-rtl"}>
+             {isEn 
+               ? "Welcome to NmoLabs! We are different from any other agency; we are your growth partner, not just a marketing company. ✨ We innovate exceptional ideas and solutions for your success. Stay tuned for our new innovative products and tools coming soon! 🚀 (Please note that the website and tools are currently under continuous development and innovation)."
+               : "مرحباً بك في نمو لابز! نختلف عن أي شركة أخرى، فنحن شريك نمو لك ولسنا مجرد شركة تسويقية. ✨ نبتكر أفكاراً وحلولاً استثنائية لنجاحك. ترقبوا الإعلان عن منتجاتنا وأدواتنا الجديدة المبتكرة قريباً! 🚀 (يرجى العلم أن الموقع والأدوات حالياً قيد التطوير والابتكار المستمر لتلبية تطلعاتكم)."}
+           </div>
+        </div>
+      </div>
+
+      <div className="px-4 md:px-6 py-3">
+        <div className="w-full lg:w-fit mx-auto flex items-center justify-between lg:justify-center gap-4 lg:gap-12 bg-[var(--surface-primary)]/85 shadow-[0_4px_30px_rgba(0,0,0,0.05)] border border-[var(--border-default)]/60 rounded-2xl px-4 md:px-6 py-3 transition-colors backdrop-blur-xl">
         <button 
           className="lg:hidden text-[var(--text-secondary)] hover:text-[var(--color-primary)] transition-colors p-2 -mr-2"
           onClick={() => setIsMobileMenuOpen(true)}
@@ -139,21 +153,26 @@ export const Header = () => {
             );
           })}
         </nav>
-        <div className="flex items-center gap-4">
-          <div className="hidden sm:flex items-center gap-3 border-l border-[var(--border-default)] pl-4 ml-2">
+        <div className="flex items-center gap-4"><div className="flex items-center gap-2 sm:gap-4 sm:mr-4 sm:border-r border-[var(--border-default)] sm:pr-4">
+            <button 
+              onClick={handleToggleLanguage}
+              className="text-[var(--text-secondary)] hover:text-[var(--color-primary)] transition-colors cursor-pointer"
+              aria-label={isEn ? "Toggle Language" : "تغيير اللغة"}
+            >
+               <Globe size={20} />
+            </button>
             {config.showThemeToggle && (
-              <button onClick={toggleTheme} className="p-2 rounded-xl border border-transparent text-[var(--text-secondary)] hover:text-[var(--color-primary)] hover:border-[var(--interactive-border-hover)] focus:border-[var(--interactive-border-active)] transition-all cursor-pointer">
+              <button 
+                onClick={toggleTheme} 
+                className="text-[var(--text-secondary)] hover:text-[var(--color-primary)] transition-colors cursor-pointer" 
+                aria-label={isEn ? "Toggle Theme" : "تغيير المظهر"}
+              >
                 {config.theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
               </button>
             )}
-            <button 
-              onClick={handleToggleLanguage}
-              className="p-2 rounded-xl border border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--interactive-border-hover)] focus:border-[var(--interactive-border-active)] transition-all font-english text-sm font-medium flex items-center gap-1 cursor-pointer"
-            >
-              <Globe size={18} />
-              {config.language === 'en' ? 'عربي' : 'EN'}
-            </button>
           </div>
+          
+          
           <button 
             onClick={() => { updateConfig({ currentRoute: 'start-project' }); window.scrollTo(0,0); }}
             className="hidden sm:block px-6 py-2.5 rounded-xl font-bold text-sm text-white hover:opacity-90 transition-all shadow-md hover:shadow-lg cursor-pointer border border-[var(--color-secondary)]/50"
@@ -161,9 +180,7 @@ export const Header = () => {
           >
             {config.language === 'en' ? 'Start Project' : 'ابدأ مشروعك'}
           </button>
-        </div>
-      </div>
-    </motion.header>
+        </div></div></div></motion.header>
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>

@@ -94,23 +94,23 @@ export const Testimonials = () => {
   );
 
   return (
-    <section className="py-16 relative overflow-hidden bg-[color:var(--glass-bg)] bg-dots-pattern" id="testimonials">
+    <section className="py-6 relative overflow-hidden bg-[color:var(--glass-bg)] bg-dots-pattern" id="testimonials">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--surface-primary)] opacity-50 pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto px-6 mb-24 text-center relative z-10">
+      <div className="max-w-7xl mx-auto px-6 mb-6 text-center relative z-10">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]"
+          className="text-4xl md:text-5xl font-bold mb-4 text-[var(--text-primary)]"
         >
           {config.testimonialsTitle || 'متاجر كبرت معنا'}
         </motion.h2>
-        <p className="text-xl text-[var(--text-muted)]">{config.testimonialsSubtitle || 'شركاء النجاح اللي حققنا معهم قفزات نوعية في التحويل والمبيعات.'}</p>
+        <p className="text-lg md:text-xl text-[var(--text-muted)] max-w-2xl mx-auto">{config.testimonialsSubtitle || 'شركاء النجاح اللي حققنا معهم قفزات نوعية في التحويل والمبيعات.'}</p>
       </div>
 
       {/* Infinite Marquee */}
-      <div className="relative w-full flex overflow-x-hidden py-20 z-10 group" dir="ltr">
+      <div className="relative w-full flex overflow-x-hidden py-4 z-10 group" dir="ltr">
         <div className="absolute top-0 bottom-0 left-0 w-32 bg-gradient-to-r from-[var(--surface-primary)] to-transparent z-20 pointer-events-none" />
         <div className="absolute top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-[var(--surface-primary)] to-transparent z-20 pointer-events-none" />
         

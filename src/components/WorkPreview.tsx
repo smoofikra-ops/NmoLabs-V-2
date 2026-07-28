@@ -40,7 +40,7 @@ export const WorkPreview = () => {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
           {previewProjects.map((project, idx) => (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -87,7 +87,7 @@ export const WorkPreview = () => {
                     {isEn ? project.sectorEn : project.sectorAr}
                   </span>
                 </div>
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-white mb-2 group-hover:text-[var(--color-primary)] transition-colors">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-[var(--color-primary)] to-[var(--color-secondary)] mb-2 transition-colors">
                   {isEn ? project.titleEn : project.titleAr}
                 </h3>
                 <p className="text-white/70 line-clamp-2 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:h-0 group-hover:h-auto text-sm sm:text-base">

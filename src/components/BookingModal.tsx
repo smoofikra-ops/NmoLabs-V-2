@@ -224,7 +224,7 @@ export const BookingModal = () => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--surface-primary)/80] backdrop-blur-md" dir={isRTL ? 'rtl' : 'ltr'}>
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md" dir={isRTL ? 'rtl' : 'ltr'}>
         {/* Backdrop overlay */}
         <div className="absolute inset-0 cursor-pointer" onClick={() => setIsOpen(false)} />
 
@@ -232,7 +232,7 @@ export const BookingModal = () => {
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
-          className="bg-[#07070F] border border-[var(--border-default)] rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl relative z-10"
+          className="bg-[var(--surface-primary)] border border-[var(--border-default)] rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl relative z-10"
         >
           {/* Top Header */}
           <div className="flex items-center justify-between p-6 border-b border-[var(--border-default)] bg-[var(--surface-primary)]/20">
@@ -309,7 +309,7 @@ export const BookingModal = () => {
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder={isRTL ? "الاسم الثلاثي أو الثنائي" : "John Doe"}
-                      className="w-full bg-[var(--surface-primary)]/60 border border-white/15 rounded-xl px-4 py-3 text-[var(--text-primary)] text-sm focus:border-[var(--color-primary)] outline-none transition-all placeholder:text-gray-600"
+                      className="w-full bg-[var(--surface-primary)]/60 border border-[var(--border-default)] rounded-xl px-4 py-3 text-[var(--text-primary)] text-sm focus:border-[var(--color-primary)] outline-none transition-all placeholder:text-gray-600"
                     />
                   </div>
 
@@ -324,7 +324,7 @@ export const BookingModal = () => {
                       value={mobileNumber}
                       onChange={(e) => setMobileNumber(e.target.value)}
                       placeholder="05xxxxxxxx"
-                      className="w-full bg-[var(--surface-primary)]/60 border border-white/15 rounded-xl px-4 py-3 text-[var(--text-primary)] text-sm focus:border-[var(--color-primary)] outline-none transition-all placeholder:text-gray-600 font-english"
+                      className="w-full bg-[var(--surface-primary)]/60 border border-[var(--border-default)] rounded-xl px-4 py-3 text-[var(--text-primary)] text-sm focus:border-[var(--color-primary)] outline-none transition-all placeholder:text-gray-600 font-english"
                     />
                     <span className="text-[10px] text-[var(--text-muted)] mt-1.5 block">{getTranslatedText('mobileHint')}</span>
                   </div>
@@ -371,7 +371,7 @@ export const BookingModal = () => {
                     <select
                       value={serviceType}
                       onChange={(e) => setServiceType(e.target.value)}
-                      className="w-full bg-[var(--surface-primary)]/60 border border-white/15 rounded-xl px-4 py-3 text-[var(--text-primary)] text-sm focus:border-[var(--color-primary)] outline-none transition-all cursor-pointer"
+                      className="w-full bg-[var(--surface-primary)]/60 border border-[var(--border-default)] rounded-xl px-4 py-3 text-[var(--text-primary)] text-sm focus:border-[var(--color-primary)] outline-none transition-all cursor-pointer"
                     >
                       <option value="إنشاء المتاجر الإلكترونية">{isRTL ? "إنشاء المتاجر الإلكترونية" : "E-Commerce store setup"}</option>
                       <option value="أدوات النمو">{isRTL ? "أدوات النمو" : "Growth Tools"}</option>
@@ -393,7 +393,7 @@ export const BookingModal = () => {
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder={getTranslatedText('notesPlaceholder')}
-                    className="w-full bg-[var(--surface-primary)]/60 border border-white/15 rounded-xl px-4 py-3 text-[var(--text-primary)] text-sm focus:border-[var(--color-primary)] outline-none transition-all placeholder:text-gray-600 resize-none"
+                    className="w-full bg-[var(--surface-primary)]/60 border border-[var(--border-default)] rounded-xl px-4 py-3 text-[var(--text-primary)] text-sm focus:border-[var(--color-primary)] outline-none transition-all placeholder:text-gray-600 resize-none"
                   />
                 </div>
 
@@ -410,7 +410,7 @@ export const BookingModal = () => {
                       min={getMinDateString()}
                       value={selectedDate}
                       onChange={(e) => setSelectedDate(e.target.value)}
-                      className="w-full bg-[var(--surface-primary)]/60 border border-white/15 rounded-xl px-4 py-3 text-[var(--text-primary)] text-sm focus:border-[var(--color-primary)] outline-none transition-all font-english"
+                      className="w-full bg-[var(--surface-primary)]/60 border border-[var(--border-default)] rounded-xl px-4 py-3 text-[var(--text-primary)] text-sm focus:border-[var(--color-primary)] outline-none transition-all font-english"
                     />
                   </div>
 
@@ -427,7 +427,7 @@ export const BookingModal = () => {
                           onClick={() => setSelectedTime(time)}
                           className={`py-1.5 rounded-lg text-xs font-medium transition-all ${
                             selectedTime === time
-                              ? 'bg-[var(--color-primary)] text-[var(--text-primary)] shadow'
+                              ? 'bg-[var(--color-primary)] text-white shadow'
                               : 'bg-[var(--surface-tertiary)] text-[var(--text-secondary)] hover:bg-[var(--surface-secondary)]'
                           }`}
                         >
@@ -447,7 +447,7 @@ export const BookingModal = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 mt-2 rounded-full font-bold text-sm bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] hover:shadow-[0_0_20px_rgba(79,142,247,0.4)] text-[var(--text-primary)] hover:opacity-95 transition-all flex items-center justify-center gap-2"
+                  className="w-full py-4 mt-2 rounded-full font-bold text-sm bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] hover:shadow-[0_0_20px_rgba(79,142,247,0.4)] text-white hover:opacity-95 transition-all flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <>

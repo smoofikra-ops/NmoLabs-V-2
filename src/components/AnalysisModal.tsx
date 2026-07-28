@@ -14,14 +14,14 @@ export const AnalysisModal = ({ isOpen, onClose, url, results, isAnalyzing }) =>
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--surface-primary)/80] backdrop-blur-md"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
         dir="rtl"
       >
         <motion.div
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
-          className="bg-[color:var(--bg-color)] border border-[var(--color-primary)] border-opacity-30 rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl relative"
+          className="bg-[var(--surface-primary)] border border-[var(--color-primary)] border-opacity-30 rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl relative"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-[var(--border-default)] bg-[var(--surface-primary)]/20">
@@ -95,7 +95,7 @@ export const AnalysisModal = ({ isOpen, onClose, url, results, isAnalyzing }) =>
                 </div>
 
                 {/* Call to Action */}
-                <div className="bg-[#000080] rounded-xl p-8 text-center border border-[var(--border-strong)] mt-8 relative overflow-hidden shadow-xl">
+                <div className="bg-[var(--surface-secondary)] rounded-xl p-8 text-center border border-[var(--border-strong)] mt-8 relative overflow-hidden shadow-xl">
                   <div className="relative z-10">
                     <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-4 text-shadow-sm">جاهز لحل هذه المشاكل ومضاعفة مبيعاتك؟</h3>
                     <p className="text-[var(--text-primary)] opacity-90 mb-6 max-w-xl mx-auto">فريق نمو لابز مستعد للعمل معك على تحسين متجرك الإلكتروني، وتطبيق أفضل الممارسات التي أثبتت نجاحها.</p>
@@ -104,7 +104,7 @@ export const AnalysisModal = ({ isOpen, onClose, url, results, isAnalyzing }) =>
                         onClose();
                         document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                       }}
-                      className="px-8 py-3 bg-[var(--color-primary)] hover:brightness-110 text-[var(--text-primary)] font-bold rounded-xl transition-all hover:-translate-y-1 hover:shadow-lg shadow-black"
+                      className="px-8 py-3 bg-[var(--color-primary)] hover:brightness-110 text-white font-bold rounded-xl transition-all hover:-translate-y-1 hover:shadow-lg shadow-black"
                     >
                       تواصل معنا الآن للبدء
                     </button>
@@ -124,14 +124,14 @@ export const AnalysisModal = ({ isOpen, onClose, url, results, isAnalyzing }) =>
 
 const ScoreCard = ({ title, score, icon }) => {
   // Deep premium dark background and high-contrast light elements matching the tier
-  let bgClass = "bg-[#061814]/90 border-green-500/40 text-green-300 shadow-[0_4px_20px_rgba(16,185,129,0.15)]";
+  let bgClass = "bg-green-500/10 border-green-500/40 text-green-600 dark:text-green-300 shadow-[0_4px_20px_rgba(16,185,129,0.15)]";
   let glowColor = "rgba(16,185,129,0.3)";
   
   if (score < 50) {
-    bgClass = "bg-[#1c0808]/90 border-red-500/40 text-red-300 shadow-[0_4px_20px_rgba(239,68,68,0.15)]";
+    bgClass = "bg-red-500/10 border-red-500/40 text-red-600 dark:text-red-300 shadow-[0_4px_20px_rgba(239,68,68,0.15)]";
     glowColor = "rgba(239,68,68,0.3)";
   } else if (score < 80) {
-    bgClass = "bg-[#1c1208]/90 border-orange-500/40 text-orange-300 shadow-[0_4px_20px_rgba(249,115,22,0.15)]";
+    bgClass = "bg-orange-500/10 border-orange-500/40 text-orange-600 dark:text-orange-300 shadow-[0_4px_20px_rgba(249,115,22,0.15)]";
     glowColor = "rgba(249,115,22,0.3)";
   }
 

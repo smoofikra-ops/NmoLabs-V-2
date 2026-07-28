@@ -1,6 +1,8 @@
 import React from 'react';
 import { Megaphone, Share2, Search, PenTool, Layout as LayoutIcon } from 'lucide-react';
 import { StrictServiceSeoData } from '../lib/schemas';
+import ecommerceImage from '../assets/images/regenerated_image_1784996549587.jpg';
+import socialMediaImage from '../assets/images/regenerated_image_1784996544010.png';
 
 export type ServiceItem = {
   id: string;
@@ -12,6 +14,14 @@ export type ServiceItem = {
   descEn: string;
   deliverables: string[];
   deliverablesEn: string[];
+  packages?: {
+    title: string;
+    titleEn?: string;
+    price?: string;
+    priceEn?: string;
+    details: { title: string; desc: string }[];
+    detailsEn?: { title: string; desc: string }[];
+  }[];
   journey?: { title: string; desc: string }[];
   pricing?: {
     title: string;
@@ -30,11 +40,75 @@ export const servicesList: ServiceItem[] = [
     title: 'تأسيس المتاجر الإلكترونية',
     titleEn: 'E-Commerce Setup',
     icon: <LayoutIcon className="w-10 h-10" />,
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=1000',
+    image: ecommerceImage,
     desc: 'من اختيار الاسم والهوية لين التشغيل والتسويق — نضبط لك متجر احترافي جاهز للبيع.',
     descEn: 'From naming and branding to operations and marketing — we build a professional, ready-to-sell store.',
     deliverables: ['باقة الانطلاقة', 'باقة النمو', 'باقة التشغيل الكامل', 'باقة مخصصة'],
     deliverablesEn: ['Starter Package', 'Growth Package', 'Full Operation Package', 'Custom Package'],
+    packages: [
+      {
+        title: 'باقة الانطلاقة',
+        titleEn: 'Starter Package',
+        price: 'تواصل معنا للتسعير',
+        priceEn: 'Contact for pricing',
+        details: [
+          { title: 'تصميم المتجر', desc: 'تصميم واجهة مستخدم أساسية وجذابة' },
+          { title: 'إعداد المنتجات', desc: 'إضافة المنتجات وتصنيفاتها الأساسية' },
+          { title: 'الربط والدفع', desc: 'تفعيل بوابات الدفع وطرق الشحن' }
+        ],
+        detailsEn: [
+          { title: 'Store Design', desc: 'Basic and attractive user interface design' },
+          { title: 'Product Setup', desc: 'Adding products and basic categories' },
+          { title: 'Payment & Shipping', desc: 'Activating payment gateways and shipping methods' }
+        ]
+      },
+      {
+        title: 'باقة النمو',
+        titleEn: 'Growth Package',
+        price: 'تواصل معنا للتسعير',
+        priceEn: 'Contact for pricing',
+        details: [
+          { title: 'تصميم متقدم', desc: 'واجهة مستخدم مخصصة لتحسين التحويل' },
+          { title: 'أدوات التسويق', desc: 'ربط أدوات التتبع وتحليل البيانات' },
+          { title: 'تحسين المحركات', desc: 'تهيئة أساسية لمحركات البحث SEO' }
+        ],
+        detailsEn: [
+          { title: 'Advanced Design', desc: 'Custom UI optimized for conversions' },
+          { title: 'Marketing Tools', desc: 'Integrating tracking and analytics tools' },
+          { title: 'Basic SEO', desc: 'Fundamental search engine optimization' }
+        ]
+      },
+      {
+        title: 'باقة التشغيل الكامل',
+        titleEn: 'Full Operation Package',
+        price: 'تواصل معنا للتسعير',
+        priceEn: 'Contact for pricing',
+        details: [
+          { title: 'إدارة متكاملة', desc: 'إدارة العمليات اليومية للمتجر بالكامل' },
+          { title: 'حملات تسويقية', desc: 'إطلاق وإدارة حملات إعلانية مستمرة' },
+          { title: 'تقارير دورية', desc: 'تحليل الأداء وتقديم تقارير مخصصة للنمو' }
+        ],
+        detailsEn: [
+          { title: 'Full Management', desc: 'Complete daily operations management' },
+          { title: 'Marketing Campaigns', desc: 'Launching and managing continuous ad campaigns' },
+          { title: 'Periodic Reports', desc: 'Performance analysis and custom growth reports' }
+        ]
+      },
+      {
+        title: 'باقة مخصصة',
+        titleEn: 'Custom Package',
+        price: 'تواصل معنا للتسعير',
+        priceEn: 'Contact for pricing',
+        details: [
+          { title: 'حلول مفصلة', desc: 'خدمات مصممة خصيصاً لاحتياجات نشاطك التجاري' },
+          { title: 'استشارات خاصة', desc: 'جلسات استشارية لتحديد أفضل استراتيجيات النمو' }
+        ],
+        detailsEn: [
+          { title: 'Tailored Solutions', desc: 'Services custom-designed for your business needs' },
+          { title: 'Specialized Consulting', desc: 'Consulting sessions to determine best growth strategies' }
+        ]
+      }
+    ],
     seo: {
       title: 'تأسيس المتاجر الإلكترونية | نمو لابز',
       description: 'نقدم حلول متكاملة لتأسيس وإطلاق المتاجر الإلكترونية بدءاً من اختيار الهوية وحتى التشغيل والتسويق لبناء متجر احترافي جاهز للبيع.',
@@ -52,6 +126,52 @@ export const servicesList: ServiceItem[] = [
     descEn: 'Direct your budget to the right audience. Data-driven targeting to increase your ROAS.',
     deliverables: ['دراسة السوق والمنافسين', 'إطلاق وإدارة الإعلانات', 'تحسين مستمر (A/B Testing)'],
     deliverablesEn: ['Market & Competitor Analysis', 'Launch & Manage Ads', 'Continuous Optimization (A/B Testing)'],
+    packages: [
+      {
+        title: 'مبلغ ثابت بالإضافة إلى نسبة',
+        titleEn: 'Fixed amount plus a percentage',
+        price: 'حسب الميزانية الإعلانية',
+        priceEn: 'Based on Ad Spend',
+        details: [
+          { title: 'إدارة مرنة', desc: 'رسوم ثابتة لإدارة الحملات بالإضافة إلى نسبة من العائد' },
+          { title: 'تحليل الأداء', desc: 'متابعة مستمرة لتحسين العائد على الإنفاق ROAS' }
+        ],
+        detailsEn: [
+          { title: 'Flexible Management', desc: 'Fixed fee for campaign management plus a percentage of ROAS' },
+          { title: 'Performance Analysis', desc: 'Continuous monitoring to optimize ROAS' }
+        ]
+      },
+      {
+        title: 'نسبة من إجمالي الصرف',
+        titleEn: 'Percentage of total spending',
+        price: 'حسب الميزانية الإعلانية',
+        priceEn: 'Based on Ad Spend',
+        details: [
+          { title: 'شراكة في النجاح', desc: 'رسومنا تعتمد بشكل كامل على ميزانية حملاتك الإعلانية' },
+          { title: 'توسيع الوصول', desc: 'التركيز على الوصول لأكبر شريحة ممكنة بأفضل تكلفة' }
+        ],
+        detailsEn: [
+          { title: 'Partnership in Success', desc: 'Our fees are fully dependent on your ad budget' },
+          { title: 'Expand Reach', desc: 'Focus on reaching the largest possible audience at the best cost' }
+        ]
+      },
+      {
+        title: 'إدارة وتخطيط كامل',
+        titleEn: 'Full management and planning',
+        price: 'تواصل معنا للتسعير',
+        priceEn: 'Contact for pricing',
+        details: [
+          { title: 'تخطيط استراتيجي', desc: 'بناء استراتيجية إعلانية متكاملة عبر عدة منصات' },
+          { title: 'تنفيذ وإدارة', desc: 'إدارة كاملة من الإنشاء وحتى قياس وتحليل النتائج' },
+          { title: 'تقارير شاملة', desc: 'تقارير دورية توضح الأداء ومقترحات التحسين' }
+        ],
+        detailsEn: [
+          { title: 'Strategic Planning', desc: 'Building a comprehensive ad strategy across platforms' },
+          { title: 'Execution & Management', desc: 'Full management from creation to analyzing results' },
+          { title: 'Comprehensive Reports', desc: 'Periodic reports detailing performance and optimization proposals' }
+        ]
+      }
+    ],
     journey: [
       {title: 'تحليل البيانات', desc: 'فهم الوضع الحالي، القنوات، الجمهور، الأداء والفرص قبل تشغيل الحملات.'},
       {title: 'التجهيز', desc: 'إعداد الحسابات الإعلانية، أدوات القياس، Pixels، الأحداث وصفحات الهبوط.'},
@@ -83,7 +203,7 @@ export const servicesList: ServiceItem[] = [
     title: 'إدارة السوشيال ميديا',
     titleEn: 'Social Media Management',
     icon: <Share2 className="w-10 h-10" />,
-    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=1000',
+    image: socialMediaImage,
     desc: 'ما ننزل بوستات وبس، نبني لك مجتمع يتفاعل ويشتري. ندير حساباتك من الألف للياء.',
     descEn: 'We do not just post; we build an engaging community that buys. End-to-end account management.',
     deliverables: ['خطة محتوى شهرية', 'تصميم بوستات وفيديوهات', 'إدارة التفاعل', 'توثيق الحسابات'],

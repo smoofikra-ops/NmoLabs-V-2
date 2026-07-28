@@ -27,7 +27,7 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
             value={formData.url || ''}
             onChange={(e) => setFormData({ ...formData, url: e.target.value })}
             placeholder="أدخل رابط المتجر (مثال: https://yourstore.com)"
-            className="w-full bg-[#151f2e] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors focus:ring-1 focus:ring-[var(--color-primary)]"
+            className="w-full bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors focus:ring-1 focus:ring-[var(--color-primary)]"
             dir="ltr"
           />
         );
@@ -38,7 +38,7 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
             value={formData.keyword || ''}
             onChange={(e) => setFormData({ ...formData, keyword: e.target.value })}
             placeholder="أدخل الكلمة المفتاحية المراد تحليلها"
-            className="w-full bg-[#151f2e] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors focus:ring-1 focus:ring-[var(--color-primary)]"
+            className="w-full bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors focus:ring-1 focus:ring-[var(--color-primary)]"
           />
         );
       case 'حل مشكلة الوصف المضلل في Google Merchant Center':
@@ -50,7 +50,7 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
               value={formData.url || ''}
               onChange={(e) => setFormData({ ...formData, url: e.target.value })}
               placeholder="رابط المتجر"
-              className="w-full bg-[#151f2e] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors"
+              className="w-full bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors"
               dir="ltr"
             />
             <input
@@ -58,7 +58,7 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
               value={formData.xml || ''}
               onChange={(e) => setFormData({ ...formData, xml: e.target.value })}
               placeholder="رابط خريطة الموقع (XML Sitemap)"
-              className="w-full bg-[#151f2e] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors"
+              className="w-full bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors"
               dir="ltr"
             />
           </div>
@@ -72,7 +72,7 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
               value={formData.accountLink || ''}
               onChange={(e) => setFormData({ ...formData, accountLink: e.target.value })}
               placeholder="رابط الحساب الإعلاني أو الإعلان المشكلة"
-              className="w-full bg-[#151f2e] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors"
+              className="w-full bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors"
               dir="ltr"
             />
             {tool.name.includes('تعليق') && (
@@ -80,7 +80,7 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
                  value={formData.details || ''}
                  onChange={(e) => setFormData({ ...formData, details: e.target.value })}
                  placeholder="اشرح المشكلة باختصار..."
-                 className="w-full bg-[#151f2e] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors h-24"
+                 className="w-full bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors h-24"
                />
             )}
           </div>
@@ -93,14 +93,14 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
               value={formData.budget || ''}
               onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
               placeholder="الميزانية الإعلانية"
-              className="bg-[#151f2e] border border-[var(--border-default)] rounded-xl px-5 py-3 text-[var(--text-primary)] focus:border-[var(--color-primary)] transition-colors"
+              className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-5 py-3 text-[var(--text-primary)] focus:border-[var(--color-primary)] transition-colors"
             />
             <input
               type="number"
               value={formData.cpc || ''}
               onChange={(e) => setFormData({ ...formData, cpc: e.target.value })}
               placeholder="تكلفة النقرة المتوقعة (CPC)"
-              className="bg-[#151f2e] border border-[var(--border-default)] rounded-xl px-5 py-3 text-[var(--text-primary)] focus:border-[var(--color-primary)] transition-colors"
+              className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-5 py-3 text-[var(--text-primary)] focus:border-[var(--color-primary)] transition-colors"
             />
           </div>
         );
@@ -112,21 +112,21 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
               value={formData.visits || ''}
               onChange={(e) => setFormData({ ...formData, visits: e.target.value })}
               placeholder="عدد الزيارات الشهري"
-              className="bg-[#151f2e] border border-[var(--border-default)] rounded-xl px-5 py-3 text-[var(--text-primary)] focus:border-[var(--color-primary)] transition-colors"
+              className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-5 py-3 text-[var(--text-primary)] focus:border-[var(--color-primary)] transition-colors"
             />
             <input
               type="number"
               value={formData.sales || ''}
               onChange={(e) => setFormData({ ...formData, sales: e.target.value })}
               placeholder="عدد الطلبات"
-              className="bg-[#151f2e] border border-[var(--border-default)] rounded-xl px-5 py-3 text-[var(--text-primary)] focus:border-[var(--color-primary)] transition-colors"
+              className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-5 py-3 text-[var(--text-primary)] focus:border-[var(--color-primary)] transition-colors"
             />
             <input
               type="number"
               value={formData.conversion || ''}
               onChange={(e) => setFormData({ ...formData, conversion: e.target.value })}
               placeholder="معدل التحويل (%)"
-              className="bg-[#151f2e] border border-[var(--border-default)] rounded-xl px-5 py-3 text-[var(--text-primary)] focus:border-[var(--color-primary)] transition-colors col-span-2"
+              className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-5 py-3 text-[var(--text-primary)] focus:border-[var(--color-primary)] transition-colors col-span-2"
             />
           </div>
         );
@@ -139,7 +139,7 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
             value={formData.prompt || ''}
             onChange={(e) => setFormData({ ...formData, prompt: e.target.value })}
             placeholder="صف بدقة ما تريد العمل عليه (منتجاتك، شريحتك التي تستهدفها، نوع الإعلان)..."
-            className="w-full bg-[#151f2e] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors h-32"
+            className="w-full bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors h-32"
           />
         );
       case 'إصلاح خرائط جوجل':
@@ -149,7 +149,7 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
             value={formData.mapLink || ''}
             onChange={(e) => setFormData({ ...formData, mapLink: e.target.value })}
             placeholder="أدخل رابط خرائط جوجل لنشاطك التجاري"
-            className="w-full bg-[#151f2e] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors"
+            className="w-full bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors"
             dir="ltr"
           />
         );
@@ -160,7 +160,7 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
             value={formData.general || ''}
             onChange={(e) => setFormData({ ...formData, general: e.target.value })}
             placeholder="أدخل البيانات المطلوبة..."
-            className="w-full bg-[#151f2e] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors"
+            className="w-full bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-5 py-4 text-[var(--text-primary)] text-right placeholder-gray-500 focus:outline-none focus:border-[var(--color-primary)] transition-colors"
           />
         );
     }
@@ -315,24 +315,24 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--surface-primary)/80] backdrop-blur-md"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
         dir="rtl"
       >
         <motion.div
           initial={{ scale: 0.95, opacity: 0, y: 10 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.95, opacity: 0, y: 10 }}
-          className="bg-[#0b121c] border border-[var(--color-primary)] border-opacity-20 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col shadow-[0_0_40px_rgba(43,194,194,0.1)] relative"
+          className="bg-[var(--surface-primary)] border border-[var(--color-primary)] border-opacity-20 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col shadow-[0_0_40px_rgba(43,194,194,0.1)] relative"
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-5 border-b border-[var(--border-default)] bg-[#0b121c]">
+          <div className="flex items-center justify-between p-5 border-b border-[var(--border-default)] bg-[var(--surface-primary)]">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center text-[var(--color-primary)]">
                 {tool.locked ? <Bot size={20} className="text-[var(--color-secondary)]" /> : <Bot size={20} />}
               </div>
               <div>
-                <h2 className="text-lg font-bold text-[#e2e8f0] mb-0.5">{tool.name}</h2>
-                <p className="text-xs text-[#94a3b8]">{tool.locked ? 'أداة مدفوعة (تتطلب اشتراك للحصول على التقرير الكامل)' : 'أداة مجانية (تقرير كامل)'}</p>
+                <h2 className="text-lg font-bold text-[var(--text-primary)] mb-0.5">{tool.name}</h2>
+                <p className="text-xs text-[var(--text-muted)]">{tool.locked ? 'أداة مدفوعة (تتطلب اشتراك للحصول على التقرير الكامل)' : 'أداة مجانية (تقرير كامل)'}</p>
               </div>
             </div>
             <button 
@@ -349,7 +349,7 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
               <div className="max-w-xl mx-auto py-8">
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-3 tracking-wide">النموذج جاهز للتحليل</h3>
-                  <p className="text-[#94a3b8] text-sm">أدخل البيانات المطلوبة بدقة للحصول على أفضل تقرير وتوصيات من الذكاء الاصطناعي الخاص بنا.</p>
+                  <p className="text-[var(--text-muted)] text-sm">أدخل البيانات المطلوبة بدقة للحصول على أفضل تقرير وتوصيات من الذكاء الاصطناعي الخاص بنا.</p>
                 </div>
                 
                 <div className="mb-8">
@@ -359,7 +359,7 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
                 <button
                   onClick={handleAnalyze}
                   disabled={!isFormValid()}
-                  className="w-full py-4 bg-[var(--color-primary)] hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed text-[#0b121c] font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg"
+                  className="w-full py-4 bg-[var(--color-primary)] hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg"
                 >
                   <Search size={18} />
                   <span>بدء الفحص والتحليل</span>
@@ -368,39 +368,39 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
             ) : isAnalyzing ? (
               <div className="flex flex-col items-center justify-center py-20 min-h-[300px]">
                 <div className="w-20 h-20 mb-8 relative">
-                  <div className="absolute inset-0 border-4 border-[#1e293b] rounded-full"></div>
+                  <div className="absolute inset-0 border-4 border-[var(--border-default)] rounded-full"></div>
                   <div className={`absolute inset-0 border-4 ${tool.locked ? 'border-[var(--color-secondary)]' : 'border-[var(--color-primary)]'} rounded-full border-t-transparent animate-spin`}></div>
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-[var(--text-primary)] tracking-wide">جاري فحص البيانات...</h3>
-                <p className="text-[#94a3b8] text-center text-sm max-w-sm leading-relaxed">
+                <p className="text-[var(--text-muted)] text-center text-sm max-w-sm leading-relaxed">
                   الرجاء الانتظار قليلاً (قد يستغرق الأمر حتى 30 ثانية)، يتم التواصل مع نموذج الذكاء الاصطناعي واستخراج أدق النتائج وأفضل الحلول.
                 </p>
                 <div className="mt-8 font-english text-xs text-[var(--color-primary)] opacity-70 animate-pulse">Running Deep Analysis Models...</div>
               </div>
             ) : results ? (
-              <div className="space-y-6 animate-fade-in text-gray-200">
+              <div className="space-y-6 animate-fade-in text-[var(--text-secondary)]">
                 {/* Score */}
-                <div className="flex flex-col md:flex-row items-center gap-6 p-6 rounded-2xl bg-[#111827] border border-[var(--border-default)] shadow-inner">
-                   <div className="w-24 h-24 shrink-0 rounded-full bg-[#0b121c] flex items-center justify-center border-4 border-[var(--color-primary)] shadow-[0_0_20px_rgba(43,194,194,0.15)]">
+                <div className="flex flex-col md:flex-row items-center gap-6 p-6 rounded-2xl bg-[var(--surface-secondary)] border border-[var(--border-default)] shadow-inner">
+                   <div className="w-24 h-24 shrink-0 rounded-full bg-[var(--surface-primary)] flex items-center justify-center border-4 border-[var(--color-primary)] shadow-[0_0_20px_rgba(43,194,194,0.15)]">
                      <span className="text-3xl font-bold font-english text-[var(--text-primary)]">{results.overallScore}</span><span className="text-sm text-[var(--text-muted)] mt-2">%</span>
                    </div>
                    <div className="text-center md:text-right">
                      <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">النتيجة العامة للتقييم</h3>
-                     <p className="text-sm text-[#94a3b8] leading-relaxed">{results.summary}</p>
+                     <p className="text-sm text-[var(--text-muted)] leading-relaxed">{results.summary}</p>
                    </div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6 relative">
                   {/* Insights Section */}
-                  <div className="p-6 rounded-2xl bg-[#111827] border border-[var(--border-default)] relative overflow-hidden group">
-                    <h4 className="flex items-center gap-2 font-bold mb-5 text-[#38bdf8] text-lg">
+                  <div className="p-6 rounded-2xl bg-[var(--surface-secondary)] border border-[var(--border-default)] relative overflow-hidden group">
+                    <h4 className="flex items-center gap-2 font-bold mb-5 text-[var(--color-primary)] text-lg">
                       <Activity size={20} />
                       التشخيص والتحليل
                     </h4>
                     <ul className="space-y-4 relative z-10">
                       {results.insights.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-3 text-[15px] text-[#cbd5e1] leading-relaxed">
-                          <span className="w-2 h-2 rounded-full bg-[#38bdf8] shrink-0 mt-2 shadow-[0_0_8px_#38bdf8]"></span>
+                        <li key={idx} className="flex items-start gap-3 text-[15px] text-[var(--text-secondary)] leading-relaxed">
+                          <span className="w-2 h-2 rounded-full bg-[var(--color-primary)] shrink-0 mt-2 shadow-[0_0_8px_var(--color-primary)]"></span>
                           <span>{item}</span>
                         </li>
                       ))}
@@ -408,8 +408,8 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
                   </div>
 
                   {/* Recommendations Section */}
-                  <div className="p-6 rounded-2xl bg-[#111827] border border-[var(--border-default)] relative overflow-hidden group">
-                    <h4 className="flex items-center gap-2 font-bold mb-5 text-[#34d399] text-lg">
+                  <div className="p-6 rounded-2xl bg-[var(--surface-secondary)] border border-[var(--border-default)] relative overflow-hidden group">
+                    <h4 className="flex items-center gap-2 font-bold mb-5 text-[var(--color-accent)] text-lg">
                       <CheckCircle2 size={20} />
                       التوصيات والحلول
                     </h4>
@@ -418,19 +418,19 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
                     <div className={`relative z-10 ${tool.locked ? 'h-[140px] overflow-hidden' : ''}`}>
                       <ul className="space-y-4">
                         {results.recommendations.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-3 text-[15px] text-[#cbd5e1] leading-relaxed">
-                            <span className="w-2 h-2 rounded-full bg-[#34d399] shrink-0 mt-2 shadow-[0_0_8px_#34d399]"></span>
+                          <li key={idx} className="flex items-start gap-3 text-[15px] text-[var(--text-secondary)] leading-relaxed">
+                            <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] shrink-0 mt-2 shadow-[0_0_8px_var(--color-accent)]"></span>
                             <span>{item}</span>
                           </li>
                         ))}
                         {tool.locked && (
                           <>
-                           <li className="flex items-start gap-3 text-[15px] text-[#cbd5e1] leading-relaxed blur-[3px] opacity-60">
-                             <span className="w-2 h-2 rounded-full bg-[#34d399] shrink-0 mt-2 shadow-[0_0_8px_#34d399]"></span>
+                           <li className="flex items-start gap-3 text-[15px] text-[var(--text-secondary)] leading-relaxed blur-[3px] opacity-60">
+                             <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] shrink-0 mt-2 shadow-[0_0_8px_var(--color-accent)]"></span>
                              <span>هذه توصية مخفية تتطلب ترقية باقتك للوصول إلى التحليل الاحترافي.</span>
                            </li>
-                           <li className="flex items-start gap-3 text-[15px] text-[#cbd5e1] leading-relaxed blur-[4px] opacity-40">
-                             <span className="w-2 h-2 rounded-full bg-[#34d399] shrink-0 mt-2 shadow-[0_0_8px_#34d399]"></span>
+                           <li className="flex items-start gap-3 text-[15px] text-[var(--text-secondary)] leading-relaxed blur-[4px] opacity-40">
+                             <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] shrink-0 mt-2 shadow-[0_0_8px_var(--color-accent)]"></span>
                              <span>الخطوة التالية المتقدمة لتحقيق نمو أفضل في المبيعات وتجربة المستخدم.</span>
                            </li>
                           </>
@@ -438,7 +438,7 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
                       </ul>
                       
                       {tool.locked && (
-                         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#111827] to-transparent pointer-events-none flex items-end justify-center pb-2">
+                         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[var(--surface-secondary)] to-transparent pointer-events-none flex items-end justify-center pb-2">
                          </div>
                       )}
                     </div>
@@ -447,7 +447,7 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
                          <a 
                            href="#pricing"
                            onClick={handleClose}
-                           className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#4f46e5] hover:bg-[#4338ca] text-[var(--text-primary)] rounded-xl text-sm font-bold shadow-lg transition-colors cursor-pointer"
+                           className="inline-flex items-center gap-2 px-6 py-2.5 bg-[var(--color-primary)] hover:brightness-110 text-white rounded-xl text-sm font-bold shadow-lg transition-colors cursor-pointer"
                          >
                            <Lock size={16} />
                            اشترك لعرض جميع التوصيات
@@ -459,7 +459,7 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
 
                 {/* Footer in report */}
                 <div className="pt-6 flex justify-end">
-                  <button onClick={handleClose} className="px-6 py-2 bg-[var(--surface-secondary)] hover:bg-[var(--surface-tertiary)] text-[#e2e8f0] rounded-xl transition-colors text-sm font-medium border border-[var(--border-default)]">
+                  <button onClick={handleClose} className="px-6 py-2 bg-[var(--surface-secondary)] hover:bg-[var(--surface-tertiary)] text-[var(--text-primary)] rounded-xl transition-colors text-sm font-medium border border-[var(--border-default)]">
                     إنهاء وإغلاق التقرير
                   </button>
                 </div>

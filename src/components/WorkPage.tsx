@@ -208,11 +208,11 @@ export const WorkPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 tracking-tight text-white">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white">
               {isEn ? (
-                <>Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50">Work</span></>
+                <>Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[var(--color-primary)] to-[var(--color-secondary)]">Work</span></>
               ) : (
-                <>أعمال<span className="text-transparent bg-clip-text bg-gradient-to-l from-white to-white/50">نا</span></>
+                <>أعمال<span className="text-transparent bg-clip-text bg-gradient-to-l from-white via-[var(--color-primary)] to-[var(--color-secondary)]">نا</span></>
               )}
             </h1>
             <p className="text-xl md:text-3xl text-white/60 max-w-3xl mx-auto leading-relaxed">
@@ -275,7 +275,7 @@ export const WorkPage = () => {
 
           <motion.div 
             layout
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[minmax(250px,auto)]"
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 auto-rows-[minmax(180px,auto)] sm:auto-rows-[minmax(250px,auto)]"
           >
             <AnimatePresence mode="popLayout">
               {filteredOtherProjects.map((project) => (

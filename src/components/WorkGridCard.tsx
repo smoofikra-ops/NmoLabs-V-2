@@ -83,7 +83,7 @@ export const WorkGridCard: React.FC<Props> = ({ project, isEn, updateConfig, get
         </div>
       )}
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent p-6 flex flex-col justify-end pointer-events-none">
+      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent p-4 sm:p-6 flex flex-col justify-end pointer-events-none">
         <motion.div 
           variants={isHoverable ? { hover: { y: 0 } } : {}}
           initial={isHoverable ? { y: 16 } : { y: 0 }}
@@ -93,7 +93,7 @@ export const WorkGridCard: React.FC<Props> = ({ project, isEn, updateConfig, get
             {project.year && <span className="text-[var(--color-primary)] animate-pulse">{project.year}</span>}
             <span>{isEn ? project.sectorEn : project.sectorAr}</span>
           </div>
-          <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
+          <h3 className="text-base sm:text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-[var(--color-primary)] to-[var(--color-secondary)] mb-1 sm:mb-2 line-clamp-2">
             {isEn ? project.titleEn : project.titleAr}
           </h3>
           <motion.p 
