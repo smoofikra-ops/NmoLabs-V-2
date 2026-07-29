@@ -12,7 +12,7 @@ interface Props {
 }
 
 
-const FlipPackageCard = ({ pkg, isEn, colorHex }: { pkg: any, isEn: boolean, colorHex: string }) => {
+const FlipPackageCard = ({ pkg, isEn, colorHex }: { pkg: any, isEn: boolean, colorHex: string, key?: any }) => {
   const [flipped, setFlipped] = React.useState(false);
   return (
     <div className="flex flex-col gap-4">
