@@ -42,6 +42,7 @@ export const projects: Project[] = [
   {
     id: '1',
     slug: 'regine',
+    coverImage: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&q=80&w=1200',
     year: '2022',
     titleAr: 'ريجين',
     titleEn: 'Regine',
@@ -56,7 +57,7 @@ export const projects: Project[] = [
     size: 'featured',
     cardSize: 'large',
     services: ['تطوير المتجر', 'تجربة المستخدم', 'إدارة المحتوى', 'تحسين محركات البحث', 'التسويق الرقمي', 'تحسين التحويل'],
-    coverImage: '/src/assets/images/regenerated_image_1784602783544.jpg',
+    
     projectUrl: 'https://regine-sa.com/',
     resultsAvailable: false,
     brandColor: '#0ea5e9',
@@ -118,6 +119,7 @@ export const projects: Project[] = [
   {
     id: '18',
     slug: 'nomu-trader',
+    coverImage: 'https://images.unsplash.com/photo-1586528116311-ad8ed7c50800?auto=format&fit=crop&q=80&w=1200',
     titleAr: 'نمو تاجر',
     titleEn: 'Nomu Trader',
     category: 'systems',
@@ -142,6 +144,7 @@ export const projects: Project[] = [
   {
     id: '17',
     slug: 'eventlive-ksa',
+    coverImage: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1200',
     titleAr: 'EventLive KSA',
     titleEn: 'EventLive KSA',
     category: 'corporate',
@@ -166,6 +169,7 @@ export const projects: Project[] = [
   {
     id: '2',
     slug: 'endeve',
+    coverImage: 'https://images.unsplash.com/photo-1550009158-9ebf6d173c36?auto=format&fit=crop&q=80&w=1200',
     year: '2024',
     titleAr: 'إنديف',
     titleEn: 'Endeve',
@@ -186,6 +190,7 @@ export const projects: Project[] = [
   {
     id: '3',
     slug: 'safqatkom-care',
+    coverImage: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=80&w=1200',
     year: '2024',
     titleAr: 'صفقتكم للعناية',
     titleEn: 'Safqatkom Care',
@@ -206,6 +211,7 @@ export const projects: Project[] = [
   {
     id: '4',
     slug: 'reflow',
+    coverImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200',
     year: '2025',
     titleAr: 'ريفلو',
     titleEn: 'Reflow',
@@ -226,6 +232,7 @@ export const projects: Project[] = [
   {
     id: '5',
     slug: 'hessa-tissues',
+    coverImage: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&q=80&w=1200',
     year: '2024',
     titleAr: 'حصة للمناديل',
     titleEn: 'Hessa Tissues',
@@ -246,6 +253,7 @@ export const projects: Project[] = [
   {
     id: '6',
     slug: 'poly-market',
+    coverImage: 'https://images.unsplash.com/photo-1580913428706-c311e67898b3?auto=format&fit=crop&q=80&w=1200',
     titleAr: 'بولي ماركت',
     titleEn: 'Poly Market',
     category: 'ecommerce',
@@ -265,6 +273,7 @@ export const projects: Project[] = [
   {
     id: '7',
     slug: 'ulevel',
+    coverImage: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1200',
     titleAr: 'يوليفل للمقاولات',
     titleEn: 'Ulevel Contracting',
     category: 'corporate',
@@ -284,6 +293,7 @@ export const projects: Project[] = [
   {
     id: '8',
     slug: 'nuqoush',
+    coverImage: 'https://images.unsplash.com/photo-1542744094-24638ea0bc40?auto=format&fit=crop&q=80&w=1200',
     titleAr: 'نقوش للدعاية والإعلان',
     titleEn: 'Nuqoush Advertising',
     category: 'corporate',
@@ -303,6 +313,7 @@ export const projects: Project[] = [
   {
     id: '9',
     slug: 'dembo',
+    coverImage: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1200',
     titleAr: 'ديمبو',
     titleEn: 'Dembo',
     category: 'ecommerce',
@@ -322,6 +333,7 @@ export const projects: Project[] = [
   {
     id: '10',
     slug: 'general-electronics',
+    coverImage: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&q=80&w=1200',
     titleAr: 'متجر إلكترونيات عام',
     titleEn: 'General Electronics Store',
     category: 'ecommerce',
@@ -341,6 +353,7 @@ export const projects: Project[] = [
   {
     id: '11',
     slug: 'rare-idea',
+    coverImage: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1200',
     titleAr: 'الفكرة النادرة للدعاية والإعلان',
     titleEn: 'Rare Idea Advertising',
     category: 'marketing',
@@ -360,6 +373,7 @@ export const projects: Project[] = [
   {
     id: '12',
     slug: 'nakhlatain',
+    coverImage: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=1200',
     year: '2025',
     titleAr: 'نخلتين',
     titleEn: 'Nakhlatain',
@@ -380,6 +394,7 @@ export const projects: Project[] = [
   {
     id: '13',
     slug: 'thulth-al-youm',
+    coverImage: 'https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&q=80&w=1200',
     year: '2025',
     titleAr: 'ثلث اليوم',
     titleEn: 'Thulth Al Youm',
@@ -400,6 +415,7 @@ export const projects: Project[] = [
   {
     id: '16',
     slug: 'al-mithali',
+    coverImage: 'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&q=80&w=1200',
     titleAr: 'المثالي للدعاية والإعلان',
     titleEn: 'Al Mithali Advertising',
     category: 'corporate',
@@ -419,6 +435,7 @@ export const projects: Project[] = [
   {
     id: '19',
     slug: 'rawafid-al-janoub',
+    coverImage: 'https://images.unsplash.com/photo-1576092762791-dd9e2220c476?auto=format&fit=crop&q=80&w=1200',
     titleAr: 'روافد الجنوب',
     titleEn: 'Rawafid Al Janoub',
     category: 'ecommerce',

@@ -53,10 +53,19 @@ export const ProductsPreview = () => {
               }}
               className={`group relative rounded-3xl p-4 sm:p-8 bg-[#111] border border-white/10 hover:border-white/30 cursor-pointer overflow-hidden transition-all duration-300 flex flex-col h-full ${idx === 2 ? 'col-span-2' : ''}`}
             >
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500" style={{ backgroundColor: product.brandColor }} />
+              {product.coverVisual ? (
+                 <>
+                   <div className="absolute inset-0 z-0">
+                     <img src={product.coverVisual} className="w-full h-full object-cover opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700" alt={isEn ? product.titleEn : product.titleAr} />
+                   </div>
+                   <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-[#111]/80 to-transparent z-0" />
+                 </>
+              ) : (
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0" style={{ backgroundColor: product.brandColor }} />
+              )}
               
               <div className="flex items-center justify-between mb-8 relative z-10">
-                <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center font-black text-2xl text-white/40 group-hover:text-white transition-colors" style={{ color: product.brandColor }}>
+                <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center font-black text-2xl text-white group-hover:scale-110 transition-all" style={{ color: product.brandColor }}>
                   {isEn ? product.shortNameEn.charAt(0) : product.shortNameAr.charAt(0)}
                 </div>
                 <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40 group-hover:text-white transition-colors group-hover:bg-white/10">

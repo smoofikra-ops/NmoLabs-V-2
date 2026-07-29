@@ -96,8 +96,6 @@ export const AdminPanel = () => {
           updateConfig({ partners: compressedPartners as any });
         }
 
-        const { savePartnersToFirestore } = await import('../lib/partners');
-        await savePartnersToFirestore(compressedPartners as any);
       }
       saveConfig();
       setSaveMessage('تم الحفظ بنجاح!');

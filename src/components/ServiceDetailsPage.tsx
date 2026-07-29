@@ -151,9 +151,22 @@ export const ServiceDetailsPage = ({ slug }: Props) => {
         </button>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-16">
-          <div className="flex items-center gap-4 mb-6 text-[var(--color-primary)]">
-            {service.icon}
-          </div>
+          {service.image && (
+            <div className="w-full h-64 md:h-96 rounded-3xl overflow-hidden mb-12 relative border border-[var(--border-default)]">
+              <img src={service.image} alt={title} className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface-primary)]/80 to-transparent" />
+              <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 w-16 h-16 md:w-20 md:h-20 bg-[var(--surface-primary)] backdrop-blur-md rounded-2xl flex items-center justify-center text-[var(--color-primary)] border border-[var(--border-default)] shadow-xl z-10">
+                {React.cloneElement(service.icon as React.ReactElement, { size: 32 })}
+              </div>
+            </div>
+          )}
+
+          {!service.image && (
+            <div className="flex items-center gap-4 mb-6 text-[var(--color-primary)]">
+              {service.icon}
+            </div>
+          )}
+
           <h1 className="text-4xl md:text-6xl font-black text-[var(--text-primary)] mb-6 tracking-tight leading-[1.1]">
             {title}
           </h1>

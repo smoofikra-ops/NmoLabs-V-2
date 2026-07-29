@@ -5,14 +5,14 @@ import { Globe, ShoppingBag, Smartphone, Database, LineChart, FileText, Blocks, 
 import { triggerBookingModal } from './BookingModal';
 
 const BUILD_OPTIONS = [
-  { id: 'website', title: 'موقع إلكتروني احترافي', titleEn: 'Professional Website', desc: 'يعبر عن هويتك ويجذب العملاء', descEn: 'Reflects your identity and attracts customers', icon: Globe, image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80' },
-  { id: 'landing', title: 'صفحة تعريفية Landing Page', titleEn: 'Landing Page', desc: 'لإطلاق الحملات الإعلانية والمنتجات', descEn: 'For launching ad campaigns and products', icon: FileText, image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80' },
-  { id: 'store', title: 'متجر إلكتروني', titleEn: 'E-Commerce Store', desc: 'متجر متكامل جاهز للبيع', descEn: 'Full-featured ready-to-sell store', icon: ShoppingBag, image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80' },
-  { id: 'catalog', title: 'كتالوج رقمي', titleEn: 'Digital Catalog', desc: 'استعراض تفاعلي لمنتجاتك وخدماتك', descEn: 'Interactive showcase of your products & services', icon: Blocks, image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&q=80' },
-  { id: 'app', title: 'تطبيق مخصص', titleEn: 'Custom Mobile App', desc: 'تطبيق جوال مبتكر لعملائك', descEn: 'Innovative mobile app for your clients', icon: Smartphone, image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80' },
-  { id: 'system', title: 'نظام إداري أو محاسبي', titleEn: 'Admin / Accounting System', desc: 'لإدارة عملياتك وموظفيك', descEn: 'Manage operations and employees', icon: Database, image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80' },
+  { id: 'website', title: 'موقع إلكتروني احترافي', titleEn: 'Professional Website', desc: 'يعبر عن هويتك ويجذب العملاء', descEn: 'Reflects your identity and attracts customers', icon: Globe, image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80' },
+  { id: 'landing', title: 'صفحة تعريفية Landing Page', titleEn: 'Landing Page', desc: 'لإطلاق الحملات الإعلانية والمنتجات', descEn: 'For launching ad campaigns and products', icon: FileText, image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80' },
+  { id: 'store', title: 'متجر إلكتروني', titleEn: 'E-Commerce Store', desc: 'متجر متكامل جاهز للبيع', descEn: 'Full-featured ready-to-sell store', icon: ShoppingBag, image: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=80' },
+  { id: 'catalog', title: 'كتالوج رقمي', titleEn: 'Digital Catalog', desc: 'استعراض تفاعلي لمنتجاتك وخدماتك', descEn: 'Interactive showcase of your products & services', icon: Blocks, image: 'https://images.unsplash.com/photo-1481481600451-24ce8fc40e53?w=800&q=80' },
+  { id: 'app', title: 'تطبيق مخصص', titleEn: 'Custom Mobile App', desc: 'تطبيق جوال مبتكر لعملائك', descEn: 'Innovative mobile app for your clients', icon: Smartphone, image: 'https://images.unsplash.com/photo-1618761714954-0b8cd0026356?w=800&q=80' },
+  { id: 'system', title: 'نظام إداري أو محاسبي', titleEn: 'Admin / Accounting System', desc: 'لإدارة عملياتك وموظفيك', descEn: 'Manage operations and employees', icon: Database, image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80' },
   { id: 'erp_crm', title: 'نظام ERP أو CRM', titleEn: 'ERP / CRM System', desc: 'إدارة متكاملة للموارد والعملاء', descEn: 'Integrated resource & customer management', icon: LineChart, image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80' },
-  { id: 'ai', title: 'حل مخصص بالذكاء الاصطناعي', titleEn: 'Custom AI Solution', desc: 'أتمتة وتحليل متقدم للبيانات', descEn: 'Advanced automation and data analytics', icon: Bot, image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80' },
+  { id: 'ai', title: 'حل مخصص بالذكاء الاصطناعي', titleEn: 'Custom AI Solution', desc: 'أتمتة وتحليل متقدم للبيانات', descEn: 'Advanced automation and data analytics', icon: Bot, image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80' },
 ];
 
 export const WhatToBuild = () => {

@@ -316,6 +316,7 @@ export const productsData: Product[] = [
   {
     id: '6',
     slug: 'nomu-trader',
+    coverVisual: 'https://images.unsplash.com/photo-1586528116311-ad8ed7c50800?auto=format&fit=crop&q=80&w=1200',
     titleAr: 'نمو تاجر',
     titleEn: 'Nomu Trader',
     shortNameAr: 'نمو تاجر',
@@ -364,6 +365,7 @@ export const productsData: Product[] = [
   {
     id: '7',
     slug: 'accounting-systems',
+    coverVisual: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=1200',
     titleAr: 'الأنظمة المحاسبية المخصصة',
     titleEn: 'Custom Accounting Systems',
     shortNameAr: 'أنظمة محاسبية',

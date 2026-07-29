@@ -3,17 +3,25 @@ import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'mot
 import { useSite } from '../context/SiteContext';
 
 const darkBackgrounds = [
-  'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2940&auto=format&fit=crop', // Dark abstract tech
-  'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2940&auto=format&fit=crop', // Circuit board / dark blue
-  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2944&auto=format&fit=crop', // Earth from space / network
-  'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2940&auto=format&fit=crop', // Matrix / digital code
+  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2944&auto=format&fit=crop', // Earth/Network
+  'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2940&auto=format&fit=crop', // Dark tech abstract
+  'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2940&auto=format&fit=crop', // AI grid
+  'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2940&auto=format&fit=crop', // Data / Dashboards
+  'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2940&auto=format&fit=crop', // Marketing / Business
+  'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2940&auto=format&fit=crop', // Circuit board
+  'https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=2940&auto=format&fit=crop', // Web Design / Code
+  'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2940&auto=format&fit=crop', // Digital Code
 ];
 
 const lightBackgrounds = [
   'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2864&auto=format&fit=crop', // Light abstract waves
+  'https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=2874&auto=format&fit=crop', // Light glass
   'https://images.unsplash.com/photo-1557682250-33bd709cbe85?q=80&w=2929&auto=format&fit=crop', // Soft light gradient
-  'https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=2874&auto=format&fit=crop', // Light rain on glass
+  'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2940&auto=format&fit=crop', // Dashboard (works in light mode with mix-blend)
+  'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2940&auto=format&fit=crop', // Marketing / MacBook
+  'https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=2940&auto=format&fit=crop', // Web Design / Code
   'https://images.unsplash.com/photo-1604871000636-074fa5117945?q=80&w=2874&auto=format&fit=crop', // Light abstract art
+  'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2874&auto=format&fit=crop', // Desk / Workspace
 ];
 
 export const InteractiveBackground: React.FC = () => {

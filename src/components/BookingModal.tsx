@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { X, Calendar as CalendarIcon, Clock, Phone, User as UserIcon, Briefcase, FileText, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
 import { db, googleSignIn, getAccessToken, OperationType, handleFirestoreError } from '../lib/firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 // Helper custom helper to trigger the booking modal from anywhere
 export const triggerBookingModal = (serviceType?: string) => {
@@ -150,7 +150,7 @@ export const BookingModal = () => {
         notes: notes.trim(),
         appointmentDate: selectedDate,
         appointmentTime: selectedTime,
-        createdAt: new Date().toISOString() // Or request.time inside firestore rules
+        createdAt: serverTimestamp() // Or request.time inside firestore rules
       };
 
       // 1. SAVE to Firebase Firestore securely
