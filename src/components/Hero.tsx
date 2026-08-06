@@ -132,7 +132,7 @@ export const Hero = () => {
   const isEn = config.language === 'en';
 
   return (
-    <section className="relative min-h-auto py-16 sm:py-20 md:py-24 lg:min-h-screen flex items-center overflow-hidden bg-[var(--surface-brand)]" id="hero">
+    <section className="relative min-h-auto py-16 sm:py-20 md:py-12 lg:py-24 lg:min-h-screen flex items-center overflow-hidden bg-[var(--surface-brand)]" id="hero">
       {config.heroVideoUrl ? (
         <video
           autoPlay
@@ -186,7 +186,7 @@ export const Hero = () => {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full sm:w-auto">
             <button
-              onClick={() => { updateConfig({ currentRoute: 'start-project' }); window.scrollTo(0, 0); }}
+              onClick={() => { updateConfig({ currentRoute: 'kyc' }); window.scrollTo(0, 0); }}
               className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold text-base text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
               style={{ backgroundColor: 'var(--color-primary)' }}
             >

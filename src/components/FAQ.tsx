@@ -114,7 +114,7 @@ export const FAQ = () => {
   if (!config.sections.faq) return null;
 
   return (
-    <section className="py-16 sm:py-24 md:py-32 relative bg-grid-pattern" id="faq">
+    <section className="py-10 sm:py-10 md:py-20 relative bg-grid-pattern" id="faq">
       <div className="absolute top-1/2 right-0 w-64 h-64 bg-[var(--color-primary)] opacity-10 blur-[100px] rounded-full pointer-events-none" />
       
       <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">

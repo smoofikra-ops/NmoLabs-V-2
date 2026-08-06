@@ -159,7 +159,7 @@ export const InnovationLabPage = () => {
       </section>
 
       {/* From Idea to Product Process */}
-      <section className="py-24 relative z-10 bg-[#080808] border-b border-white/5">
+      <section className="py-12 lg:py-24 relative z-10 bg-[#080808] border-b border-white/5">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-black mb-4">{isEn ? 'From Idea to Product' : 'من الفكرة إلى المنتج'}</h2>
@@ -221,7 +221,7 @@ export const InnovationLabPage = () => {
       </div>
 
       {/* Experimental Grid - Other Experiments */}
-      <section className="py-24 relative z-10 bg-[#050505] border-t border-white/5">
+      <section className="py-12 lg:py-24 relative z-10 bg-[#050505] border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
             <h2 className="text-3xl font-black">{isEn ? 'More Experiments' : 'تجارب إضافية'}</h2>
@@ -296,7 +296,7 @@ export const InnovationLabPage = () => {
       </section>
 
       {/* Lab Principles */}
-      <section className="py-24 bg-[#080808] relative z-10">
+      <section className="py-12 lg:py-24 bg-[#080808] relative z-10">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-3xl font-black mb-12 text-center">{isEn ? 'How do we work in the Lab?' : 'كيف نعمل داخل المختبر؟'}</h2>
           
@@ -323,7 +323,7 @@ export const InnovationLabPage = () => {
       <InnovationPreview />
 
       {/* From Lab to Products */}
-      <section className="py-24 relative z-10 overflow-hidden">
+      <section className="py-12 lg:py-24 relative z-10 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#111] opacity-50 pointer-events-none" />
         <div className="max-w-6xl mx-auto px-6 relative z-10 text-center">
           <h2 className="text-3xl font-black mb-16">{isEn ? 'Some experiments become products' : 'بعض التجارب تتحول إلى منتجات'}</h2>
@@ -339,7 +339,7 @@ export const InnovationLabPage = () => {
       </section>
 
       {/* Share a Challenge */}
-      <section id="challenge" className="py-24 relative z-10">
+      <section id="challenge" className="py-12 lg:py-24 relative z-10">
         <div className="max-w-4xl mx-auto px-6">
           <div className="bg-[#111] border border-white/10 rounded-[2.5rem] p-8 md:p-16 relative overflow-hidden">
             <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0ibm9uZSIvPgo8Y2lyY2xlIGN4PSIxIiBjeT0iMSIgcj0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPgo8L3N2Zz4=')]" />
@@ -413,7 +413,7 @@ const FeaturedExperiment = ({ exp, index, isEn, onInView, updateConfig, getStatu
   const isEven = index % 2 === 0;
 
   return (
-    <section ref={ref} className="min-h-[80svh] flex items-center py-24 relative z-10 border-b border-white/5 last:border-b-0">
+    <section ref={ref} className="min-h-[80svh] flex items-center py-12 lg:py-24 relative z-10 border-b border-white/5 last:border-b-0">
       <div className="max-w-7xl mx-auto px-6 w-full">
         <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12 lg:gap-24`}>
           

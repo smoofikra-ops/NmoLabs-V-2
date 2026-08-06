@@ -30,13 +30,13 @@ export const WhyChooseUs = () => {
   ];
 
   return (
-    <section className="py-32 relative overflow-hidden" id="why-us">
+    <section className="py-16 md:py-32 relative overflow-hidden" id="why-us">
       {/* Background decorations */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[var(--color-secondary)]/5 max-w-full rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[var(--color-primary)]/5 max-w-full rounded-full blur-[100px] pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           
           {/* Content Side */}
           <motion.div
@@ -56,9 +56,9 @@ export const WhyChooseUs = () => {
               إحنا مو مجرد وكالة تسويق عادية، إحنا شريك نجاح تقني ندمج لك التكنولوجيا المتقدمة مع أحدث استراتيجيات النمو عشان تكتسح السوق.
             </p>
 
-            <div className="space-y-6 mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-10">
               {features.map((feature, idx) => (
-                <div key={idx} className="flex items-start gap-4 p-4 rounded-2xl bg-[var(--surface-primary)]/20 border border-[var(--border-default)] hover:border-[var(--color-primary)]/30 transition-all duration-300 transform hover:scale-[1.03] hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(79,142,247,0.1)] group cursor-default">
+                <div key={idx} className="flex flex-col sm:flex-row items-start gap-4 p-5 rounded-2xl bg-[var(--surface-primary)]/20 border border-[var(--border-default)] hover:border-[var(--color-primary)]/30 transition-all duration-300 group cursor-default h-full">
                   <div className="p-3 bg-[var(--surface-secondary)] rounded-xl border border-[var(--border-default)] group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
                     {feature.icon}
                   </div>

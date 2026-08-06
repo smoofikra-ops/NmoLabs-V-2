@@ -1,0 +1,153 @@
+      {/* SECTION 4: NMOLABS ECOSYSTEM (منظومة NmoLabs) */}
+      <section id="about-ecosystem" className="py-24 border-b border-[var(--border-default)]/30 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+            <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
+              {isEn ? 'NmoLabs Ecosystem: Four Cohesive Paths' : 'منظومة NmoLabs: أربع مسارات تعمل معاً'}
+            </h2>
+            <p className="text-base text-[var(--text-muted)]">
+              {isEn ? 'Our pathways feed into one central hub to catalyze true growth.' : 'تتكامل مساراتنا التقنية والتجريبية لتشكل منظومة متناغمة تصنع حلول الغد.'}
+            </p>
+          </div>
+
+          {/* Connected Diagram for desktop, clean stacked layout for mobile */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            {/* Desktop Visual Layout (4 Connected Orbiting Cards around Center) */}
+            <div className="lg:col-span-8 relative min-h-auto lg:min-h-[450px] flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-0">
+              
+              {/* Central Hub representing NmoLabs (Visible mainly on Desktop, hidden on mobile for clean stacked look or kept at top) */}
+              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[var(--surface-primary)] border border-[var(--color-primary)]/40 flex flex-col items-center justify-center text-center shadow-lg relative z-20 lg:absolute lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 mb-4 lg:mb-0">
+                <span className="font-black text-xs sm:text-sm tracking-widest font-english text-[var(--text-primary)]">NMOLABS</span>
+                <span className="text-[9px] sm:text-[10px] text-[var(--color-primary)] font-bold mt-1">{isEn ? 'Ecosystem' : 'المنظومة'}</span>
+                
+                {/* Pulse ring */}
+                <div className="absolute inset-0 rounded-full border border-[var(--color-primary)]/25 animate-ping pointer-events-none" />
+              </div>
+
+              {/* Grid for mobile, Absolute for desktop */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full lg:w-auto lg:block">
+
+                {/* Path 1: Services (الخدمات) */}
+                <motion.div 
+                  onHoverStart={() => setHoveredPath('services')}
+                  onHoverEnd={() => setHoveredPath(null)}
+                  className="relative lg:absolute lg:top-8 lg:left-8 bg-[var(--surface-secondary)] border border-[var(--border-default)] p-4 sm:p-5 rounded-2xl w-full lg:w-48 shadow-md z-10 hover:border-blue-500/40 transition-colors"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-md bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
+                      <Layers size={14} />
+                    </div>
+                    <h4 className="font-bold text-sm text-[var(--text-primary)]">{isEn ? 'Services' : 'الخدمات'}</h4>
+                  </div>
+                  <p className="text-[11px] text-[var(--text-muted)] leading-relaxed mb-3">
+                    {isEn ? 'Solutions we execute based on client needs.' : 'حلول ننفذها وفق احتياج العملاء.'}
+                  </p>
+                  <button onClick={() => handleScrollToSection('services')} className="text-[10px] font-bold text-[var(--color-primary)] hover:underline flex items-center gap-1 cursor-pointer">
+                    <span>{isEn ? 'View Services' : 'الخدمات'}</span>
+                    {isEn ? <ArrowRight size={10} className="shrink-0" /> : <ArrowLeft size={10} className="shrink-0" />}
+                  </button>
+                </motion.div>
+
+                {/* Path 2: Work (الأعمال) */}
+                <motion.div 
+                  onHoverStart={() => setHoveredPath('work')}
+                  onHoverEnd={() => setHoveredPath(null)}
+                  className="relative lg:absolute lg:top-8 lg:right-8 bg-[var(--surface-secondary)] border border-[var(--border-default)] p-4 sm:p-5 rounded-2xl w-full lg:w-48 shadow-md z-10 hover:border-emerald-500/40 transition-colors"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-md bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0">
+                      <Briefcase size={14} />
+                    </div>
+                    <h4 className="font-bold text-sm text-[var(--text-primary)]">{isEn ? 'Work' : 'الأعمال'}</h4>
+                  </div>
+                  <p className="text-[11px] text-[var(--text-muted)] leading-relaxed mb-3">
+                    {isEn ? 'Digital projects built by NmoLabs.' : 'مشاريع وتجارب رقمية بنتها NmoLabs.'}
+                  </p>
+                  <button onClick={() => navigateToRoute('work')} className="text-[10px] font-bold text-[var(--color-primary)] hover:underline flex items-center gap-1 cursor-pointer">
+                    <span>{isEn ? 'View Works' : 'أعمالنا'}</span>
+                    {isEn ? <ArrowRight size={10} className="shrink-0" /> : <ArrowLeft size={10} className="shrink-0" />}
+                  </button>
+                </motion.div>
+
+                {/* Path 3: Products (المنتجات) */}
+                <motion.div 
+                  onHoverStart={() => setHoveredPath('products')}
+                  onHoverEnd={() => setHoveredPath(null)}
+                  className="relative lg:absolute lg:bottom-8 lg:left-8 bg-[var(--surface-secondary)] border border-[var(--border-default)] p-4 sm:p-5 rounded-2xl w-full lg:w-48 shadow-md z-10 hover:border-purple-500/40 transition-colors"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-md bg-purple-500/10 text-purple-500 flex items-center justify-center shrink-0">
+                      <ShoppingBag size={14} />
+                    </div>
+                    <h4 className="font-bold text-sm text-[var(--text-primary)]">{isEn ? 'Products' : 'المنتجات'}</h4>
+                  </div>
+                  <p className="text-[11px] text-[var(--text-muted)] leading-relaxed mb-3">
+                    {isEn ? 'Proprietary platforms owned or engineered by us.' : 'حلول وأنظمة تملكها أو تطورها NmoLabs.'}
+                  </p>
+                  <button onClick={() => navigateToRoute('products')} className="text-[10px] font-bold text-[var(--color-primary)] hover:underline flex items-center gap-1 cursor-pointer">
+                    <span>{isEn ? 'View Products' : 'منتجاتنا'}</span>
+                    {isEn ? <ArrowRight size={10} className="shrink-0" /> : <ArrowLeft size={10} className="shrink-0" />}
+                  </button>
+                </motion.div>
+
+                {/* Path 4: Innovation Lab (مختبر الابتكارات) */}
+                <motion.div 
+                  onHoverStart={() => setHoveredPath('innovation')}
+                  onHoverEnd={() => setHoveredPath(null)}
+                  className="relative lg:absolute lg:bottom-8 lg:right-8 bg-[var(--surface-secondary)] border border-[var(--border-default)] p-4 sm:p-5 rounded-2xl w-full lg:w-48 shadow-md z-10 hover:border-amber-500/40 transition-colors"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-md bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
+                      <Cpu size={14} />
+                    </div>
+                    <h4 className="font-bold text-sm text-[var(--text-primary)]">{isEn ? 'Innovation Labs' : 'مختبر الابتكارات'}</h4>
+                  </div>
+                  <p className="text-[11px] text-[var(--text-muted)] leading-relaxed mb-3">
+                    {isEn ? 'Pioneering future-oriented AI experiments.' : 'أفكار وتجارب ونماذج أولية لاختبار حلول المستقبل.'}
+                  </p>
+                  <button onClick={() => navigateToRoute('innovation-lab')} className="text-[10px] font-bold text-[var(--color-primary)] hover:underline flex items-center gap-1 cursor-pointer">
+                    <span>{isEn ? 'Explore Lab' : 'مختبر الابتكارات'}</span>
+                    {isEn ? <ArrowRight size={10} className="shrink-0" /> : <ArrowLeft size={10} className="shrink-0" />}
+                  </button>
+                </motion.div>
+              </div>
+
+              {/* Radial connector lines SVG (Desktop only) */}
+              <svg className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none stroke-[var(--border-default)] opacity-40" xmlns="http://www.w3.org/2000/svg">
+                <line x1="15%" y1="15%" x2="50%" y2="50%" strokeDasharray="3 3" className={hoveredPath === 'services' ? 'stroke-blue-500 stroke-2' : ''} />
+                <line x1="85%" y1="15%" x2="50%" y2="50%" strokeDasharray="3 3" className={hoveredPath === 'work' ? 'stroke-emerald-500 stroke-2' : ''} />
+                <line x1="15%" y1="85%" x2="50%" y2="50%" strokeDasharray="3 3" className={hoveredPath === 'products' ? 'stroke-purple-500 stroke-2' : ''} />
+                <line x1="85%" y1="85%" x2="50%" y2="50%" strokeDasharray="3 3" className={hoveredPath === 'innovation' ? 'stroke-amber-500 stroke-2' : ''} />
+              </svg>
+
+            </div>
+
+            {/* Explanatory summary columns */}
+            <div className="lg:col-span-4 bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-3xl p-8 space-y-6">
+              <span className="text-xs font-bold text-[var(--color-primary)] tracking-wider block uppercase">
+                {isEn ? 'Ecosystem Synergy' : 'تكامل المنظومة الكلية'}
+              </span>
+              <h3 className="font-black text-xl text-[var(--text-primary)]">
+                {isEn ? 'How the paths feed into each other:' : 'كيف تدعم المسارات بعضها بعضاً؟'}
+              </h3>
+              
+              <ul className="space-y-4 text-xs md:text-sm text-[var(--text-muted)] leading-relaxed">
+                <li className="flex gap-2">
+                  <span className="text-[var(--color-primary)] font-bold">1.</span>
+                  <span>{isEn ? 'Daily service execution gives us insight into real operational bottlenecks.' : 'تطوير الخدمات المباشرة يكشف لنا الاحتياجات والمشاكل الحقيقية التي تواجه المتاجر والشركات.'}</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-[var(--color-primary)] font-bold">2.</span>
+                  <span>{isEn ? 'We transform those insights into proprietary software and growth products.' : 'نحوّل تلك المشاكل إلى أنظمة ومُنتجات جاهزة لتوفير الجهد البشري والتقني.'}</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-[var(--color-primary)] font-bold">3.</span>
+                  <span>{isEn ? 'The Innovation Lab keeps us tested on the edge of AI and advanced software.' : 'مختبر الابتكار يعمل كمظلة لصياغة تجارب الغد وأتمتة نماذج العمل المتقدمة.'}</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </section>

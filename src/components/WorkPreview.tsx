@@ -11,7 +11,7 @@ export const WorkPreview = () => {
   const previewProjects = projects.filter(p => p.featured).slice(0, 3);
 
   return (
-    <section className="py-16 sm:py-24 md:py-32 bg-[#050505] relative overflow-hidden" id="work">
+    <section className="py-10 sm:py-10 md:py-10 md:py-20 bg-[#050505] relative overflow-hidden" id="work">
       {/* Background elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[500px] opacity-20 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-primary)] to-transparent blur-[120px] rounded-full mix-blend-screen" />
@@ -19,7 +19,7 @@ export const WorkPreview = () => {
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-20 mix-blend-overlay" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-12 sm:mb-20">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-12 sm:mb-10 lg:mb-20">
           <div className="max-w-2xl">
             <h2 className="text-2xl sm:text-4xl md:text-6xl font-black text-white mb-4 sm:mb-6 tracking-tight leading-tight">
               {isEn ? 'Work built to perform, evolve and grow' : 'مشاريع بنيناها لتعمل، تتطور وتنمو'}
@@ -54,7 +54,7 @@ export const WorkPreview = () => {
                   window.scrollTo({top: 0, behavior: 'smooth'});
                 }
               }}
-              className="group relative rounded-3xl overflow-hidden bg-[#111] border border-white/10 cursor-pointer hover:border-white/30 transition-all duration-500 aspect-[4/5] flex flex-col justify-end"
+              className={`group relative rounded-3xl overflow-hidden bg-[#111] border border-white/10 cursor-pointer hover:border-white/30 transition-all duration-500 aspect-[4/5] sm:aspect-square md:aspect-[4/5] flex flex-col justify-end ${idx === 2 ? 'col-span-2 lg:col-span-1 aspect-[2/1] sm:aspect-square' : ''}`}
             >
               <div 
                 className="absolute inset-0 opacity-40 group-hover:opacity-60 transition-opacity duration-700 mix-blend-screen"

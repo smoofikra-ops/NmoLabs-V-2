@@ -1,243 +1,115 @@
+
 import React from 'react';
 import { motion } from 'motion/react';
 import { useSite } from '../context/SiteContext';
-import { Globe, ShoppingBag, Smartphone, Database, LineChart, FileText, Blocks, Bot, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Globe, ShoppingBag, Smartphone, Database, LineChart, FileText, Blocks, Bot, ArrowRight, ArrowLeft } from 'lucide-react';
 import { triggerBookingModal } from './BookingModal';
 
 const BUILD_OPTIONS = [
-  { id: 'website', title: 'موقع إلكتروني احترافي', titleEn: 'Professional Website', desc: 'يعبر عن هويتك ويجذب العملاء', descEn: 'Reflects your identity and attracts customers', icon: Globe, image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80' },
-  { id: 'landing', title: 'صفحة تعريفية Landing Page', titleEn: 'Landing Page', desc: 'لإطلاق الحملات الإعلانية والمنتجات', descEn: 'For launching ad campaigns and products', icon: FileText, image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80' },
   { id: 'store', title: 'متجر إلكتروني', titleEn: 'E-Commerce Store', desc: 'متجر متكامل جاهز للبيع', descEn: 'Full-featured ready-to-sell store', icon: ShoppingBag, image: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=80' },
-  { id: 'catalog', title: 'كتالوج رقمي', titleEn: 'Digital Catalog', desc: 'استعراض تفاعلي لمنتجاتك وخدماتك', descEn: 'Interactive showcase of your products & services', icon: Blocks, image: 'https://images.unsplash.com/photo-1481481600451-24ce8fc40e53?w=800&q=80' },
   { id: 'app', title: 'تطبيق مخصص', titleEn: 'Custom Mobile App', desc: 'تطبيق جوال مبتكر لعملائك', descEn: 'Innovative mobile app for your clients', icon: Smartphone, image: 'https://images.unsplash.com/photo-1618761714954-0b8cd0026356?w=800&q=80' },
-  { id: 'system', title: 'نظام إداري أو محاسبي', titleEn: 'Admin / Accounting System', desc: 'لإدارة عملياتك وموظفيك', descEn: 'Manage operations and employees', icon: Database, image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80' },
-  { id: 'erp_crm', title: 'نظام ERP أو CRM', titleEn: 'ERP / CRM System', desc: 'إدارة متكاملة للموارد والعملاء', descEn: 'Integrated resource & customer management', icon: LineChart, image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80' },
-  { id: 'ai', title: 'حل مخصص بالذكاء الاصطناعي', titleEn: 'Custom AI Solution', desc: 'أتمتة وتحليل متقدم للبيانات', descEn: 'Advanced automation and data analytics', icon: Bot, image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80' },
+  { id: 'ai', title: 'حل بالذكاء الاصطناعي', titleEn: 'Custom AI Solution', desc: 'أتمتة وتحليل متقدم للبيانات', descEn: 'Advanced automation and data analytics', icon: Bot, image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80' },
+  { id: 'erp_crm', title: 'نظام إداري ERP', titleEn: 'ERP / CRM System', desc: 'إدارة متكاملة للموارد والعملاء', descEn: 'Integrated resource & customer management', icon: LineChart, image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80' },
+  { id: 'website', title: 'موقع احترافي', titleEn: 'Professional Website', desc: 'يعبر عن هويتك ويجذب العملاء', descEn: 'Reflects your identity and attracts customers', icon: Globe, image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80' },
 ];
 
 export const WhatToBuild = () => {
   const { config } = useSite();
   const isEn = config.language === 'en';
   const isRtl = !isEn;
-  const [activeIndex, setActiveIndex] = React.useState(0);
-  const [isPaused, setIsPaused] = React.useState(false);
-
-  const [touchStart, setTouchStart] = React.useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = React.useState<number | null>(null);
-
-  const total = BUILD_OPTIONS.length;
-
-  const nextSlide = React.useCallback(() => {
-    setActiveIndex((prev) => (prev + 1) % total);
-  }, [total]);
-
-  const prevSlide = React.useCallback(() => {
-    setActiveIndex((prev) => (prev - 1 + total) % total);
-  }, [total]);
-
-  React.useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(() => {
-      nextSlide();
-    }, 4500);
-    return () => clearInterval(timer);
-  }, [isPaused, nextSlide]);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setIsPaused(true);
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    const minDistance = 40;
-    if (Math.abs(distance) > minDistance) {
-      if (distance > 0) {
-        isRtl ? nextSlide() : nextSlide();
-      } else {
-        isRtl ? prevSlide() : prevSlide();
-      }
-    }
-    setTimeout(() => setIsPaused(false), 3000);
-  };
-
-  if (config.sections.whatToBuild === false) return null;
 
   return (
-    <section className="py-12 sm:py-20 relative overflow-hidden" id="whatToBuild">
-      {/* Background ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-full max-h-[500px] bg-[var(--color-primary)]/10 rounded-full blur-[120px] pointer-events-none" />
-
+    <section className="py-10 sm:py-16 md:py-24 relative overflow-hidden bg-[var(--surface-primary)] border-t border-[var(--border-default)]">
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[var(--color-primary)] opacity-5 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3" />
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        {/* Header Section */}
-        <motion.div
-           initial={{ opacity: 0, y: 20 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true }}
-           transition={{ duration: 0.5 }}
-           className="text-center mb-8 sm:mb-12"
-        >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 text-[var(--color-primary)] text-xs sm:text-sm font-semibold mb-3">
-            {isEn ? 'Custom Solutions' : 'حلول رقمية متكاملة'}
-          </div>
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold mb-3 text-[var(--text-primary)]">
-            {isEn ? 'What would you like us to build for you?' : 'وش ودك نبني لك؟'}
-          </h2>
-          <p className="text-sm sm:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto font-light">
-            {isEn ? 'Choose the solution you need, and we will turn it into a complete digital project.' : 'اختار الحل اللي تحتاجه، وإحنا نضبطك ونحوله لمشروع رقمي متكامل.'}
-          </p>
-        </motion.div>
-
-        {/* Carousel Container */}
-        <div 
-          className="relative w-full max-w-5xl mx-auto py-4"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          {/* Navigation Arrows */}
-          <div className="flex items-center justify-between absolute top-1/2 -translate-y-1/2 left-0 right-0 z-40 pointer-events-none px-1 sm:px-4">
-            <button
-              onClick={isRtl ? nextSlide : prevSlide}
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[var(--surface-primary)]/90 backdrop-blur-md border border-[var(--border-default)] text-[var(--text-primary)] hover:text-[var(--color-primary)] hover:border-[var(--color-primary)] flex items-center justify-center transition-all duration-300 shadow-lg pointer-events-auto hover:scale-110 active:scale-95 cursor-pointer"
-              aria-label="Previous slide"
-            >
-              {isRtl ? <ChevronRight size={22} /> : <ChevronLeft size={22} />}
-            </button>
-            <button
-              onClick={isRtl ? prevSlide : nextSlide}
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[var(--surface-primary)]/90 backdrop-blur-md border border-[var(--border-default)] text-[var(--text-primary)] hover:text-[var(--color-primary)] hover:border-[var(--color-primary)] flex items-center justify-center transition-all duration-300 shadow-lg pointer-events-auto hover:scale-110 active:scale-95 cursor-pointer"
-              aria-label="Next slide"
-            >
-              {isRtl ? <ChevronLeft size={22} /> : <ChevronRight size={22} />}
-            </button>
-          </div>
-
-          {/* Cards Track */}
-          <div 
-            className="overflow-hidden px-2 sm:px-4 py-8 touch-pan-y"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+        <div className="text-center max-w-3xl mx-auto mb-10 lg:mb-16">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--border-default)] text-xs font-bold uppercase mb-4 text-[var(--color-primary)] bg-[var(--surface-secondary)]"
           >
-            <div className="flex items-center justify-center min-h-[330px] sm:min-h-[380px] relative">
-              {BUILD_OPTIONS.map((option, index) => {
-                let offset = index - activeIndex;
-                if (offset < -total / 2) offset += total;
-                if (offset > total / 2) offset -= total;
+            {isEn ? 'Discover Opportunities' : 'اكتشف فرص النمو'}
+          </motion.div>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-2xl sm:text-4xl md:text-5xl font-black mb-4 tracking-tight text-[var(--text-primary)]"
+          >
+            {isEn ? 'What are you looking to build?' : 'ماذا تفكر أن تبني؟'}
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-base sm:text-lg text-[var(--text-muted)] font-light leading-relaxed"
+          >
+            {isEn 
+              ? 'Select the type of project you want to start, and let us handle the technical execution from concept to launch.' 
+              : 'اختر نوع المشروع الذي ترغب في إطلاقه، ودعنا نتولى التنفيذ التقني من الفكرة وحتى الإطلاق.'}
+          </motion.p>
+        </div>
 
-                const isCenter = offset === 0;
-                const isVisible = Math.abs(offset) <= 2;
+        {/* Bento Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 auto-rows-[160px] sm:auto-rows-[200px] lg:auto-rows-[240px]">
+          {BUILD_OPTIONS.map((option, idx) => {
+            let gridClass = 'col-span-1 row-span-1';
+            
+            // Dynamic Bento Layout
+            if (idx === 0) gridClass = 'col-span-2 row-span-2'; // E-commerce (Large Feature)
+            if (idx === 1) gridClass = 'col-span-2 md:col-span-1 row-span-1'; // App
+            if (idx === 2) gridClass = 'col-span-1 md:col-span-1 row-span-1 lg:row-span-2'; // AI
+            if (idx === 3) gridClass = 'col-span-1 md:col-span-2 lg:col-span-1 row-span-1'; // ERP
+            if (idx === 4) gridClass = 'col-span-2 md:col-span-1 lg:col-span-2 row-span-1'; // Website
 
-                if (!isVisible) return null;
-
-                return (
-                  <motion.div
-                    key={option.id}
-                    initial={false}
-                    animate={{
-                      x: offset * (isRtl ? -270 : 270),
-                      scale: isCenter ? 1.08 : Math.abs(offset) === 1 ? 0.86 : 0.72,
-                      opacity: isCenter ? 1 : Math.abs(offset) === 1 ? 0.6 : 0.2,
-                      zIndex: isCenter ? 30 : 30 - Math.abs(offset) * 10,
-                      rotateY: offset * (isRtl ? 8 : -8),
-                    }}
-                    transition={{ type: "spring", stiffness: 260, damping: 26 }}
-                    onClick={() => {
-                      if (!isCenter) {
-                        setActiveIndex(index);
-                      } else {
-                        triggerBookingModal(isEn ? option.titleEn || option.title : option.title);
-                      }
-                    }}
-                    className={`absolute w-[250px] xs:w-[280px] sm:w-[320px] md:w-[340px] rounded-3xl cursor-pointer group transition-all duration-500 overflow-hidden border ${
-                      isCenter
-                        ? 'border-[var(--color-primary)] shadow-[0_12px_40px_rgba(79,142,247,0.3)] bg-[var(--surface-secondary)]'
-                        : 'border-[var(--border-default)] bg-[var(--surface-secondary)]/80 hover:border-[var(--color-primary)]/50'
-                    }`}
-                  >
-                    {/* Background Image that zooms on center */}
-                    <div 
-                      className={`absolute inset-0 z-0 bg-cover bg-center transition-all duration-700 ${
-                        isCenter ? 'opacity-40 scale-110 group-hover:scale-115' : 'opacity-15 scale-100'
-                      }`}
-                      style={{ backgroundImage: `url(${option.image})` }}
-                    />
-                    <div className={`absolute inset-0 z-10 transition-opacity duration-500 ${
-                      isCenter 
-                        ? 'bg-gradient-to-t from-[var(--surface-primary)] via-[var(--surface-primary)]/85 to-[var(--surface-primary)]/40' 
-                        : 'bg-[var(--surface-primary)]/85'
-                    }`} />
-
-                    {/* Card Content */}
-                    <div className="relative z-20 p-5 sm:p-8 flex flex-col justify-between h-[290px] sm:h-[340px]">
-                      <div>
-                        <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center mb-4 sm:mb-5 border transition-all duration-500 shadow-md ${
-                          isCenter
-                            ? 'bg-[var(--color-primary)] text-[var(--text-primary)] border-[var(--color-primary)] scale-110'
-                            : 'bg-[var(--surface-tertiary)] text-[var(--color-primary)] border-[var(--border-default)]'
-                        }`}>
-                          {React.createElement(option.icon, {
-                            size: 26,
-                            className: "transition-transform duration-300 group-hover:scale-110"
-                          })}
-                        </div>
-                        <h3 className={`font-bold mb-2 sm:mb-3 text-base sm:text-xl md:text-2xl leading-tight transition-colors ${
-                          isCenter ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'
-                        }`}>
-                          {isEn ? option.titleEn || option.title : option.title}
-                        </h3>
-                        <p className={`text-xs sm:text-sm leading-relaxed line-clamp-3 transition-colors ${
-                          isCenter ? 'text-[var(--text-muted)] font-normal' : 'text-[var(--text-muted)]/70 font-light'
-                        }`}>
-                          {isEn ? option.descEn || option.desc : option.desc}
-                        </p>
-                      </div>
-
-                      <div className="mt-3 sm:mt-4 flex items-center justify-between border-t border-[var(--border-default)]/60 pt-3 sm:pt-4">
-                        <span className={`text-xs font-bold transition-opacity ${
-                          isCenter ? 'text-[var(--color-primary)] opacity-100' : 'text-[var(--text-muted)] opacity-60'
-                        }`}>
-                          {isEn ? (isCenter ? 'Tap to request' : 'View') : (isCenter ? 'انقر للطلب' : 'استعراض')}
-                        </span>
-                        <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm ${
-                          isCenter
-                            ? 'bg-[var(--color-primary)] text-[var(--text-primary)] scale-105 shadow-[0_0_15px_var(--color-primary)]'
-                            : 'bg-[var(--surface-tertiary)] text-[var(--text-muted)]'
-                        }`}>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={isRtl ? 'rotate-180' : ''}><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Dots Indicator */}
-          <div className="flex items-center justify-center gap-2 mt-4 sm:mt-6">
-            {BUILD_OPTIONS.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveIndex(idx)}
-                aria-label={`Go to slide ${idx + 1}`}
-                className={`transition-all duration-300 rounded-full cursor-pointer ${
-                  idx === activeIndex
-                    ? 'w-8 h-2.5 bg-[var(--color-primary)] shadow-[0_0_10px_var(--color-primary)]'
-                    : 'w-2.5 h-2.5 bg-[var(--border-default)] hover:bg-[var(--text-muted)]/50'
-                }`}
-              />
-            ))}
-          </div>
+            return (
+              <motion.div
+                key={option.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: idx * 0.1 }}
+                onClick={() => triggerBookingModal(isEn ? option.titleEn : option.title)}
+                className={`group relative rounded-3xl overflow-hidden cursor-pointer ${gridClass}`}
+              >
+                {/* Background Image */}
+                <div className="absolute inset-0 z-0">
+                  <img 
+                    src={option.image} 
+                    alt={isEn ? option.titleEn : option.title} 
+                    className="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent" />
+                </div>
+                
+                {/* Content */}
+                <div className="relative z-10 flex flex-col justify-end h-full p-4 sm:p-6 lg:p-8 hover:translate-y-[-4px] transition-transform duration-300">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center mb-4 sm:mb-auto group-hover:bg-[var(--color-primary)] group-hover:border-[var(--color-primary)] transition-colors duration-300">
+                    {React.createElement(option.icon, { size: idx === 0 ? 24 : 20 })}
+                  </div>
+                  
+                  <div>
+                    <h3 className={`font-black text-white mb-1 sm:mb-2 transition-colors duration-300 group-hover:text-transparent group-hover:bg-clip-text ${idx === 0 ? 'text-xl sm:text-2xl lg:text-3xl' : 'text-base sm:text-xl'}`} style={{ backgroundImage: 'linear-gradient(to right, #fff, var(--color-primary))' }}>
+                      {isEn ? option.titleEn : option.title}
+                    </h3>
+                    <p className={`text-white/60 font-light line-clamp-2 ${idx === 0 ? 'text-sm sm:text-base' : 'text-xs sm:text-sm'}`}>
+                      {isEn ? option.descEn : option.desc}
+                    </p>
+                  </div>
+                  
+                  {/* Action Arrow (only visible on hover for desktop, always on for mobile if we wanted, but hover is fine) */}
+                  <div className="absolute top-4 sm:top-6 lg:top-8 left-4 sm:left-6 lg:left-8 w-8 h-8 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0">
+                    {isEn ? <ArrowRight size={16} /> : <ArrowLeft size={16} />}
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 };
-

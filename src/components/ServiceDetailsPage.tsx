@@ -289,7 +289,7 @@ export const ServiceDetailsPage = ({ slug }: Props) => {
            <button 
               className="mx-auto flex items-center justify-center gap-2 text-[var(--text-primary)] font-bold py-4 px-10 rounded-xl transition-all shadow-[0_0_15px_rgba(79,142,247,0.3)] hover:shadow-[0_0_25px_rgba(79,142,247,0.5)] transform hover:scale-105"
               style={{ backgroundColor: config.primaryColor }}
-              onClick={() => updateConfig({ currentRoute: 'start-project' })}
+              onClick={() => updateConfig({ currentRoute: 'kyc' })}
             >
               {isEn ? 'Start Your Project' : 'ابدأ مشروعك'}
               <ArrowUpRight size={20} />

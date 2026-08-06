@@ -227,7 +227,7 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 1: WHO IS NMOLABS (من هي NmoLabs؟) */}
-      <section id="about-who-we-are" className="py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/10">
+      <section id="about-who-we-are" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
@@ -295,7 +295,7 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 2: WHAT WE BUILD (ما الذي نبنيه؟) */}
-      <section id="about-what-we-build" className="py-24 border-b border-[var(--border-default)]/30">
+      <section id="about-what-we-build" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
@@ -353,7 +353,7 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 3: HOW WE DIFFER (كيف نختلف؟) */}
-      <section id="about-how-we-differ" className="py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/15">
+      <section id="about-how-we-differ" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/15">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
@@ -425,166 +425,196 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
+      
       {/* SECTION 4: NMOLABS ECOSYSTEM (منظومة NmoLabs) */}
-      <section id="about-ecosystem" className="py-24 border-b border-[var(--border-default)]/30 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+      <section id="about-ecosystem" className="py-8 lg:py-24 border-b border-[var(--border-default)]/30 overflow-hidden relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-16 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
               {isEn ? 'NmoLabs Ecosystem: Four Cohesive Paths' : 'منظومة NmoLabs: أربع مسارات تعمل معاً'}
             </h2>
-            <p className="text-base text-[var(--text-muted)]">
+            <p className="text-sm sm:text-base text-[var(--text-muted)] max-w-xl mx-auto">
               {isEn ? 'Our pathways feed into one central hub to catalyze true growth.' : 'تتكامل مساراتنا التقنية والتجريبية لتشكل منظومة متناغمة تصنع حلول الغد.'}
             </p>
           </div>
 
-          {/* Connected Diagram for desktop, clean stacked layout for mobile */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-16">
             
-            {/* Desktop Visual Layout (4 Connected Orbiting Cards around Center) */}
-            <div className="lg:col-span-8 relative min-h-auto lg:min-h-[450px] flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-0">
+            {/* Interactive Ecosystem Map */}
+            <div className="w-full max-w-[340px] sm:max-w-[400px] lg:max-w-[500px] aspect-square mx-auto relative flex items-center justify-center">
               
-              {/* Central Hub representing NmoLabs (Visible mainly on Desktop, hidden on mobile for clean stacked look or kept at top) */}
-              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[var(--surface-primary)] border border-[var(--color-primary)]/40 flex flex-col items-center justify-center text-center shadow-lg relative z-20 lg:absolute lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 mb-4 lg:mb-0">
-                <span className="font-black text-xs sm:text-sm tracking-widest font-english text-[var(--text-primary)]">NMOLABS</span>
-                <span className="text-[9px] sm:text-[10px] text-[var(--color-primary)] font-bold mt-1">{isEn ? 'Ecosystem' : 'المنظومة'}</span>
+              {/* Center Hub */}
+              <div className="absolute z-20 w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[var(--surface-primary)] border-2 border-[var(--color-primary)] flex flex-col items-center justify-center text-center shadow-[0_0_30px_rgba(79,142,247,0.3)] transition-all duration-300 overflow-hidden">
+                <span className="font-black text-[10px] sm:text-sm tracking-widest font-english text-[var(--text-primary)]">NMOLABS</span>
+                <div className="h-4 flex items-center justify-center mt-1 w-full">
+                  <AnimatePresence mode="wait">
+                    <motion.span 
+                      key={hoveredPath || 'ecosystem'}
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-[9px] sm:text-[10px] text-[var(--color-primary)] font-bold uppercase tracking-wider block"
+                    >
+                      {hoveredPath ? hoveredPath : (isEn ? 'Ecosystem' : 'المنظومة')}
+                    </motion.span>
+                  </AnimatePresence>
+                </div>
+                <div className="absolute inset-0 rounded-full border border-[var(--color-primary)] animate-ping opacity-20 pointer-events-none" />
+              </div>
+
+              {/* Orbital rings */}
+              <div className="absolute inset-4 sm:inset-6 rounded-full border border-[var(--border-default)]/30 pointer-events-none" />
+              <div className="absolute inset-12 sm:inset-16 rounded-full border border-[var(--border-default)]/10 pointer-events-none" />
+
+              {/* Path Nodes */}
+              {[
+                { id: 'services', angle: -45, title: isEn ? 'Services' : 'الخدمات', icon: <Layers size={16} />, color: 'text-blue-500', bg: 'bg-blue-500' },
+                { id: 'work', angle: 45, title: isEn ? 'Work' : 'الأعمال', icon: <Briefcase size={16} />, color: 'text-emerald-500', bg: 'bg-emerald-500' },
+                { id: 'products', angle: 135, title: isEn ? 'Products' : 'المنتجات', icon: <ShoppingBag size={16} />, color: 'text-purple-500', bg: 'bg-purple-500' },
+                { id: 'innovation', angle: -135, title: isEn ? 'Lab' : 'المختبر', icon: <Cpu size={16} />, color: 'text-amber-500', bg: 'bg-amber-500' }
+              ].map((node) => {
+                const isActive = hoveredPath === node.id || (!hoveredPath && node.id === 'services');
                 
-                {/* Pulse ring */}
-                <div className="absolute inset-0 rounded-full border border-[var(--color-primary)]/25 animate-ping pointer-events-none" />
-              </div>
-
-              {/* Grid for mobile, Absolute for desktop */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full lg:w-auto lg:block">
-
-                {/* Path 1: Services (الخدمات) */}
-                <motion.div 
-                  onHoverStart={() => setHoveredPath('services')}
-                  onHoverEnd={() => setHoveredPath(null)}
-                  className="relative lg:absolute lg:top-8 lg:left-8 bg-[var(--surface-secondary)] border border-[var(--border-default)] p-4 sm:p-5 rounded-2xl w-full lg:w-48 shadow-md z-10 hover:border-blue-500/40 transition-colors"
-                >
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-6 h-6 rounded-md bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
-                      <Layers size={14} />
+                const radiusPct = 35; // 35% from center
+                const rad = (node.angle * Math.PI) / 180;
+                const leftPos = 50 + (radiusPct * Math.cos(rad));
+                const topPos = 50 + (radiusPct * Math.sin(rad));
+                
+                return (
+                  <button
+                    key={node.id}
+                    onClick={() => setHoveredPath(node.id)}
+                    className={`absolute z-30 flex flex-col items-center gap-2 cursor-pointer transition-all duration-300 ${isActive ? 'scale-110' : 'scale-95 opacity-70 hover:opacity-100'}`}
+                    style={{
+                      transform: 'translate(-50%, -50%)',
+                      left: `${leftPos}%`,
+                      top: `${topPos}%`
+                    }}
+                  >
+                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shadow-lg transition-colors border ${isActive ? `${node.bg}/10 border-${node.bg.split('-')[1]}-500 ${node.color}` : 'bg-[var(--surface-secondary)] border-[var(--border-default)] text-[var(--text-muted)]'}`}>
+                      {node.icon}
                     </div>
-                    <h4 className="font-bold text-sm text-[var(--text-primary)]">{isEn ? 'Services' : 'الخدمات'}</h4>
-                  </div>
-                  <p className="text-[11px] text-[var(--text-muted)] leading-relaxed mb-3">
-                    {isEn ? 'Solutions we execute based on client needs.' : 'حلول ننفذها وفق احتياج العملاء.'}
-                  </p>
-                  <button onClick={() => handleScrollToSection('services')} className="text-[10px] font-bold text-[var(--color-primary)] hover:underline flex items-center gap-1 cursor-pointer">
-                    <span>{isEn ? 'View Services' : 'الخدمات'}</span>
-                    {isEn ? <ArrowRight size={10} className="shrink-0" /> : <ArrowLeft size={10} className="shrink-0" />}
+                    <span className={`text-[10px] sm:text-xs font-bold px-2 py-1 rounded-full ${isActive ? `${node.bg}/20 ${node.color}` : 'bg-[var(--surface-secondary)] text-[var(--text-muted)]'}`}>
+                      {node.title}
+                    </span>
                   </button>
-                </motion.div>
+                );
+              })}
 
-                {/* Path 2: Work (الأعمال) */}
-                <motion.div 
-                  onHoverStart={() => setHoveredPath('work')}
-                  onHoverEnd={() => setHoveredPath(null)}
-                  className="relative lg:absolute lg:top-8 lg:right-8 bg-[var(--surface-secondary)] border border-[var(--border-default)] p-4 sm:p-5 rounded-2xl w-full lg:w-48 shadow-md z-10 hover:border-emerald-500/40 transition-colors"
-                >
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-6 h-6 rounded-md bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0">
-                      <Briefcase size={14} />
-                    </div>
-                    <h4 className="font-bold text-sm text-[var(--text-primary)]">{isEn ? 'Work' : 'الأعمال'}</h4>
-                  </div>
-                  <p className="text-[11px] text-[var(--text-muted)] leading-relaxed mb-3">
-                    {isEn ? 'Digital projects built by NmoLabs.' : 'مشاريع وتجارب رقمية بنتها NmoLabs.'}
-                  </p>
-                  <button onClick={() => navigateToRoute('work')} className="text-[10px] font-bold text-[var(--color-primary)] hover:underline flex items-center gap-1 cursor-pointer">
-                    <span>{isEn ? 'View Works' : 'أعمالنا'}</span>
-                    {isEn ? <ArrowRight size={10} className="shrink-0" /> : <ArrowLeft size={10} className="shrink-0" />}
-                  </button>
-                </motion.div>
-
-                {/* Path 3: Products (المنتجات) */}
-                <motion.div 
-                  onHoverStart={() => setHoveredPath('products')}
-                  onHoverEnd={() => setHoveredPath(null)}
-                  className="relative lg:absolute lg:bottom-8 lg:left-8 bg-[var(--surface-secondary)] border border-[var(--border-default)] p-4 sm:p-5 rounded-2xl w-full lg:w-48 shadow-md z-10 hover:border-purple-500/40 transition-colors"
-                >
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-6 h-6 rounded-md bg-purple-500/10 text-purple-500 flex items-center justify-center shrink-0">
-                      <ShoppingBag size={14} />
-                    </div>
-                    <h4 className="font-bold text-sm text-[var(--text-primary)]">{isEn ? 'Products' : 'المنتجات'}</h4>
-                  </div>
-                  <p className="text-[11px] text-[var(--text-muted)] leading-relaxed mb-3">
-                    {isEn ? 'Proprietary platforms owned or engineered by us.' : 'حلول وأنظمة تملكها أو تطورها NmoLabs.'}
-                  </p>
-                  <button onClick={() => navigateToRoute('products')} className="text-[10px] font-bold text-[var(--color-primary)] hover:underline flex items-center gap-1 cursor-pointer">
-                    <span>{isEn ? 'View Products' : 'منتجاتنا'}</span>
-                    {isEn ? <ArrowRight size={10} className="shrink-0" /> : <ArrowLeft size={10} className="shrink-0" />}
-                  </button>
-                </motion.div>
-
-                {/* Path 4: Innovation Lab (مختبر الابتكارات) */}
-                <motion.div 
-                  onHoverStart={() => setHoveredPath('innovation')}
-                  onHoverEnd={() => setHoveredPath(null)}
-                  className="relative lg:absolute lg:bottom-8 lg:right-8 bg-[var(--surface-secondary)] border border-[var(--border-default)] p-4 sm:p-5 rounded-2xl w-full lg:w-48 shadow-md z-10 hover:border-amber-500/40 transition-colors"
-                >
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-6 h-6 rounded-md bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
-                      <Cpu size={14} />
-                    </div>
-                    <h4 className="font-bold text-sm text-[var(--text-primary)]">{isEn ? 'Innovation Labs' : 'مختبر الابتكارات'}</h4>
-                  </div>
-                  <p className="text-[11px] text-[var(--text-muted)] leading-relaxed mb-3">
-                    {isEn ? 'Pioneering future-oriented AI experiments.' : 'أفكار وتجارب ونماذج أولية لاختبار حلول المستقبل.'}
-                  </p>
-                  <button onClick={() => navigateToRoute('innovation-lab')} className="text-[10px] font-bold text-[var(--color-primary)] hover:underline flex items-center gap-1 cursor-pointer">
-                    <span>{isEn ? 'Explore Lab' : 'مختبر الابتكارات'}</span>
-                    {isEn ? <ArrowRight size={10} className="shrink-0" /> : <ArrowLeft size={10} className="shrink-0" />}
-                  </button>
-                </motion.div>
-              </div>
-
-              {/* Radial connector lines SVG (Desktop only) */}
-              <svg className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none stroke-[var(--border-default)] opacity-40" xmlns="http://www.w3.org/2000/svg">
-                <line x1="15%" y1="15%" x2="50%" y2="50%" strokeDasharray="3 3" className={hoveredPath === 'services' ? 'stroke-blue-500 stroke-2' : ''} />
-                <line x1="85%" y1="15%" x2="50%" y2="50%" strokeDasharray="3 3" className={hoveredPath === 'work' ? 'stroke-emerald-500 stroke-2' : ''} />
-                <line x1="15%" y1="85%" x2="50%" y2="50%" strokeDasharray="3 3" className={hoveredPath === 'products' ? 'stroke-purple-500 stroke-2' : ''} />
-                <line x1="85%" y1="85%" x2="50%" y2="50%" strokeDasharray="3 3" className={hoveredPath === 'innovation' ? 'stroke-amber-500 stroke-2' : ''} />
+              {/* Connecting Lines SVG */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50%" cy="50%" r="35%" fill="none" stroke="var(--border-default)" strokeWidth="1" strokeDasharray="4 4" opacity="0.3" />
+                
+                {/* Active line drawing based on selection */}
+                <line 
+                  x1="50%" 
+                  y1="50%" 
+                  x2={
+                    hoveredPath === 'services' ? `${50 + (35 * Math.cos(-45 * Math.PI / 180))}%` : 
+                    hoveredPath === 'work' ? `${50 + (35 * Math.cos(45 * Math.PI / 180))}%` : 
+                    hoveredPath === 'products' ? `${50 + (35 * Math.cos(135 * Math.PI / 180))}%` : 
+                    hoveredPath === 'innovation' ? `${50 + (35 * Math.cos(-135 * Math.PI / 180))}%` : "50%"
+                  } 
+                  y2={
+                    hoveredPath === 'services' ? `${50 + (35 * Math.sin(-45 * Math.PI / 180))}%` : 
+                    hoveredPath === 'work' ? `${50 + (35 * Math.sin(45 * Math.PI / 180))}%` : 
+                    hoveredPath === 'products' ? `${50 + (35 * Math.sin(135 * Math.PI / 180))}%` : 
+                    hoveredPath === 'innovation' ? `${50 + (35 * Math.sin(-135 * Math.PI / 180))}%` : "50%"
+                  } 
+                  stroke="var(--color-primary)" 
+                  strokeWidth="2" 
+                  opacity={hoveredPath ? 0.8 : 0} 
+                  className="transition-all duration-500 ease-in-out" 
+                />
               </svg>
 
             </div>
 
-            {/* Explanatory summary columns */}
-            <div className="lg:col-span-4 bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-3xl p-8 space-y-6">
-              <span className="text-xs font-bold text-[var(--color-primary)] tracking-wider block uppercase">
-                {isEn ? 'Ecosystem Synergy' : 'تكامل المنظومة الكلية'}
-              </span>
-              <h3 className="font-black text-xl text-[var(--text-primary)]">
-                {isEn ? 'How the paths feed into each other:' : 'كيف تدعم المسارات بعضها بعضاً؟'}
-              </h3>
-              
-              <ul className="space-y-4 text-xs md:text-sm text-[var(--text-muted)] leading-relaxed">
-                <li className="flex gap-2">
-                  <span className="text-[var(--color-primary)] font-bold">1.</span>
-                  <span>{isEn ? 'Daily service execution gives us insight into real operational bottlenecks.' : 'تطوير الخدمات المباشرة يكشف لنا الاحتياجات والمشاكل الحقيقية التي تواجه المتاجر والشركات.'}</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-[var(--color-primary)] font-bold">2.</span>
-                  <span>{isEn ? 'We transform those insights into proprietary software and growth products.' : 'نحوّل تلك المشاكل إلى أنظمة ومُنتجات جاهزة لتوفير الجهد البشري والتقني.'}</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-[var(--color-primary)] font-bold">3.</span>
-                  <span>{isEn ? 'The Innovation Lab keeps us tested on the edge of AI and advanced software.' : 'مختبر الابتكار يعمل كمظلة لصياغة تجارب الغد وأتمتة نماذج العمل المتقدمة.'}</span>
-                </li>
-              </ul>
-            </div>
+            {/* Active Content Panel */}
+            <div className="flex-1 w-full max-w-lg mx-auto lg:mx-0">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={hoveredPath || 'default'}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-3xl p-6 sm:p-8 relative overflow-hidden"
+                >
+                  {(!hoveredPath || hoveredPath === 'services') && (
+                    <>
+                      <div className="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center mb-4">
+                        <Layers size={20} />
+                      </div>
+                      <h3 className="text-xl font-black text-[var(--text-primary)] mb-3">{isEn ? 'Services' : 'الخدمات'}</h3>
+                      <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6">
+                        {isEn ? 'Digital services executed with deep operational understanding. From setup to marketing.' : 'تطوير وتنفيذ الخدمات المباشرة يكشف لنا الاحتياجات والمشاكل الحقيقية التي تواجه المتاجر.'}
+                      </p>
+                      <button onClick={() => navigateToRoute('services')} className="text-xs font-bold text-blue-500 hover:underline flex items-center gap-1">
+                        {isEn ? 'View Services' : 'استكشف الخدمات'} {isEn ? <ArrowRight size={12} /> : <ArrowLeft size={12} />}
+                      </button>
+                    </>
+                  )}
 
+                  {hoveredPath === 'work' && (
+                    <>
+                      <div className="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-4">
+                        <Briefcase size={20} />
+                      </div>
+                      <h3 className="text-xl font-black text-[var(--text-primary)] mb-3">{isEn ? 'Work' : 'الأعمال'}</h3>
+                      <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6">
+                        {isEn ? 'Digital projects built by NmoLabs that drive tangible business results and scaling.' : 'مشاريع وتجارب رقمية بنيناها مع عملائنا لتحقيق نمو ملموس ونتائج قابلة للقياس.'}
+                      </p>
+                      <button onClick={() => navigateToRoute('work')} className="text-xs font-bold text-emerald-500 hover:underline flex items-center gap-1">
+                        {isEn ? 'View Work' : 'استكشف الأعمال'} {isEn ? <ArrowRight size={12} /> : <ArrowLeft size={12} />}
+                      </button>
+                    </>
+                  )}
+
+                  {hoveredPath === 'products' && (
+                    <>
+                      <div className="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-500 flex items-center justify-center mb-4">
+                        <ShoppingBag size={20} />
+                      </div>
+                      <h3 className="text-xl font-black text-[var(--text-primary)] mb-3">{isEn ? 'Products' : 'المنتجات'}</h3>
+                      <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6">
+                        {isEn ? 'Proprietary platforms owned or engineered by us to solve specific market gaps.' : 'نحوّل المشاكل إلى أنظمة ومُنتجات جاهزة لتوفير الجهد البشري والتقني في السوق.'}
+                      </p>
+                      <button onClick={() => navigateToRoute('products')} className="text-xs font-bold text-purple-500 hover:underline flex items-center gap-1">
+                        {isEn ? 'Explore Products' : 'اكتشف المنتجات'} {isEn ? <ArrowRight size={12} /> : <ArrowLeft size={12} />}
+                      </button>
+                    </>
+                  )}
+
+                  {hoveredPath === 'innovation' && (
+                    <>
+                      <div className="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center mb-4">
+                        <Cpu size={20} />
+                      </div>
+                      <h3 className="text-xl font-black text-[var(--text-primary)] mb-3">{isEn ? 'Innovation Lab' : 'مختبر الابتكارات'}</h3>
+                      <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6">
+                        {isEn ? 'Pioneering experiments testing the edge of AI, automation, and advanced software models.' : 'يعمل كمظلة لصياغة تجارب الغد وأتمتة نماذج العمل المتقدمة عبر الذكاء الاصطناعي.'}
+                      </p>
+                      <button onClick={() => navigateToRoute('innovation-lab')} className="text-xs font-bold text-amber-500 hover:underline flex items-center gap-1">
+                        {isEn ? 'Enter the Lab' : 'دخول المختبر'} {isEn ? <ArrowRight size={12} /> : <ArrowLeft size={12} />}
+                      </button>
+                    </>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+            
           </div>
         </div>
       </section>
 
+
       {/* SECTION 5: VISION AND MISSION (الرؤية والرسالة) */}
-      <section id="about-vision-mission" className="py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/5">
+      <section id="about-vision-mission" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/5">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
           
           {/* Vision card */}
-          <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-3xl p-8 md:p-12 relative overflow-hidden group">
+          <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-3xl p-5 lg:p-12 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
             <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500 mb-6 border border-blue-500/20">
               <Compass size={24} />
@@ -599,7 +629,7 @@ export const AboutPage: React.FC = () => {
           </div>
 
           {/* Mission card */}
-          <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-3xl p-8 md:p-12 relative overflow-hidden group">
+          <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-3xl p-5 lg:p-12 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
             <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-6 border border-emerald-500/20">
               <Target size={24} />
@@ -617,7 +647,7 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 6: VALUES (قيم تحكم طريقة عملنا) */}
-      <section id="about-values" className="py-24 border-b border-[var(--border-default)]/30">
+      <section id="about-values" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
@@ -652,7 +682,7 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 7: WORKFLOW (كيف نعمل؟) - Interactive quiet timeline */}
-      <section id="about-workflow" className="py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/10">
+      <section id="about-workflow" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
@@ -717,33 +747,54 @@ export const AboutPage: React.FC = () => {
             </AnimatePresence>
           </div>
 
-          {/* Mobile view: Simple Vertical List */}
-          <div className="lg:hidden space-y-4">
-            {companyData.workProcess.map((step) => (
-              <div 
-                key={step.step} 
-                className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl p-5 flex gap-4 items-start"
-              >
-                <div className="w-8 h-8 rounded-lg bg-[var(--surface-tertiary)] flex items-center justify-center shrink-0 font-english font-bold text-sm text-[var(--color-primary)]">
-                  {step.step}
-                </div>
-                <div className="space-y-1">
-                  <h4 className="font-black text-sm text-[var(--text-primary)]">
-                    {isEn ? step.titleEn : step.titleAr}
-                  </h4>
-                  <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                    {isEn ? step.descEn : step.descAr}
+          
+          {/* Mobile view: Horizontal scroll stepper */}
+          <div className="lg:hidden">
+            <div className="flex overflow-x-auto gap-3 pb-4 snap-x custom-scrollbar">
+              {companyData.workProcess.map((step, idx) => {
+                const isActive = activeStep === idx;
+                return (
+                  <button
+                    key={step.step}
+                    onClick={() => setActiveStep(idx)}
+                    className={`shrink-0 snap-center px-5 py-4 rounded-2xl border transition-all duration-300 min-w-[140px] text-center ${isActive ? 'bg-[var(--surface-primary)] border-[var(--color-primary)] shadow-md' : 'bg-[var(--surface-secondary)]/60 border-[var(--border-default)]'}`}
+                  >
+                    <span className={`text-xs font-bold font-english block mb-2 ${isActive ? 'text-[var(--color-primary)]' : 'text-[var(--text-muted)]'}`}>
+                      {step.step}
+                    </span>
+                    <h4 className={`font-black text-sm ${isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-muted)]'}`}>
+                      {isEn ? step.titleEn : step.titleAr}
+                    </h4>
+                  </button>
+                );
+              })}
+            </div>
+            
+            <div className="mt-4 bg-[var(--surface-secondary)] border border-[var(--color-primary)]/20 p-6 rounded-3xl text-center shadow-inner relative overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeStep}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className="space-y-3"
+                >
+                  <h3 className="font-black text-lg text-[var(--color-primary)]">
+                    {isEn ? companyData.workProcess[activeStep].titleEn : companyData.workProcess[activeStep].titleAr}
+                  </h3>
+                  <p className="text-sm text-[var(--text-muted)] leading-relaxed">
+                    {isEn ? companyData.workProcess[activeStep].descEn : companyData.workProcess[activeStep].descAr}
                   </p>
-                </div>
-              </div>
-            ))}
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
-
         </div>
-      </section>
+</section>
 
       {/* SECTION 8: SECTORS (القطاعات التي عملنا معها) */}
-      <section id="about-sectors" className="py-24 border-b border-[var(--border-default)]/30">
+      <section id="about-sectors" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
@@ -770,7 +821,7 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 9: EVOLUTION (نبذة عن تطور NmoLabs) */}
-      <section id="about-evolution" className="py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/15">
+      <section id="about-evolution" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/15">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
@@ -823,7 +874,7 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 10: TEAM AND COLLABORATION (الفريق وطريقة التعاون) */}
-      <section id="about-team" className="py-24 border-b border-[var(--border-default)]/30">
+      <section id="about-team" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
@@ -865,7 +916,7 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 11: TRUST LINKS (روابط الثقة) */}
-      <section id="about-trust-links" className="py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/5">
+      <section id="about-trust-links" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/5">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
@@ -954,7 +1005,7 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 12: CTA (الدعوة الختامية) */}
-      <section id="about-cta" className="py-20 relative overflow-hidden">
+      <section id="about-cta" className="py-10 md:py-20 relative overflow-hidden">
         
         {/* Subtle grid and ambient backdrop */}
         <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none" />

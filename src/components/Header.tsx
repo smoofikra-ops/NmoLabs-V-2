@@ -174,7 +174,7 @@ export const Header = () => {
           
           
           <button 
-            onClick={() => { updateConfig({ currentRoute: 'start-project' }); window.scrollTo(0,0); }}
+            onClick={() => { updateConfig({ currentRoute: 'kyc' }); window.scrollTo(0,0); }}
             className="hidden sm:block px-6 py-2.5 rounded-xl font-bold text-sm text-white hover:opacity-90 transition-all shadow-md hover:shadow-lg cursor-pointer border border-[var(--color-secondary)]/50"
             style={{ backgroundColor: 'var(--color-primary)' }}
           >
@@ -244,7 +244,7 @@ export const Header = () => {
                 <button 
                   onClick={() => {
                     setIsMobileMenuOpen(false);
-                    { updateConfig({ currentRoute: 'start-project' }); window.scrollTo(0, 0); }
+                    { updateConfig({ currentRoute: 'kyc' }); window.scrollTo(0, 0); }
                   }}
                   className="w-full py-3.5 rounded-xl font-bold text-[var(--text-primary)] transition-transform active:scale-95 cursor-pointer shadow-lg relative overflow-hidden group text-sm"
                   style={{ backgroundColor: 'var(--color-primary)' }}

@@ -8,7 +8,7 @@ export const Workflow = () => {
   if (!config.sections.workflow) return null;
 
   return (
-    <section className="py-24 relative overflow-hidden" id="workflow">
+    <section className="py-8 lg:py-24 relative overflow-hidden" id="workflow">
       <div className="max-w-5xl mx-auto px-6 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

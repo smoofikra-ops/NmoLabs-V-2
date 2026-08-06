@@ -115,7 +115,7 @@ export const ExperimentDetailsPage = () => {
         </header>
 
         {/* Content Sections */}
-        <div className="space-y-12 mb-20">
+        <div className="space-y-12 mb-10 lg:mb-20">
           
           {/* Problem */}
           {(experiment.problemAr || experiment.problemEn) && (
@@ -212,7 +212,7 @@ export const ExperimentDetailsPage = () => {
         </div>
 
         {/* CTA */}
-        <div className="text-center py-16 border-t border-b border-white/10 mb-20">
+        <div className="text-center py-16 border-t border-b border-white/10 mb-10 lg:mb-20">
           <h2 className="text-2xl font-bold mb-4">{isEn ? 'Have a similar challenge?' : 'تواجه تحديًا مشابهًا؟'}</h2>
           <button 
             onClick={() => triggerBookingModal(isEn ? 'Shared Challenge from Experiment' : 'تحدي مشارك من صفحة التجربة')}

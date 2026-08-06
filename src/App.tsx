@@ -42,6 +42,7 @@ const FounderPage = lazy(() => import('./components/FounderPage').then(module =>
 const AboutPage = lazy(() => import('./components/AboutPage').then(module => ({ default: module.AboutPage })));
 const InnovationLabPage = lazy(() => import('./components/InnovationLabPage').then(module => ({ default: module.InnovationLabPage })));const ExperimentDetailsPage = lazy(() => import('./components/ExperimentDetailsPage').then(module => ({ default: module.ExperimentDetailsPage })));
 const StartProjectPage = lazy(() => import('./components/StartProjectPage').then(module => ({ default: module.StartProjectPage })));
+const DiscoveryPortal = lazy(() => import('./components/DiscoveryPortal').then(module => ({ default: module.DiscoveryPortal })));
 const ScrollProgress = () => {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -163,7 +164,7 @@ function AppContent() {
         <script type="application/ld+json">{JSON.stringify(schemas)}</script>
       </Helmet>
       <ScrollProgress />
-      <Header />
+      {config.currentRoute !== 'kyc' && <Header />}
       
       {isHome ? (
         <MainContent />
@@ -183,11 +184,7 @@ function AppContent() {
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
           <FounderPage />
         </Suspense>
-      ) : config.currentRoute === 'innovation-lab' ? (        <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>          <InnovationLabPage />        </Suspense>      ) : config.currentRoute?.startsWith('innovation-lab/') ? (        <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>          <ExperimentDetailsPage />        </Suspense>      ) : config.currentRoute === 'start-project' ? (
-        <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
-          <StartProjectPage />
-        </Suspense>
-      ) : config.currentRoute === 'products' ? (
+      ) : config.currentRoute === 'innovation-lab' ? (        <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>          <InnovationLabPage />        </Suspense>      ) : config.currentRoute?.startsWith('innovation-lab/') ? (        <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>          <ExperimentDetailsPage />        </Suspense>      ) : config.currentRoute === 'kyc' ? (<Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}><DiscoveryPortal /></Suspense>) : config.currentRoute === 'products' ? (
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
           <ProductsPage />
         </Suspense>
@@ -211,7 +208,7 @@ function AppContent() {
       )}
       
       <Suspense fallback={null}>
-        <Footer />
+        {config.currentRoute !== 'kyc' && <Footer />}
       </Suspense>
 
       {/* Hidden Admin Features */}
@@ -221,11 +218,11 @@ function AppContent() {
       </Suspense>
 
       {/* Global Consult Booking Dialog */}
-      <BookingModal />
+      {config.currentRoute !== 'kyc' && <BookingModal />}
       
       {/* Visual Effects */}
       <MouseParticles />
-      <WhatsAppWidget />
+      {config.currentRoute !== 'kyc' && <WhatsAppWidget />}
     </div>
   );
 }

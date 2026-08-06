@@ -60,7 +60,7 @@ export const Blog = () => {
   if (config.sections.blog === false) return null;
 
   return (
-    <section className="py-16 sm:py-24 md:py-32 relative overflow-hidden bg-[var(--surface-primary)]/10" id="blog">
+    <section className="py-10 sm:py-10 md:py-20 relative overflow-hidden bg-[var(--surface-primary)]/10" id="blog">
       {/* Background decoration */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-[var(--color-primary)] opacity-10 blur-[120px] rounded-full pointer-events-none" />
 

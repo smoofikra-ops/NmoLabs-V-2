@@ -119,7 +119,7 @@ export const FounderPage = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-20 md:py-28 relative">
+      <section className="py-10 md:py-20 md:py-28 relative">
         <div className="max-w-4xl mx-auto px-6">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-8 h-8 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center">
@@ -137,7 +137,7 @@ export const FounderPage = () => {
       </section>
 
       {/* Vision Quote Section */}
-      <section className="py-20 bg-[var(--surface-secondary)] border-y border-[var(--border-default)] relative overflow-hidden">
+      <section className="py-10 md:py-20 bg-[var(--surface-secondary)] border-y border-[var(--border-default)] relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.02] bg-[radial-gradient(circle_at_center,var(--color-primary)_1px,transparent_1px)]" style={{ backgroundSize: '40px 40px' }} />
         <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
           <h2 className="text-sm font-bold text-[var(--color-primary)] uppercase tracking-widest mb-12">
@@ -154,7 +154,7 @@ export const FounderPage = () => {
       </section>
 
       {/* Methodology Section */}
-      <section className="py-20 md:py-28">
+      <section className="py-10 md:py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-3xl font-black mb-16 text-center">
             {isEn ? 'How He Leads Project Building?' : 'كيف يقود بناء المشاريع؟'}
@@ -186,7 +186,7 @@ export const FounderPage = () => {
       </section>
 
       {/* Focus Areas */}
-      <section className="py-20 bg-[var(--surface-secondary)] border-y border-[var(--border-default)]">
+      <section className="py-10 md:py-20 bg-[var(--surface-secondary)] border-y border-[var(--border-default)]">
         <div className="max-w-5xl mx-auto px-6 text-center">
           <h2 className="text-2xl font-bold mb-10">
             {isEn ? 'Areas Led & Developed within NmoLabs' : 'مجالات يقودها ويطورها داخل NmoLabs'}
@@ -203,7 +203,7 @@ export const FounderPage = () => {
       </section>
 
       {/* Journey Section */}
-      <section className="py-20 md:py-28">
+      <section className="py-10 md:py-20 md:py-28">
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="text-3xl font-black mb-16 text-center">
             {isEn ? 'Continuous Building & Development Journey' : 'رحلة بناء وتطوير مستمرة'}
@@ -233,7 +233,7 @@ export const FounderPage = () => {
       </section>
 
       {/* From Vision to Execution */}
-      <section className="py-20 bg-[var(--surface-brand)] border-y border-[var(--border-default)]">
+      <section className="py-10 md:py-20 bg-[var(--surface-brand)] border-y border-[var(--border-default)]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl font-black mb-4">
@@ -246,25 +246,35 @@ export const FounderPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
             {[
-              { icon: Briefcase, route: 'workPreview', titleEn: 'Our Work', titleAr: 'أعمالنا', descEn: 'Client projects executed and developed by NmoLabs.', descAr: 'مشاريع عملاء نفذتها وطورتها NmoLabs.' },
-              { icon: Code2, route: 'productsPreview', titleEn: 'Our Products', titleAr: 'منتجاتنا', descEn: 'Solutions, platforms, and systems developed by NmoLabs.', descAr: 'حلول ومنصات وأنظمة تطورها NmoLabs.' },
-              { icon: Zap, route: 'innovation-lab', titleEn: 'Innovation Labs', titleAr: 'مختبر الابتكارات', descEn: 'Experiments, ideas, and prototypes under research and testing.', descAr: 'تجارب وأفكار ونماذج أولية قيد البحث والاختبار.' }
+              { image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80', icon: Briefcase, route: 'work', titleEn: 'Our Work', titleAr: 'أعمالنا', descEn: 'Client projects executed and developed by NmoLabs.', descAr: 'مشاريع عملاء نفذتها وطورتها NmoLabs.' },
+              { image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80', icon: Code2, route: 'products', titleEn: 'Our Products', titleAr: 'منتجاتنا', descEn: 'Solutions, platforms, and systems developed by NmoLabs.', descAr: 'حلول ومنصات وأنظمة تطورها NmoLabs.' },
+              { image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80', icon: Zap, route: 'innovation-lab', titleEn: 'Innovation Labs', titleAr: 'مختبر الابتكارات', descEn: 'Experiments, ideas, and prototypes under research and testing.', descAr: 'تجارب وأفكار ونماذج أولية قيد البحث والاختبار.' }
             ].map((card, idx) => (
               <div 
                 key={idx}
                 onClick={() => { updateConfig({ currentRoute: card.route as any }); window.scrollTo(0,0); }}
-                className="bg-[var(--surface-primary)] border border-[var(--border-default)] p-8 rounded-2xl cursor-pointer hover:border-[var(--color-primary)] hover:shadow-lg transition-all group"
+                className={`bg-[var(--surface-primary)] border border-[var(--border-default)] rounded-3xl cursor-pointer hover:border-[var(--color-primary)] transition-all group overflow-hidden flex flex-col h-full ${idx === 0 ? 'col-span-2 md:col-span-1' : 'col-span-1'}`}
               >
-                <card.icon size={40} className="text-[var(--text-muted)] mb-6 group-hover:text-[var(--color-primary)] transition-colors" />
-                <h3 className="text-xl font-bold mb-3">{isEn ? card.titleEn : card.titleAr}</h3>
-                <p className="text-[var(--text-secondary)] text-sm leading-relaxed mb-6">
-                  {isEn ? card.descEn : card.descAr}
-                </p>
-                <div className="flex items-center gap-2 text-[var(--color-primary)] font-bold text-sm">
-                  {isEn ? 'Explore' : 'استكشف'}
-                  <ArrowRight size={16} className={isEn ? '' : 'rotate-180'} />
+                <div className={`relative overflow-hidden ${idx === 0 ? "h-48" : "h-32 sm:h-48"}`}>
+                  <div className="absolute inset-0 bg-[var(--color-primary)] opacity-20 group-hover:opacity-10 transition-opacity z-10" />
+                  <img src={card.image} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt={isEn ? card.titleEn : card.titleAr} />
+                  <div className="absolute top-4 left-4 z-20 w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center text-white shadow-lg border border-white/20 group-hover:bg-[var(--color-primary)] transition-colors">
+                    <card.icon size={20} />
+                  </div>
+                </div>
+                
+                <div className="p-4 sm:p-6 lg:p-8 flex-1 flex flex-col">
+                  <h3 className="text-base sm:text-lg md:text-xl font-black mb-2 sm:mb-3 text-[var(--text-primary)] group-hover:text-[var(--color-primary)] transition-colors">{isEn ? card.titleEn : card.titleAr}</h3>
+                  <p className="text-[var(--text-muted)] text-xs sm:text-sm leading-relaxed mb-3 sm:mb-6 flex-1">
+                    {isEn ? card.descEn : card.descAr}
+                  </p>
+                  <div className="flex items-center gap-2 text-[var(--text-primary)] font-bold text-sm group-hover:text-[var(--color-primary)] transition-colors mt-auto">
+                    {isEn ? 'Explore' : 'استكشف'}
+                    <ArrowRight size={16} className={`transition-transform ${isEn ? 'group-hover:translate-x-1' : 'rotate-180 group-hover:-translate-x-1'}`} />
+                  </div>
                 </div>
               </div>
             ))}
@@ -272,8 +282,9 @@ export const FounderPage = () => {
         </div>
       </section>
 
+
       {/* Guiding Principles */}
-      <section className="py-20 md:py-28">
+      <section className="py-10 md:py-20 md:py-28">
         <div className="max-w-5xl mx-auto px-6">
           <div className="flex items-center justify-center gap-3 mb-16">
             <Target size={24} className="text-[var(--color-primary)]" />
@@ -292,7 +303,7 @@ export const FounderPage = () => {
       </section>
 
       {/* Letter from Founder */}
-      <section className="py-20 bg-[var(--surface-secondary)] border-y border-[var(--border-default)]">
+      <section className="py-10 md:py-20 bg-[var(--surface-secondary)] border-y border-[var(--border-default)]">
         <div className="max-w-4xl mx-auto px-6">
           <div className="bg-[var(--surface-primary)] border border-[var(--border-default)] rounded-3xl p-10 md:p-16 shadow-sm relative overflow-hidden">
             <div className="absolute top-0 start-0 w-32 h-32 bg-[var(--color-primary)]/5 blur-3xl rounded-full" />
@@ -317,7 +328,7 @@ export const FounderPage = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-24 text-center">
+      <section className="py-8 lg:py-24 text-center">
         <div className="max-w-3xl mx-auto px-6">
           <h2 className="text-4xl font-black mb-6">
             {isEn ? 'Let\'s Build the Next Step Together' : 'لنبنِ الخطوة القادمة معًا'}

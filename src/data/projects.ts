@@ -70,6 +70,7 @@ export const projects: Project[] = [
   {
     id: '14',
     slug: 'network-gate',
+    coverImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200',
     year: '2024',
     titleAr: 'بوابة الشبكات',
     titleEn: 'Network Gate',
@@ -100,6 +101,7 @@ export const projects: Project[] = [
     category: 'corporate',
     sectorAr: 'التشجير والمقاولات الزراعية',
     sectorEn: 'Afforestation & Agricultural Contracting',
+    coverImage: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&q=80&w=1200',
     summaryAr: 'موقع وكتالوج تعريفي احترافي يعرض خدمات التشجير والمقاولات الزراعية وتنسيق الحدائق وشبكات الري.',
     summaryEn: 'A professional corporate website and catalog showcasing afforestation, agricultural contracting, landscaping, and irrigation network services.',
     status: 'in_progress',

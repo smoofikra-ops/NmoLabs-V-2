@@ -214,12 +214,12 @@ export const Solutions = () => {
   const ecommerceDetails = [...ecommerceChallenges, ...ecommerceValues];
 
   return (
-    <section className="py-16 sm:py-24 md:py-32 relative bg-dots-pattern" id="solutions">
+    <section className="py-10 sm:py-10 md:py-10 md:py-20 relative bg-dots-pattern" id="solutions">
       {/* Background decoration */}
       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-[var(--color-secondary)] opacity-20 blur-[120px] rounded-full pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-12 sm:mb-20">
+        <div className="text-center mb-12 sm:mb-10 lg:mb-20">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

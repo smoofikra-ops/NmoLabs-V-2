@@ -11,7 +11,7 @@ export const InnovationPreview = () => {
   const previewExperiments = experimentsData.slice(0, 3);
 
   return (
-    <section className="py-24 bg-[#050505] relative overflow-hidden font-sans border-t border-white/5">
+    <section className="py-12 lg:py-24 bg-[#050505] relative overflow-hidden font-sans border-t border-white/5">
       {/* Background Glows */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-blue-500/5 blur-[100px] -translate-y-1/2 pointer-events-none" />
       <div className="absolute top-1/2 right-0 w-96 h-96 bg-purple-500/5 blur-[100px] -translate-y-1/2 pointer-events-none" />

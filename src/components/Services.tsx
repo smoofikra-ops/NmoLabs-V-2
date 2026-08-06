@@ -1,129 +1,107 @@
-import React, { useState, useRef, useEffect } from 'react';
+
+import React, { useEffect, useState, useRef } from 'react';
+import { motion } from 'motion/react';
 import { useSite } from '../context/SiteContext';
-import { motion, useScroll, useTransform } from 'motion/react';
-import { ArrowUpRight } from 'lucide-react';
 import { servicesList } from '../data/services';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
-export const Services = () => {
+export const Services: React.FC = () => {
   const { config, updateConfig } = useSite();
+  const isEn = config.language === 'en';
   const sectionRef = useRef<HTMLElement>(null);
-  const [isLargeScreen, setIsLargeScreen] = useState(false);
-
-  useEffect(() => {
-    setIsLargeScreen(window.innerWidth >= 1024);
-    const handleResize = () => setIsLargeScreen(window.innerWidth >= 1024);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
   
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-
-  const y1 = useTransform(scrollYProgress, [0, 1], [40, -40]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [80, -80]);
-  const y3 = useTransform(scrollYProgress, [0, 1], [0, 0]);
-
   if (!config.sections.services) return null;
 
-  return (
-    <section className="py-12 sm:py-16 relative z-10 bg-radial-glow" id="services" ref={sectionRef}>
-      {/* Dark gradient fade from top */}
-      <div className="absolute top-0 w-full h-32 bg-gradient-to-b from-[var(--surface-primary)] to-transparent pointer-events-none" />
+  const techServices = servicesList.filter(s => ['ecommerce-setup', 'ui-ux'].includes(s.id));
+  const marketingServices = servicesList.filter(s => ['ads-management', 'social-media', 'seo', 'copywriting'].includes(s.id));
 
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-12 sm:mb-20 relative">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-[var(--color-primary)] opacity-10 blur-[100px] rounded-full pointer-events-none" />
+  const groups = [
+    {
+      id: 'tech',
+      title: isEn ? 'Development & Design' : 'التطوير والتصميم',
+      desc: isEn ? 'Build a solid digital foundation.' : 'بناء أساس رقمي متين.',
+      items: techServices
+    },
+    {
+      id: 'marketing',
+      title: isEn ? 'Marketing & Growth' : 'التسويق والنمو',
+      desc: isEn ? 'Scale your audience and sales.' : 'توسيع نطاق المبيعات والجمهور.',
+      items: marketingServices
+    }
+  ];
+
+  return (
+    <section className="py-10 sm:py-16 md:py-24 relative z-10 bg-[var(--surface-primary)] border-y border-[var(--border-default)]" id="services" ref={sectionRef}>
+      <div className="absolute top-0 w-full h-32 bg-gradient-to-b from-[var(--surface-secondary)] to-transparent pointer-events-none" />
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="text-center mb-10 lg:mb-16 relative">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border-[var(--border-default)] text-sm font-medium mb-6 text-[var(--text-muted)]"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border-[var(--border-default)] text-xs font-bold uppercase mb-4 text-[var(--color-primary)] tracking-widest"
           >
-            حلول نمو ذكية
+            {isEn ? 'Our Expertise' : 'حلول نمو ذكية'}
           </motion.div>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-bold mb-4 sm:mb-6 tracking-tight text-[var(--text-primary)]"
+            className="text-2xl md:text-5xl font-black mb-4 tracking-tight text-[var(--text-primary)]"
           >
-            خدمات التسويق المتكاملة
+            {isEn ? 'Services built to scale' : 'خدمات تُبنى لتتوسع'}
           </motion.h2>
-          <motion.p 
-             initial={{ opacity: 0, y: 20 }}
-             whileInView={{ opacity: 1, y: 0 }}
-             viewport={{ once: true }}
-             transition={{ delay: 0.1 }}
-             className="text-base sm:text-lg md:text-xl text-[var(--text-muted)] max-w-3xl mx-auto font-light"
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-base sm:text-lg text-[var(--text-muted)] max-w-2xl mx-auto font-light leading-relaxed"
           >
-            حلول تسويق احترافية لبناء حضور رقمي قوي وتحقيق نمو حقيقي ومستدام.
+            {isEn 
+              ? 'We group our capabilities to provide end-to-end support for your digital products.'
+              : 'نجمع خبراتنا لتقديم دعم متكامل ومستدام لمنتجاتك ومشاريعك الرقمية.'}
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 sm:gap-6">
-          {servicesList.map((service, index) => {
-            return (
-              <motion.div
-                key={service.id}
-                style={{ y: isLargeScreen ? (index % 3 === 0 ? y1 : index % 3 === 1 ? y2 : y3) : 0 }}
-              >
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.4 }}
-                  className="hover:-translate-y-2 transition-all duration-500 rounded-3xl overflow-hidden group relative flex flex-col h-full shadow-md border border-[var(--border-default)] hover:border-[var(--color-primary)] hover:shadow-[inset_0_4px_15px_rgba(0,0,0,1),0_0_20px_rgba(79,142,247,0.3)] bg-[var(--surface-secondary)] cursor-pointer"
-                  onClick={() => updateConfig({ currentRoute: `services/${service.id}` })}
-                >
-                  {/* Hover Glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none z-0" />
-                  
-                  {/* Animated Border Top */}
-                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out opacity-0 group-hover:opacity-100 z-20" />
-                  
-                  {service.image && (
-                    <>
-                      <div className="absolute inset-0 z-0 overflow-hidden">
-                        <img 
-                          src={service.image} 
-                          alt={service.title} 
-                          className="w-full h-full object-cover transition-all duration-700 group-hover:blur-sm group-hover:scale-105 opacity-60 group-hover:opacity-40" 
-                        />
-                      </div>
-                      <div className="absolute inset-0 z-0 bg-gradient-to-t from-[var(--surface-secondary)] via-[var(--surface-secondary)]/80 to-[var(--surface-secondary)]/60 pointer-events-none" />
-                    </>
-                  )}
-                  
-                  <div className="p-4 sm:p-8 relative z-10 flex flex-col h-full">
-                    <div className="flex items-start justify-between mb-8">
-                      <div 
-                        className="p-4 rounded-2xl transition-all duration-500 bg-[var(--surface-tertiary)] shadow-sm border border-[var(--border-default)] text-[var(--color-primary)] group-hover:text-[var(--text-primary)] group-hover:bg-[var(--color-primary)] group-hover:shadow-lg flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-3"
-                      >
-                        {service.icon}
-                      </div>
-                    </div>
-                    
-                    <h3 className="text-lg sm:text-2xl font-bold mb-3 text-[var(--text-primary)] group-hover:text-[var(--color-primary)] transition-colors duration-300">{service.title}</h3>
-                    <p className="text-[var(--text-muted)] leading-relaxed text-xs sm:text-sm lg:text-base font-light mb-8 flex-1 line-clamp-4">
-                      {service.desc}
-                    </p>
-
-                    {/* Section Divider with animation */}
-                    <div className="h-px w-full bg-gradient-to-r from-transparent via-[var(--border-default)] group-hover:via-[var(--color-primary)] to-transparent mb-6 transition-colors duration-500"></div>
-
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          {groups.map((group, gIdx) => (
+            <motion.div 
+              key={group.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: gIdx * 0.1 }}
+              className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-3xl p-6 sm:p-8 flex flex-col"
+            >
+              <div className="mb-6 pb-6 border-b border-[var(--border-default)]">
+                <h3 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] mb-2">{group.title}</h3>
+                <p className="text-sm text-[var(--text-muted)]">{group.desc}</p>
+              </div>
+              
+              <div className="flex flex-wrap gap-2 sm:gap-3 mt-auto">
+                {group.items.map((service) => {
+                                    return (
                     <button 
-                      className="flex items-center gap-2 text-[var(--color-primary)] group-hover:text-[var(--text-primary)] font-bold mt-auto hover:gap-3 transition-all duration-300"
+                      key={service.id}
+                      onClick={() => {
+                        updateConfig({ currentRoute: `services/${service.id}` });
+                        window.scrollTo(0,0);
+                      }}
+                      className="group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 bg-[var(--surface-primary)] border border-[var(--border-default)] rounded-xl hover:border-[var(--color-primary)] hover:bg-[var(--surface-tertiary)] transition-all duration-300"
                     >
-                      تفاصيل أكثر
-                      <ArrowUpRight size={18} />
+                      <div className="text-[var(--text-muted)] group-hover:text-[var(--color-primary)] transition-colors shrink-0">
+                        {React.cloneElement(service.icon as React.ReactElement, { size: 16 })}
+                      </div>
+                      <span className="font-bold text-xs sm:text-sm text-[var(--text-primary)] whitespace-nowrap">
+                        {isEn ? service.titleEn : service.title}
+                      </span>
                     </button>
-                  </div>
-                </motion.div>
-              </motion.div>
-            )
-          })}
+                  );
+                })}
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

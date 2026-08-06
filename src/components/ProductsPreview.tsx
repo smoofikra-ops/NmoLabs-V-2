@@ -11,13 +11,13 @@ export const ProductsPreview = () => {
   const previewProducts = productsData.filter(p => p.featured).slice(0, 3);
 
   return (
-    <section className="py-16 sm:py-24 md:py-32 bg-[#050505] relative overflow-hidden" id="products">
+    <section className="py-10 sm:py-10 md:py-10 md:py-20 bg-[#050505] relative overflow-hidden" id="products">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[500px] opacity-10 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-primary)] to-transparent blur-[120px] rounded-full mix-blend-screen" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-12 sm:mb-20">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-12 sm:mb-10 lg:mb-20">
           <div className="max-w-2xl">
             <span className="text-[var(--color-primary)] font-bold text-xs sm:text-sm tracking-widest uppercase mb-2 sm:mb-4 block">NmoLabs Products</span>
             <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6 tracking-tight leading-tight">
@@ -51,7 +51,7 @@ export const ProductsPreview = () => {
                 updateConfig({ currentRoute: `products/${product.slug}` });
                 window.scrollTo({top: 0, behavior: 'smooth'});
               }}
-              className={`group relative rounded-3xl p-4 sm:p-8 bg-[#111] border border-white/10 hover:border-white/30 cursor-pointer overflow-hidden transition-all duration-300 flex flex-col h-full ${idx === 2 ? 'col-span-2' : ''}`}
+              className={`group relative rounded-3xl p-4 sm:p-8 bg-[#111] border border-white/10 hover:border-white/30 cursor-pointer overflow-hidden transition-all duration-300 flex flex-col h-full ${idx === 0 ? 'col-span-2 lg:col-span-1 min-h-[220px]' : 'col-span-1 min-h-[200px]'}`}
             >
               {product.coverVisual ? (
                  <>

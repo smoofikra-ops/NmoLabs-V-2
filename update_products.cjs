@@ -1,20 +1,26 @@
 const fs = require('fs');
+
 let code = fs.readFileSync('src/data/products.ts', 'utf8');
 
-const visuals = {
-  'ecommerce-management': 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=1200',
-  'smart-hr': 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1200',
-  'ai-support-bot': 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1200',
-  'smart-menu': 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=1200',
-  'media-buyer-dashboard': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200',
-  'nomu-trader': 'https://images.unsplash.com/photo-1586528116311-ad8ed7c50800?auto=format&fit=crop&q=80&w=1200',
-  'accounting-systems': 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=1200'
-};
+// For any product without coverVisual, let's add one.
+code = code.replace(
+  /brandColor: '#ff2a2a',/g, 
+  "brandColor: '#ff2a2a',\n    coverVisual: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200',"
+);
 
-for (const [slug, url] of Object.entries(visuals)) {
-  const searchStr = `slug: '${slug}',`;
-  const replaceStr = `slug: '${slug}',\n    coverVisual: '${url}',`;
-  code = code.replace(searchStr, replaceStr);
-}
+code = code.replace(
+  /brandColor: '#ff6b00',/g, 
+  "brandColor: '#ff6b00',\n    coverVisual: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200',"
+);
+
+code = code.replace(
+  /brandColor: '#00a3ff',/g, 
+  "brandColor: '#00a3ff',\n    coverVisual: 'https://images.unsplash.com/photo-1542744094-24638ea0bc40?auto=format&fit=crop&q=80&w=1200',"
+);
+
+code = code.replace(
+  /brandColor: '#4f8ef7',/g, 
+  "brandColor: '#4f8ef7',\n    coverVisual: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=80&w=1200',"
+);
 
 fs.writeFileSync('src/data/products.ts', code);

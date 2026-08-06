@@ -191,11 +191,11 @@ export const ToolsGrid = () => {
   if (!config.sections.tools) return null;
 
   return (
-    <section className="py-16 sm:py-24 md:py-32 relative bg-[color:var(--glass-bg)] bg-radial-glow" id="tools">
+    <section className="py-10 sm:py-10 md:py-20 relative bg-[color:var(--glass-bg)] bg-radial-glow" id="tools">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--surface-primary)] opacity-50" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="text-center mb-12 sm:mb-20">
+        <div className="text-center mb-12 sm:mb-10 lg:mb-20">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -216,7 +216,7 @@ export const ToolsGrid = () => {
         </div>
 
         {/* Tools Layout (Categories as Icons) */}
-        <div className="flex flex-col mb-20 md:mb-32" id="tools-container">
+        <div className="flex flex-col mb-10 lg:mb-20 md:mb-32" id="tools-container">
           
           {/* Categories Horizontal Icons */}
           <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8">
@@ -311,7 +311,7 @@ export const ToolsGrid = () => {
             <p className="text-sm sm:text-base text-[var(--text-muted)]">اختر الباقة التي تناسب حجم نشاطك</p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
             {pricingPackages.map((pkg, i) => (
               <PricingPackageCard key={i} pkg={pkg} index={i} />
             ))}

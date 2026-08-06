@@ -37,7 +37,7 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
     <section 
       ref={ref}
       id={`featured-${project.id}`}
-      className="min-h-[80svh] py-24 flex items-center relative z-10"
+      className="min-h-[80svh] py-12 lg:py-24 flex items-center relative z-10"
     >
       <div className="max-w-7xl mx-auto px-6 w-full">
         <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-16`}>
@@ -285,7 +285,7 @@ export const WorkPage = () => {
           </motion.div>
 
           {filteredOtherProjects.length === 0 && (
-            <div className="text-center py-24 text-[var(--text-muted)]">
+            <div className="text-center py-12 lg:py-24 text-[var(--text-muted)]">
               {isEn ? 'No projects found in this category.' : 'لا توجد مشاريع في هذا التصنيف حالياً.'}
             </div>
           )}

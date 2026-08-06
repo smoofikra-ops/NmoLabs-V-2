@@ -132,7 +132,7 @@ export const EcommerceSaas = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center max-w-4xl mx-auto mb-20"
+          className="text-center max-w-4xl mx-auto mb-10 lg:mb-20"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-[var(--color-primary)]/30 text-[var(--color-primary)] font-medium mb-6 animate-pulse-slow">
             <ShoppingBag className="w-4 h-4" />

@@ -49,7 +49,7 @@ export const InteractiveBackground: React.FC = () => {
   });
 
   useEffect(() => {
-    if (isMobile) return;
+    
     return smoothProgress.on("change", (latest) => {
       // Divide the page into chunks based on the number of backgrounds
       const index = Math.min(
@@ -70,14 +70,14 @@ export const InteractiveBackground: React.FC = () => {
         style={{ backgroundColor: 'var(--surface-primary)' }}
       />
 
-      {!isMobile && (
+      {true && (
         <AnimatePresence mode="wait">
           <motion.div
             key={currentBg}
             initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: config.theme === 'dark' ? 0.2 : 0.15, scale: 1 }}
+            animate={{ opacity: config.theme === 'dark' ? 0.2 : 0.15, scale: 1.05 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 1.2, ease: 'easeInOut' }}
+            transition={{ opacity: { duration: 1.2, ease: 'easeInOut' }, scale: { duration: 20, ease: 'linear', repeat: Infinity, repeatType: 'reverse' } }}
             className="absolute inset-0"
           >
             <img 
