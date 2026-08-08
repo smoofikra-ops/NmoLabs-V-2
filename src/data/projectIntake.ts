@@ -1,4 +1,4 @@
-export type ProjectType = 'website' | 'ecommerce' | 'custom-system' | 'accounting-system' | 'ai-automation' | 'marketing' | 'catalog-profile' | 'audit-improvement' | 'consultation' | 'integrated-project' | 'other';
+export type ProjectType = 'website' | 'ecommerce' | 'custom-system' | 'accounting-system' | 'ai-automation' | 'marketing' | 'catalog-profile' | 'audit-improvement' | 'consultation' | 'integrated-project' | 'other' | 'events-management';
 
 export const projectTypes = [
   { id: 'website', value: 'website', labelAr: 'إنشاء موقع إلكتروني', labelEn: 'Website Development', descAr: 'موقع تعريفي، موقع شركة، صفحة هبوط أو موقع خدمات.', descEn: 'Corporate site, landing page, or service website.' },
@@ -11,6 +11,7 @@ export const projectTypes = [
   { id: 'audit-improvement', value: 'audit-improvement', labelAr: 'تحليل وتطوير مشروع قائم', labelEn: 'Audit & Improvement', descAr: 'تحليل موقع أو متجر أو نظام وتحديد فرص التحسين.', descEn: 'Analyze a site, store, or system and identify areas for improvement.' },
   { id: 'consultation', value: 'consultation', labelAr: 'استشارة وتحديد الحل المناسب', labelEn: 'Consultation', descAr: 'غير متأكد من الخدمة المناسبة وتحتاج توجيهًا.', descEn: 'Not sure which service fits and need guidance.' },
   { id: 'integrated-project', value: 'integrated-project', labelAr: 'مشروع متكامل', labelEn: 'Integrated Project', descAr: 'مجموعة خدمات مترابطة تشمل البناء والتسويق والتشغيل.', descEn: 'A set of connected services including build, marketing, and operations.' },
+  { id: 'events-management', value: 'events-management', labelAr: 'إدارة الفعاليات والمهرجانات', labelEn: 'Events & Festivals Management', descAr: 'تصوير، مونتاج، توثيق، بث مباشر، تصوير درون، وافتتاحات.', descEn: 'Photography, video editing, documentation, live streaming, drone, etc.' },
   { id: 'other', value: 'other', labelAr: 'أخرى', labelEn: 'Other', descAr: 'حدد احتياجك الخاص', descEn: 'Specify your custom need.' }
 ];
 

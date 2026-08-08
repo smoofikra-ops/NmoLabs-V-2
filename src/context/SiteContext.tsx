@@ -244,6 +244,13 @@ const defaultConfig: SiteConfig = {
 };
 
 const getInitialConfig = () => {
+  let initialRoute = 'home';
+  if (typeof window !== 'undefined') {
+    const path = window.location.pathname.replace(/^\/+/, '');
+    if (path) {
+      initialRoute = path;
+    }
+  }
   const saved = localStorage.getItem('nmo_site_config');
   const savedUserTheme = localStorage.getItem('nmo_user_theme');
   if (saved) {
@@ -285,7 +292,7 @@ const getInitialConfig = () => {
         partnerClicks: parsed.partnerClicks || [],
         socialLinks: parsed.socialLinks || defaultConfig.socialLinks,
         footerDescription: parsed.footerDescription || defaultConfig.footerDescription,
-        currentRoute: 'home',
+        currentRoute: initialRoute,
         logoText: parsed.logoText || defaultConfig.logoText,
         desktopLogoUrl: parsed.desktopLogoUrl || defaultConfig.desktopLogoUrl,
         mobileLogoUrl: parsed.mobileLogoUrl || defaultConfig.mobileLogoUrl,
@@ -301,7 +308,7 @@ const getInitialConfig = () => {
       console.error("Failed to load config", e);
     }
   }
-  return { ...defaultConfig, theme: (savedUserTheme as 'light' | 'dark') || defaultConfig.theme };
+  return { ...defaultConfig, currentRoute: initialRoute, theme: (savedUserTheme as 'light' | 'dark') || defaultConfig.theme };
 };
 
 type SiteContextType = {
@@ -336,8 +343,7 @@ export const useSite = create<SiteContextType>((set, get) => ({
 }));
 
 export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const config = useSite(state => state.config);
-
+  const { config, updateConfig } = useSite();
   React.useEffect(() => {
     if (config.theme === 'light') {
       document.body.classList.remove('theme-dark');
@@ -347,6 +353,24 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
       document.body.classList.remove('theme-light');
     }
   }, [config.theme]);
+
+  React.useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname.replace(/^\/+/, '') || 'home';
+      updateConfig({ currentRoute: path });
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  React.useEffect(() => {
+    if (config.currentRoute) {
+      const targetUrl = config.currentRoute === 'home' ? '/' : `/${config.currentRoute}`;
+      if (window.location.pathname !== targetUrl) {
+        window.history.pushState(null, '', targetUrl);
+      }
+    }
+  }, [config.currentRoute]);
 
   return <>{children}</>;
 };
