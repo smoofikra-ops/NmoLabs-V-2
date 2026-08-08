@@ -235,7 +235,7 @@ export const DiscoveryPortal = () => {
       localStorage.removeItem('nomoDiscoveryProgress_v3');
       localStorage.removeItem('nomoDiscoveryStep_v3');
     } else {
-      setSubmitError(isEn ? (result.message || 'Failed to submit. Please try again.') : 'فشل الإرسال. يرجى المحاولة مرة أخرى.');
+      setSubmitError(isEn ? (result.message || 'Failed to submit. Please try again.') : (result.message || 'فشل الإرسال. يرجى المحاولة مرة أخرى.'));
     }
   };
 

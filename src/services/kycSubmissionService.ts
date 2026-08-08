@@ -33,10 +33,13 @@ export interface KYCSubmissionResponse {
 }
 
 export const submitKYCForm = async (payload: KYCSubmissionPayload): Promise<KYCSubmissionResponse> => {
+  console.log("=== [Frontend] submitKYCForm called ===");
+  console.log("Payload:", payload);
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 seconds timeout
+    const timeoutId = setTimeout(() => controller.abort(), 20000); // 20 seconds timeout
 
+    console.log("Sending request to /api/kyc-submit...");
     const response = await fetch('/api/kyc-submit', {
       method: 'POST',
       headers: {
@@ -48,18 +51,22 @@ export const submitKYCForm = async (payload: KYCSubmissionPayload): Promise<KYCS
 
     clearTimeout(timeoutId);
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
+    console.log("HTTP Status from /api/kyc-submit:", response.status);
 
     const data = await response.json();
+    console.log("Response body from /api/kyc-submit:", data);
+
+    if (!response.ok) {
+        throw new Error(data.message || `HTTP error! status: ${response.status}`);
+    }
 
     return data;
   } catch (error: any) {
-    console.error("KYC Submission error:", error);
+    console.error("=== [Frontend] KYC Submission error ===");
+    console.error(error);
     if (error.name === 'AbortError') {
-      return { success: false, message: 'Request timed out. Please try again.' };
+      return { success: false, message: 'انتهت مهلة الاتصال بالخادم. يرجى المحاولة مرة أخرى.' }; // Connection timeout
     }
-    return { success: false, message: error.message || 'Failed to submit form.' };
+    return { success: false, message: error.message || 'تعذر الاتصال بالخادم.' };
   }
 };
