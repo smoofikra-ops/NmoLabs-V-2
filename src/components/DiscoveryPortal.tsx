@@ -156,24 +156,47 @@ export const DiscoveryPortal = () => {
   const currentSection = sections[stepIndex]?.id || 'client_info';
 
   const validateSection = (sectionId: string) => {
-    switch(sectionId) {
+    switch (sectionId) {
       case 'client_info':
-        return formData.name.trim().length > 1 && formData.company.trim().length > 1 && formData.phone.trim().length > 5 && formData.email.trim().includes('@');
+        return (
+          formData.name.trim().length > 1 &&
+          formData.company.trim().length > 1 &&
+          formData.phone.trim().length > 5 &&
+          (
+            formData.email.trim() === '' ||
+            formData.email.trim().includes('@')
+          )
+        );
+
       case 'service':
         return formData.type !== '' && formData.description.trim().length > 10;
+
       case 'project_details':
-        return dynamicFields.every(f => (formData.dynamicAnswers[f.id] || '').trim().length > 0);
+        return dynamicFields.every(
+          f => (formData.dynamicAnswers[f.id] || '').trim().length > 0
+        );
+
       case 'identity_content':
-        return true; 
+        return true;
+
       case 'platforms':
-        return true; 
+        return true;
+
       case 'timeline':
-        return formData.budget !== '' && formData.timeline !== '' && formData.approval_response_time !== '';
+        return (
+          formData.budget !== '' &&
+          formData.timeline !== '' &&
+          formData.approval_response_time !== ''
+        );
+
       case 'additional_notes':
-        return true; 
+        return true;
+
       case 'review':
         return agreedToTerms && !isSubmitting;
-      default: return true;
+
+      default:
+        return true;
     }
   };
 
@@ -330,7 +353,7 @@ export const DiscoveryPortal = () => {
                 <div className="w-8 h-8 rounded-full bg-[var(--bg-primary)] border border-[var(--border-default)] flex items-center justify-center font-bold text-[var(--color-primary)]">A</div>
                 <div>
                   <h3 className="font-bold text-lg text-[var(--text-primary)]">{isEn ? 'Personal Details' : 'البيانات الشخصية'}</h3>
-                  <p className="text-xs text-[var(--text-muted)]">{isEn ? 'Enter your full name and contact email' : 'أدخل اسمك الكريم وبريدك الإلكتروني'}</p>
+                  <p className="text-xs text-[var(--text-muted)]">{isEn ? 'Enter your name. Email is optional.' : 'أدخل اسمك الكريم، والبريد الإلكتروني اختياري.'}</p>
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -345,15 +368,20 @@ export const DiscoveryPortal = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-[var(--text-primary)]">{isEn ? 'Email' : 'البريد الإلكتروني'}</label>
+                  <label className="text-sm font-bold text-[var(--text-primary)]">{isEn ? 'Email (Optional)' : 'البريد الإلكتروني (اختياري)'}</label>
                   <input 
                     type="email" 
                     value={formData.email} 
                     onChange={e => setFormData({...formData, email: e.target.value})}
                     dir="ltr"
                     className="w-full bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-xl px-4 py-3.5 text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)] transition-colors text-left shadow-sm"
-                    placeholder="example@domain.com"
+                    placeholder={isEn ? "example@domain.com — Optional" : "example@domain.com — اختياري"}
                   />
+                  <p className="text-xs text-[var(--text-muted)]">
+                    {isEn
+                      ? 'You can continue without entering an email address.'
+                      : 'يمكنك المتابعة بدون إدخال البريد الإلكتروني.'}
+                  </p>
                 </div>
               </div>
             </div>
