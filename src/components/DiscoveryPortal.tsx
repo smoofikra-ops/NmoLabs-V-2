@@ -489,7 +489,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
     localStorage.removeItem("nomoDiscoveryProgress_v3");
     localStorage.removeItem("nomoDiscoveryStep_v3");
 
-    const NOMOLABS_WHATSAPP_NUMBER = 'PUT_NUMBER_HERE';
+    const NOMOLABS_WHATSAPP_NUMBER = '0500804990';
     const waUrl = `https://wa.me/${NOMOLABS_WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
     setTimeout(() => {
         window.open(waUrl, '_blank');
