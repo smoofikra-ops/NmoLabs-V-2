@@ -117,7 +117,7 @@ const defaultConfig: SiteConfig = {
   heroThumbVideoUrl: '',
   heroVideoLoop: true,
   heroVideoPlaybackRate: 1,
-  contactNumber: '0500804990',
+  contactNumber: '966500804990',
   primaryColor: '#2563EB',
   secondaryColor: '#06B6D4',
   accentColor: '#10B981',

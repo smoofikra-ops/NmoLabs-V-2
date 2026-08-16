@@ -65,7 +65,7 @@ const pricingPackages = [
     features: ['كل ميزات الاحترافية', 'أدوات مخصصة لتجارتك', 'استشارات تسويقية', 'ربط API خاص'],
     color: '#10b981',
     buttonLabel: 'تواصل معنا',
-    contactLink: 'https://wa.me/966XXXXXXXXX'
+    contactLink: 'contact'
   }
 ];
 

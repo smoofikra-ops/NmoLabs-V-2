@@ -36,7 +36,7 @@ export const Footer = () => {
 
   const handleScroll = (id: string) => {
     if (id === 'contact' && config.contactNumber) {
-      let num = config.contactNumber.replace(/[^0-9]/g, ''); if(num.startsWith('05')) num = '966' + num.substring(1); window.open(`https://wa.me/${num}`, '_blank');
+      window.open(`https://wa.me/${config.contactNumber.replace(/[^0-9]/g, '')}`, '_blank');
       return;
     }
     if (config.currentRoute && config.currentRoute !== 'home') {

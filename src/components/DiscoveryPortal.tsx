@@ -489,8 +489,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
     localStorage.removeItem("nomoDiscoveryProgress_v3");
     localStorage.removeItem("nomoDiscoveryStep_v3");
 
-    const NOMOLABS_WHATSAPP_NUMBER = '0500804990';
-    const waUrl = `https://wa.me/${NOMOLABS_WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    const waUrl = `https://wa.me/${config.contactNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(msg)}`;
     setTimeout(() => {
         window.open(waUrl, '_blank');
     }, 500);
@@ -498,8 +497,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleWhatsAppClick = () => {
     setIsWhatsAppOpened(true);
-    const NOMOLABS_WHATSAPP_NUMBER = '966500804990';
-    const waUrl = `https://wa.me/${NOMOLABS_WHATSAPP_NUMBER}?text=${encodeURIComponent(fullWaMessage)}`;
+    const waUrl = `https://wa.me/${config.contactNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(fullWaMessage)}`;
     window.open(waUrl, '_blank');
     
     setTimeout(() => {
