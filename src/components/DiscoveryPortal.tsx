@@ -498,7 +498,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleWhatsAppClick = () => {
     setIsWhatsAppOpened(true);
-    const NOMOLABS_WHATSAPP_NUMBER = 'PUT_NUMBER_HERE';
+    const NOMOLABS_WHATSAPP_NUMBER = '966500804990';
     const waUrl = `https://wa.me/${NOMOLABS_WHATSAPP_NUMBER}?text=${encodeURIComponent(fullWaMessage)}`;
     window.open(waUrl, '_blank');
     
