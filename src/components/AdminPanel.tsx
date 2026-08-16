@@ -369,7 +369,7 @@ export const AdminPanel = () => {
                        type="text" 
                        value={config.contactNumber || ''}
                        onChange={(e) => updateConfig({ contactNumber: e.target.value })}
-                       placeholder="+966500000000"
+                       placeholder="966500804990"
                        className="w-full bg-[var(--surface-tertiary)] border border-[var(--border-default)] p-3 rounded-xl focus:border-[var(--color-primary)] outline-none transition-colors font-english text-left"
                        dir="ltr"
                      />

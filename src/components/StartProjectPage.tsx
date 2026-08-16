@@ -76,7 +76,8 @@ ${formData.description}`
 التفاصيل:
 ${formData.description}`;
 
-    let num = config.contactNumber?.replace(/[^0-9]/g, '') || '966500804990';
+    if (!config.contactNumber) return;
+    let num = config.contactNumber.replace(/[^0-9]/g, '');
     window.open(`https://wa.me/${num}?text=${encodeURIComponent(text)}`, '_blank');
     
     // Clear draft after successful submission
