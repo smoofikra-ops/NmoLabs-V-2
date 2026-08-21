@@ -1,33 +1,45 @@
 const fs = require('fs');
-let code = fs.readFileSync('src/context/SiteContext.tsx', 'utf8');
 
-const oldPartners = `  partners: [
-    { id: '1', name: 'الفكرة النادرة - دعاية واعلان', color: '#e63450', imageUrl: 'https://cdn.salla.sa/cdn-cgi/image/fit=scale-down,width=400,height=400,onerror=redirect,format=auto/BrzyDD/5GmtTmSorZpwTyuxAPydLrhQ20Zl5HMfO5392Rek.png', linkUrl: 'https://ric.com.sa/' },
-    { id: '2', name: 'بوابة الشبكات - انتينا ورواتر 5G', color: '#f29b6d', imageUrl: '', linkUrl: 'https://netgate-sa.com/' },
-    { id: '3', name: 'نخلتين واي فاي - انتينا وراتر', color: '#0e2f67', imageUrl: 'https://cdn.salla.sa/cdn-cgi/image/fit=scale-down,width=400,height=400,onerror=redirect,format=auto/wBalV/H2Do5qXWaQdqr9xBlSCxSz4CTZvn14mVFKvIhQHD.png', linkUrl: 'https://nakhltain.com/' },
-    { id: '4', name: 'ثلث اليوم للمفروشات', color: '#235418', imageUrl: 'https://cdn.salla.sa/cdn-cgi/image/fit=scale-down,width=400,height=400,onerror=redirect,format=auto/mQdDnZ/PyXrrxl7c8MJjl9A6wokcULOPOTmMNUqsaxfKR1v.png', linkUrl: 'https://thulth-sa.com/' },
-    { id: 'partner_1778961537430', name: 'مناديل ريجين', color: '#22b6ed', imageUrl: 'https://media.zid.store/13b20f5f-3857-45e3-9134-458d965caf58/a8827d63-f750-41ea-b5b2-1be59091326a.png', linkUrl: 'https://regine-sa.com' },
-    { id: 'partner_1779035910510', name: 'الأجهزة المبتكرة', color: '#de9336', imageUrl: '', linkUrl: '' },
-    { id: 'partner_1779035948609', name: 'صفقات كوم - كوزماتيكس', color: '#f5abc5', imageUrl: '', linkUrl: 'https://safaqatcom.com/' },
-    { id: 'partner_1779064216129', name: 'Rayflow Studio - ورشات عمل', color: '#414798', imageUrl: '', linkUrl: '' },
-    { id: 'partner_1779064264993', name: 'مناديل حصة', color: '#fdb700', imageUrl: '', linkUrl: '' },
-    { id: 'partner_1779064308309', name: 'بولي مارت - مصنع بلاستيك', color: '', imageUrl: '', linkUrl: '' },
-    { id: 'partner_1779064336725', name: 'شركة مقاولات', color: '', imageUrl: '', linkUrl: '' }
+const contextPath = 'src/context/SiteContext.tsx';
+let content = fs.readFileSync(contextPath, 'utf8');
+
+const targetArrayEnd = `    { id: 'partner_1779064336725', name: 'شركة مقاولات', color: '', imageUrl: '', linkUrl: '' }
   ],`;
 
-const newPartners = `  partners: [
-    { id: '1', name: 'الفكرة النادرة - دعاية واعلان', color: '#e63450', imageUrl: '/partners/1.png', linkUrl: 'https://ric.com.sa/' },
-    { id: '2', name: 'بوابة الشبكات - انتينا ورواتر 5G', color: '#f29b6d', imageUrl: '', linkUrl: 'https://netgate-sa.com/' },
-    { id: '3', name: 'نخلتين واي فاي - انتينا وراتر', color: '#0e2f67', imageUrl: '/partners/3.png', linkUrl: 'https://nakhltain.com/' },
-    { id: '4', name: 'ثلث اليوم للمفروشات', color: '#235418', imageUrl: '/partners/4.png', linkUrl: 'https://thulth-sa.com/' },
-    { id: 'partner_1778961537430', name: 'مناديل ريجين', color: '#22b6ed', imageUrl: '/partners/regine.png', linkUrl: 'https://regine-sa.com' },
-    { id: 'partner_1779035910510', name: 'الأجهزة المبتكرة', color: '#de9336', imageUrl: '', linkUrl: '' },
-    { id: 'partner_1779035948609', name: 'صفقات كوم - كوزماتيكس', color: '#f5abc5', imageUrl: '', linkUrl: 'https://safaqatcom.com/' },
-    { id: 'partner_1779064216129', name: 'Rayflow Studio - ورشات عمل', color: '#414798', imageUrl: '', linkUrl: '' },
-    { id: 'partner_1779064264993', name: 'مناديل حصة', color: '#fdb700', imageUrl: '', linkUrl: '' },
-    { id: 'partner_1779064308309', name: 'بولي مارت - مصنع بلاستيك', color: '', imageUrl: '', linkUrl: '' },
-    { id: 'partner_1779064336725', name: 'شركة مقاولات', color: '', imageUrl: '', linkUrl: '' }
+const newPartners = `    { id: 'partner_1779064336725', name: 'شركة مقاولات', color: '', imageUrl: '', linkUrl: '' },
+    { 
+      id: 'partner_rayatnajd', 
+      name: 'رايات نجد', 
+      color: '#3f7b49', 
+      imageUrl: '', 
+      linkUrl: 'https://rayatnajd.com',
+      types: ['موقع مؤسسي متكامل'],
+      description: 'يعرض الشركة وخدمات التشجير والاستدامة والمشاتل والمشاريع السابقة، ويضم مركز معرفة ومدونة وأدوات ذكية. مناسب للشركات التي تحتاج إلى بناء الثقة، عرض خبراتها، واستهداف الظهور في نتائج البحث على المدى الطويل.'
+    },
+    { 
+      id: 'partner_eventlive', 
+      name: 'إيفنت لايف', 
+      color: '#e30a21', 
+      imageUrl: '', 
+      linkUrl: 'https://eventliveksa.com',
+      types: ['موقع خدماتي بصري'],
+      description: 'يركز على التصوير الفوتوغرافي، إنتاج الفيديو، البث المباشر وتغطية الفعاليات والمؤتمرات. يتميز بالعرض البصري القوي، إبراز الأعمال السابقة، وسهولة الوصول إلى الاتصال والواتساب لطلب الخدمة.'
+    },
+    { 
+      id: 'partner_almethali', 
+      name: 'المثالي للدعاية والإعلان', 
+      color: '#1a56a4', 
+      imageUrl: '', 
+      linkUrl: 'https://almethaliadv.com',
+      types: ['موقع خدمات ومعرض أعمال'],
+      description: 'يعرض مجموعة كبيرة من الخدمات مثل اللوحات الإعلانية، الطباعة الرقمية، تجهيز المعارض والأكشاك، الفعاليات، الاستاندات والهدايا الدعائية، مع تقسيم واضح للخدمات ومعرض للأعمال المنفذة.'
+    }
   ],`;
 
-code = code.replace(oldPartners, newPartners);
-fs.writeFileSync('src/context/SiteContext.tsx', code);
+if (content.includes(targetArrayEnd)) {
+  content = content.replace(targetArrayEnd, newPartners);
+  fs.writeFileSync(contextPath, content);
+  console.log("Successfully added new partners to SiteContext.");
+} else {
+  console.error("Could not find the target array end in SiteContext.");
+}

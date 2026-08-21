@@ -57,6 +57,11 @@ export const Testimonials = () => {
             ))}
           </div>
         )}
+        {partner.description && (
+          <div className="text-[11px] bg-[var(--surface-secondary)]/90 text-[var(--text-secondary)] px-3 py-1.5 rounded-lg text-center leading-relaxed mt-1 max-w-full whitespace-normal">
+            {partner.description}
+          </div>
+        )}
       </div>
 
       {/* Logo Container */}

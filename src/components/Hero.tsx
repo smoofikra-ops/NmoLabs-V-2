@@ -126,6 +126,7 @@ const InteractiveShowcase = () => {
 
 export const Hero = () => {
   const { config, updateConfig } = useSite();
+  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
 
   if (!config.sections.hero) return null;
 
@@ -144,15 +145,33 @@ export const Hero = () => {
           poster={config.heroVideoPoster}
         />
       ) : (
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-20 dark:opacity-[0.25] pointer-events-none"
-        >
-          <source src="https://b.top4top.io/m_37896jjzf1.mp4" type="video/mp4" />
-        </video>
+        <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
+          {[
+            "https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/assets/videos/%D8%A7hero-vid1.mp4",
+            "https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/assets/videos/hero-vid2.mp4"
+          ].map((src, index) => (
+            <video
+              key={src}
+              src={src}
+              autoPlay={index === 0}
+              muted
+              playsInline
+              preload="auto"
+              onEnded={(e) => {
+                 const nextIndex = (index + 1) % 2;
+                 setActiveVideoIndex(nextIndex);
+                 const nextVideo = e.currentTarget.parentElement.children[nextIndex];
+                 if (nextVideo) {
+                   nextVideo.currentTime = 0;
+                   nextVideo.play().catch(console.error);
+                 }
+              }}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                activeVideoIndex === index ? 'opacity-20 dark:opacity-[0.25]' : 'opacity-0'
+              }`}
+            />
+          ))}
+        </div>
       )}
       <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-brand)]/80 via-[var(--surface-brand)]/40 to-[var(--surface-brand)] pointer-events-none" />
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.1] pointer-events-none" />
