@@ -19,7 +19,7 @@ Attempting to create a booking with a system admin or role-override field.
 ```json
 {
   "fullName": "Malicious Attacker",
-  "mobileNumber": "0545698905",
+  "mobileNumber": "0500804990",
   "clientType": "individual",
   "serviceType": "أخرى",
   "appointmentDate": "2026-06-01",
@@ -34,7 +34,7 @@ Attempting to set `createdAt` in the past.
 ```json
 {
   "fullName": "Backdated User",
-  "mobileNumber": "0545698905",
+  "mobileNumber": "0500804990",
   "clientType": "individual",
   "serviceType": "أخرى",
   "appointmentDate": "2026-06-01",
@@ -80,7 +80,7 @@ Submitting custom strings instead of individual/company.
 ```json
 {
   "fullName": "Sucker",
-  "mobileNumber": "0545698905",
+  "mobileNumber": "0500804990",
   "clientType": "hacker_superuser",
   "serviceType": "أخرى"
 }
@@ -91,7 +91,7 @@ Attempting to book at `02:00` AM (working hours are 10:00 AM to 10:00 PM).
 ```json
 {
   "fullName": "Late Night Hacker",
-  "mobileNumber": "0545698905",
+  "mobileNumber": "0500804990",
   "clientType": "individual",
   "serviceType": "أخرى",
   "appointmentDate": "2026-06-01",
