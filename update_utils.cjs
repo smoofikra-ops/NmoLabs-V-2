@@ -1,4 +1,6 @@
-import { clsx, type ClassValue } from 'clsx';
+const fs = require('fs');
+const path = 'src/lib/utils.ts';
+const content = `import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -30,6 +32,10 @@ export function formatWhatsAppPhone(phone?: string): string {
  */
 export function getWhatsAppUrl(phone?: string, message?: string): string {
   const formattedPhone = formatWhatsAppPhone(phone);
-  const textParam = message ? `?text=${encodeURIComponent(message)}` : '';
-  return `https://wa.me/${formattedPhone}${textParam}`;
+  const textParam = message ? \`?text=\${encodeURIComponent(message)}\` : '';
+  return \`https://wa.me/\${formattedPhone}\${textParam}\`;
 }
+`;
+
+fs.writeFileSync(path, content);
+console.log('Updated src/lib/utils.ts successfully');

@@ -1,3 +1,4 @@
+import { getWhatsAppUrl } from '../lib/utils';
 import React from 'react';
 import { motion } from 'motion/react';
 import { CheckCircle2, Zap, Brain, Shield, Rocket, ArrowLeft } from 'lucide-react';
@@ -73,7 +74,7 @@ export const WhyChooseUs = () => {
             <button 
               onClick={() => {
                 if(config.contactNumber) {
-                   window.open(`https://wa.me/${config.contactNumber.replace(/[^0-9]/g, '')}`, '_blank');
+                   window.open(getWhatsAppUrl(config.contactNumber), '_blank');
                 } else {
                    document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
                 }

@@ -1,3 +1,4 @@
+import { getWhatsAppUrl } from '../lib/utils';
 import React, { useState } from 'react';
 import { useSite } from '../context/SiteContext';
 import { motion, AnimatePresence } from 'motion/react';
@@ -149,7 +150,7 @@ const PricingPackageCard: React.FC<{ pkg: any, index: number }> = ({ pkg, index 
             
             {(pkg.contactLink || pkg.buttonLabel === 'تواصل معنا' || pkg.buttonLabel.includes('تواصل')) ? (
               <a 
-                href={config.contactNumber ? `https://wa.me/${config.contactNumber.replace(/[^0-9]/g, '')}` : '#contact'}
+                href={config.contactNumber ? getWhatsAppUrl(config.contactNumber) : '#contact'}
                 target={config.contactNumber ? "_blank" : "_self"}
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}

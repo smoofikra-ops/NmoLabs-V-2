@@ -117,7 +117,7 @@ const defaultConfig: SiteConfig = {
   heroThumbVideoUrl: '',
   heroVideoLoop: true,
   heroVideoPlaybackRate: 1,
-  contactNumber: '966500804990',
+  contactNumber: '0500804990',
   primaryColor: '#2563EB',
   secondaryColor: '#06B6D4',
   accentColor: '#10B981',
@@ -301,9 +301,15 @@ const getInitialConfig = () => {
            order.splice(1, 0, 'testimonials');
         }
       }
+      let resolvedContactNumber = parsed.contactNumber || defaultConfig.contactNumber;
+      if (!resolvedContactNumber || resolvedContactNumber.includes('545698905')) {
+        resolvedContactNumber = '0500804990';
+      }
+
       return {
         ...defaultConfig,
         ...parsed,
+        contactNumber: resolvedContactNumber,
         theme: savedUserTheme || parsed.theme || defaultConfig.theme,
         sectionOrder: order,
         sections: { ...defaultConfig.sections, ...(parsed.sections || {}) },

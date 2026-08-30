@@ -1,3 +1,4 @@
+import { getWhatsAppUrl } from '../lib/utils';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle, X, Send } from 'lucide-react';
@@ -12,9 +13,7 @@ export const WhatsAppWidget = () => {
     e.preventDefault();
     if (!config.contactNumber) return;
     
-    const phoneNumber = config.contactNumber.replace(/[^0-9]/g, '');
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+    window.open(getWhatsAppUrl(config.contactNumber, message), '_blank');
     setMessage('');
     setIsOpen(false);
   };

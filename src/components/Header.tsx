@@ -1,3 +1,4 @@
+import { getWhatsAppUrl } from '../lib/utils';
 import React, { useEffect, useState } from 'react';
 import { useSite } from '../context/SiteContext';
 import { motion, AnimatePresence } from 'motion/react';
@@ -44,7 +45,7 @@ export const Header = () => {
       setTimeout(() => {
         if(id === 'hero') window.scrollTo({top: 0, behavior: 'smooth'});
         else if(id === 'contact' && config.contactNumber) {
-          window.open(`https://wa.me/${config.contactNumber.replace(/[^0-9]/g, '')}`, '_blank');
+          window.open(getWhatsAppUrl(config.contactNumber), '_blank');
         } else {
           document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
         }
@@ -54,7 +55,7 @@ export const Header = () => {
 
     if(id === 'hero') window.scrollTo({top: 0, behavior: 'smooth'});
     else if(id === 'contact' && config.contactNumber) {
-      window.open(`https://wa.me/${config.contactNumber.replace(/[^0-9]/g, '')}`, '_blank');
+      window.open(getWhatsAppUrl(config.contactNumber), '_blank');
     } else {
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     }

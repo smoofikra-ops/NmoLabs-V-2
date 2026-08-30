@@ -1,3 +1,4 @@
+import { getWhatsAppUrl } from '../lib/utils';
 import React, { useState } from 'react';
 import { useSite } from '../context/SiteContext';
 import { companyData } from '../data/company';
@@ -45,7 +46,7 @@ export const AboutPage: React.FC = () => {
 
   const handleContactClick = () => {
     if (config.contactNumber) {
-      window.open(`https://wa.me/${config.contactNumber.replace(/[^0-9]/g, '')}`, '_blank');
+      window.open(getWhatsAppUrl(config.contactNumber), '_blank');
     }
   };
 

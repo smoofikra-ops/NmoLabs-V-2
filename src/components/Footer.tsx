@@ -1,3 +1,4 @@
+import { getWhatsAppUrl } from '../lib/utils';
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { UserRound, FlaskConical } from 'lucide-react';
@@ -36,7 +37,7 @@ export const Footer = () => {
 
   const handleScroll = (id: string) => {
     if (id === 'contact' && config.contactNumber) {
-      window.open(`https://wa.me/${config.contactNumber.replace(/[^0-9]/g, '')}`, '_blank');
+      window.open(getWhatsAppUrl(config.contactNumber), '_blank');
       return;
     }
     if (config.currentRoute && config.currentRoute !== 'home') {

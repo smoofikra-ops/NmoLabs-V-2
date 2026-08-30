@@ -1,3 +1,4 @@
+import { getWhatsAppUrl } from '../lib/utils';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useSite } from '../context/SiteContext';
@@ -77,8 +78,7 @@ ${formData.description}`
 ${formData.description}`;
 
     if (!config.contactNumber) return;
-    let num = config.contactNumber.replace(/[^0-9]/g, '');
-    window.open(`https://wa.me/${num}?text=${encodeURIComponent(text)}`, '_blank');
+    window.open(getWhatsAppUrl(config.contactNumber, text), '_blank');
     
     // Clear draft after successful submission
     localStorage.removeItem('nmolabs_project_draft');

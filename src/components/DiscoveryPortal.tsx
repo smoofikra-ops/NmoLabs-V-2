@@ -1,3 +1,4 @@
+import { getWhatsAppUrl } from "../lib/utils";
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -489,7 +490,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
     localStorage.removeItem("nomoDiscoveryProgress_v3");
     localStorage.removeItem("nomoDiscoveryStep_v3");
 
-    const waUrl = `https://wa.me/${config.contactNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(msg)}`;
+    const waUrl = getWhatsAppUrl(config.contactNumber, msg);
     setTimeout(() => {
         window.open(waUrl, '_blank');
     }, 500);
@@ -497,7 +498,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleWhatsAppClick = () => {
     setIsWhatsAppOpened(true);
-    const waUrl = `https://wa.me/${config.contactNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(fullWaMessage)}`;
+    const waUrl = getWhatsAppUrl(config.contactNumber, fullWaMessage);
     window.open(waUrl, '_blank');
     
     setTimeout(() => {
