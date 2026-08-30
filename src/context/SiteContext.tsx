@@ -130,6 +130,12 @@ const defaultConfig: SiteConfig = {
   },
   sections: {
     hero: true,
+    storySolutions: true,
+    storyEcommerce: true,
+    storyWebsites: true,
+    storyGrowth: true,
+    storySocial: true,
+    storyBigVision: true,
     aboutPreview: true,
     whatToBuild: true,
     services: true,
@@ -145,7 +151,18 @@ const defaultConfig: SiteConfig = {
     analyzer: true,
     blog: true
   },
-  sectionOrder: ['hero', 'testimonials', 'aboutPreview', 'whatToBuild', 'services', 'workPreview', 'productsPreview', 'solutions', 'tools', 'workflow', 'faq', 'blog'],
+  sectionOrder: [
+    'hero',
+    'storySolutions',
+    'storyEcommerce',
+    'storyWebsites',
+    'storyGrowth',
+    'storySocial',
+    'storyBigVision',
+    'testimonials',
+    'faq',
+    'blog'
+  ],
   apiLinks: {
     semrush: '',
     hotjar: '',
@@ -284,6 +301,10 @@ const getInitialConfig = () => {
     try {
       const parsed = JSON.parse(saved);
       let order = parsed.sectionOrder || defaultConfig.sectionOrder;
+      // Upgrade older stored order to new storytelling flow
+      if (!order.includes('storySolutions')) {
+        order = defaultConfig.sectionOrder;
+      }
       order = order.filter((s: string) => s !== 'analyzer' && s !== 'innovationPreview' && s !== 'founderPreview');
       if (!order.includes('blog')) {
         order.push('blog');

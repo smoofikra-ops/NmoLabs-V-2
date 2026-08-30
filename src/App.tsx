@@ -12,6 +12,13 @@ import { InteractiveBackground } from './components/InteractiveBackground';
 
 import { WhatsAppWidget } from './components/WhatsAppWidget';
 
+const StoryCustomSolutions = lazy(() => import('./components/storytelling/StoryCustomSolutions').then(module => ({ default: module.StoryCustomSolutions })));
+const StoryEcommerce = lazy(() => import('./components/storytelling/StoryEcommerce').then(module => ({ default: module.StoryEcommerce })));
+const StoryWebsites = lazy(() => import('./components/storytelling/StoryWebsites').then(module => ({ default: module.StoryWebsites })));
+const StoryGrowthCampaigns = lazy(() => import('./components/storytelling/StoryGrowthCampaigns').then(module => ({ default: module.StoryGrowthCampaigns })));
+const StorySocialPresence = lazy(() => import('./components/storytelling/StorySocialPresence').then(module => ({ default: module.StorySocialPresence })));
+const StoryBigVision = lazy(() => import('./components/storytelling/StoryBigVision').then(module => ({ default: module.StoryBigVision })));
+
 const Services = lazy(() => import('./components/Services').then(module => ({ default: module.Services })));
 const WhyChooseUs = lazy(() => import('./components/WhyChooseUs').then(module => ({ default: module.WhyChooseUs })));
 const Solutions = lazy(() => import('./components/Solutions').then(module => ({ default: module.Solutions })));
@@ -99,6 +106,12 @@ const MainContent = () => {
 
     switch (id) {
       case 'hero': return <Hero key={id} />;
+      case 'storySolutions': return <Suspense key={id} fallback={<div className="h-96" />}><StoryCustomSolutions /></Suspense>;
+      case 'storyEcommerce': return <Suspense key={id} fallback={<div className="h-96" />}><StoryEcommerce /></Suspense>;
+      case 'storyWebsites': return <Suspense key={id} fallback={<div className="h-96" />}><StoryWebsites /></Suspense>;
+      case 'storyGrowth': return <Suspense key={id} fallback={<div className="h-96" />}><StoryGrowthCampaigns /></Suspense>;
+      case 'storySocial': return <Suspense key={id} fallback={<div className="h-96" />}><StorySocialPresence /></Suspense>;
+      case 'storyBigVision': return <Suspense key={id} fallback={<div className="h-96" />}><StoryBigVision /></Suspense>;
       case 'whatToBuild': return <Suspense key={id} fallback={<div className="h-96" />}><WhatToBuild /></Suspense>;
       case 'services': return <Suspense key={id} fallback={<div className="h-96" />}><Services /></Suspense>;
       case 'workPreview': return <Suspense key={id} fallback={<div className="h-96" />}><WorkPreview /></Suspense>;

@@ -1,6 +1,8 @@
 {
-  "name": "",
-  "description": "",
+  "name": "NmoLabs Official Website",
+  "description": "الموقع الرسمي لـ NmoLabs - استوديو الابتكار وتطوير الأنظمة، المتاجر الإلكترونية، المنصات الرقمية، ونمو الأعمال.",
   "requestFramePermissions": [],
-  "majorCapabilities": []
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

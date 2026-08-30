@@ -1,39 +1,30 @@
 const fs = require('fs');
-let code = fs.readFileSync('src/components/Hero.tsx', 'utf8');
+const path = 'src/components/Hero.tsx';
+let content = fs.readFileSync(path, 'utf8');
 
-const oldVideo = `{config.heroVideoUrl ? (
-            <div className="relative w-full aspect-video md:aspect-[4/3] lg:aspect-video rounded-3xl overflow-hidden shadow-2xl border border-[var(--border-default)] group cursor-pointer">
-              <video 
-                src={config.heroVideoUrl} 
-                poster={config.heroVideoPoster}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                autoPlay={config.heroVideoLoop !== false}
-                loop={config.heroVideoLoop !== false}
-                muted
-                playsInline
-                controls
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
-            </div>
-          ) : (`;
+// Replace opacity-40 dark:opacity-50
+content = content.replace(
+  'className="absolute inset-0 w-full h-full object-cover opacity-40 dark:opacity-50 pointer-events-none"',
+  'className="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-85 pointer-events-none"'
+);
 
-const newVideo = `{config.heroVideoUrl ? (
-            <div className="relative w-full w-full aspect-[4/5] sm:aspect-video md:aspect-video lg:aspect-square xl:aspect-[4/3] rounded-[2rem] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-[var(--border-default)]/50 bg-[var(--surface-secondary)]/40 backdrop-blur-xl group cursor-pointer p-2 sm:p-3">
-              <div className="relative w-full h-full rounded-3xl overflow-hidden bg-[var(--surface-primary)]">
-                <video 
-                  src={config.heroVideoUrl} 
-                  poster={config.heroVideoPoster}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  autoPlay={config.heroVideoLoop !== false}
-                  loop={config.heroVideoLoop !== false}
-                  muted
-                  playsInline
-                  controls
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
-              </div>
-            </div>
-          ) : (`;
+// Replace opacity-20 dark:opacity-[0.25]
+content = content.replace(
+  "activeVideoIndex === index ? 'opacity-20 dark:opacity-[0.25]' : 'opacity-0'",
+  "activeVideoIndex === index ? 'opacity-70 dark:opacity-80' : 'opacity-0'"
+);
 
-code = code.replace(oldVideo, newVideo);
-fs.writeFileSync('src/components/Hero.tsx', code);
+// Replace overlay
+content = content.replace(
+  '<div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-brand)]/80 via-[var(--surface-brand)]/40 to-[var(--surface-brand)] pointer-events-none" />',
+  '<div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-brand)]/35 via-transparent to-[var(--surface-brand)]/65 pointer-events-none" />'
+);
+
+// Replace grid pattern opacity
+content = content.replace(
+  '<div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.1] pointer-events-none" />',
+  '<div className="absolute inset-0 bg-grid-pattern opacity-[0.02] dark:opacity-[0.04] pointer-events-none" />'
+);
+
+fs.writeFileSync(path, content);
+console.log('Hero.tsx updated with clear, crisp video settings.');
