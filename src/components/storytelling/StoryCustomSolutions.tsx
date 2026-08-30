@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import React from 'react';
+import { motion, useTransform } from 'motion/react';
 import { useSite } from '../../context/SiteContext';
 import { 
   Cpu, 
@@ -10,11 +10,13 @@ import {
   Award, 
   Sparkles, 
   ArrowLeft, 
-  ArrowRight,
-  ShieldCheck,
-  Zap,
-  Code2
+  ArrowRight, 
+  ShieldCheck, 
+  Zap, 
+  Code2 
 } from 'lucide-react';
+import { StorySceneContainer } from './StorySceneContainer';
+import { STORY_ASSETS } from './storyAssets';
 
 const PRODUCTS = [
   {
@@ -113,110 +115,102 @@ const PRODUCTS = [
 export const StoryCustomSolutions: React.FC = () => {
   const { config, updateConfig } = useSite();
   const isEn = config.language === 'en';
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start']
-  });
-
-  const headerOpacity = useTransform(scrollYProgress, [0.05, 0.2], [0, 1]);
-  const headerY = useTransform(scrollYProgress, [0.05, 0.2], [30, 0]);
 
   return (
-    <section 
-      ref={containerRef} 
-      id="story-solutions" 
-      className="relative py-20 lg:py-28 overflow-hidden bg-[var(--surface-primary)] border-b border-[var(--border-default)] transition-colors duration-300"
+    <StorySceneContainer
+      id="story-solutions"
+      bgUrl={STORY_ASSETS.STORY_02_SYSTEMS}
+      isEn={isEn}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Story Header */}
-        <motion.div 
-          style={{ opacity: headerOpacity, y: headerY }}
-          className="text-center max-w-3xl mx-auto mb-14 lg:mb-20"
-        >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-xs font-semibold text-[var(--color-primary)] mb-4 shadow-sm">
-            <Code2 className="w-3.5 h-3.5" />
-            <span>STORY 01 • {isEn ? 'Custom Digital Solutions' : 'الأنظمة والحلول الرقمية'}</span>
-          </div>
-
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--text-primary)] tracking-tight leading-tight mb-4">
-            {isEn ? 'Custom Systems, Apps & Digital Solutions' : 'الأنظمة والتطبيقات والحلول الرقمية المخصصة'}
-          </h2>
-
-          <p className="text-lg sm:text-xl text-[var(--text-muted)] font-medium">
-            {isEn ? 'We build the exact technology your business needs.' : 'نبني التقنية التي يحتاجها عملك.'}
-          </p>
-        </motion.div>
-
-        {/* Scroll-Choreographed Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
-          {PRODUCTS.map((prod, index) => {
-            const Icon = prod.icon;
-            const startRange = 0.12 + (index * 0.08);
-            const endRange = Math.min(0.28 + (index * 0.08), 0.85);
-            const xInitial = index % 2 === 0 ? 25 : -25;
-
-            return (
-              <ProductTileItem
-                key={prod.id}
-                product={prod}
-                icon={Icon}
-                scrollYProgress={scrollYProgress}
-                startRange={startRange}
-                endRange={endRange}
-                xInitial={xInitial}
-                isEn={isEn}
-                onSelect={() => {
-                  updateConfig({ currentRoute: 'products' });
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-              />
-            );
-          })}
-
-          {/* 8th Tile for Symmetry and Action */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            onClick={() => {
-              updateConfig({ currentRoute: 'products' });
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className="group relative p-6 rounded-2xl border-2 border-dashed border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-secondary)]/50 hover:bg-[var(--surface-primary)] flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 shadow-sm hover:shadow-md min-h-[160px]"
+      {({ scrollYProgress, headerOpacity, headerY, isReducedMotion }) => (
+        <>
+          {/* Story Header */}
+          <motion.div 
+            style={{ opacity: headerOpacity, y: headerY }}
+            className="text-center max-w-3xl mx-auto mb-14 lg:mb-20"
           >
-            <div className="w-12 h-12 rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-              <Zap className="w-6 h-6" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-primary)]/90 backdrop-blur-md border border-[var(--border-default)] text-xs font-semibold text-[var(--color-primary)] mb-4 shadow-sm">
+              <Code2 className="w-3.5 h-3.5" />
+              <span>STORY 02 • {isEn ? 'Custom Digital Solutions' : 'الأنظمة والحلول الرقمية'}</span>
             </div>
-            <h3 className="font-bold text-[var(--text-primary)] mb-1 text-base">
-              {isEn ? 'Explore Full Suite' : 'استكشف كافة الحلول'}
-            </h3>
-            <p className="text-xs text-[var(--text-muted)] flex items-center gap-1 group-hover:text-[var(--color-primary)] font-semibold transition-colors">
-              <span>{isEn ? 'View all products' : 'عرض منتجات NmoLabs'}</span>
-              {isEn ? <ArrowRight className="w-3.5 h-3.5" /> : <ArrowLeft className="w-3.5 h-3.5" />}
+
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--text-primary)] tracking-tight leading-tight mb-4">
+              {isEn ? 'Custom Systems, Apps & Digital Solutions' : 'الأنظمة والتطبيقات والحلول الرقمية المخصصة'}
+            </h2>
+
+            <p className="text-lg sm:text-xl text-[var(--text-secondary)] font-medium">
+              {isEn ? 'We build the exact technology your business needs.' : 'نبني التقنية التي يحتاجها عملك.'}
             </p>
           </motion.div>
-        </div>
 
-        {/* Bottom Proof Strip */}
-        <div className="mt-12 text-center">
-          <button
-            onClick={() => {
-              updateConfig({ currentRoute: 'products' });
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--surface-secondary)] hover:bg-[var(--surface-tertiary)] border border-[var(--border-default)] text-sm font-bold text-[var(--text-primary)] transition-all shadow-sm hover:shadow group"
-          >
-            <ShieldCheck className="w-4 h-4 text-[var(--color-accent)]" />
-            <span>{isEn ? 'Engineered for scalability & security' : 'أنظمة مبنية لتحمل التوسع والأمان العالي'}</span>
-            {isEn ? <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /> : <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />}
-          </button>
-        </div>
+          {/* Scroll-Choreographed Products Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+            {PRODUCTS.map((prod, index) => {
+              const Icon = prod.icon;
+              const startRange = 0.12 + (index * 0.07);
+              const endRange = Math.min(0.26 + (index * 0.07), 0.82);
+              const xInitial = isReducedMotion ? 0 : (index % 2 === 0 ? 25 : -25);
 
-      </div>
-    </section>
+              return (
+                <ProductTileItem
+                  key={prod.id}
+                  product={prod}
+                  icon={Icon}
+                  scrollYProgress={scrollYProgress}
+                  startRange={startRange}
+                  endRange={endRange}
+                  xInitial={xInitial}
+                  isEn={isEn}
+                  isReducedMotion={isReducedMotion}
+                  onSelect={() => {
+                    updateConfig({ currentRoute: 'products' });
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                />
+              );
+            })}
+
+            {/* 8th Tile for Symmetry and Action */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              onClick={() => {
+                updateConfig({ currentRoute: 'products' });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="group relative p-6 rounded-2xl border-2 border-dashed border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/80 backdrop-blur-md hover:bg-[var(--surface-primary)] flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 shadow-sm hover:shadow-md min-h-[160px]"
+            >
+              <div className="w-12 h-12 rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <Zap className="w-6 h-6" />
+              </div>
+              <h3 className="font-bold text-[var(--text-primary)] mb-1 text-base">
+                {isEn ? 'Explore Full Suite' : 'استكشف كافة الحلول'}
+              </h3>
+              <p className="text-xs text-[var(--text-muted)] flex items-center gap-1 group-hover:text-[var(--color-primary)] font-semibold transition-colors">
+                <span>{isEn ? 'View all products' : 'عرض منتجات NmoLabs'}</span>
+                {isEn ? <ArrowRight className="w-3.5 h-3.5" /> : <ArrowLeft className="w-3.5 h-3.5" />}
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Bottom Proof Strip */}
+          <div className="mt-12 text-center">
+            <button
+              onClick={() => {
+                updateConfig({ currentRoute: 'products' });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--surface-primary)]/90 backdrop-blur-md hover:bg-[var(--surface-secondary)] border border-[var(--border-default)] text-sm font-bold text-[var(--text-primary)] transition-all shadow-sm hover:shadow group"
+            >
+              <ShieldCheck className="w-4 h-4 text-[var(--color-accent)]" />
+              <span>{isEn ? 'Engineered for scalability & security' : 'أنظمة مبنية لتحمل التوسع والأمان العالي'}</span>
+              {isEn ? <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /> : <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />}
+            </button>
+          </div>
+        </>
+      )}
+    </StorySceneContainer>
   );
 };
 
@@ -228,6 +222,7 @@ interface ProductTileProps {
   endRange: number;
   xInitial: number;
   isEn: boolean;
+  isReducedMotion: boolean;
   onSelect: () => void;
 }
 
@@ -239,18 +234,35 @@ const ProductTileItem: React.FC<ProductTileProps> = ({
   endRange,
   xInitial,
   isEn,
+  isReducedMotion,
   onSelect
 }) => {
-  const opacity = useTransform(scrollYProgress, [startRange, endRange], [0, 1]);
-  const y = useTransform(scrollYProgress, [startRange, endRange], [24, 0]);
-  const x = useTransform(scrollYProgress, [startRange, endRange], [xInitial, 0]);
-  const scale = useTransform(scrollYProgress, [startRange, endRange], [0.94, 1]);
+  const opacity = useTransform(
+    scrollYProgress,
+    [startRange, endRange, 0.88, 0.98],
+    [0, 1, 1, 0.2]
+  );
+  const y = useTransform(
+    scrollYProgress,
+    [startRange, endRange],
+    isReducedMotion ? [0, 0] : [24, 0]
+  );
+  const x = useTransform(
+    scrollYProgress,
+    [startRange, endRange],
+    isReducedMotion ? [0, 0] : [xInitial, 0]
+  );
+  const scale = useTransform(
+    scrollYProgress,
+    [startRange, endRange],
+    isReducedMotion ? [1, 1] : [0.94, 1]
+  );
 
   return (
     <motion.div
       style={{ opacity, y, x, scale }}
       onClick={onSelect}
-      className={`group relative p-5 sm:p-6 rounded-2xl border ${product.borderColor} bg-[var(--surface-primary)] hover:bg-[var(--surface-secondary)]/70 transition-all duration-300 shadow-sm hover:shadow-lg cursor-pointer flex flex-col justify-between overflow-hidden`}
+      className={`group relative p-5 sm:p-6 rounded-2xl border ${product.borderColor} bg-[var(--surface-primary)]/88 backdrop-blur-md hover:bg-[var(--surface-primary)] transition-all duration-300 shadow-sm hover:shadow-lg cursor-pointer flex flex-col justify-between overflow-hidden`}
     >
       <div>
         <div className="flex items-center justify-between mb-4">

@@ -1,20 +1,20 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import React from 'react';
+import { motion, useTransform } from 'motion/react';
 import { useSite } from '../../context/SiteContext';
 import { 
   Share2, 
   Sparkles, 
   MessageSquare, 
-  Heart, 
   Eye, 
   ArrowLeft, 
   ArrowRight,
   TrendingUp,
   Camera,
-  Play,
   CheckCircle2
 } from 'lucide-react';
 import { triggerBookingModal } from '../BookingModal';
+import { StorySceneContainer } from './StorySceneContainer';
+import { STORY_ASSETS } from './storyAssets';
 
 const SOCIAL_PILLARS = [
   {
@@ -73,134 +73,126 @@ const MOCK_POSTS = [
 export const StorySocialPresence: React.FC = () => {
   const { config } = useSite();
   const isEn = config.language === 'en';
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start']
-  });
-
-  const headerOpacity = useTransform(scrollYProgress, [0.05, 0.2], [0, 1]);
-  const headerY = useTransform(scrollYProgress, [0.05, 0.2], [30, 0]);
 
   return (
-    <section 
-      ref={containerRef} 
-      id="story-social" 
-      className="relative py-20 lg:py-28 overflow-hidden bg-[var(--surface-primary)] border-b border-[var(--border-default)] transition-colors duration-300"
+    <StorySceneContainer
+      id="story-social"
+      bgUrl={STORY_ASSETS.STORY_06_SOCIAL}
+      isEn={isEn}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Story Header */}
-        <motion.div 
-          style={{ opacity: headerOpacity, y: headerY }}
-          className="text-center max-w-3xl mx-auto mb-14 lg:mb-20"
-        >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-xs font-semibold text-[var(--color-primary)] mb-4 shadow-sm">
-            <Share2 className="w-3.5 h-3.5" />
-            <span>STORY 05 • {isEn ? 'Social Media & Brand Presence' : 'حضور العلامة الرقمي'}</span>
+      {({ scrollYProgress, headerOpacity, headerY, isReducedMotion }) => (
+        <>
+          {/* Story Header */}
+          <motion.div 
+            style={{ opacity: headerOpacity, y: headerY }}
+            className="text-center max-w-3xl mx-auto mb-14 lg:mb-20"
+          >
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-primary)]/90 backdrop-blur-md border border-[var(--border-default)] text-xs font-semibold text-[var(--color-primary)] mb-4 shadow-sm">
+              <Share2 className="w-3.5 h-3.5" />
+              <span>STORY 06 • {isEn ? 'Social Media & Brand Presence' : 'حضور العلامة والتأثير الرقمي'}</span>
+            </div>
+
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--text-primary)] tracking-tight leading-tight mb-4">
+              {isEn ? 'Elevating Brand Presence on Social Media' : 'إدارة وتطوير حضور العلامة في وسائل التواصل'}
+            </h2>
+
+            <p className="text-lg sm:text-xl text-[var(--text-secondary)] font-medium">
+              {isEn ? 'From creative direction to high-impact content and active community management.' : 'نبني لعلامتك حضوراً مؤثراً يجذب الجمهور المستهدف ويحول التفاعل إلى مبيعات وثقة.'}
+            </p>
+          </motion.div>
+
+          {/* 3 Pillars Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            {SOCIAL_PILLARS.map((pillar, index) => {
+              const startRange = 0.1 + (index * 0.1);
+              const endRange = Math.min(0.28 + (index * 0.1), 0.85);
+              const Icon = pillar.icon;
+
+              return (
+                <PillarCard
+                  key={pillar.titleAr}
+                  pillar={pillar}
+                  icon={Icon}
+                  scrollYProgress={scrollYProgress}
+                  startRange={startRange}
+                  endRange={endRange}
+                  isEn={isEn}
+                  isReducedMotion={isReducedMotion}
+                />
+              );
+            })}
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--text-primary)] tracking-tight leading-tight mb-4">
-            {isEn ? 'Elevating Brand Presence on Social Media' : 'إدارة وتطوير حضور العلامة في وسائل التواصل'}
-          </h2>
-
-          <p className="text-lg sm:text-xl text-[var(--text-muted)] font-medium">
-            {isEn ? 'From creative direction to high-impact content and active community management.' : 'نبني لعلامتك حضوراً مؤثراً يجذب الجمهور المستهدف ويحول التفاعل إلى مبيعات وثقة.'}
-          </p>
-        </motion.div>
-
-        {/* 3 Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {SOCIAL_PILLARS.map((pillar, index) => {
-            const startRange = 0.1 + (index * 0.1);
-            const endRange = Math.min(0.3 + (index * 0.1), 0.85);
-            const Icon = pillar.icon;
-
-            return (
-              <PillarCard
-                key={pillar.titleAr}
-                pillar={pillar}
-                icon={Icon}
-                scrollYProgress={scrollYProgress}
-                startRange={startRange}
-                endRange={endRange}
-                isEn={isEn}
-              />
-            );
-          })}
-        </div>
-
-        {/* Social Content Proof Showcase */}
-        <div className="rounded-3xl border border-[var(--border-default)] bg-[var(--surface-secondary)] p-6 sm:p-8 lg:p-10 shadow-sm">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-            <div>
-              <h3 className="text-xl font-bold text-[var(--text-primary)] mb-1">
-                {isEn ? 'Engaging Formats That Spark Action' : 'نماذج وتجارب محتوى تصنع التفاعل'}
-              </h3>
-              <p className="text-xs sm:text-sm text-[var(--text-muted)]">
-                {isEn ? 'Optimized for TikTok, Instagram Reels, Snapchat, and X' : 'محتوى متجاوب مع خوارزميات المنصات وسلوك المستهلك المحلي'}
-              </p>
-            </div>
-            <div className="flex items-center gap-2 text-xs font-bold text-[var(--color-primary)]">
-              <Sparkles className="w-4 h-4" />
-              <span>{isEn ? 'Strategic Publishing' : 'نشر مبني على الأثر'}</span>
-            </div>
-          </div>
-
-          {/* Social Mockup Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            {MOCK_POSTS.map((post, idx) => (
-              <div 
-                key={idx}
-                className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)] overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 group"
-              >
-                <div className="relative h-44 overflow-hidden bg-slate-100 dark:bg-slate-800">
-                  <img 
-                    src={post.image} 
-                    alt={post.platform}
-                    loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                  <div className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-black/60 backdrop-blur text-[11px] font-bold text-white">
-                    {post.platform}
-                  </div>
-                  <div className="absolute bottom-3 right-3 left-3 flex items-center justify-between text-white text-xs">
-                    <span className="flex items-center gap-1 font-bold">
-                      <Eye className="w-3.5 h-3.5" />
-                      {post.views}
-                    </span>
-                    <span className="flex items-center gap-1 text-emerald-400 font-bold">
-                      <TrendingUp className="w-3.5 h-3.5" />
-                      {post.engagement}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-4 flex items-center justify-between">
-                  <span className="text-xs font-bold text-[var(--text-secondary)]">
-                    {post.category}
-                  </span>
-                  <CheckCircle2 className="w-4 h-4 text-[var(--color-accent)]" />
-                </div>
+          {/* Social Content Proof Showcase */}
+          <div className="rounded-3xl border border-[var(--border-default)] bg-[var(--surface-primary)]/90 backdrop-blur-md p-6 sm:p-8 lg:p-10 shadow-sm">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+              <div>
+                <h3 className="text-xl font-bold text-[var(--text-primary)] mb-1">
+                  {isEn ? 'Engaging Formats That Spark Action' : 'نماذج وتجارب محتوى تصنع التفاعل'}
+                </h3>
+                <p className="text-xs sm:text-sm text-[var(--text-muted)]">
+                  {isEn ? 'Optimized for TikTok, Instagram Reels, Snapchat, and X' : 'محتوى متجاوب مع خوارزميات المنصات وسلوك المستهلك المحلي'}
+                </p>
               </div>
-            ))}
-          </div>
+              <div className="flex items-center gap-2 text-xs font-bold text-[var(--color-primary)]">
+                <Sparkles className="w-4 h-4" />
+                <span>{isEn ? 'Strategic Publishing' : 'نشر مبني على الأثر'}</span>
+              </div>
+            </div>
 
-          <div className="mt-8 text-center">
-            <button
-              onClick={() => triggerBookingModal()}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--color-primary)] text-white text-xs sm:text-sm font-bold shadow-md hover:opacity-95 transition-all"
-            >
-              <span>{isEn ? 'Build Your Social Presence' : 'طور حضور علامتك مع NmoLabs'}</span>
-              {isEn ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
-            </button>
-          </div>
-        </div>
+            {/* Social Mockup Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+              {MOCK_POSTS.map((post, idx) => (
+                <div 
+                  key={idx}
+                  className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)] overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 group"
+                >
+                  <div className="relative h-44 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                    <img 
+                      src={post.image} 
+                      alt={post.platform}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                    <div className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-black/60 backdrop-blur text-[11px] font-bold text-white">
+                      {post.platform}
+                    </div>
+                    <div className="absolute bottom-3 right-3 left-3 flex items-center justify-between text-white text-xs">
+                      <span className="flex items-center gap-1 font-bold">
+                        <Eye className="w-3.5 h-3.5" />
+                        {post.views}
+                      </span>
+                      <span className="flex items-center gap-1 text-emerald-400 font-bold">
+                        <TrendingUp className="w-3.5 h-3.5" />
+                        {post.engagement}
+                      </span>
+                    </div>
+                  </div>
 
-      </div>
-    </section>
+                  <div className="p-4 flex items-center justify-between">
+                    <span className="text-xs font-bold text-[var(--text-secondary)]">
+                      {post.category}
+                    </span>
+                    <CheckCircle2 className="w-4 h-4 text-[var(--color-accent)]" />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 text-center">
+              <button
+                onClick={() => triggerBookingModal()}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--color-primary)] text-white text-xs sm:text-sm font-bold shadow-md hover:opacity-95 transition-all"
+              >
+                <span>{isEn ? 'Build Your Social Presence' : 'طور حضور علامتك مع NmoLabs'}</span>
+                {isEn ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+    </StorySceneContainer>
   );
 };
 
@@ -211,6 +203,7 @@ interface PillarCardProps {
   startRange: number;
   endRange: number;
   isEn: boolean;
+  isReducedMotion: boolean;
 }
 
 const PillarCard: React.FC<PillarCardProps> = ({
@@ -219,16 +212,29 @@ const PillarCard: React.FC<PillarCardProps> = ({
   scrollYProgress,
   startRange,
   endRange,
-  isEn
+  isEn,
+  isReducedMotion
 }) => {
-  const opacity = useTransform(scrollYProgress, [startRange, endRange], [0, 1]);
-  const y = useTransform(scrollYProgress, [startRange, endRange], [24, 0]);
-  const scale = useTransform(scrollYProgress, [startRange, endRange], [0.95, 1]);
+  const opacity = useTransform(
+    scrollYProgress,
+    [startRange, endRange, 0.88, 0.98],
+    [0, 1, 1, 0.2]
+  );
+  const y = useTransform(
+    scrollYProgress,
+    [startRange, endRange],
+    isReducedMotion ? [0, 0] : [24, 0]
+  );
+  const scale = useTransform(
+    scrollYProgress,
+    [startRange, endRange],
+    isReducedMotion ? [1, 1] : [0.95, 1]
+  );
 
   return (
     <motion.div
       style={{ opacity, y, scale }}
-      className="p-6 sm:p-7 rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)] shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+      className="p-6 sm:p-7 rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)]/90 backdrop-blur-md shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
     >
       <div>
         <div className="flex items-center justify-between mb-5">
@@ -254,3 +260,4 @@ const PillarCard: React.FC<PillarCardProps> = ({
     </motion.div>
   );
 };
+

@@ -1,17 +1,15 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import React from 'react';
+import { motion, useTransform } from 'motion/react';
 import { useSite } from '../../context/SiteContext';
 import { 
   Globe, 
   ExternalLink, 
   ArrowLeft, 
   ArrowRight, 
-  Monitor, 
-  Shield, 
-  Sparkles,
-  Layers,
-  CheckCircle
+  Monitor 
 } from 'lucide-react';
+import { StorySceneContainer } from './StorySceneContainer';
+import { STORY_ASSETS } from './storyAssets';
 
 const WEBSITES = [
   {
@@ -89,110 +87,102 @@ const WEBSITES = [
 export const StoryWebsites: React.FC = () => {
   const { config, updateConfig } = useSite();
   const isEn = config.language === 'en';
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start']
-  });
-
-  const headerOpacity = useTransform(scrollYProgress, [0.05, 0.2], [0, 1]);
-  const headerY = useTransform(scrollYProgress, [0.05, 0.2], [30, 0]);
 
   return (
-    <section 
-      ref={containerRef} 
-      id="story-websites" 
-      className="relative py-20 lg:py-28 overflow-hidden bg-[var(--surface-primary)] border-b border-[var(--border-default)] transition-colors duration-300"
+    <StorySceneContainer
+      id="story-websites"
+      bgUrl={STORY_ASSETS.STORY_04_WEBSITES}
+      isEn={isEn}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Story Header */}
-        <motion.div 
-          style={{ opacity: headerOpacity, y: headerY }}
-          className="text-center max-w-3xl mx-auto mb-14 lg:mb-20"
-        >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-xs font-semibold text-[var(--color-primary)] mb-4 shadow-sm">
-            <Globe className="w-3.5 h-3.5" />
-            <span>STORY 03 • {isEn ? 'Platforms & Websites' : 'المواقع والمنصات التعريفية'}</span>
-          </div>
-
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--text-primary)] tracking-tight leading-tight mb-4">
-            {isEn ? 'Websites & Digital Platforms that Build Trust' : 'إنشاء وتطوير المواقع والمنصات الرقمية'}
-          </h2>
-
-          <p className="text-lg sm:text-xl text-[var(--text-muted)] font-medium">
-            {isEn ? 'High-impact corporate portals and platforms that reflect credibility and brand authority.' : 'واجهات تعريفية ومنصات مصممة لبناء الثقة وعكس قوة أعمالك أمام العملاء والشركاء.'}
-          </p>
-        </motion.div>
-
-        {/* Scroll Sequenced Websites Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {WEBSITES.map((site, index) => {
-            const startRange = 0.1 + (index * 0.1);
-            const endRange = Math.min(0.3 + (index * 0.1), 0.9);
-            const xInitial = index % 2 === 0 ? 30 : -30;
-
-            return (
-              <WebsiteCard
-                key={site.id}
-                site={site}
-                index={index}
-                scrollYProgress={scrollYProgress}
-                startRange={startRange}
-                endRange={endRange}
-                xInitial={xInitial}
-                isEn={isEn}
-                onSelect={() => {
-                  if (site.slug) {
-                    updateConfig({ currentRoute: `work/${site.slug}` });
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  } else {
-                    updateConfig({ currentRoute: 'work' });
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }
-                }}
-              />
-            );
-          })}
-
-          {/* 6th Slot CTA */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="rounded-2xl border border-[var(--border-default)] bg-gradient-to-br from-[var(--surface-secondary)] to-[var(--surface-tertiary)] p-6 sm:p-8 flex flex-col justify-between shadow-sm"
+      {({ scrollYProgress, headerOpacity, headerY, isReducedMotion }) => (
+        <>
+          {/* Story Header */}
+          <motion.div 
+            style={{ opacity: headerOpacity, y: headerY }}
+            className="text-center max-w-3xl mx-auto mb-14 lg:mb-20"
           >
-            <div>
-              <div className="w-12 h-12 rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center mb-4">
-                <Monitor className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">
-                {isEn ? 'Explore All Selected Works' : 'شاهد كافة الأعمال المنفذة'}
-              </h3>
-              <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6">
-                {isEn 
-                  ? 'Browse our complete catalog of corporate websites, apps, and bespoke platforms.'
-                  : 'تصفح قائمة المشاريع الكاملة والحلول الرقمية التي بنيناها لعملائنا في مختلف القطاعات.'
-                }
-              </p>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-primary)]/90 backdrop-blur-md border border-[var(--border-default)] text-xs font-semibold text-[var(--color-primary)] mb-4 shadow-sm">
+              <Globe className="w-3.5 h-3.5" />
+              <span>STORY 04 • {isEn ? 'Platforms & Websites' : 'المواقع والمنصات الرقمية'}</span>
             </div>
 
-            <button
-              onClick={() => {
-                updateConfig({ currentRoute: 'work' });
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="w-full py-3.5 px-5 rounded-xl bg-[var(--color-primary)] text-white text-sm font-bold flex items-center justify-center gap-2 hover:opacity-95 shadow-md transition-opacity"
-            >
-              <span>{isEn ? 'View Our Work' : 'شاهد أعمالنا'}</span>
-              {isEn ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
-            </button>
-          </motion.div>
-        </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--text-primary)] tracking-tight leading-tight mb-4">
+              {isEn ? 'Websites & Digital Platforms that Build Trust' : 'إنشاء وتطوير المواقع والمنصات الرقمية'}
+            </h2>
 
-      </div>
-    </section>
+            <p className="text-lg sm:text-xl text-[var(--text-secondary)] font-medium">
+              {isEn ? 'High-impact corporate portals and platforms that reflect credibility and brand authority.' : 'واجهات تعريفية ومنصات مصممة لبناء الثقة وعكس قوة أعمالك أمام العملاء والشركاء.'}
+            </p>
+          </motion.div>
+
+          {/* Scroll Sequenced Websites Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {WEBSITES.map((site, index) => {
+              const startRange = 0.1 + (index * 0.08);
+              const endRange = Math.min(0.28 + (index * 0.08), 0.85);
+              const xInitial = isReducedMotion ? 0 : (index % 2 === 0 ? 30 : -30);
+
+              return (
+                <WebsiteCard
+                  key={site.id}
+                  site={site}
+                  index={index}
+                  scrollYProgress={scrollYProgress}
+                  startRange={startRange}
+                  endRange={endRange}
+                  xInitial={xInitial}
+                  isEn={isEn}
+                  isReducedMotion={isReducedMotion}
+                  onSelect={() => {
+                    if (site.slug) {
+                      updateConfig({ currentRoute: `work/${site.slug}` });
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                      updateConfig({ currentRoute: 'work' });
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  }}
+                />
+              );
+            })}
+
+            {/* 6th Slot CTA */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)]/88 backdrop-blur-md p-6 sm:p-8 flex flex-col justify-between shadow-sm"
+            >
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center mb-4">
+                  <Monitor className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">
+                  {isEn ? 'Explore All Selected Works' : 'شاهد كافة الأعمال المنفذة'}
+                </h3>
+                <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6">
+                  {isEn 
+                    ? 'Browse our complete catalog of corporate websites, apps, and bespoke platforms.'
+                    : 'تصفح قائمة المشاريع الكاملة والحلول الرقمية التي بنيناها لعملائنا في مختلف القطاعات.'
+                  }
+                </p>
+              </div>
+
+              <button
+                onClick={() => {
+                  updateConfig({ currentRoute: 'work' });
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="w-full py-3.5 px-5 rounded-xl bg-[var(--color-primary)] text-white text-sm font-bold flex items-center justify-center gap-2 hover:opacity-95 shadow-md transition-opacity"
+              >
+                <span>{isEn ? 'View Our Work' : 'شاهد أعمالنا'}</span>
+                {isEn ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
+              </button>
+            </motion.div>
+          </div>
+        </>
+      )}
+    </StorySceneContainer>
   );
 };
 
@@ -204,6 +194,7 @@ interface WebsiteCardProps {
   endRange: number;
   xInitial: number;
   isEn: boolean;
+  isReducedMotion: boolean;
   onSelect: () => void;
 }
 
@@ -215,18 +206,35 @@ const WebsiteCard: React.FC<WebsiteCardProps> = ({
   endRange,
   xInitial,
   isEn,
+  isReducedMotion,
   onSelect
 }) => {
-  const opacity = useTransform(scrollYProgress, [startRange, endRange], [0, 1]);
-  const y = useTransform(scrollYProgress, [startRange, endRange], [24, 0]);
-  const x = useTransform(scrollYProgress, [startRange, endRange], [xInitial, 0]);
-  const scale = useTransform(scrollYProgress, [startRange, endRange], [0.95, 1]);
+  const opacity = useTransform(
+    scrollYProgress,
+    [startRange, endRange, 0.88, 0.98],
+    [0, 1, 1, 0.2]
+  );
+  const y = useTransform(
+    scrollYProgress,
+    [startRange, endRange],
+    isReducedMotion ? [0, 0] : [24, 0]
+  );
+  const x = useTransform(
+    scrollYProgress,
+    [startRange, endRange],
+    isReducedMotion ? [0, 0] : [xInitial, 0]
+  );
+  const scale = useTransform(
+    scrollYProgress,
+    [startRange, endRange],
+    isReducedMotion ? [1, 1] : [0.95, 1]
+  );
 
   return (
     <motion.div
       style={{ opacity, y, x, scale }}
       onClick={onSelect}
-      className="group relative rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)] hover:border-[var(--color-primary)]/40 hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden flex flex-col justify-between"
+      className="group relative rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)]/90 backdrop-blur-md hover:border-[var(--color-primary)]/40 hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden flex flex-col justify-between"
     >
       <div>
         <div className="relative h-44 sm:h-48 overflow-hidden bg-slate-100 dark:bg-slate-900">
@@ -295,3 +303,4 @@ const WebsiteCard: React.FC<WebsiteCardProps> = ({
     </motion.div>
   );
 };
+

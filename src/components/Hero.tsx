@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, ArrowLeft, Monitor, ShoppingBag, Smartphone, Database, LineChart, BrainCircuit, Bot } from 'lucide-react';
 import { triggerBookingModal } from './BookingModal';
 import siteLogo from '../assets/images/site-logo.png';
+import { STORY_ASSETS } from './storytelling/storyAssets';
 
 
 const TYPEWRITER_PHRASES = [
@@ -134,18 +135,29 @@ export const Hero = () => {
 
   return (
     <section className="relative min-h-auto py-16 sm:py-20 md:py-12 lg:py-24 lg:min-h-screen flex items-center overflow-hidden bg-[var(--surface-brand)]" id="hero">
+      {/* STORY 01 — Background World Layer */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <img
+          src={STORY_ASSETS.STORY_01_HERO}
+          alt=""
+          role="presentation"
+          aria-hidden="true"
+          className="w-full h-full object-cover object-center opacity-85 dark:opacity-90 transition-transform duration-1000 scale-100"
+        />
+      </div>
+
       {config.heroVideoUrl ? (
         <video
           autoPlay
           loop={config.heroVideoLoop !== false}
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-85 pointer-events-none"
+          className="absolute inset-0 w-full h-full object-cover opacity-60 dark:opacity-70 pointer-events-none z-[1] mix-blend-screen dark:mix-blend-lighten"
           src={config.heroVideoUrl}
           poster={config.heroVideoPoster}
         />
       ) : (
-        <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-[1]">
           {[
             "https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/assets/videos/%D8%A7hero-vid1.mp4",
             "https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/assets/videos/hero-vid2.mp4"
@@ -166,15 +178,15 @@ export const Hero = () => {
                    nextVideo.play().catch(console.error);
                  }
               }}
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-                activeVideoIndex === index ? 'opacity-70 dark:opacity-80' : 'opacity-0'
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 mix-blend-screen dark:mix-blend-lighten ${
+                activeVideoIndex === index ? 'opacity-55 dark:opacity-65' : 'opacity-0'
               }`}
             />
           ))}
         </div>
       )}
-      <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-brand)]/35 via-transparent to-[var(--surface-brand)]/65 pointer-events-none" />
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] dark:opacity-[0.04] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-primary)]/75 via-[var(--surface-primary)]/55 to-[var(--surface-primary)]/85 dark:from-[#0a0f1d]/85 dark:via-[#0a0f1d]/65 dark:to-[#0a0f1d]/90 pointer-events-none z-[2]" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] dark:opacity-[0.04] pointer-events-none z-[2]" />
       
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 w-full flex flex-col items-center justify-center text-center mt-10 lg:mt-0">
         

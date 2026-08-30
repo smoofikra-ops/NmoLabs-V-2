@@ -1,18 +1,15 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import React from 'react';
+import { motion, useTransform } from 'motion/react';
 import { useSite } from '../../context/SiteContext';
 import { 
   ShoppingBag, 
   ExternalLink, 
   ArrowLeft, 
   ArrowRight, 
-  CheckCircle2, 
-  Sparkles, 
-  CreditCard,
-  Zap,
-  Layers,
   TrendingUp
 } from 'lucide-react';
+import { StorySceneContainer } from './StorySceneContainer';
+import { STORY_ASSETS } from './storyAssets';
 
 const STORES = [
   {
@@ -95,110 +92,102 @@ const STORES = [
 export const StoryEcommerce: React.FC = () => {
   const { config, updateConfig } = useSite();
   const isEn = config.language === 'en';
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start']
-  });
-
-  const headerOpacity = useTransform(scrollYProgress, [0.05, 0.2], [0, 1]);
-  const headerY = useTransform(scrollYProgress, [0.05, 0.2], [30, 0]);
 
   return (
-    <section 
-      ref={containerRef} 
-      id="story-ecommerce" 
-      className="relative py-20 lg:py-28 overflow-hidden bg-[var(--surface-secondary)] border-b border-[var(--border-default)] transition-colors duration-300"
+    <StorySceneContainer
+      id="story-ecommerce"
+      bgUrl={STORY_ASSETS.STORY_03_ECOMMERCE}
+      isEn={isEn}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Story Header */}
-        <motion.div 
-          style={{ opacity: headerOpacity, y: headerY }}
-          className="text-center max-w-3xl mx-auto mb-14 lg:mb-20"
-        >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-primary)] border border-[var(--border-default)] text-xs font-semibold text-[var(--color-primary)] mb-4 shadow-sm">
-            <ShoppingBag className="w-3.5 h-3.5" />
-            <span>STORY 02 • {isEn ? 'E-Commerce Engineering' : 'إنشاء وتطوير المتاجر'}</span>
-          </div>
-
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--text-primary)] tracking-tight leading-tight mb-4">
-            {isEn ? 'E-Commerce Stores Built for High Conversion' : 'إنشاء وتطوير المتاجر الإلكترونية'}
-          </h2>
-
-          <p className="text-lg sm:text-xl text-[var(--text-muted)] font-medium">
-            {isEn ? 'Real stores engineered for conversion, speed, and frictionless shopping.' : 'بدل أن نخبرك، نشاركك نماذج من المتاجر التي عملنا عليها.'}
-          </p>
-        </motion.div>
-
-        {/* Scroll Sequenced Stores Showcase */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {STORES.map((store, index) => {
-            const startRange = 0.1 + (index * 0.1);
-            const endRange = Math.min(0.3 + (index * 0.1), 0.9);
-            const xInitial = index % 2 === 0 ? 30 : -30;
-
-            return (
-              <StoreShowcaseCard
-                key={store.id}
-                store={store}
-                index={index}
-                scrollYProgress={scrollYProgress}
-                startRange={startRange}
-                endRange={endRange}
-                xInitial={xInitial}
-                isEn={isEn}
-                onSelect={() => {
-                  if (store.slug) {
-                    updateConfig({ currentRoute: `work/${store.slug}` });
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  } else {
-                    updateConfig({ currentRoute: 'work' });
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }
-                }}
-              />
-            );
-          })}
-
-          {/* CTA Box */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="rounded-2xl border border-[var(--border-default)] bg-gradient-to-br from-[var(--surface-primary)] to-[var(--surface-tertiary)] p-6 sm:p-8 flex flex-col justify-between shadow-sm"
+      {({ scrollYProgress, headerOpacity, headerY, isReducedMotion }) => (
+        <>
+          {/* Story Header */}
+          <motion.div 
+            style={{ opacity: headerOpacity, y: headerY }}
+            className="text-center max-w-3xl mx-auto mb-14 lg:mb-20"
           >
-            <div>
-              <div className="w-12 h-12 rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center mb-4">
-                <TrendingUp className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">
-                {isEn ? 'Ready to Launch Your Store?' : 'جاهز لإطلاق متجرك القادم؟'}
-              </h3>
-              <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6">
-                {isEn 
-                  ? 'We design, develop, integrate payment gateways, and optimize your store for maximum sales.'
-                  : 'نصمم، نطور، نربط بوابات الدفع، ونهيئ متجرك لتحقيق أعلى عائد ومبيعات متزايدة.'
-                }
-              </p>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-primary)]/90 backdrop-blur-md border border-[var(--border-default)] text-xs font-semibold text-[var(--color-primary)] mb-4 shadow-sm">
+              <ShoppingBag className="w-3.5 h-3.5" />
+              <span>STORY 03 • {isEn ? 'E-Commerce Engineering' : 'إنشاء وتطوير المتاجر'}</span>
             </div>
 
-            <button
-              onClick={() => {
-                updateConfig({ currentRoute: 'work' });
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="w-full py-3.5 px-5 rounded-xl bg-[var(--color-primary)] text-white text-sm font-bold flex items-center justify-center gap-2 hover:opacity-95 shadow-md transition-opacity"
-            >
-              <span>{isEn ? 'Explore E-Commerce Projects' : 'استكشف مشاريع التجارة الإلكترونية'}</span>
-              {isEn ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
-            </button>
-          </motion.div>
-        </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--text-primary)] tracking-tight leading-tight mb-4">
+              {isEn ? 'E-Commerce Stores Built for High Conversion' : 'إنشاء وتطوير المتاجر الإلكترونية'}
+            </h2>
 
-      </div>
-    </section>
+            <p className="text-lg sm:text-xl text-[var(--text-secondary)] font-medium">
+              {isEn ? 'Real stores engineered for conversion, speed, and frictionless shopping.' : 'بدل أن نخبرك، نشاركك نماذج من المتاجر التي عملنا عليها.'}
+            </p>
+          </motion.div>
+
+          {/* Scroll Sequenced Stores Showcase */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {STORES.map((store, index) => {
+              const startRange = 0.1 + (index * 0.08);
+              const endRange = Math.min(0.28 + (index * 0.08), 0.85);
+              const xInitial = isReducedMotion ? 0 : (index % 2 === 0 ? 30 : -30);
+
+              return (
+                <StoreShowcaseCard
+                  key={store.id}
+                  store={store}
+                  index={index}
+                  scrollYProgress={scrollYProgress}
+                  startRange={startRange}
+                  endRange={endRange}
+                  xInitial={xInitial}
+                  isEn={isEn}
+                  isReducedMotion={isReducedMotion}
+                  onSelect={() => {
+                    if (store.slug) {
+                      updateConfig({ currentRoute: `work/${store.slug}` });
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                      updateConfig({ currentRoute: 'work' });
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  }}
+                />
+              );
+            })}
+
+            {/* CTA Box */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)]/88 backdrop-blur-md p-6 sm:p-8 flex flex-col justify-between shadow-sm"
+            >
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center mb-4">
+                  <TrendingUp className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">
+                  {isEn ? 'Ready to Launch Your Store?' : 'جاهز لإطلاق متجرك القادم؟'}
+                </h3>
+                <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6">
+                  {isEn 
+                    ? 'We design, develop, integrate payment gateways, and optimize your store for maximum sales.'
+                    : 'نصمم، نطور، نربط بوابات الدفع، ونهيئ متجرك لتحقيق أعلى عائد ومبيعات متزايدة.'
+                  }
+                </p>
+              </div>
+
+              <button
+                onClick={() => {
+                  updateConfig({ currentRoute: 'work' });
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="w-full py-3.5 px-5 rounded-xl bg-[var(--color-primary)] text-white text-sm font-bold flex items-center justify-center gap-2 hover:opacity-95 shadow-md transition-opacity"
+              >
+                <span>{isEn ? 'Explore E-Commerce Projects' : 'استكشف مشاريع التجارة الإلكترونية'}</span>
+                {isEn ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
+              </button>
+            </motion.div>
+          </div>
+        </>
+      )}
+    </StorySceneContainer>
   );
 };
 
@@ -210,6 +199,7 @@ interface StoreCardProps {
   endRange: number;
   xInitial: number;
   isEn: boolean;
+  isReducedMotion: boolean;
   onSelect: () => void;
 }
 
@@ -221,18 +211,35 @@ const StoreShowcaseCard: React.FC<StoreCardProps> = ({
   endRange,
   xInitial,
   isEn,
+  isReducedMotion,
   onSelect
 }) => {
-  const opacity = useTransform(scrollYProgress, [startRange, endRange], [0, 1]);
-  const y = useTransform(scrollYProgress, [startRange, endRange], [24, 0]);
-  const x = useTransform(scrollYProgress, [startRange, endRange], [xInitial, 0]);
-  const scale = useTransform(scrollYProgress, [startRange, endRange], [0.95, 1]);
+  const opacity = useTransform(
+    scrollYProgress,
+    [startRange, endRange, 0.88, 0.98],
+    [0, 1, 1, 0.2]
+  );
+  const y = useTransform(
+    scrollYProgress,
+    [startRange, endRange],
+    isReducedMotion ? [0, 0] : [24, 0]
+  );
+  const x = useTransform(
+    scrollYProgress,
+    [startRange, endRange],
+    isReducedMotion ? [0, 0] : [xInitial, 0]
+  );
+  const scale = useTransform(
+    scrollYProgress,
+    [startRange, endRange],
+    isReducedMotion ? [1, 1] : [0.95, 1]
+  );
 
   return (
     <motion.div
       style={{ opacity, y, x, scale }}
       onClick={onSelect}
-      className="group relative rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)] hover:border-[var(--color-primary)]/40 hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden flex flex-col justify-between"
+      className="group relative rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)]/90 backdrop-blur-md hover:border-[var(--color-primary)]/40 hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden flex flex-col justify-between"
     >
       <div>
         <div className="relative h-44 sm:h-48 overflow-hidden bg-slate-100 dark:bg-slate-900">
@@ -301,3 +308,4 @@ const StoreShowcaseCard: React.FC<StoreCardProps> = ({
     </motion.div>
   );
 };
+
