@@ -158,6 +158,7 @@ const defaultConfig: SiteConfig = {
     'storyWebsites',
     'storyGrowth',
     'storySocial',
+    'workflow',
     'storyBigVision',
     'testimonials',
     'faq',

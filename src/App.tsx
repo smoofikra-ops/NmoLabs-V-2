@@ -11,6 +11,7 @@ import { Helmet } from 'react-helmet-async';
 import { InteractiveBackground } from './components/InteractiveBackground';
 
 import { WhatsAppWidget } from './components/WhatsAppWidget';
+import { BackToTop } from './components/BackToTop';
 
 const StoryCustomSolutions = lazy(() => import('./components/storytelling/StoryCustomSolutions').then(module => ({ default: module.StoryCustomSolutions })));
 const StoryEcommerce = lazy(() => import('./components/storytelling/StoryEcommerce').then(module => ({ default: module.StoryEcommerce })));
@@ -263,6 +264,7 @@ function AppContent() {
       {/* Visual Effects */}
       <MouseParticles />
       {config.currentRoute !== 'kyc' && <WhatsAppWidget />}
+      <BackToTop />
     </div>
   );
 }

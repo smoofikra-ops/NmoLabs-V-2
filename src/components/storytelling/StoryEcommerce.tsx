@@ -6,9 +6,11 @@ import {
   ExternalLink, 
   ArrowLeft, 
   ArrowRight, 
-  TrendingUp
+  TrendingUp,
+  Sparkles,
+  Layers
 } from 'lucide-react';
-import { StorySceneContainer } from './StorySceneContainer';
+import { PinnedStoryScene } from './PinnedStoryScene';
 import { STORY_ASSETS } from './storyAssets';
 
 const STORES = [
@@ -94,184 +96,190 @@ export const StoryEcommerce: React.FC = () => {
   const isEn = config.language === 'en';
 
   return (
-    <StorySceneContainer
+    <PinnedStoryScene
       id="story-ecommerce"
       bgUrl={STORY_ASSETS.STORY_03_ECOMMERCE}
+      badge={{
+        icon: ShoppingBag,
+        textAr: 'STORY 03 • المتاجر الإلكترونية والتجارة الرقمية',
+        textEn: 'STORY 03 • E-Commerce & Digital Retail'
+      }}
+      titleAr="متاجر إلكترونية مصممة للتحويل ومضاعفة المبيعات"
+      titleEn="High-Converting E-Commerce Flagships"
+      subtitleAr="نبني تجارب تسوق سلسة وسريعة تجمع بين الهوية الفريدة ومعدلات الشراء العالية."
+      subtitleEn="We engineer lightning-fast shopping experiences optimized for maximum checkout conversion."
+      itemCount={STORES.length + 1}
       isEn={isEn}
+      scrollMultiplier={2.5}
     >
-      {({ scrollYProgress, headerOpacity, headerY, isReducedMotion }) => (
-        <>
-          {/* Story Header */}
-          <motion.div 
-            style={{ opacity: headerOpacity, y: headerY }}
-            className="text-center max-w-3xl mx-auto mb-14 lg:mb-20"
+      {({ trackX, trackRef, activeProgress, isReducedMotion }) => (
+        <div className="w-full px-4 sm:px-8">
+          <motion.div
+            ref={trackRef}
+            style={{ x: trackX }}
+            className="flex flex-row flex-nowrap items-stretch gap-4 sm:gap-6 will-change-transform py-3"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-primary)]/90 backdrop-blur-md border border-[var(--border-default)] text-xs font-semibold text-[var(--color-primary)] mb-4 shadow-sm">
-              <ShoppingBag className="w-3.5 h-3.5" />
-              <span>STORY 03 • {isEn ? 'E-Commerce Engineering' : 'إنشاء وتطوير المتاجر'}</span>
-            </div>
+            {STORES.map((store, index) => (
+              <StoreStoryCard
+                key={store.id}
+                store={store}
+                index={index}
+                totalItems={STORES.length + 1}
+                activeProgress={activeProgress}
+                isEn={isEn}
+                isReducedMotion={isReducedMotion}
+                onSelect={() => {
+                  updateConfig({ currentRoute: 'work' });
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
+            ))}
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--text-primary)] tracking-tight leading-tight mb-4">
-              {isEn ? 'E-Commerce Stores Built for High Conversion' : 'إنشاء وتطوير المتاجر الإلكترونية'}
-            </h2>
-
-            <p className="text-lg sm:text-xl text-[var(--text-secondary)] font-medium">
-              {isEn ? 'Real stores engineered for conversion, speed, and frictionless shopping.' : 'بدل أن نخبرك، نشاركك نماذج من المتاجر التي عملنا عليها.'}
-            </p>
-          </motion.div>
-
-          {/* Scroll Sequenced Stores Showcase */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {STORES.map((store, index) => {
-              return (
-                <StoreShowcaseCard
-                  key={store.id}
-                  store={store}
-                  index={index}
-                  isEn={isEn}
-                  isReducedMotion={isReducedMotion}
-                  onSelect={() => {
-                    if (store.slug) {
-                      updateConfig({ currentRoute: `work/${store.slug}` });
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    } else {
-                      updateConfig({ currentRoute: 'work' });
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }
-                  }}
-                />
-              );
-            })}
-
-            {/* CTA Box */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)]/88 backdrop-blur-md p-6 sm:p-8 flex flex-col justify-between shadow-sm"
-            >
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center mb-4">
-                  <TrendingUp className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">
-                  {isEn ? 'Ready to Launch Your Store?' : 'جاهز لإطلاق متجرك القادم؟'}
-                </h3>
-                <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6">
-                  {isEn 
-                    ? 'We design, develop, integrate payment gateways, and optimize your store for maximum sales.'
-                    : 'نصمم، نطور، نربط بوابات الدفع، ونهيئ متجرك لتحقيق أعلى عائد ومبيعات متزايدة.'
-                  }
-                </p>
-              </div>
-
-              <button
+            {/* Final CTA Card */}
+            <div className="w-[85vw] sm:w-[350px] md:w-[380px] lg:w-[400px] shrink-0 flex">
+              <div
                 onClick={() => {
                   updateConfig({ currentRoute: 'work' });
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="w-full py-3.5 px-5 rounded-xl bg-[var(--color-primary)] text-white text-sm font-bold flex items-center justify-center gap-2 hover:opacity-95 shadow-md transition-opacity"
+                className="card-depth-2 w-full p-6 sm:p-8 rounded-3xl border-2 border-dashed border-[var(--color-primary)]/40 hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/90 backdrop-blur-md flex flex-col justify-between items-center text-center cursor-pointer transition-all duration-300 group shadow-md hover:shadow-xl relative overflow-hidden"
               >
-                <span>{isEn ? 'Explore E-Commerce Projects' : 'استكشف مشاريع التجارة الإلكترونية'}</span>
-                {isEn ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
-              </button>
-            </motion.div>
-          </div>
-        </>
+                <div className="my-auto py-4 flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-2xl bg-amber-500 text-white flex items-center justify-center mb-4 shadow-lg shadow-amber-500/30 group-hover:scale-110 transition-transform">
+                    <ShoppingBag className="w-8 h-8" />
+                  </div>
+
+                  <span className="text-xs font-bold uppercase tracking-widest text-amber-500 mb-2 font-mono">
+                    Portfolio
+                  </span>
+
+                  <h3 className="text-xl sm:text-2xl font-black text-[var(--text-primary)] mb-2">
+                    {isEn ? 'View All E-Commerce Work' : 'استكشف كافة المتاجر'}
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-[260px] leading-relaxed mb-6 font-medium">
+                    {isEn 
+                      ? 'Browse full store case studies, UI/UX designs, and revenue optimization results.'
+                      : 'تصفح دراسات الحالة الكاملة، تصاميم واجهات المتاجر، ونتائج تحسين معدلات الشراء.'}
+                  </p>
+
+                  <button
+                    className="px-6 py-3 rounded-full bg-[var(--color-primary)] text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-md group-hover:bg-[var(--color-primary)]/90 transition-colors"
+                  >
+                    <span>{isEn ? 'Explore All Stores' : 'عرض كافة المتاجر'}</span>
+                    {isEn ? <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /> : <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />}
+                  </button>
+                </div>
+
+                <div className="w-full pt-4 border-t border-[var(--border-default)] flex items-center justify-center gap-2 text-[11px] text-[var(--text-muted)]">
+                  <TrendingUp className="w-3.5 h-3.5 text-amber-500" />
+                  <span>{isEn ? 'Conversion Science & Speed' : 'هندسة تحويل وسرعة قياسية'}</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       )}
-    </StorySceneContainer>
+    </PinnedStoryScene>
   );
 };
 
 interface StoreCardProps {
   store: typeof STORES[0];
   index: number;
+  totalItems: number;
+  activeProgress: any;
   isEn: boolean;
   isReducedMotion: boolean;
   onSelect: () => void;
 }
 
-const StoreShowcaseCard: React.FC<StoreCardProps> = ({
+const StoreStoryCard: React.FC<StoreCardProps> = ({
   store,
   index,
+  totalItems,
+  activeProgress,
   isEn,
   isReducedMotion,
   onSelect
 }) => {
+  const cardScale = useTransform(
+    activeProgress,
+    [index - 1.2, index, index + 1.2],
+    isReducedMotion ? [1, 1, 1] : [0.95, 1.02, 0.95]
+  );
+
+  const cardOpacity = useTransform(
+    activeProgress,
+    [index - 1.8, index - 0.2, index, index + 0.2, index + 1.8],
+    [0.7, 0.95, 1, 0.95, 0.7]
+  );
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: isReducedMotion ? 0 : 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.45, delay: isReducedMotion ? 0 : Math.min(index * 0.08, 0.3) }}
+      style={{
+        scale: cardScale,
+        opacity: cardOpacity
+      }}
       onClick={onSelect}
-      className="group relative rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)]/90 backdrop-blur-md hover:border-[var(--color-primary)]/40 hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden flex flex-col justify-between"
+      className="w-[85vw] sm:w-[340px] md:w-[360px] lg:w-[380px] shrink-0 flex"
     >
-      <div>
-        <div className="relative h-44 sm:h-48 overflow-hidden bg-slate-100 dark:bg-slate-900">
+      <div className="card-depth-2 w-full rounded-3xl border border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/92 backdrop-blur-md transition-all duration-300 shadow-md hover:shadow-xl cursor-pointer flex flex-col justify-between group overflow-hidden">
+        
+        {/* Cover Media Header */}
+        <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-[var(--surface-secondary)]">
           <img 
             src={store.coverImage} 
-            alt={store.nameAr}
-            loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            alt={isEn ? store.nameEn : store.nameAr}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface-primary)] via-transparent to-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface-primary)] via-transparent to-black/30" />
           
-          <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-            <span className="text-[11px] font-mono font-medium px-2.5 py-1 rounded-md bg-black/60 backdrop-blur-md text-white border border-white/10 shadow-xs">
-              {store.domain}
-            </span>
-            <span className="w-6 h-6 rounded-full bg-black/50 backdrop-blur-md text-white flex items-center justify-center text-xs">
-              0{index + 1}
-            </span>
+          <div className="absolute top-3 right-3 rtl:right-auto rtl:left-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[11px] font-bold border border-white/10 font-mono">
+            {store.domain}
           </div>
 
-          <div className="absolute bottom-3 right-3 left-3">
-            <span className="inline-block text-[11px] font-bold px-2.5 py-1 rounded-md bg-[var(--surface-primary)]/90 backdrop-blur-sm text-[var(--color-primary)] border border-[var(--border-default)] shadow-xs">
-              {isEn ? store.sectorEn : store.sectorAr}
-            </span>
+          <div className="absolute bottom-3 right-3 rtl:right-3 rtl:left-auto px-2.5 py-1 rounded-md bg-[var(--surface-primary)]/95 text-[var(--color-primary)] text-xs font-bold border border-[var(--border-default)]">
+            {isEn ? store.sectorEn : store.sectorAr}
           </div>
         </div>
 
-        <div className="p-5 sm:p-6">
-          <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--color-primary)] transition-colors flex items-center justify-between">
-            <span>{isEn ? store.nameEn : store.nameAr}</span>
-            {store.url && (
-              <a 
-                href={store.url} 
-                target="_blank" 
-                rel="noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="text-[var(--text-muted)] hover:text-[var(--color-primary)] transition-colors p-1"
-                title={store.domain}
-              >
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            )}
-          </h3>
+        {/* Content Body */}
+        <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <h3 className="text-lg sm:text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--color-primary)] transition-colors">
+              {isEn ? store.nameEn : store.nameAr}
+            </h3>
 
-          <p className="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed mb-4">
-            {isEn ? store.highlightEn : store.highlightAr}
-          </p>
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed mb-4 font-normal">
+              {isEn ? store.highlightEn : store.highlightAr}
+            </p>
 
-          <div className="flex flex-wrap gap-1.5">
-            {store.tags.map((tag) => (
-              <span 
-                key={tag} 
-                className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)]"
-              >
-                {tag}
-              </span>
-            ))}
+            <div className="flex flex-wrap gap-1.5 mb-4">
+              {store.tags.map((tag, tIdx) => (
+                <span 
+                  key={tIdx}
+                  className="text-[10px] sm:text-[11px] px-2.5 py-0.5 rounded-md bg-[var(--surface-secondary)] text-[var(--text-muted)] border border-[var(--border-default)]"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="pt-3 border-t border-[var(--border-default)] flex items-center justify-between text-xs text-[var(--text-muted)] font-medium">
+            <span className="flex items-center gap-1 text-[var(--color-primary)] font-semibold">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>{isEn ? 'Live Case Study' : 'مشروع نشط'}</span>
+            </span>
+
+            <span className="text-[var(--color-primary)] font-bold flex items-center gap-1 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform">
+              <span>{isEn ? 'View Store' : 'تفاصيل المشروع'}</span>
+              {isEn ? <ArrowRight className="w-3.5 h-3.5" /> : <ArrowLeft className="w-3.5 h-3.5" />}
+            </span>
           </div>
         </div>
-      </div>
-
-      <div className="px-5 sm:px-6 py-3 border-t border-[var(--border-default)]/60 bg-[var(--surface-secondary)]/50 flex items-center justify-between text-xs font-bold text-[var(--color-primary)]">
-        <span>{isEn ? 'View Store Case' : 'استعراض تفاصيل المتجر'}</span>
-        {isEn ? <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" /> : <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />}
       </div>
     </motion.div>
   );
 };
-

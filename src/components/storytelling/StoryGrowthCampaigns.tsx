@@ -5,217 +5,286 @@ import {
   TrendingUp, 
   Target, 
   BarChart2, 
-  ArrowUpRight, 
   Activity,
   ArrowLeft,
-  ArrowRight
+  ArrowRight,
+  Zap,
+  Sparkles,
+  Search,
+  Sliders,
+  CheckCircle2
 } from 'lucide-react';
-import { triggerBookingModal } from '../BookingModal';
-import { StorySceneContainer } from './StorySceneContainer';
+import { PinnedStoryScene } from './PinnedStoryScene';
 import { STORY_ASSETS } from './storyAssets';
 
-const CAMPAIGN_PHASES = [
+const PERFORMANCE_STAGES = [
   {
     step: '01',
     titleAr: 'نُطلق بدقة',
     titleEn: 'Precision Launch',
-    descAr: 'تجهيز الحسابات الإعلانية، ربط البكسلات (Pixel / CAPI)، وبناء الهياكل الإعلانية الموجهة للتحويل.',
-    descEn: 'Account structuring, Pixel/CAPI tracking integration, and conversion-focused architectures.',
+    subtitleAr: 'تأسيس الهيكل الإعلاني والبكسلات',
+    subtitleEn: 'Ad account architecture & tracking',
+    descAr: 'تجهيز الحسابات الإعلانية، ربط بكسلات التتبع (Pixel / CAPI)، وبناء الهياكل الإعلانية الموجهة للشراء المباشر.',
+    descEn: 'Structuring high-converting ad sets, integrating Pixel & CAPI server-side tracking, and initial creative testing.',
+    kpis: ['إعداد Meta CAPI & Google Ads', 'اختبار الجمهور والاهتمامات', 'بناء نماذج الإعلانات'],
     icon: Target,
     color: '#0F62FE'
   },
   {
     step: '02',
-    titleAr: 'نقيس ونحلل',
-    titleEn: 'Measure & Analyze',
-    descAr: 'تتبع مسار العميل، قياس تكلفة الاكتساب (CAC)، ونقاط التوقف والتسرب في قمع الشراء.',
-    descEn: 'Customer journey tracking, CAC analysis, and funnel drop-off diagnostics.',
-    icon: BarChart2,
+    titleAr: 'نقيس اللحظة',
+    titleEn: 'Real-time Measurement',
+    subtitleAr: 'تتبع مسار العميل والاكتساب',
+    subtitleEn: 'Customer acquisition cost diagnostics',
+    descAr: 'تتبع دقيق لمسار العميل، قياس تكلفة الاكتساب (CAC)، ونقاط التوقف والتسرب في قمع الشراء بالملي ثانية.',
+    descEn: 'Tracking granular funnel progression, evaluating real-time CPA/CAC, and identifying drop-offs.',
+    kpis: ['دقة تتبع الإحالات 99.4%', 'مراقبة تكلفة النقرة (CPC)', 'تحليل معدل وصول الإعلانات'],
+    icon: Activity,
     color: '#06B6D4'
   },
   {
     step: '03',
-    titleAr: 'نطوّر ونضاعف (ROAS)',
-    titleEn: 'Scale & Maximize ROAS',
-    descAr: 'تحسين مستمر للعائد على الإنفاق الإعلاني، وإعادة الاستهداف الذكي لزيادة القيمة الدائمة للعميل.',
-    descEn: 'Continuous return on ad spend optimization, smart retargeting, and LTV amplification.',
+    titleAr: 'نحلل الأرقام',
+    titleEn: 'Data Analytics',
+    subtitleAr: 'تشخيص سلوك الشراء والربحية',
+    subtitleEn: 'Behavioral analytics & margins',
+    descAr: 'تحليل سلوك الزوار داخل المتجر، فحص المنتجات الأكثر ربحية، واكتشاف أسباب ترك سلات الشراء.',
+    descEn: 'Evaluating customer cohort behaviors, top margin SKUs, and checkout friction points.',
+    kpis: ['تحليل القيمة الدائمة (LTV)', 'فحص مسار إتمام الطلب', 'تحديد أسباب التردد'],
+    icon: BarChart2,
+    color: '#8B5CF6'
+  },
+  {
+    step: '04',
+    titleAr: 'نطوّر ونضاعف',
+    titleEn: 'Scale & Maximize',
+    subtitleAr: 'إعادة الاستهداف ومضاعفة ROAS',
+    subtitleEn: 'Retargeting & budget amplification',
+    descAr: 'إعادة استهداف ذكية ومؤتمتة، تحسين مستمر للعائد على الإنفاق الإعلاني، وزيادة الميزانيات على الحملات الرابحة.',
+    descEn: 'Smart algorithmic retargeting, conversion rate optimization (CRO), and scaling winning ad sets.',
+    kpis: ['مضاعفة الميزانية الرابحة', 'إعادة استهداف متعددة القنوات', 'تخفيض تكلفة الطلب (CPA)'],
+    icon: Sliders,
+    color: '#EC4899'
+  },
+  {
+    step: '05',
+    titleAr: 'نتائج الأداء',
+    titleEn: 'Performance Results',
+    subtitleAr: 'عائد إعلاني موثق ونمو مستدام',
+    subtitleEn: 'Verified ad ROAS and scale',
+    descAr: 'نتائج أداء إعلاني مثبتة وقابلة للقياس عبر كافة المنصات الرئيسية (ميتا، جوجل، تيك توك، وسناب شات).',
+    descEn: 'Documented return on ad spend across Meta, Google, TikTok, and Snapchat ad networks.',
+    kpis: ['متوسط ROAS من 3.8x إلى 6.2x', 'انخفاض تكلفة الاكتساب 35%', 'ارتفاع معدل التحويل 42%'],
     icon: TrendingUp,
     color: '#10B981'
   }
 ];
 
-const METRICS = [
-  { labelAr: 'معدل العائد الإعلاني (ROAS)', labelEn: 'Average Campaign ROAS', value: '3.8x — 6.2x', trend: '+140%', highlight: true },
-  { labelAr: 'تحسن معدل التحويل (CR)', labelEn: 'Conversion Rate Uplift', value: '+42%', trend: '+42%', highlight: false },
-  { labelAr: 'انخفاض تكلفة الاكتساب (CPA)', labelEn: 'Acquisition Cost Reduction', value: '-35%', trend: '-35%', highlight: false },
-  { labelAr: 'دقة تتبع الإحالات (Attribution)', labelEn: 'Attribution Accuracy', value: '99.4%', trend: 'Verified', highlight: false },
-];
-
 export const StoryGrowthCampaigns: React.FC = () => {
-  const { config } = useSite();
+  const { config, updateConfig } = useSite();
   const isEn = config.language === 'en';
 
   return (
-    <StorySceneContainer
+    <PinnedStoryScene
       id="story-growth"
       bgUrl={STORY_ASSETS.STORY_05_GROWTH}
+      badge={{
+        icon: Activity,
+        textAr: 'STORY 05 • إدارة الحملات والأداء الإعلاني',
+        textEn: 'STORY 05 • Performance Marketing & Growth Science'
+      }}
+      titleAr="نُطلق. نقيس. نحلل. نطوّر. نقود نتائج الأداء."
+      titleEn="Launch. Measure. Analyze. Scale. Deliver Results."
+      subtitleAr="إدارة حملات إعلانية مدعومة بالبيانات وهندسة التحويل لضمان أعلى عائد إعلاني (ROAS)."
+      subtitleEn="Data-driven ad management and conversion science engineered for scalable ROAS."
+      itemCount={PERFORMANCE_STAGES.length + 1}
       isEn={isEn}
+      scrollMultiplier={2.6}
     >
-      {({ scrollYProgress, headerOpacity, headerY, isReducedMotion }) => (
-        <>
-          {/* Story Header */}
-          <motion.div 
-            style={{ opacity: headerOpacity, y: headerY }}
-            className="text-center max-w-3xl mx-auto mb-14 lg:mb-20"
+      {({ trackX, trackRef, activeProgress, isReducedMotion }) => (
+        <div className="w-full px-4 sm:px-8">
+          <motion.div
+            ref={trackRef}
+            style={{ x: trackX }}
+            className="flex flex-row flex-nowrap items-stretch gap-4 sm:gap-6 will-change-transform py-3"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-primary)]/90 backdrop-blur-md border border-[var(--border-default)] text-xs font-semibold text-[var(--color-primary)] mb-4 shadow-sm">
-              <Activity className="w-3.5 h-3.5" />
-              <span>STORY 05 • {isEn ? 'Growth & Ad Intelligence' : 'إدارة الحملات والأداء الإعلاني'}</span>
-            </div>
-
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--text-primary)] tracking-tight leading-tight mb-4">
-              {isEn ? 'Launch. Measure. Analyze. Scale.' : 'نطلق. نقيس. نحلل. نطوّر.'}
-            </h2>
-
-            <p className="text-lg sm:text-xl text-[var(--text-secondary)] font-medium">
-              {isEn ? 'Data-driven ad management and conversion science engineered for repeatable growth.' : 'إدارة حملات إعلانية مدعومة بالبيانات والأتمتة لضمان أعلى عائد واستدامة النمو.'}
-            </p>
-          </motion.div>
-
-          {/* 3 Step Visual Pipeline */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            {CAMPAIGN_PHASES.map((phase, index) => {
+            {PERFORMANCE_STAGES.map((phase, index) => {
               const Icon = phase.icon;
-
               return (
-                <PhaseCard
+                <PerformanceStoryCard
                   key={phase.step}
                   phase={phase}
                   icon={Icon}
                   index={index}
+                  totalItems={PERFORMANCE_STAGES.length + 1}
+                  activeProgress={activeProgress}
                   isEn={isEn}
                   isReducedMotion={isReducedMotion}
+                  onSelect={() => {
+                    updateConfig({ currentRoute: 'start-project' });
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
                 />
               );
             })}
-          </div>
 
-          {/* Dashboard Visualizer Frame */}
-          <motion.div
-            initial={{ opacity: 0, y: isReducedMotion ? 0 : 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="rounded-3xl border border-[var(--border-default)] bg-[var(--surface-primary)]/90 backdrop-blur-md p-6 sm:p-8 lg:p-10 shadow-lg relative overflow-hidden"
-          >
-            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 mb-6 border-b border-[var(--border-default)]">
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <h3 className="text-lg font-bold text-[var(--text-primary)]">
-                    {isEn ? 'Real-Time Campaign Engine' : 'محرك تحليل الأداء والعائد الإعلاني'}
-                  </h3>
-                </div>
-                <p className="text-xs sm:text-sm text-[var(--text-muted)]">
-                  {isEn ? 'Integrated tracking across Meta, Google Ads, TikTok, and Snap CAPI' : 'ربط تحليلي مباشر وشامل عبر منصات ميتا، جوجل، وتيك توك مع بكسلات التتبع المتقدمة'}
-                </p>
-              </div>
-
-              <div className="flex items-center gap-2">
-                {['Meta Ads', 'Google Ads', 'TikTok Ads', 'Snap CAPI'].map((network) => (
-                  <span key={network} className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)]">
-                    {network}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Metrics Grid */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {METRICS.map((metric, idx) => (
-                <div 
-                  key={idx}
-                  className={`p-4 sm:p-5 rounded-2xl border ${metric.highlight ? 'border-[var(--color-primary)]/40 bg-[var(--color-primary)]/10' : 'border-[var(--border-default)] bg-[var(--surface-secondary)]/70'}`}
-                >
-                  <div className="text-xs text-[var(--text-muted)] font-medium mb-1.5">
-                    {isEn ? metric.labelEn : metric.labelAr}
-                  </div>
-                  <div className="text-2xl sm:text-3xl font-black text-[var(--text-primary)] tracking-tight mb-2">
-                    {metric.value}
-                  </div>
-                  <div className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                    <span>{metric.trend}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Action Strip */}
-            <div className="mt-8 pt-6 border-t border-[var(--border-default)] flex flex-col sm:flex-row items-center justify-between gap-4">
-              <span className="text-xs sm:text-sm text-[var(--text-muted)] text-center sm:text-right">
-                {isEn ? 'Ready to scale your store or company with proven ad performance?' : 'هل ترغب في إدارة احترافية لحملاتك الإعلانية ورفع العائد على الاستثمار؟'}
-              </span>
-              <button
-                onClick={() => triggerBookingModal()}
-                className="px-6 py-3 rounded-full bg-[var(--color-primary)] text-white text-xs sm:text-sm font-bold shadow-md hover:opacity-95 transition-all flex items-center gap-2 shrink-0"
+            {/* Final CTA Card */}
+            <div className="w-[85vw] sm:w-[350px] md:w-[380px] lg:w-[400px] shrink-0 flex">
+              <div
+                onClick={() => {
+                  updateConfig({ currentRoute: 'start-project' });
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="card-depth-2 w-full p-6 sm:p-8 rounded-3xl border-2 border-dashed border-[var(--color-primary)]/40 hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/90 backdrop-blur-md flex flex-col justify-between items-center text-center cursor-pointer transition-all duration-300 group shadow-md hover:shadow-xl relative overflow-hidden"
               >
-                <span>{isEn ? 'Request Growth Audit' : 'اطلب تدقيق حملاتك الإعلانية'}</span>
-                {isEn ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
-              </button>
+                <div className="my-auto py-4 flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-2xl bg-emerald-500 text-white flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/30 group-hover:scale-110 transition-transform">
+                    <TrendingUp className="w-8 h-8" />
+                  </div>
+
+                  <span className="text-xs font-bold uppercase tracking-widest text-emerald-500 mb-2 font-mono">
+                    Scale With NmoLabs
+                  </span>
+
+                  <h3 className="text-xl sm:text-2xl font-black text-[var(--text-primary)] mb-2">
+                    {isEn ? 'Scale Your Ad Campaigns' : 'ضاعف أرباح حملاتك الإعلانية'}
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-[260px] leading-relaxed mb-6 font-medium">
+                    {isEn 
+                      ? 'Partner with our growth team to audit, optimize, and scale your advertising performance.'
+                      : 'احصل على تدقيق مجاني لحساباتك الإعلانية وخطة عملية لرفع العائد وتقليل تكلفة الاكتساب.'}
+                  </p>
+
+                  <button
+                    className="px-6 py-3 rounded-full bg-[var(--color-primary)] text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-md group-hover:bg-[var(--color-primary)]/90 transition-colors"
+                  >
+                    <span>{isEn ? 'Request Growth Audit' : 'طلب دراسة نمو للحملات'}</span>
+                    {isEn ? <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /> : <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />}
+                  </button>
+                </div>
+
+                <div className="w-full pt-4 border-t border-[var(--border-default)] flex items-center justify-center gap-2 text-[11px] text-[var(--text-muted)]">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>{isEn ? 'Data-Driven & Transparent Attribution' : 'شفافية كاملة في مؤشرات التتبع والعائد'}</span>
+                </div>
+              </div>
             </div>
           </motion.div>
-        </>
+        </div>
       )}
-    </StorySceneContainer>
+    </PinnedStoryScene>
   );
 };
 
 interface PhaseCardProps {
-  phase: typeof CAMPAIGN_PHASES[0];
+  phase: typeof PERFORMANCE_STAGES[0];
   icon: React.ElementType;
   index: number;
+  totalItems: number;
+  activeProgress: any;
   isEn: boolean;
   isReducedMotion: boolean;
+  onSelect: () => void;
 }
 
-const PhaseCard: React.FC<PhaseCardProps> = ({
+const PerformanceStoryCard: React.FC<PhaseCardProps> = ({
   phase,
   icon: Icon,
   index,
+  totalItems,
+  activeProgress,
   isEn,
-  isReducedMotion
+  isReducedMotion,
+  onSelect
 }) => {
+  const cardScale = useTransform(
+    activeProgress,
+    [index - 1.2, index, index + 1.2],
+    isReducedMotion ? [1, 1, 1] : [0.95, 1.02, 0.95]
+  );
+
+  const cardOpacity = useTransform(
+    activeProgress,
+    [index - 1.8, index - 0.2, index, index + 0.2, index + 1.8],
+    [0.7, 0.95, 1, 0.95, 0.7]
+  );
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: isReducedMotion ? 0 : 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.45, delay: isReducedMotion ? 0 : Math.min(index * 0.1, 0.3) }}
-      className="p-6 sm:p-7 rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)]/90 backdrop-blur-md shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+      style={{
+        scale: cardScale,
+        opacity: cardOpacity
+      }}
+      onClick={onSelect}
+      className="w-[85vw] sm:w-[340px] md:w-[360px] lg:w-[380px] shrink-0 flex"
     >
-      <div>
-        <div className="flex items-center justify-between mb-5">
-          <div 
-            className="w-12 h-12 rounded-xl flex items-center justify-center shadow-xs"
-            style={{ backgroundColor: `${phase.color}15`, color: phase.color }}
-          >
-            <Icon className="w-6 h-6" />
+      <div className="card-depth-2 w-full p-5 sm:p-7 rounded-3xl border border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/92 backdrop-blur-md transition-all duration-300 shadow-md hover:shadow-xl cursor-pointer flex flex-col justify-between group relative overflow-hidden">
+        
+        {/* Ambient glow */}
+        <div 
+          className="absolute -top-10 -right-10 w-28 h-28 rounded-full blur-2xl opacity-15 pointer-events-none group-hover:opacity-30 transition-opacity" 
+          style={{ backgroundColor: phase.color }}
+        />
+
+        <div>
+          {/* Top Stage Bar */}
+          <div className="flex items-center justify-between mb-4">
+            <div 
+              className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-xs transition-transform duration-300 group-hover:scale-105"
+              style={{ backgroundColor: `${phase.color}18`, color: phase.color }}
+            >
+              <Icon className="w-6 h-6" strokeWidth={1.75} />
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)] font-mono">
+                STAGE {phase.step}
+              </span>
+            </div>
           </div>
-          <span className="text-xs font-black font-mono px-2.5 py-1 rounded-md bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-muted)]">
-            PHASE {phase.step}
-          </span>
+
+          {/* Title */}
+          <h3 className="text-lg sm:text-xl font-bold text-[var(--text-primary)] mb-1 group-hover:text-[var(--color-primary)] transition-colors">
+            {isEn ? phase.titleEn : phase.titleAr}
+          </h3>
+
+          <p className="text-xs font-semibold text-[var(--color-primary)] mb-3">
+            {isEn ? phase.subtitleEn : phase.subtitleAr}
+          </p>
+
+          {/* Description */}
+          <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed mb-4 font-normal">
+            {isEn ? phase.descEn : phase.descAr}
+          </p>
+
+          {/* KPI bullet points */}
+          <div className="space-y-1.5 mb-4">
+            {phase.kpis.map((kpi, kIdx) => (
+              <div 
+                key={kIdx}
+                className="flex items-center gap-2 text-[11px] sm:text-xs text-[var(--text-muted)] bg-[var(--surface-secondary)]/80 p-2 rounded-xl border border-[var(--border-default)]"
+              >
+                <CheckCircle2 className="w-3.5 h-3.5 text-[var(--color-primary)] shrink-0" />
+                <span>{kpi}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2.5">
-          {isEn ? phase.titleEn : phase.titleAr}
-        </h3>
+        {/* Footer */}
+        <div className="pt-3 border-t border-[var(--border-default)] flex items-center justify-between text-xs text-[var(--text-muted)] font-medium">
+          <span className="flex items-center gap-1.5 text-[11px]">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>{isEn ? 'Active Process' : 'منهجية معتمدة'}</span>
+          </span>
 
-        <p className="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed">
-          {isEn ? phase.descEn : phase.descAr}
-        </p>
+          <span className="text-[var(--color-primary)] font-bold text-xs flex items-center gap-1 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform">
+            <span>{isEn ? 'Explore Strategy' : 'تفاصيل الخطة'}</span>
+            {isEn ? <ArrowRight className="w-3.5 h-3.5" /> : <ArrowLeft className="w-3.5 h-3.5" />}
+          </span>
+        </div>
       </div>
     </motion.div>
   );
 };
-

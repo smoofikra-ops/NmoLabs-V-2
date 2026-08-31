@@ -40,7 +40,7 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
       className="min-h-[80svh] py-12 lg:py-24 flex items-center relative z-10"
     >
       <div className="max-w-7xl mx-auto px-6 w-full">
-        <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-16`}>
+        <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12 lg:gap-16`}>
           
           {/* Content */}
           <div className="w-full lg:w-1/2 flex flex-col justify-center">
@@ -50,30 +50,30 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
             >
-              <div className="flex items-center gap-4 mb-6">
-                <span className="text-5xl font-black text-white/20">0{index + 1}</span>
-                <div className="h-[1px] flex-grow bg-white/20" />
+              <div className="flex items-center gap-3 sm:gap-4 mb-6">
+                <span className="text-4xl sm:text-5xl font-black text-[var(--color-primary)]/40">0{index + 1}</span>
+                <div className="h-[1px] flex-grow bg-[var(--border-default)]" />
                 {project.year && (
-                  <span className="px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-[var(--color-primary)] text-sm font-bold backdrop-blur-sm animate-pulse">
+                  <span className="px-3.5 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--color-primary)] text-xs sm:text-sm font-bold">
                     {project.year}
                   </span>
                 )}
-                <span className="px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-sm font-bold backdrop-blur-sm">
+                <span className="px-3.5 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)] text-xs sm:text-sm font-bold">
                   {isEn ? project.sectorEn : project.sectorAr}
                 </span>
               </div>
               
-              <h3 className="text-5xl md:text-6xl font-black text-white mb-6 tracking-tight">
+              <h3 className="text-3xl md:text-5xl lg:text-6xl font-black text-[var(--text-primary)] mb-6 tracking-tight">
                 {isEn ? project.titleEn : project.titleAr}
               </h3>
               
-              <p className="text-xl text-white/70 leading-relaxed mb-8">
+              <p className="text-base sm:text-lg md:text-xl text-[var(--text-secondary)] leading-relaxed mb-8 font-light">
                 {isEn ? project.summaryEn : project.summaryAr}
               </p>
 
-              <div className="flex flex-wrap gap-2 mb-10">
+              <div className="flex flex-wrap gap-2 mb-8">
                 {project.services.slice(0, 4).map((srv, idx) => (
-                  <span key={idx} className="px-3 py-1 rounded-full bg-white/5 text-white/80 text-sm">
+                  <span key={idx} className="px-3 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-muted)] text-xs sm:text-sm">
                     {srv}
                   </span>
                 ))}
@@ -89,10 +89,10 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
                       window.scrollTo({top: 0, behavior: 'smooth'});
                     }
                   }}
-                  className="px-8 py-4 rounded-full font-bold text-white transition-all bg-white/10 hover:bg-white/20 border border-white/20 hover:scale-105 flex items-center gap-2"
+                  className="px-7 py-3.5 rounded-full font-bold text-white transition-all bg-[var(--color-primary)] hover:bg-[var(--color-primary)]/90 shadow-md flex items-center gap-2 cursor-pointer"
                 >
                   {isEn ? 'Explore Project' : 'استكشف المشروع'}
-                  {isEn ? <ArrowRight size={20} /> : <ArrowLeft size={20} />}
+                  {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
                 </button>
               </div>
             </motion.div>
@@ -105,7 +105,7 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="aspect-[4/3] rounded-[2rem] overflow-hidden border border-white/10 relative group shadow-2xl cursor-pointer bg-[#111]"
+              className="card-depth-3 aspect-[4/3] rounded-[2rem] overflow-hidden border border-[var(--border-default)] relative group cursor-pointer bg-[var(--surface-secondary)]"
               onClick={() => {
                 if (project.projectUrl) {
                   window.open(project.projectUrl, '_blank');
@@ -120,8 +120,8 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
                 <img src={project.coverImage} alt={isEn ? project.titleEn : project.titleAr} className="relative z-10 w-full h-full object-cover object-top group-hover:object-bottom transition-all duration-[8000ms] ease-in-out" />
               ) : (
                 <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
-                   <div className="w-32 h-32 rounded-3xl blur-[40px] absolute" style={{ backgroundColor: project.brandColor }} />
-                   <div className="text-white/20 font-black text-8xl relative z-10 group-hover:scale-110 transition-transform duration-700">
+                   <div className="w-32 h-32 rounded-3xl blur-[40px] absolute opacity-30" style={{ backgroundColor: project.brandColor }} />
+                   <div className="text-[var(--text-muted)] font-black text-8xl relative z-10 group-hover:scale-110 transition-transform duration-700">
                      {isEn ? project.titleEn.charAt(0) : project.titleAr.charAt(0)}
                    </div>
                 </div>
@@ -184,51 +184,54 @@ export const WorkPage = () => {
   };
 
   return (
-    <div className="bg-[#050505] min-h-screen text-[var(--text-primary)]">
+    <div className="bg-[var(--surface-primary)] min-h-screen text-[var(--text-primary)] transition-colors duration-300">
       <Helmet>
         <title>{isEn ? 'Our Work | NmoLabs' : 'أعمالنا | NmoLabs'}</title>
       </Helmet>
 
       {/* Dynamic Background */}
       <div 
-        className="fixed inset-0 opacity-20 transition-colors duration-1000 ease-in-out pointer-events-none mix-blend-screen z-0"
+        className="fixed inset-0 opacity-15 transition-colors duration-1000 ease-in-out pointer-events-none mix-blend-screen z-0"
         style={{
           background: `radial-gradient(circle at 50% 50%, ${activeColor} 0%, transparent 60%)`,
           transform: `translateY(${scrollProgress * 100}px)`
         }}
       />
       
-      <div className="fixed inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-20 mix-blend-overlay pointer-events-none z-0" />
+      <div className="fixed inset-0 bg-grid-pattern opacity-10 pointer-events-none z-0" />
 
       {/* Hero Section */}
-      <section className="pt-40 pb-20 relative z-10">
+      <section className="pt-32 pb-16 relative z-10">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-xs font-bold text-[var(--color-primary)] mb-6">
+              <span>{isEn ? 'Selected Portfolio' : 'أعمال ومشاريع مختارة'}</span>
+            </div>
+            <h1 className="text-4xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight text-[var(--text-primary)]">
               {isEn ? (
-                <>Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[var(--color-primary)] to-[var(--color-secondary)]">Work</span></>
+                <>Our <span className="text-[var(--color-primary)]">Work</span></>
               ) : (
-                <>أعمال<span className="text-transparent bg-clip-text bg-gradient-to-l from-white via-[var(--color-primary)] to-[var(--color-secondary)]">نا</span></>
+                <>أعمال<span className="text-[var(--color-primary)]">نا</span></>
               )}
             </h1>
-            <p className="text-xl md:text-3xl text-white/60 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-2xl text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed font-light">
               {isEn 
-                ? 'We build digital experiences that drive growth. Explore our selected case studies.' 
-                : 'نبني تجارب رقمية تقود النمو. استكشف مجموعة من أبرز مشاريعنا.'}
+                ? 'We build digital experiences and enterprise systems that drive verified business growth.' 
+                : 'نصمم ونبني تجارب رقمية ومنظومات برمجية تقود النمو المستدام.'}
             </p>
           </motion.div>
           
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 1 }}
-            className="mt-20 flex justify-center text-white/30 animate-bounce"
+            transition={{ delay: 0.5, duration: 0.8 }}
+            className="mt-12 flex justify-center text-[var(--text-muted)] animate-bounce"
           >
-            <ArrowDown size={32} />
+            <ArrowDown size={28} />
           </motion.div>
         </div>
       </section>
@@ -248,11 +251,11 @@ export const WorkPage = () => {
       </div>
 
       {/* Other Projects Grid */}
-      <div className="py-32 relative z-10 bg-black/40 border-t border-white/5 backdrop-blur-xl">
+      <div className="py-24 relative z-10 bg-[var(--surface-secondary)]/50 border-t border-[var(--border-default)] backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6">
           
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-16">
-            <h2 className="text-3xl md:text-5xl font-black text-white">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
+            <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
               {isEn ? 'More Projects' : 'مشاريع إضافية'}
             </h2>
             
@@ -261,10 +264,10 @@ export const WorkPage = () => {
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all ${
+                  className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                     activeCategory === cat.id
-                      ? 'bg-white text-black scale-105 shadow-lg'
-                      : 'bg-[#111] text-white/70 hover:bg-white/10 hover:text-white border border-white/10'
+                      ? 'bg-[var(--color-primary)] text-white shadow-md'
+                      : 'bg-[var(--surface-primary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-default)] hover:border-[var(--interactive-border)]'
                   }`}
                 >
                   {isEn ? cat.en : cat.ar}
