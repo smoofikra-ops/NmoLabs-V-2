@@ -37,33 +37,30 @@ export const StorySceneContainer: React.FC<StorySceneContainerProps> = ({
   });
 
   // Background smooth choreography
-  // 0.0 -> 0.15: Smooth entrance
-  // 0.15 -> 0.85: Active storytelling state
-  // 0.85 -> 1.00: Smooth cinematic exit (no stuck elements)
-  const bgOpacity = useTransform(
+  const bgOpacityBugFree = useTransform(
     scrollYProgress,
-    [0.0, 0.12, 0.85, 1.0],
-    [0.1, 1, 1, 0.05]
+    [0.0, 0.15, 0.85, 1.0],
+    [0.4, 1, 1, 0.4]
   );
 
   const bgScale = useTransform(
     scrollYProgress,
     [0.0, 0.5, 1.0],
-    shouldReduceMotion ? [1, 1, 1] : [1.05, 1.0, 1.04]
+    shouldReduceMotion ? [1, 1, 1] : [1.03, 1.0, 1.03]
   );
 
   const bgY = useTransform(
     scrollYProgress,
     [0.0, 1.0],
-    shouldReduceMotion ? ['0%', '0%'] : ['-3%', '3%']
+    shouldReduceMotion ? ['0%', '0%'] : ['-2%', '2%']
   );
 
-  // Header animation
-  const headerOpacity = useTransform(scrollYProgress, [0.08, 0.22, 0.88, 0.98], [0, 1, 1, 0.2]);
-  const headerY = useTransform(
+  // Safe header animation that guarantees visibility
+  const headerOpacity = useTransform(scrollYProgress, [0.0, 0.08], [0.85, 1]);
+  const headerYIntepolated = useTransform(
     scrollYProgress,
-    [0.08, 0.22],
-    shouldReduceMotion ? [0, 0] : [24, 0]
+    [0.0, 0.08],
+    shouldReduceMotion ? [0, 0] : [12, 0]
   );
 
   // Intelligent prefetch of next images
@@ -81,7 +78,7 @@ export const StorySceneContainer: React.FC<StorySceneContainerProps> = ({
       {/* Background Image Layer with Cinematic Depth */}
       <motion.div
         style={{
-          opacity: bgOpacity,
+          opacity: bgOpacityBugFree,
           scale: bgScale,
           y: bgY,
         }}
@@ -115,7 +112,7 @@ export const StorySceneContainer: React.FC<StorySceneContainerProps> = ({
         {children({
           scrollYProgress,
           headerOpacity,
-          headerY,
+          headerY: headerYIntepolated,
           isReducedMotion: !!shouldReduceMotion,
         })}
       </div>

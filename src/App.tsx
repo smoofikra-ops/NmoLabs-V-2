@@ -50,6 +50,7 @@ const AboutPage = lazy(() => import('./components/AboutPage').then(module => ({ 
 const InnovationLabPage = lazy(() => import('./components/InnovationLabPage').then(module => ({ default: module.InnovationLabPage })));const ExperimentDetailsPage = lazy(() => import('./components/ExperimentDetailsPage').then(module => ({ default: module.ExperimentDetailsPage })));
 const StartProjectPage = lazy(() => import('./components/StartProjectPage').then(module => ({ default: module.StartProjectPage })));
 const DiscoveryPortal = lazy(() => import('./components/DiscoveryPortal').then(module => ({ default: module.DiscoveryPortal })));
+const NotFoundPage = lazy(() => import('./components/NotFoundPage').then(module => ({ default: module.NotFoundPage })));
 const ScrollProgress = () => {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -205,11 +206,27 @@ function AppContent() {
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
           <ProductDetailsPage slug={config.currentRoute.split('/')[1]} />
         </Suspense>
+      ) : config.currentRoute === 'services' ? (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
+          <div className="pt-24 min-h-screen">
+            <Services />
+          </div>
+        </Suspense>
       ) : config.currentRoute?.startsWith('services/') ? (
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
           <ServiceDetailsPage slug={config.currentRoute.split('/')[1]} />
         </Suspense>
-      ) : (
+      ) : config.currentRoute === 'blog' ? (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
+          <div className="pt-24 min-h-screen">
+            <Blog />
+          </div>
+        </Suspense>
+      ) : config.currentRoute === 'start-project' ? (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
+          <StartProjectPage />
+        </Suspense>
+      ) : ['privacy', 'terms', 'cookies', 'disclaimer'].includes(config.currentRoute) ? (
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
           <div className="pt-32 pb-24 px-6 max-w-4xl mx-auto min-h-screen">
             {config.currentRoute === 'privacy' && <PrivacyPolicy />}
@@ -217,6 +234,10 @@ function AppContent() {
             {config.currentRoute === 'cookies' && <CookiePolicy />}
             {config.currentRoute === 'disclaimer' && <Disclaimer />}
           </div>
+        </Suspense>
+      ) : (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
+          <NotFoundPage />
         </Suspense>
       )}
       

@@ -61,7 +61,7 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="border-t border-[var(--border-default)] pt-12 md:pt-20 pb-8 relative z-20 bg-[var(--surface-primary)]">
+    <footer id="contact" className="border-t border-[var(--border-default)] pt-12 md:pt-20 pb-8 relative z-20 bg-[var(--surface-primary)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-16">
           

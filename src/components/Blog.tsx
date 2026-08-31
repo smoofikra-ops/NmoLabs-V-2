@@ -57,7 +57,8 @@ export const Blog = () => {
   const { config } = useSite();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  if (config.sections.blog === false) return null;
+  const isStandalone = config.currentRoute === 'blog';
+  if (!isStandalone && config.sections.blog === false) return null;
 
   return (
     <section className="py-10 sm:py-10 md:py-20 relative overflow-hidden bg-[var(--surface-primary)]/10" id="blog">

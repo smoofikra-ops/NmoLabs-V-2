@@ -10,7 +10,8 @@ export const Services: React.FC = () => {
   const isEn = config.language === 'en';
   const sectionRef = useRef<HTMLElement>(null);
   
-  if (!config.sections.services) return null;
+  const isStandalone = config.currentRoute === 'services';
+  if (!isStandalone && config.sections.services === false) return null;
 
   const techServices = servicesList.filter(s => ['ecommerce-setup', 'ui-ux'].includes(s.id));
   const marketingServices = servicesList.filter(s => ['ads-management', 'social-media', 'seo', 'copywriting'].includes(s.id));

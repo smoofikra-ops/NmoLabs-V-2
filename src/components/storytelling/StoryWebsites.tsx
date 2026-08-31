@@ -118,19 +118,11 @@ export const StoryWebsites: React.FC = () => {
           {/* Scroll Sequenced Websites Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {WEBSITES.map((site, index) => {
-              const startRange = 0.1 + (index * 0.08);
-              const endRange = Math.min(0.28 + (index * 0.08), 0.85);
-              const xInitial = isReducedMotion ? 0 : (index % 2 === 0 ? 30 : -30);
-
               return (
                 <WebsiteCard
                   key={site.id}
                   site={site}
                   index={index}
-                  scrollYProgress={scrollYProgress}
-                  startRange={startRange}
-                  endRange={endRange}
-                  xInitial={xInitial}
                   isEn={isEn}
                   isReducedMotion={isReducedMotion}
                   onSelect={() => {
@@ -189,10 +181,6 @@ export const StoryWebsites: React.FC = () => {
 interface WebsiteCardProps {
   site: typeof WEBSITES[0];
   index: number;
-  scrollYProgress: any;
-  startRange: number;
-  endRange: number;
-  xInitial: number;
   isEn: boolean;
   isReducedMotion: boolean;
   onSelect: () => void;
@@ -201,38 +189,16 @@ interface WebsiteCardProps {
 const WebsiteCard: React.FC<WebsiteCardProps> = ({
   site,
   index,
-  scrollYProgress,
-  startRange,
-  endRange,
-  xInitial,
   isEn,
   isReducedMotion,
   onSelect
 }) => {
-  const opacity = useTransform(
-    scrollYProgress,
-    [startRange, endRange, 0.88, 0.98],
-    [0, 1, 1, 0.2]
-  );
-  const y = useTransform(
-    scrollYProgress,
-    [startRange, endRange],
-    isReducedMotion ? [0, 0] : [24, 0]
-  );
-  const x = useTransform(
-    scrollYProgress,
-    [startRange, endRange],
-    isReducedMotion ? [0, 0] : [xInitial, 0]
-  );
-  const scale = useTransform(
-    scrollYProgress,
-    [startRange, endRange],
-    isReducedMotion ? [1, 1] : [0.95, 1]
-  );
-
   return (
     <motion.div
-      style={{ opacity, y, x, scale }}
+      initial={{ opacity: 0, y: isReducedMotion ? 0 : 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.45, delay: isReducedMotion ? 0 : Math.min(index * 0.08, 0.3) }}
       onClick={onSelect}
       className="group relative rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)]/90 backdrop-blur-md hover:border-[var(--color-primary)]/40 hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden flex flex-col justify-between"
     >

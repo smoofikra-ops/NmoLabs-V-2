@@ -15,8 +15,8 @@
   
   --spacing-128: 32rem;
   
-  --animate-marquee: marquee 50s linear infinite;
-  --animate-marquee-rtl: marquee-rtl 150s linear infinite;
+  --animate-marquee: marquee 65s linear infinite;
+  --animate-marquee-rtl: marquee-rtl 65s linear infinite;
   --animate-glow: glow 3s ease-in-out infinite alternate;
   --animate-float: float 6s ease-in-out infinite;
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -138,11 +138,11 @@
 
 @keyframes marquee {
   0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); } 
+  100% { transform: translateX(-100%); } 
 }
 @keyframes marquee-rtl {
   0% { transform: translateX(0%); }
-  100% { transform: translateX(50%); }
+  100% { transform: translateX(100%); }
 }
 
 @keyframes glow {

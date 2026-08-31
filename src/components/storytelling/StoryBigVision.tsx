@@ -98,7 +98,13 @@ export const StoryBigVision: React.FC = () => {
           </div>
 
           {/* End-to-End Visual Lifecycle Steps */}
-          <div className="p-6 sm:p-8 rounded-3xl border border-[var(--border-default)] bg-[var(--surface-primary)]/90 backdrop-blur-md mb-12 shadow-sm">
+          <motion.div 
+            initial={{ opacity: 0, y: isReducedMotion ? 0 : 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5 }}
+            className="p-6 sm:p-8 rounded-3xl border border-[var(--border-default)] bg-[var(--surface-primary)]/90 backdrop-blur-md mb-12 shadow-sm"
+          >
             <div className="text-xs font-bold uppercase tracking-widest text-[var(--text-muted)] mb-6">
               {isEn ? 'Our Complete Lifecycle Model' : 'نموذج التنفيذ المتكامل'}
             </div>
@@ -122,10 +128,16 @@ export const StoryBigVision: React.FC = () => {
                 );
               })}
             </div>
-          </div>
+          </motion.div>
 
           {/* Final Growth Partner Showcase Box (STORY 08) */}
-          <div className="relative rounded-3xl border border-[var(--border-default)] bg-[var(--surface-primary)]/95 backdrop-blur-xl p-8 sm:p-10 shadow-xl overflow-hidden text-center mb-6">
+          <motion.div 
+            initial={{ opacity: 0, y: isReducedMotion ? 0 : 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6 }}
+            className="relative rounded-3xl border border-[var(--border-default)] bg-[var(--surface-primary)]/95 backdrop-blur-xl p-8 sm:p-10 shadow-xl overflow-hidden text-center mb-6"
+          >
             <div className="absolute inset-0 pointer-events-none opacity-20">
               <img 
                 src={STORY_ASSETS.STORY_08_PARTNER}
@@ -179,7 +191,7 @@ export const StoryBigVision: React.FC = () => {
                 )}
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       )}

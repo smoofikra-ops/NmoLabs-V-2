@@ -17,13 +17,13 @@ export const Header = () => {
   const mainNavItems = [
     { nameAr: 'الرئيسية', nameEn: 'Home', act: 'hero' },
     { nameAr: 'من نحن', nameEn: 'About Us', route: 'about' },
-    { nameAr: 'ماذا نبني؟', nameEn: 'What We Build', act: 'whatToBuild' },
-    { nameAr: 'خدماتنا', nameEn: 'Services', act: 'services' },
+    { nameAr: 'ماذا نبني؟', nameEn: 'What We Build', act: 'story-solutions' },
+    { nameAr: 'خدماتنا', nameEn: 'Services', route: 'services' },
     { nameAr: 'أعمالنا', nameEn: 'Work', route: 'work' },
     { nameAr: 'منتجاتنا', nameEn: 'Products', route: 'products' },
     { nameAr: 'مختبر الابتكارات', nameEn: 'Innovation Labs', route: 'innovation-lab' },
-    { nameAr: 'كيف نعمل؟', nameEn: 'Workflow', act: 'workflow' },
-    { nameAr: 'المدونة', nameEn: 'Blog', act: 'blog' },
+    { nameAr: 'كيف نعمل؟', nameEn: 'Workflow', route: 'about' },
+    { nameAr: 'المدونة', nameEn: 'Blog', route: 'blog' },
     { nameAr: 'تواصل معنا', nameEn: 'Contact', act: 'contact' },
   ];
 
@@ -32,7 +32,7 @@ export const Header = () => {
     setIsMobileMenuOpen(false);
     if (item.route) {
       updateConfig({ currentRoute: item.route });
-      window.scrollTo({top: 0, behavior: 'smooth'});
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       handleScroll(item.act);
     }
@@ -43,21 +43,29 @@ export const Header = () => {
     if (config.currentRoute && config.currentRoute !== 'home') {
       updateConfig({ currentRoute: 'home' });
       setTimeout(() => {
-        if(id === 'hero') window.scrollTo({top: 0, behavior: 'smooth'});
-        else if(id === 'contact' && config.contactNumber) {
-          window.open(getWhatsAppUrl(config.contactNumber), '_blank');
+        if (id === 'hero') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (id === 'contact') {
+          const el = document.getElementById('contact') || document.getElementById('footer');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          else if (config.contactNumber) window.open(getWhatsAppUrl(config.contactNumber), '_blank');
         } else {
-          document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+          const target = document.getElementById(id) || (id === 'story-solutions' ? document.getElementById('whatToBuild') : null);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 100);
+      }, 120);
       return;
     }
 
-    if(id === 'hero') window.scrollTo({top: 0, behavior: 'smooth'});
-    else if(id === 'contact' && config.contactNumber) {
-      window.open(getWhatsAppUrl(config.contactNumber), '_blank');
+    if (id === 'hero') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (id === 'contact') {
+      const el = document.getElementById('contact') || document.getElementById('footer');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      else if (config.contactNumber) window.open(getWhatsAppUrl(config.contactNumber), '_blank');
     } else {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      const target = document.getElementById(id) || (id === 'story-solutions' ? document.getElementById('whatToBuild') : null);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
     }
   };
 

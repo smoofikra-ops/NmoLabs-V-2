@@ -147,19 +147,13 @@ export const StoryCustomSolutions: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
             {PRODUCTS.map((prod, index) => {
               const Icon = prod.icon;
-              const startRange = 0.12 + (index * 0.07);
-              const endRange = Math.min(0.26 + (index * 0.07), 0.82);
-              const xInitial = isReducedMotion ? 0 : (index % 2 === 0 ? 25 : -25);
 
               return (
                 <ProductTileItem
                   key={prod.id}
                   product={prod}
                   icon={Icon}
-                  scrollYProgress={scrollYProgress}
-                  startRange={startRange}
-                  endRange={endRange}
-                  xInitial={xInitial}
+                  index={index}
                   isEn={isEn}
                   isReducedMotion={isReducedMotion}
                   onSelect={() => {
@@ -217,10 +211,7 @@ export const StoryCustomSolutions: React.FC = () => {
 interface ProductTileProps {
   product: typeof PRODUCTS[0];
   icon: React.ElementType;
-  scrollYProgress: any;
-  startRange: number;
-  endRange: number;
-  xInitial: number;
+  index: number;
   isEn: boolean;
   isReducedMotion: boolean;
   onSelect: () => void;
@@ -229,38 +220,17 @@ interface ProductTileProps {
 const ProductTileItem: React.FC<ProductTileProps> = ({
   product,
   icon: Icon,
-  scrollYProgress,
-  startRange,
-  endRange,
-  xInitial,
+  index,
   isEn,
   isReducedMotion,
   onSelect
 }) => {
-  const opacity = useTransform(
-    scrollYProgress,
-    [startRange, endRange, 0.88, 0.98],
-    [0, 1, 1, 0.2]
-  );
-  const y = useTransform(
-    scrollYProgress,
-    [startRange, endRange],
-    isReducedMotion ? [0, 0] : [24, 0]
-  );
-  const x = useTransform(
-    scrollYProgress,
-    [startRange, endRange],
-    isReducedMotion ? [0, 0] : [xInitial, 0]
-  );
-  const scale = useTransform(
-    scrollYProgress,
-    [startRange, endRange],
-    isReducedMotion ? [1, 1] : [0.94, 1]
-  );
-
   return (
     <motion.div
-      style={{ opacity, y, x, scale }}
+      initial={{ opacity: 0, y: isReducedMotion ? 0 : 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.45, delay: isReducedMotion ? 0 : Math.min(index * 0.06, 0.3) }}
       onClick={onSelect}
       className={`group relative p-5 sm:p-6 rounded-2xl border ${product.borderColor} bg-[var(--surface-primary)]/88 backdrop-blur-md hover:bg-[var(--surface-primary)] transition-all duration-300 shadow-sm hover:shadow-lg cursor-pointer flex flex-col justify-between overflow-hidden`}
     >

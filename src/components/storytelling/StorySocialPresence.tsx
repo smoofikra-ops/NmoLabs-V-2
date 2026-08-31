@@ -104,8 +104,6 @@ export const StorySocialPresence: React.FC = () => {
           {/* 3 Pillars Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             {SOCIAL_PILLARS.map((pillar, index) => {
-              const startRange = 0.1 + (index * 0.1);
-              const endRange = Math.min(0.28 + (index * 0.1), 0.85);
               const Icon = pillar.icon;
 
               return (
@@ -113,9 +111,7 @@ export const StorySocialPresence: React.FC = () => {
                   key={pillar.titleAr}
                   pillar={pillar}
                   icon={Icon}
-                  scrollYProgress={scrollYProgress}
-                  startRange={startRange}
-                  endRange={endRange}
+                  index={index}
                   isEn={isEn}
                   isReducedMotion={isReducedMotion}
                 />
@@ -124,7 +120,13 @@ export const StorySocialPresence: React.FC = () => {
           </div>
 
           {/* Social Content Proof Showcase */}
-          <div className="rounded-3xl border border-[var(--border-default)] bg-[var(--surface-primary)]/90 backdrop-blur-md p-6 sm:p-8 lg:p-10 shadow-sm">
+          <motion.div
+            initial={{ opacity: 0, y: isReducedMotion ? 0 : 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="rounded-3xl border border-[var(--border-default)] bg-[var(--surface-primary)]/90 backdrop-blur-md p-6 sm:p-8 lg:p-10 shadow-sm"
+          >
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
               <div>
                 <h3 className="text-xl font-bold text-[var(--text-primary)] mb-1">
@@ -189,7 +191,7 @@ export const StorySocialPresence: React.FC = () => {
                 {isEn ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
               </button>
             </div>
-          </div>
+          </motion.div>
         </>
       )}
     </StorySceneContainer>
@@ -199,9 +201,7 @@ export const StorySocialPresence: React.FC = () => {
 interface PillarCardProps {
   pillar: typeof SOCIAL_PILLARS[0];
   icon: React.ElementType;
-  scrollYProgress: any;
-  startRange: number;
-  endRange: number;
+  index: number;
   isEn: boolean;
   isReducedMotion: boolean;
 }
@@ -209,31 +209,16 @@ interface PillarCardProps {
 const PillarCard: React.FC<PillarCardProps> = ({
   pillar,
   icon: Icon,
-  scrollYProgress,
-  startRange,
-  endRange,
+  index,
   isEn,
   isReducedMotion
 }) => {
-  const opacity = useTransform(
-    scrollYProgress,
-    [startRange, endRange, 0.88, 0.98],
-    [0, 1, 1, 0.2]
-  );
-  const y = useTransform(
-    scrollYProgress,
-    [startRange, endRange],
-    isReducedMotion ? [0, 0] : [24, 0]
-  );
-  const scale = useTransform(
-    scrollYProgress,
-    [startRange, endRange],
-    isReducedMotion ? [1, 1] : [0.95, 1]
-  );
-
   return (
     <motion.div
-      style={{ opacity, y, scale }}
+      initial={{ opacity: 0, y: isReducedMotion ? 0 : 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.45, delay: isReducedMotion ? 0 : Math.min(index * 0.1, 0.3) }}
       className="p-6 sm:p-7 rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)]/90 backdrop-blur-md shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
     >
       <div>
