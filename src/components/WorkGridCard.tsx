@@ -142,7 +142,7 @@ export const WorkGridCard: React.FC<Props> = ({ project, isEn, updateConfig, get
     </>
   );
 
-  const containerClasses = `group relative rounded-3xl overflow-hidden bg-black border border-white/10 cursor-pointer hover:border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] transition-colors ${getGridClass(project.cardSize)}`;
+  const containerClasses = `group relative rounded-3xl overflow-hidden card-depth-2 bg-[var(--surface-secondary)] border border-[var(--border-default)] cursor-pointer hover:border-[var(--interactive-border-active)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] transition-all duration-300 ${getGridClass(project.cardSize)}`;
 
   if (hasDetails && !project.projectUrl) {
     return (

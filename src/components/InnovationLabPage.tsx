@@ -80,7 +80,7 @@ export const InnovationLabPage = () => {
   };
 
   return (
-    <div className="bg-[#030303] min-h-screen text-white relative overflow-hidden font-sans">
+    <div className="bg-[var(--surface-primary)] min-h-screen text-[var(--text-primary)] relative overflow-hidden font-sans transition-colors duration-300">
       <Helmet>
         <title>{isEn ? 'NmoLabs Innovation Labs | AI Experiments and Future Digital Solutions' : 'مختبر ابتكارات NmoLabs | تجارب الذكاء الاصطناعي والحلول المستقبلية'}</title>
         <meta name="description" content={isEn ? 'Explore NmoLabs experiments and applied research across artificial intelligence, ecommerce, automation, growth, and future digital solutions.' : 'استكشف تجارب وأبحاث NmoLabs في الذكاء الاصطناعي والتجارة الإلكترونية والأتمتة والتسويق الذكي والحلول الرقمية المستقبلية.'} />
@@ -94,42 +94,42 @@ export const InnovationLabPage = () => {
           transform: `translateY(${scrollProgress * 50}px)`
         }}
       />
-      {/* Grid Pattern / Grain */}
-      <div className="fixed inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0ibm9uZSIvPgo8Y2lyY2xlIGN4PSIxIiBjeT0iMSIgcj0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPgo8L3N2Zz4=')] z-0 pointer-events-none" />
+      {/* Grid Pattern */}
+      <div className="fixed inset-0 bg-grid-pattern opacity-10 z-0 pointer-events-none" />
 
       {/* Hero Section */}
-      <section className="relative h-[100svh] min-h-[650px] max-h-[980px] flex flex-col justify-center pt-20 z-10 border-b border-white/5">
+      <section className="relative h-[100svh] min-h-[650px] max-h-[980px] flex flex-col justify-center pt-20 z-10 border-b border-[var(--border-default)]">
         <div className="absolute inset-0 overflow-hidden opacity-20 pointer-events-none">
           <motion.div 
             animate={{ opacity: [0.3, 0.8, 0.3], scale: [1, 1.05, 1] }} 
             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full border border-white/10"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full border border-[var(--border-default)]"
           />
           <motion.div 
             animate={{ rotate: 360 }} 
             transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-dashed border-white/10"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-dashed border-[var(--border-default)]"
           />
         </div>
 
         <div className="max-w-5xl mx-auto px-6 text-center relative z-20">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-6 inline-flex">
-            <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm font-mono tracking-widest uppercase flex items-center gap-2 backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+            <span className="px-4 py-1.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)] text-sm font-mono tracking-widest uppercase flex items-center gap-2 backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-[var(--color-primary)] animate-pulse" />
               NmoLabs Innovation Labs
             </span>
           </motion.div>
 
           <motion.h1 
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1] tracking-tight"
+            className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1] tracking-tight text-[var(--text-primary)]"
           >
             {isEn ? 'Experimenting Today With What May Transform Tomorrow' : 'نجرب اليوم ما قد يغيّر العمل غدًا'}
           </motion.h1>
 
           <motion.p 
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-            className="text-xl md:text-2xl text-white/50 max-w-3xl mx-auto mb-12 leading-relaxed"
+            className="text-xl md:text-2xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-12 leading-relaxed"
           >
             {isEn ? 'A space for research, experimentation, and prototyping, where we turn problems and opportunities into ideas that can be tested and developed.' : 'مساحة للبحث والتجربة وبناء النماذج الأولية، نحول فيها المشكلات والفرص إلى أفكار قابلة للاختبار والتطوير.'}
           </motion.p>
@@ -142,7 +142,7 @@ export const InnovationLabPage = () => {
               onClick={() => {
                 document.getElementById('experiments')?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-black bg-white hover:bg-white/90 transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)]"
+              className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-white bg-[var(--color-primary)] hover:bg-[var(--color-primary)]/90 transition-all shadow-lg shadow-[var(--color-primary)]/20 cursor-pointer"
             >
               {isEn ? 'Explore Experiments' : 'استكشف التجارب'}
             </button>
@@ -150,7 +150,7 @@ export const InnovationLabPage = () => {
               onClick={() => {
                 document.getElementById('challenge')?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-white bg-[#111] hover:bg-[#222] border border-white/10 transition-all"
+              className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-[var(--text-primary)] bg-[var(--surface-secondary)] hover:bg-[var(--surface-elevated)] border border-[var(--border-default)] transition-all cursor-pointer"
             >
               {isEn ? 'Share a Challenge' : 'شاركنا تحديًا'}
             </button>
@@ -256,7 +256,7 @@ export const InnovationLabPage = () => {
                     updateConfig({ currentRoute: `innovation-lab/${exp.slug}` });
                     window.scrollTo({top: 0, behavior: 'smooth'});
                   }}
-                  className={`group relative rounded-3xl p-6 md:p-8 bg-[#0a0a0a] border border-white/10 hover:border-white/30 cursor-pointer overflow-hidden transition-all duration-300 flex flex-col ${
+                  className={`card-depth-2 group relative rounded-3xl p-6 md:p-8 bg-[var(--surface-secondary)] border border-[var(--border-default)] hover:border-[var(--interactive-border-active)] cursor-pointer overflow-hidden transition-all duration-300 flex flex-col ${
                     idx % 4 === 0 || idx % 4 === 3 ? 'md:col-span-2 lg:col-span-2' : 'col-span-1'
                   }`}
                 >
@@ -266,19 +266,19 @@ export const InnovationLabPage = () => {
                     <span className={`px-3 py-1 rounded-full text-xs font-bold border ${getStatusStyle(exp.status)}`}>
                       {getStatusText(exp.status)}
                     </span>
-                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/30 group-hover:text-white transition-all group-hover:bg-white/10 group-hover:-translate-y-1 group-hover:translate-x-1">
+                    <div className="w-8 h-8 rounded-full bg-[var(--surface-primary)] border border-[var(--border-default)] flex items-center justify-center text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-all group-hover:-translate-y-1 group-hover:translate-x-1">
                       <ArrowUpRight size={16} />
                     </div>
                   </div>
 
                   <div className="relative z-10 flex-grow">
-                    <div className="text-xs text-white/40 mb-2 font-mono uppercase">
+                    <div className="text-xs text-[var(--text-muted)] mb-2 font-mono uppercase">
                       {categories.find(c => c.id === exp.category)?.[isEn ? 'en' : 'ar']}
                     </div>
-                    <h3 className="text-xl md:text-2xl font-bold mb-3 text-white group-hover:text-transparent group-hover:bg-clip-text transition-all" style={{ backgroundImage: `linear-gradient(45deg, #fff, ${exp.brandColor || '#aaa'})` }}>
+                    <h3 className="text-xl md:text-2xl font-bold mb-3 text-[var(--text-primary)] group-hover:text-[var(--color-primary)] transition-colors">
                       {isEn ? exp.titleEn : exp.titleAr}
                     </h3>
-                    <p className="text-sm text-white/50 line-clamp-2 md:line-clamp-3">
+                    <p className="text-sm text-[var(--text-secondary)] line-clamp-2 md:line-clamp-3 leading-relaxed">
                       {isEn ? exp.hypothesisEn : exp.hypothesisAr}
                     </p>
                   </div>

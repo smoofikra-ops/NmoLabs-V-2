@@ -185,40 +185,44 @@ export const Hero = () => {
           ))}
         </div>
       )}
-      <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-primary)]/75 via-[var(--surface-primary)]/55 to-[var(--surface-primary)]/85 dark:from-[#0a0f1d]/85 dark:via-[#0a0f1d]/65 dark:to-[#0a0f1d]/90 pointer-events-none z-[2]" />
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] dark:opacity-[0.04] pointer-events-none z-[2]" />
+      {/* Background Gradient Field - Localized gentle contrast preservation */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-primary)]/80 via-[var(--surface-primary)]/50 to-[var(--surface-primary)]/90 dark:from-[#070b14]/85 dark:via-[#070b14]/55 dark:to-[#070b14]/95 pointer-events-none z-[2]" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05] pointer-events-none z-[2]" />
       
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 w-full flex flex-col items-center justify-center text-center mt-10 lg:mt-0">
         
-        {/* Text Content */}
+        {/* Text Content with Localized Readability Protection */}
         <motion.div
            initial={{ opacity: 0, x: isEn ? -20 : 20 }}
            animate={{ opacity: 1, x: 0 }}
            transition={{ duration: 0.7 }}
-           className="flex flex-col items-center text-center w-full max-w-full overflow-hidden"
+           className="flex flex-col items-center text-center w-full max-w-4xl mx-auto overflow-hidden relative"
            dir={isEn ? 'ltr' : 'rtl'}
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-xs sm:text-sm font-medium mb-5 text-[var(--color-primary)] shrink-0 max-w-full">
-            <Sparkles size={14} className="shrink-0" />
-            <span className="font-bold truncate">{isEn ? 'Tech solutions tailored for your business' : 'حلول تقنية مصممة لأعمالك'}</span>
+          {/* Subtle localized glow/backdrop field behind headline */}
+          <div className="absolute inset-0 -inset-x-6 bg-radial-glow opacity-60 dark:opacity-40 blur-2xl pointer-events-none -z-10" />
+
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--surface-primary)]/90 dark:bg-[var(--surface-secondary)]/90 border border-[var(--border-default)] text-xs sm:text-sm font-bold mb-5 text-[var(--color-primary)] shadow-sm backdrop-blur-md shrink-0 max-w-full">
+            <Sparkles size={14} className="shrink-0 text-[var(--color-primary)]" />
+            <span className="truncate">{isEn ? 'Tech solutions tailored for your business' : 'حلول تقنية مصممة لأعمالك'}</span>
           </div>
           
-          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[62px] font-black mb-4 sm:mb-6 leading-tight tracking-tight text-[var(--text-primary)] break-words w-full overflow-wrap-anywhere">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[64px] font-black mb-4 sm:mb-6 leading-[1.18] tracking-tight text-[var(--text-primary)] hero-text-shadow break-words w-full overflow-wrap-anywhere">
             {config.heroTitle}
           </h1>
           
-          <div className="text-base sm:text-xl md:text-2xl text-[var(--color-primary)] mb-4 font-bold min-h-[3rem] sm:min-h-[4rem] flex items-center justify-center w-full break-words overflow-wrap-anywhere">
+          <div className="text-lg sm:text-2xl md:text-3xl text-[var(--color-primary)] mb-4 sm:mb-6 font-black min-h-[3rem] sm:min-h-[4rem] flex items-center justify-center w-full break-words overflow-wrap-anywhere drop-shadow-sm">
             <DynamicTypewriter />
           </div>
 
-          <p className="text-sm sm:text-base md:text-lg text-[var(--text-secondary)] mb-6 sm:mb-8 leading-relaxed font-medium max-w-2xl w-full break-words mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-[var(--text-secondary)] mb-8 sm:mb-10 leading-relaxed font-medium max-w-2xl w-full break-words mx-auto drop-shadow-sm">
             {config.heroSubtitle}
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
             <button
               onClick={() => { updateConfig({ currentRoute: 'kyc' }); window.scrollTo(0, 0); }}
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold text-base text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
+              className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-8 py-4 rounded-full font-bold text-base text-white transition-all shadow-[0_8px_24px_-4px_rgba(15,98,254,0.4)] hover:shadow-[0_12px_32px_-4px_rgba(15,98,254,0.6)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
               style={{ backgroundColor: 'var(--color-primary)' }}
             >
               <span>{config.heroButtonText}</span>
@@ -227,13 +231,13 @@ export const Hero = () => {
             
             <button
               onClick={() => triggerBookingModal('استشارة مجانية')}
-              className="w-full sm:w-auto flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold text-base text-[var(--text-secondary)] bg-[var(--surface-primary)] border border-[var(--border-default)] transition-all hover:bg-[var(--surface-secondary)] cursor-pointer"
+              className="w-full sm:w-auto flex items-center justify-center px-8 py-4 rounded-full font-bold text-base text-[var(--text-primary)] bg-[var(--surface-primary)]/90 backdrop-blur-md border border-[var(--border-default)] shadow-[var(--card-shadow-1)] hover:shadow-[var(--card-shadow-2)] hover:border-[var(--border-hover)] hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
             >
               {isEn ? 'Book a Free Consultation' : 'احجز استشارة مجانية'}
             </button>
           </div>
 
-          <div className="mt-6 sm:mt-8 flex items-center gap-3 text-xs sm:text-sm text-[var(--text-muted)] font-medium bg-[var(--surface-secondary)] px-4 py-2.5 rounded-xl max-w-full">
+          <div className="mt-8 sm:mt-10 flex items-center gap-3 text-xs sm:text-sm text-[var(--text-muted)] font-medium bg-[var(--surface-primary)]/80 dark:bg-[var(--surface-secondary)]/80 border border-[var(--border-default)] px-4 py-2.5 rounded-full shadow-sm backdrop-blur-md max-w-full">
             <div className="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse shrink-0" />
             <span className="truncate">{isEn ? 'Full team for design, development, systems, and growth.' : 'فريق متكامل للتصميم، التطوير، الأنظمة والنمو.'}</span>
           </div>

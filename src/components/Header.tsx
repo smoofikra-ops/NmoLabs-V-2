@@ -106,12 +106,10 @@ export const Header = () => {
     <motion.header 
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="fixed top-0 left-0 right-0 z-50"
+      className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
     >
       {/* Announcement Bar */}
-      <div className="bg-[var(--surface-primary)] border-b border-[var(--border-default)] px-4 py-1.5 flex items-center justify-between text-xs sm:text-sm text-[var(--text-secondary)] font-medium">
-        
-
+      <div className="bg-[var(--surface-primary)]/95 backdrop-blur-md border-b border-[var(--border-default)] px-4 py-1.5 flex items-center justify-between text-xs sm:text-sm text-[var(--text-secondary)] font-medium pointer-events-auto shadow-sm">
         <div className="overflow-hidden whitespace-nowrap flex-1 ml-4 lg:ml-8 relative">
            <div className={isEn ? "inline-block animate-marquee" : "inline-block animate-marquee-rtl"}>
              {isEn 
@@ -121,22 +119,23 @@ export const Header = () => {
         </div>
       </div>
 
-      <div className="px-4 md:px-6 py-3">
-        <div className="w-full lg:w-fit mx-auto flex items-center justify-between lg:justify-center gap-4 lg:gap-12 bg-[var(--surface-primary)]/85 shadow-[0_4px_30px_rgba(0,0,0,0.05)] border border-[var(--border-default)]/60 rounded-2xl px-4 md:px-6 py-3 transition-colors backdrop-blur-xl">
+      <div className="px-4 md:px-6 py-2.5 pointer-events-auto">
+        <div className="w-full lg:w-fit mx-auto flex items-center justify-between lg:justify-center gap-3 lg:gap-8 bg-[var(--surface-primary)]/90 dark:bg-[var(--surface-primary)]/85 shadow-[var(--card-shadow-2)] border border-[var(--border-default)] rounded-full px-4 md:px-6 py-2 transition-all backdrop-blur-xl">
         <button 
-          className="lg:hidden text-[var(--text-secondary)] hover:text-[var(--color-primary)] transition-colors p-2 -mr-2"
+          className="lg:hidden text-[var(--text-secondary)] hover:text-[var(--color-primary)] transition-colors p-2 rounded-xl hover:bg-[var(--surface-secondary)]"
           onClick={() => setIsMobileMenuOpen(true)}
           aria-label={isEn ? "Open main menu" : "فتح القائمة الرئيسية"}
           aria-expanded={isMobileMenuOpen}
         >
-          <Menu size={24} />
+          <Menu size={22} />
         </button>
 
-        <div className="flex items-center justify-center absolute left-1/2 -translate-x-1/2 lg:relative lg:left-0 lg:translate-x-0 gap-2 cursor-pointer" onClick={() => handleScroll('hero')}>
-          <img src={config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="hidden lg:block object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" style={{ height: `${config.desktopLogoHeight || 40}px` }} />
-          <img src={config.mobileLogoUrl || config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="block lg:hidden object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" style={{ height: `${config.mobileLogoHeight || 30}px` }} />
+        <div className="flex items-center justify-center absolute left-1/2 -translate-x-1/2 lg:relative lg:left-0 lg:translate-x-0 gap-2 cursor-pointer transition-transform hover:scale-[1.02]" onClick={() => handleScroll('hero')}>
+          <img src={config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="hidden lg:block object-contain drop-shadow-sm" style={{ height: `${config.desktopLogoHeight || 36}px` }} />
+          <img src={config.mobileLogoUrl || config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="block lg:hidden object-contain drop-shadow-sm" style={{ height: `${config.mobileLogoHeight || 28}px` }} />
         </div>
-        <nav className="hidden lg:flex items-center gap-1 relative border border-[var(--interactive-border-hover)] p-1 rounded-2xl" onMouseLeave={() => setHoveredNav(null)}>
+
+        <nav className="hidden lg:flex items-center gap-1 relative bg-[var(--surface-secondary)]/60 border border-[var(--border-default)] p-1 rounded-full" onMouseLeave={() => setHoveredNav(null)}>
           {mainNavItems.map((item, idx) => {
             const isHovered = hoveredNav === idx;
             const isActive = activeNav === idx;
@@ -147,49 +146,52 @@ export const Header = () => {
                 onClick={() => handleNavClick(item, idx)}
                 onMouseEnter={() => setHoveredNav(idx)}
                 onFocus={() => setHoveredNav(idx)}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors z-10 border border-transparent rounded-xl flex items-center justify-center gap-1.5 ${hasLiquid ? 'text-[var(--text-primary)] border-[var(--interactive-border-active)]' : 'text-[var(--text-secondary)] hover:border-[var(--interactive-border-hover)]'}`}
+                className={`relative px-4 py-1.5 text-xs font-bold transition-all z-10 rounded-full flex items-center justify-center gap-1.5 ${hasLiquid ? 'text-[var(--color-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
               >
                 {hasLiquid && (
                   <motion.div
                     layoutId="nav-liquid-indicator"
-                    className="absolute inset-0 bg-[var(--liquid-indicator-bg)] border border-[var(--liquid-indicator-border)] rounded-xl -z-10 shadow-[var(--interactive-glow)]"
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    className="absolute inset-0 bg-[var(--surface-primary)] border border-[var(--interactive-border)] rounded-full -z-10 shadow-sm"
+                    transition={{ type: "spring", stiffness: 450, damping: 35 }}
                   />
                 )}
-                {hasLiquid && <Bookmark size={14} className="shrink-0" />}
                 {isEn ? item.nameEn : item.nameAr}
               </button>
             );
           })}
         </nav>
-        <div className="flex items-center gap-4"><div className="flex items-center gap-2 sm:gap-4 sm:mr-4 sm:border-r border-[var(--border-default)] sm:pr-4">
+
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 sm:mr-2 sm:border-r rtl:sm:border-r-0 rtl:sm:border-l border-[var(--border-default)] sm:pr-3 rtl:sm:pr-0 rtl:sm:pl-3">
             <button 
               onClick={handleToggleLanguage}
-              className="text-[var(--text-secondary)] hover:text-[var(--color-primary)] transition-colors cursor-pointer"
+              className="p-2 text-[var(--text-secondary)] hover:text-[var(--color-primary)] hover:bg-[var(--surface-secondary)] rounded-full transition-colors cursor-pointer"
               aria-label={isEn ? "Toggle Language" : "تغيير اللغة"}
             >
-               <Globe size={20} />
+               <Globe size={18} />
             </button>
             {config.showThemeToggle && (
               <button 
                 onClick={toggleTheme} 
-                className="text-[var(--text-secondary)] hover:text-[var(--color-primary)] transition-colors cursor-pointer" 
+                className="p-2 text-[var(--text-secondary)] hover:text-[var(--color-primary)] hover:bg-[var(--surface-secondary)] rounded-full transition-colors cursor-pointer" 
                 aria-label={isEn ? "Toggle Theme" : "تغيير المظهر"}
               >
-                {config.theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                {config.theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
               </button>
             )}
           </div>
           
-          
           <button 
             onClick={() => { updateConfig({ currentRoute: 'kyc' }); window.scrollTo(0,0); }}
-            className="hidden sm:block px-6 py-2.5 rounded-xl font-bold text-sm text-white hover:opacity-90 transition-all shadow-md hover:shadow-lg cursor-pointer border border-[var(--color-secondary)]/50"
+            className="hidden sm:inline-flex items-center justify-center px-5 py-2 rounded-full font-bold text-xs text-white transition-all shadow-[0_4px_14px_rgba(15,98,254,0.35)] hover:shadow-[0_6px_20px_rgba(15,98,254,0.45)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
             style={{ backgroundColor: 'var(--color-primary)' }}
           >
             {config.language === 'en' ? 'Start Project' : 'ابدأ مشروعك'}
           </button>
-        </div></div></div></motion.header>
+        </div>
+      </div>
+    </div>
+  </motion.header>
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
@@ -198,7 +200,7 @@ export const Header = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-[var(--surface-secondary)] backdrop-blur-md z-[60] lg:hidden"
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] lg:hidden"
               onClick={() => setIsMobileMenuOpen(false)}
             />
             <motion.div
@@ -211,7 +213,7 @@ export const Header = () => {
             >
               <div className="flex items-center justify-between mb-6 pb-4 border-b border-[var(--border-default)] shrink-0">
                 <div className="flex items-center gap-2">
-                  <img src={config.mobileLogoUrl || config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" style={{ height: `${config.mobileLogoHeight || 30}px` }} />
+                  <img src={config.mobileLogoUrl || config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="object-contain drop-shadow-sm" style={{ height: `${config.mobileLogoHeight || 28}px` }} />
                 </div>
                 <button 
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -222,12 +224,12 @@ export const Header = () => {
                 </button>
               </div>
 
-              <div className="flex flex-col gap-1.5 flex-1 justify-center overflow-y-auto">
+              <div className="flex flex-col gap-2 flex-1 justify-start overflow-y-auto">
                 {mainNavItems.map((item, idx) => (
                   <button
                     key={idx}
                     onClick={() => handleNavClick(item, idx)}
-                    className="text-right rtl:text-right ltr:text-left text-[var(--text-secondary)] hover:text-[var(--color-primary)] bg-[var(--surface-primary)] hover:bg-[var(--surface-secondary)] py-2.5 px-3.5 rounded-xl w-full font-bold transition-all duration-300 text-sm flex items-center gap-3 border border-[var(--border-default)] shadow-sm hover:shadow-md hover:-translate-y-0.5 min-h-[40px]"
+                    className="text-right rtl:text-right ltr:text-left text-[var(--text-secondary)] hover:text-[var(--color-primary)] bg-[var(--surface-secondary)] hover:bg-[var(--surface-tertiary)] py-3 px-4 rounded-xl w-full font-bold transition-all duration-200 text-sm flex items-center gap-3 border border-[var(--border-default)] shadow-sm min-h-[44px]"
                   >
                     <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] shrink-0" />
                     <span className="truncate">{isEn ? item.nameEn : item.nameAr}</span>
@@ -235,16 +237,16 @@ export const Header = () => {
                 ))}
               </div>
 
-              <div className="mt-4 pt-4 border-t border-[var(--border-default)] flex flex-col gap-2.5 shrink-0">
-                <div className="flex items-center justify-center gap-4">
+              <div className="mt-4 pt-4 border-t border-[var(--border-default)] flex flex-col gap-3 shrink-0">
+                <div className="flex items-center justify-center gap-3">
                   {config.showThemeToggle && (
-                    <button onClick={toggleTheme} className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors p-3 bg-[var(--surface-secondary)] rounded-xl flex-1 flex justify-center cursor-pointer">
+                    <button onClick={toggleTheme} className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors p-3 bg-[var(--surface-secondary)] rounded-xl flex-1 flex justify-center cursor-pointer border border-[var(--border-default)]">
                       {config.theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                     </button>
                   )}
                   <button 
                     onClick={handleToggleLanguage}
-                    className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors font-english text-sm font-bold flex items-center justify-center gap-2 p-3 bg-[var(--surface-secondary)] rounded-xl flex-1 cursor-pointer"
+                    className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors font-english text-sm font-bold flex items-center justify-center gap-2 p-3 bg-[var(--surface-secondary)] rounded-xl flex-1 cursor-pointer border border-[var(--border-default)]"
                   >
                     <Globe size={18} />
                     {config.language === 'en' ? 'عربي' : 'English'}
@@ -253,12 +255,13 @@ export const Header = () => {
                 <button 
                   onClick={() => {
                     setIsMobileMenuOpen(false);
-                    { updateConfig({ currentRoute: 'kyc' }); window.scrollTo(0, 0); }
+                    updateConfig({ currentRoute: 'kyc' }); 
+                    window.scrollTo(0, 0);
                   }}
-                  className="w-full py-3.5 rounded-xl font-bold text-[var(--text-primary)] transition-transform active:scale-95 cursor-pointer shadow-lg relative overflow-hidden group text-sm"
+                  className="w-full py-3.5 rounded-xl font-bold text-white transition-transform active:scale-95 cursor-pointer shadow-[0_4px_14px_rgba(15,98,254,0.4)] text-sm flex items-center justify-center"
                   style={{ backgroundColor: 'var(--color-primary)' }}
                 >
-                  <span className="relative z-10">{config.language === 'en' ? 'Start Project' : 'ابدأ مشروعك'}</span>
+                  <span>{config.language === 'en' ? 'Start Project' : 'ابدأ مشروعك'}</span>
                 </button>
               </div>
             </motion.div>

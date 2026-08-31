@@ -222,6 +222,12 @@ function AppContent() {
             <Blog />
           </div>
         </Suspense>
+      ) : config.currentRoute === 'faq' ? (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
+          <div className="pt-24 min-h-screen">
+            <FAQ />
+          </div>
+        </Suspense>
       ) : config.currentRoute === 'start-project' ? (
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
           <StartProjectPage />

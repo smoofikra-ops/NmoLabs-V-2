@@ -54,50 +54,70 @@ export const Footer = () => {
 
   const companyLinks = [
     { nameAr: 'من نحن', nameEn: 'About Us', route: 'about' },
-    { nameAr: 'المؤسس والرئيس التنفيذي', nameEn: 'Founder & CEO', route: 'founder' },
-    { nameAr: 'أعمالنا', nameEn: 'Our Works', route: 'work' },
+    { nameAr: 'خدماتنا', nameEn: 'Services', route: 'services' },
+    { nameAr: 'أعمالنا والمشاريع', nameEn: 'Our Works', route: 'work' },
     { nameAr: 'مختبر الابتكارات', nameEn: 'Innovation Lab', route: 'innovation-lab' },
-    { nameAr: 'تواصل معنا', nameEn: 'Contact Us', act: 'contact' },
+    { nameAr: 'المؤسس والرئيس التنفيذي', nameEn: 'Founder & CEO', route: 'founder' },
+  ];
+
+  const productLinks = [
+    { nameAr: 'المنتجات الذكية', nameEn: 'Products', route: 'products' },
+    { nameAr: 'المدونة التقنية', nameEn: 'Blog & Articles', route: 'blog' },
+    { nameAr: 'الأسئلة الشائعة', nameEn: 'FAQ', route: 'faq' },
+    { nameAr: 'سياسة الخصوصية', nameEn: 'Privacy Policy', route: 'privacy' },
+    { nameAr: 'شروط الاستخدام', nameEn: 'Terms of Use', route: 'terms' },
   ];
 
   return (
-    <footer id="contact" className="border-t border-[var(--border-default)] pt-12 md:pt-20 pb-8 relative z-20 bg-[var(--surface-primary)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-16">
+    <footer id="contact" className="border-t border-[var(--border-default)] pt-14 md:pt-20 pb-10 relative z-20 bg-[var(--surface-primary)] overflow-hidden">
+      {/* Background ambient lighting */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-32 bg-radial-glow opacity-30 pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 mb-16">
           
           {/* Logo and About Us */}
-          <div className="space-y-6">
-            <div className="flex items-center justify-center lg:justify-start gap-2 cursor-pointer" onClick={() => handleScroll('hero')}>
-              <img src={config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="h-24 md:h-32 object-contain drop-shadow-[0_0_15px_rgba(79,142,247,0.3)]" />
+          <div className="space-y-5 flex flex-col items-center lg:items-start text-center lg:text-start">
+            <div className="flex items-center gap-2 cursor-pointer transition-transform hover:scale-105" onClick={() => handleScroll('hero')}>
+              <img src={config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="h-14 md:h-16 object-contain drop-shadow-sm" />
             </div>
-            <p className="text-[var(--text-muted)] text-sm leading-relaxed text-center lg:text-start">
-              {config.footerDescription}
+            <p className="text-[var(--text-secondary)] text-sm leading-relaxed max-w-sm">
+              {config.footerDescription || (isEn 
+                ? "NmoLabs is your dedicated technology growth partner, engineering bespoke enterprise software, digital systems, and AI-powered growth engines."
+                : "نمو لابز هو شريكك التقني للنمو المتسارع، نصمم ونبني منظومات برمجية ذكية، حلولاً تقنية متقدمة، وأدوات رقمية تسهم في تعظيم أثر أعمالك.")}
             </p>
-            <div className="flex gap-4 flex-wrap justify-center lg:justify-start">
+            <div className="flex gap-2.5 flex-wrap justify-center lg:justify-start pt-2">
               {config.socialLinks?.map((link, idx) => (
-                <a key={idx} href={link.url} target="_blank" rel="noreferrer" title={link.name} className="w-10 h-10 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] flex items-center justify-center text-[var(--text-muted)] hover:bg-[var(--color-primary)] hover:text-[var(--text-primary)] hover:border-transparent transition-all duration-300">
+                <a 
+                  key={idx} 
+                  href={link.url} 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  title={link.name} 
+                  className="w-9 h-9 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] flex items-center justify-center text-[var(--text-muted)] hover:bg-[var(--color-primary)] hover:text-white hover:border-transparent hover:shadow-md transition-all duration-200"
+                >
                   {getSocialSvg(link.icon)}
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Company Links (الشركة) */}
-          <div className="relative transition-colors" onMouseLeave={() => setHoveredLink(null)}>
-            <button onClick={() => toggleSection('company')} className="w-full flex md:hidden items-center justify-between cursor-pointer focus:outline-none border-b border-[var(--border-default)] pb-4 mb-4">
-              <h4 className="text-[var(--text-primary)] font-bold mb-0 text-sm uppercase tracking-wider">
-                {isEn ? 'Company' : 'الشركة'}
+          {/* Company Links */}
+          <div className="relative" onMouseLeave={() => setHoveredLink(null)}>
+            <button onClick={() => toggleSection('company')} className="w-full flex md:hidden items-center justify-between cursor-pointer focus:outline-none border-b border-[var(--border-default)] pb-3 mb-4">
+              <h4 className="text-[var(--text-primary)] font-bold text-sm uppercase tracking-wider">
+                {isEn ? 'Company & Solutions' : 'الشركة والحلول'}
               </h4>
               <span className="text-[var(--color-primary)] font-bold text-lg">
                 {openSection === 'company' ? '-' : '+'}
               </span>
             </button>
-            <div className="hidden md:block mb-6 text-right ltr:text-left">
-              <h4 className="inline-block text-[var(--text-primary)] font-bold mb-0 text-lg uppercase tracking-wider pb-2">
-                {isEn ? 'Company' : 'الشركة'}
+            <div className="hidden md:block mb-5 text-right rtl:text-right ltr:text-left">
+              <h4 className="text-[var(--text-primary)] font-bold text-base uppercase tracking-wider">
+                {isEn ? 'Company & Solutions' : 'الشركة والحلول'}
               </h4>
             </div>
-            <div className={`flex-col gap-1 relative z-10 mt-4 md:mt-0 md:flex ${openSection === 'company' ? 'flex' : 'hidden'}`}>
+            <div className={`flex-col gap-1.5 relative z-10 md:flex ${openSection === 'company' ? 'flex' : 'hidden'}`}>
               {companyLinks.map((link, idx) => {
                 const id = 'company-link-' + idx;
                 const isHovered = hoveredLink === id;
@@ -105,98 +125,105 @@ export const Footer = () => {
                   <button 
                     key={idx}
                     onMouseEnter={() => setHoveredLink(id)}
-                    onClick={() => link.route ? (() => {updateConfig({currentRoute: link.route}); window.scrollTo(0,0)})() : handleScroll(link.act!)} 
-                    className={`relative flex items-center gap-2 w-fit text-right rtl:text-right ltr:text-left px-4 py-2 mb-2 border rounded-full text-sm transition-colors ${isHovered ? 'text-[var(--text-primary)] border-[var(--color-primary)] bg-[var(--surface-secondary)]' : 'text-[var(--text-muted)] border-[var(--border-default)] hover:border-[var(--interactive-border-hover)]'}`}
+                    onClick={() => {
+                      if (link.route) {
+                        updateConfig({ currentRoute: link.route });
+                        window.scrollTo(0, 0);
+                      }
+                    }} 
+                    className={`relative flex items-center gap-2 w-fit text-right rtl:text-right ltr:text-left px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isHovered ? 'text-[var(--color-primary)] bg-[var(--surface-secondary)] border border-[var(--interactive-border)] shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
                   >
-                    {isHovered && (
-                       <motion.div
-                         layoutId="footer-liquid-indicator-1"
-                         className="absolute inset-0 bg-[var(--liquid-indicator-bg)] border border-[var(--liquid-indicator-border)] shadow-[var(--interactive-glow)] rounded-full -z-10"
-                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                       />
-                    )}
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)]/40 shrink-0" />
                     {isEn ? link.nameEn : link.nameAr}
                   </button>
-                )
+                );
               })}
             </div>
           </div>
 
-          {/* Policies */}
-          <div className="relative transition-colors" onMouseLeave={() => setHoveredLink(null)}>
-            <button onClick={() => toggleSection('policies')} className="w-full flex md:hidden items-center justify-between cursor-pointer focus:outline-none border-b border-[var(--border-default)] pb-4 mb-4">
-              <h4 className="text-[var(--text-primary)] font-bold mb-0 text-sm uppercase tracking-wider">السياسات</h4>
+          {/* Products & Policies */}
+          <div className="relative" onMouseLeave={() => setHoveredLink(null)}>
+            <button onClick={() => toggleSection('products')} className="w-full flex md:hidden items-center justify-between cursor-pointer focus:outline-none border-b border-[var(--border-default)] pb-3 mb-4">
+              <h4 className="text-[var(--text-primary)] font-bold text-sm uppercase tracking-wider">
+                {isEn ? 'Systems & Policies' : 'الأنظمة والسياسات'}
+              </h4>
               <span className="text-[var(--color-primary)] font-bold text-lg">
-                {openSection === 'policies' ? '-' : '+'}
+                {openSection === 'products' ? '-' : '+'}
               </span>
             </button>
-            <div className="hidden md:block mb-6 text-right ltr:text-left">
-              <h4 className="inline-block text-[var(--text-primary)] font-bold mb-0 text-lg uppercase tracking-wider pb-2">السياسات</h4>
+            <div className="hidden md:block mb-5 text-right rtl:text-right ltr:text-left">
+              <h4 className="text-[var(--text-primary)] font-bold text-base uppercase tracking-wider">
+                {isEn ? 'Systems & Policies' : 'الأنظمة والسياسات'}
+              </h4>
             </div>
-            <div className={`flex-col gap-1 relative z-10 mt-4 md:mt-0 md:flex ${openSection === 'policies' ? 'flex' : 'hidden'}`}>
-              {[
-                { name: 'سياسة الخصوصية', route: 'privacy' },
-                { name: 'شروط الاستخدام', route: 'terms' },
-                { name: 'سياسة ملفات الارتباط', route: 'cookies' },
-                { name: 'إخلاء المسؤولية', route: 'disclaimer' },
-              ].map((link, idx) => {
-                const id = 'policy-' + idx;
+            <div className={`flex-col gap-1.5 relative z-10 md:flex ${openSection === 'products' ? 'flex' : 'hidden'}`}>
+              {productLinks.map((link, idx) => {
+                const id = 'product-link-' + idx;
                 const isHovered = hoveredLink === id;
                 return (
                   <button 
                     key={idx}
                     onMouseEnter={() => setHoveredLink(id)}
-                    onClick={() => { updateConfig({ currentRoute: link.route }); window.scrollTo(0, 0); }}
-                    className={`relative w-fit text-right px-4 py-2 mb-2 border rounded-full text-sm transition-colors ${isHovered ? 'text-[var(--text-primary)] border-[var(--color-primary)] bg-[var(--surface-secondary)]' : 'text-[var(--text-muted)] border-[var(--border-default)] hover:border-[var(--interactive-border-hover)]'}`}
+                    onClick={() => {
+                      updateConfig({ currentRoute: link.route });
+                      window.scrollTo(0, 0);
+                    }}
+                    className={`relative flex items-center gap-2 w-fit text-right rtl:text-right ltr:text-left px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isHovered ? 'text-[var(--color-primary)] bg-[var(--surface-secondary)] border border-[var(--interactive-border)] shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
                   >
-                    {isHovered && (
-                       <motion.div
-                         layoutId="footer-liquid-indicator-2"
-                         className="absolute inset-0 bg-[var(--liquid-indicator-bg)] border border-[var(--liquid-indicator-border)] shadow-[var(--interactive-glow)] rounded-full -z-10"
-                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                       />
-                    )}
-                    {link.name}
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]/50 shrink-0" />
+                    {isEn ? link.nameEn : link.nameAr}
                   </button>
-                )
+                );
               })}
             </div>
           </div>
 
           {/* Contact Info */}
-          <div className="relative transition-colors">
-            <button onClick={() => toggleSection('contact')} className="w-full flex md:hidden items-center justify-between cursor-pointer focus:outline-none border-b border-[var(--border-default)] pb-4 mb-4">
-              <h4 className="text-[var(--text-primary)] font-bold mb-0 text-sm uppercase tracking-wider">التواصل</h4>
+          <div className="relative">
+            <button onClick={() => toggleSection('contact')} className="w-full flex md:hidden items-center justify-between cursor-pointer focus:outline-none border-b border-[var(--border-default)] pb-3 mb-4">
+              <h4 className="text-[var(--text-primary)] font-bold text-sm uppercase tracking-wider">
+                {isEn ? 'Contact & Headquarters' : 'التواصل والمقر'}
+              </h4>
               <span className="text-[var(--color-primary)] font-bold text-lg">
                 {openSection === 'contact' ? '-' : '+'}
               </span>
             </button>
-            <div className="hidden md:block mb-6 text-right ltr:text-left">
-              <h4 className="inline-block text-[var(--text-primary)] font-bold mb-0 text-lg uppercase tracking-wider pb-2">التواصل</h4>
+            <div className="hidden md:block mb-5 text-right rtl:text-right ltr:text-left">
+              <h4 className="text-[var(--text-primary)] font-bold text-base uppercase tracking-wider">
+                {isEn ? 'Contact & Headquarters' : 'التواصل والمقر'}
+              </h4>
             </div>
-            <ul className={`space-y-4 text-sm text-[var(--text-muted)] mt-6 md:mt-0 md:block ${openSection === 'contact' ? 'block' : 'hidden'}`}>
-              <li className="flex w-fit items-start gap-3 px-4 py-2 mb-2 border border-[var(--border-default)] rounded-full transition-colors hover:border-[var(--interactive-border-hover)] hover:bg-[var(--surface-secondary)]">
-                <MapPin size={18} className="text-[var(--color-primary)] shrink-0 mt-0.5" />
-                <span dir="ltr" className="text-right w-full">المملكة العربية السعودية، الرياض</span>
+            <ul className={`space-y-2.5 text-xs text-[var(--text-secondary)] font-medium md:block ${openSection === 'contact' ? 'block' : 'hidden'}`}>
+              <li className="flex items-center gap-3 px-3.5 py-2.5 bg-[var(--surface-secondary)]/70 border border-[var(--border-default)] rounded-xl transition-all hover:border-[var(--interactive-border)]">
+                <MapPin size={16} className="text-[var(--color-primary)] shrink-0" />
+                <span>{isEn ? 'Riyadh, Kingdom of Saudi Arabia' : 'المملكة العربية السعودية، الرياض'}</span>
               </li>
-              <li className="flex w-fit items-center gap-3 px-4 py-2 mb-2 border border-[var(--border-default)] rounded-full transition-colors hover:border-[var(--interactive-border-hover)] hover:bg-[var(--surface-secondary)]">
-                <Phone size={18} className="text-[var(--color-primary)] shrink-0" />
-                <span dir="ltr" className="font-english">{config.contactNumber}</span>
-              </li>
-              <li className="flex w-fit items-center gap-3 px-4 py-2 mb-2 border border-[var(--border-default)] rounded-full transition-colors hover:border-[var(--interactive-border-hover)] hover:bg-[var(--surface-secondary)]">
-                <Mail size={18} className="text-[var(--color-primary)] shrink-0" />
-                <span dir="ltr" className="font-english">hello@nmolabs.com</span>
+              {config.contactNumber && (
+                <li 
+                  onClick={() => window.open(getWhatsAppUrl(config.contactNumber), '_blank')}
+                  className="flex items-center gap-3 px-3.5 py-2.5 bg-[var(--surface-secondary)]/70 border border-[var(--border-default)] rounded-xl transition-all hover:border-[var(--interactive-border)] cursor-pointer hover:bg-[var(--surface-secondary)]"
+                >
+                  <Phone size={16} className="text-[var(--color-accent)] shrink-0" />
+                  <span dir="ltr" className="font-english font-bold">{config.contactNumber}</span>
+                </li>
+              )}
+              <li 
+                onClick={() => window.location.href = 'mailto:hello@nmolabs.com'}
+                className="flex items-center gap-3 px-3.5 py-2.5 bg-[var(--surface-secondary)]/70 border border-[var(--border-default)] rounded-xl transition-all hover:border-[var(--interactive-border)] cursor-pointer hover:bg-[var(--surface-secondary)]"
+              >
+                <Mail size={16} className="text-[var(--color-primary)] shrink-0" />
+                <span dir="ltr" className="font-english font-bold">hello@nmolabs.com</span>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="pt-8 border-t border-[var(--border-default)] flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
-          <p>© {currentYear} نمو لابز. جميع الحقوق محفوظة.</p>
+        {/* Copyright & Footnote */}
+        <div className="pt-6 border-t border-[var(--border-default)] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[var(--text-muted)] font-medium">
+          <p>© {currentYear} {isEn ? 'NmoLabs. All rights reserved.' : 'نمو لابز. جميع الحقوق محفوظة.'}</p>
           <div className="flex items-center gap-2">
-            <span>صُنع بشغف في</span>
-            <span className="text-[var(--text-primary)] font-black text-xs font-english tracking-widest">NMOLABS</span>
+            <span>{isEn ? 'Built with precision by' : 'صُنع بشغف وابتكار في'}</span>
+            <span className="text-[var(--text-primary)] font-black tracking-widest font-english text-xs bg-[var(--surface-secondary)] px-2.5 py-1 rounded-md border border-[var(--border-default)]">NMOLABS</span>
           </div>
         </div>
       </div>

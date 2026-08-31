@@ -1,106 +1,55 @@
 import React, { useState } from 'react';
 import { useSite } from '../context/SiteContext';
 import { motion, AnimatePresence } from 'motion/react';
-import { Plus, Minus, HelpCircle } from 'lucide-react';
+import { Plus, Minus, HelpCircle, CheckCircle2 } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 const faqCategories = [
   {
-    title: 'عن المنصة وحلولنا الذكية',
+    titleAr: 'عن المنصة وحلولنا الذكية',
+    titleEn: 'About NmoLabs & Smart Solutions',
     questions: [
       {
-        q: 'أنتم مجرد وكالة تسويق (Agency) عادية؟',
-        a: 'لا، إحنا منصة (SaaS) وشريك نمو تقني. ندمج أدوات الذكاء الاصطناعي عشان نحلل متجرك، مع خبرات تسويقية تدير حملاتك وتصنع محتواك، عشان نوفر لك نمو حقيقي مبني على الأرقام مو التخمين.'
+        qAr: 'أنتم مجرد وكالة تسويق (Agency) عادية؟',
+        qEn: 'Are you just a traditional marketing agency?',
+        aAr: 'لا، نمو لابز هي منظومة تقنية وشريك نمو استراتيجي. ندمج الأنظمة البرمجية، أدوات الذكاء الاصطناعي، والخبرة الهندسية والتسويقية لبناء حلول نمو مستدامة مبنية على البيانات والحقائق.',
+        aEn: 'No, NmoLabs is a technology ecosystem and strategic growth partner. We combine custom software engineering, AI tooling, and operational marketing expertise to deliver verified, data-driven business scale.'
       },
       {
-        q: 'وش هي الحلول الذكية اللي تغير طريقة البيع؟',
-        a: 'نقدم لك أدوات تحليل متكاملة، تحسين محركات بحث، إدارة حملات إعلانية مدعومة بالتقنية، وفحص دقيق للمتجر عشان نكتشف وين يضيع العميل ونعالج المشكلة فوراً.'
+        qAr: 'ما هي الحلول والمنظومات التي تطورونها؟',
+        qEn: 'What solutions and systems do you develop?',
+        aAr: 'نصمم ونبني أنظمة إدارة العمليات (ERP/CRM)، منصات التجارة الإلكترونية المتقدمة، محركات أتمتة الأعمال، ونماذج الذكاء الاصطناعي التوليدي والتحليلي المخصصة للشركات.',
+        aEn: 'We engineer enterprise ERP & CRM systems, bespoke headless commerce platforms, business automation engines, and custom generative/predictive AI systems.'
       },
       {
-        q: 'كيف تفيدني هالحلول الذكية؟',
-        a: 'حلولنا تتميز بالدقة وسرعة التنفيذ لأنها تعتمد على الأرقام والذكاء الاصطناعي. بتقدر تحسن واجهة متجرك، تقلل تكاليف إعلاناتك، وترفع مبيعاتك بشكل مستدام.'
-      },
-      {
-        q: 'كم يبي لي عشان أشوف نتايج؟',
-        a: 'التحسن المبدئي يبدأ خلال أول 14 يوم بعد التدقيق التقني، ونتائج الحملات الكبيرة تبدأ توضح من 30 إلى 90 يوم كحد أقصى عشان نوصل لأفضل عائد إعلاني (ROAS).'
-      },
-      {
-        q: 'كيف تختلف منصتكم عن باقي أدوات التحليل؟',
-        a: 'ما نعطيك أرقام وتخطيطات وبس، إحنا نربط كل مشكلة بحل تسويقي وننفذه لك إذا تبي، يعني إحنا شريك نجاح مو بس أداة تراقب أداءك.'
+        qAr: 'كم من الوقت يلزم لمشاهدة نتائج ملموسة؟',
+        qEn: 'How long does it take to see measurable results?',
+        aAr: 'تبدأ المؤشرات الأولية والتحسينات التشغيلية بالظهور خلال أول 14 إلى 21 يوماً من إطلاق النظام أو الحملة، مع استقرار المؤشرات الرئيسية والنمو المضاعف بين 30 إلى 90 يوماً.',
+        aEn: 'Initial operational milestones and conversion lifts appear within 14 to 21 days of launch, with compounding growth and scaled ROI stabilizing between 30 and 90 days.'
       }
     ]
   },
   {
-    title: 'الأسعار والتواصل',
+    titleAr: 'نماذج العمل والتكامل',
+    titleEn: 'Engagement Models & Integration',
     questions: [
       {
-        q: 'هل الأدوات اشتراكها لحالها ولا ضمن الخدمات؟',
-        a: 'الأدوات متاحة لكل مشتركين باقاتنا كجزء من الشراكة. وقريباً بنوفر اشتراك منفصل للي يبغى يدير متجره بنفسه.'
+        qAr: 'هل تقدمون حلولاً مخصصة بالكامل أم باقات جاهزة؟',
+        qEn: 'Do you offer custom tailored solutions or fixed packages?',
+        aAr: 'نقدم كلاً النموذجين: منتجات وأنظمة ذكية جاهزة للتشغيل الفوري مع خيارات تخصيص، بالإضافة إلى تطوير أنظمة مخصصة بالكامل (Bespoke Enterprise Engineering) حسب متطلباتك الدقيقة.',
+        aEn: 'We offer both: ready-to-deploy modular SaaS systems with configuration options, as well as 100% bespoke engineering built specifically for enterprise specifications.'
       },
       {
-        q: 'عندكم باقات تناسب حجم متجري؟',
-        a: 'أكيد، عندنا باقات مرنة تناسب الكل (أعمال واحترافية) بالإضافة لباقات مخصصة بالكامل للمتاجر الكبيرة واللي تحتاج ربط API.'
+        qAr: 'هل تتكامل أنظمتكم مع منصات التجارة مثل سلة وزد وشوبيفاي؟',
+        qEn: 'Do your systems integrate with Salla, Zid, and Shopify?',
+        aAr: 'نعم بكل تأكيد. جميع منتجاتنا مصممة وفق معمارية برمجية مفتوحة وقابلة للربط السلس عبر واجهات برمجة التطبيقات (APIs) و Webhooks مع كافة المنصات الإقليمية والعالمية.',
+        aEn: 'Yes, absolutely. All our systems are built with open API architecture and webhooks, ensuring frictionless bi-directional integration with Salla, Zid, Shopify, and external ERPs.'
       },
       {
-        q: 'كيف أتواصل معكم عشان أختار الباقة الصح؟',
-        a: 'بكل بساطة اضغط على "تواصل معنا"، وبيحولك للواتساب ومستشارينا بيعطونك أفضل توصية لمشروعك.'
-      },
-      {
-        q: 'أقدر أجرب قبل ما أدفع؟',
-        a: 'عندنا باقة مجانية مدى الحياة تعطيك وصول لأدوات أساسية زي حاسبة الأداء وفاحص السرعة عشان تبدأ تحسّن متجرك بدون أي التزام.'
-      },
-      {
-        q: 'تدعمون متاجر سلة وزد؟',
-        a: 'طبعاً! منصتنا مصممة عشان تتوافق بشكل كامل مع سلة وزد وتقدر تسحب البيانات وتنفذ خططك بسهولة تامة.'
-      }
-    ]
-  },
-  {
-    title: 'متاعب جوجل وحلولها',
-    questions: [
-      {
-        q: 'حسابي في Google Merchant Center توقف، تقدرون تحلونه؟',
-        a: 'إيه نعم، عندنا خبرة قوية في حل تعليق Merchant Center، نعالج مشاكل الوصف المضلل والبيانات الناقصة عشان ترجع إعلاناتك بسلام.'
-      },
-      {
-        q: 'منتجاتي ترفضها إعلانات جوجل دايم، وش الحل؟',
-        a: 'نفحص المنتجات المرفوضة ونعرف وش السياسة اللي تسببت بالرفض (سواء أسعار، جودة صور، أو مشاكل تقنية زي الـ GTIN) ونحلها لك من جذورها.'
-      },
-      {
-        q: 'حسابي بـ Google Ads تبند، كيف تساعدوني؟',
-        a: 'حالات الإيقاف يبيلها مراجعة دقيقة لسبب المشكلة سواء فوترة أو مخالفات. نرفع لك التماس احترافي وندير التواصل لين تنحل.'
-      },
-      {
-        q: 'متجري ما يظهر بخرائط جوجل للبحث المحلي، وش السواة؟',
-        a: 'نضبط لك الظهور المحلي بخرائط جوجل ونستهدف الكلمات المفتاحية الصح عشان تكسب ثقة العملاء وتظهر لهم لما يبحثون.'
-      },
-      {
-        q: 'عندي مشاكل أرشفة في Search Console؟',
-        a: 'نحلل تقارير جوجل كونسول عشان نعرف الصفحات اللي ما تأرشفت، ونضبط أخطاء الأداء (Core Web Vitals) عشان ترتفع تصنيفات متجرك.'
-      }
-    ]
-  },
-  {
-    title: 'الحملات وضمان الجودة',
-    questions: [
-      {
-        q: 'وش يضمن لي نجاح الحملات؟',
-        a: 'ما نطلق أي إعلان قبل ما نقفل كل "ثغرات التسرب" بمتجرك (مشاكل تقنية، صور ضعيفة، رحلة شراء معقدة). هالشيء يرفع نسبة نجاح الحملة أكثر من 80% مقارنة باللي يطلق إعلان وهو مغمض.'
-      },
-      {
-        q: 'كيف تقيسون أداء الإعلانات؟',
-        a: 'نعتمد على مؤشرات الأداء الحقيقية (KPIs) وعندنا لوحات تحكم دقيقة تراقب العائد الإعلاني ومعدلات التحويل لحظة بلحظة عشان نحسّن باستمرار.'
-      },
-      {
-        q: 'فيه تقارير دورية لأداء متجري؟',
-        a: 'أكيد، بتشوف بيانات دقيقة من لوحة تحكم المنصة، ونرسل لك تقارير ملخصة مع توصيات استراتيجية.'
-      },
-      {
-        q: 'وش يصير لو ما شفت النتائج اللي أبيها؟',
-        a: 'إحنا نؤمن بالشراكة والمشاركة بالنتائج. لو صار أي نزول، نتدخل فوراً بحملات A/B Testing ونحلل وين المشكلة عشان نعدل المسار بسرعة.'
-      },
-      {
-        q: 'تسوون محتوى ولا بس تديرون الإعلانات؟',
-        a: 'نضبط لك الشغلة كاملة! نبني لك خطة محتوى، نكتب لك نصوص تسويقية بطلة تقنع العميل، وندير لك إعلاناتك بأعلى المعايير.'
+        qAr: 'كيف نبدأ استشارة أو مشروعاً مع نمو لابز؟',
+        qEn: 'How do we kick off a project or consultation?',
+        aAr: 'يمكنك ببساطة النقر على زر "تواصل معنا" أو "ابدأ مشروعك"، وسيقوم مستشارونا التقنيون بجدولة جلسة استكشاف وتحليل متطلبات خلال 24 ساعة.',
+        aEn: 'Simply click "Talk to Us" or "Start Project", and our senior technology consultants will schedule a discovery & scoping session within 24 hours.'
       }
     ]
   }
@@ -108,101 +57,128 @@ const faqCategories = [
 
 export const FAQ = () => {
   const { config } = useSite();
+  const isEn = config.language === 'en';
+  const isStandalone = config.currentRoute === 'faq';
   const [activeCategory, setActiveCategory] = useState<number>(0);
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-  if (!config.sections.faq) return null;
+  if (!isStandalone && config.sections?.faq === false) return null;
 
   return (
-    <section className="py-10 sm:py-10 md:py-20 relative bg-grid-pattern" id="faq">
-      <div className="absolute top-1/2 right-0 w-64 h-64 bg-[var(--color-primary)] opacity-10 blur-[100px] rounded-full pointer-events-none" />
-      
+    <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden" id="faq">
+      <Helmet>
+        <title>{isEn ? 'Frequently Asked Questions | NmoLabs' : 'الأسئلة الشائعة | نمو لابز'}</title>
+        <meta name="description" content={isEn ? 'Find verified answers to common questions about NmoLabs engineering, solutions, AI tools, and process.' : 'إجابات شاملة ومفصلة حول حلول نمو لابز البرمجية، أدوات الذكاء الاصطناعي، ومنهجية العمل.'} />
+      </Helmet>
+
       <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="text-center mb-12 sm:mb-16">
+        <div className="text-center mb-12">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border-[var(--border-default)] text-xs sm:text-sm font-medium mb-4 sm:mb-6 text-[var(--text-muted)]"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-xs font-bold text-[var(--color-primary)] mb-4"
           >
-            <HelpCircle size={16} />
-            إجابات شفافة
+            <HelpCircle size={14} />
+            <span>{isEn ? 'Clarity & Verification' : 'إجابات واضحة وشفافة'}</span>
           </motion.div>
+
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4 text-[var(--text-primary)]"
+            className="text-3xl sm:text-4xl md:text-5xl font-black mb-4 text-[var(--text-primary)] tracking-tight"
           >
-            الأسئلة الشائعة
+            {isEn ? 'Frequently Asked Questions' : 'الأسئلة الشائعة'}
           </motion.h2>
-          <p className="text-base sm:text-lg md:text-xl text-[var(--text-muted)] font-light">كل ما يدور في ذهنك حول منهجيتنا التقنية في التسويق.</p>
+
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-xl mx-auto">
+            {isEn 
+              ? 'Everything you need to know about our technology systems, development workflows, and partnership models.' 
+              : 'كل ما تحتاج لمعرفته حول حلولنا التقنية، نماذج التكامل، ومراحل بناء المنتجات.'}
+          </p>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
+        {/* Category Tabs */}
+        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-10">
           {faqCategories.map((cat, idx) => (
             <button
               key={idx}
               onClick={() => {
                 setActiveCategory(idx);
-                setOpenIndex(null);
+                setOpenIndex(0);
               }}
-              className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
                 activeCategory === idx 
-                  ? 'bg-[var(--color-primary)] text-white shadow-[0_0_15px_rgba(var(--color-primary-rgb),0.4)]'
-                  : 'bg-[var(--surface-secondary)] border border-[var(--border-default)] shadow-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-primary)] hover:border-[var(--color-primary)]/50'
+                  ? 'bg-[var(--color-primary)] text-white shadow-md'
+                  : 'bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--interactive-border)]'
               }`}
             >
-              {cat.title}
+              {isEn ? cat.titleEn : cat.titleAr}
             </button>
           ))}
         </div>
 
-        <div className="space-y-4 min-h-[300px]">
+        {/* Accordion */}
+        <div className="space-y-3.5">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeCategory}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-4"
+              transition={{ duration: 0.2 }}
+              className="space-y-3.5"
             >
               {faqCategories[activeCategory].questions.map((faq, i) => {
                 const isOpen = openIndex === i;
+                const questionText = isEn ? faq.qEn : faq.qAr;
+                const answerText = isEn ? faq.aEn : faq.aAr;
+
                 return (
                   <div 
                     key={i}
-                    className={`transition-all duration-300 rounded-2xl overflow-hidden ${isOpen ? 'bg-[var(--surface-secondary)]/90 border border-[var(--interactive-border-active)] shadow-[var(--interactive-glow)]' : 'bg-[var(--surface-secondary)]/40 backdrop-blur-sm border border-[var(--interactive-border)] shadow-sm hover:bg-[var(--surface-secondary)]/80 hover:border-[var(--interactive-border-hover)] hover:shadow-[0_0_10px_rgba(79,142,247,0.05)]'}`}
+                    className={`card-depth-1 transition-all duration-200 rounded-2xl overflow-hidden ${
+                      isOpen 
+                        ? 'bg-[var(--surface-secondary)] border border-[var(--interactive-border-active)]' 
+                        : 'bg-[var(--surface-primary)] border border-[var(--border-default)] hover:border-[var(--interactive-border)]'
+                    }`}
                   >
                     <button 
-                      className="w-full text-right p-5 md:p-6 text-lg font-bold flex items-center justify-between text-[var(--text-primary)] group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+                      className="w-full text-right rtl:text-right ltr:text-left p-5 text-sm sm:text-base font-bold flex items-center justify-between text-[var(--text-primary)] group focus-visible:outline-none cursor-pointer"
                       onClick={() => setOpenIndex(isOpen ? null : i)}
                       aria-expanded={isOpen}
                     >
-                      <span className={`pl-4 leading-relaxed transition-colors ${isOpen ? 'text-[var(--color-primary)]' : 'group-hover:text-[var(--color-primary)]'}`}>{faq.q}</span>
+                      <span className={`pr-2 rtl:pr-0 rtl:pl-4 transition-colors ${isOpen ? 'text-[var(--color-primary)]' : 'group-hover:text-[var(--color-primary)]'}`}>
+                        {questionText}
+                      </span>
                       <div 
-                        className={`shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 border ${isOpen ? 'bg-[var(--color-primary)] text-white border-transparent shadow-[0_0_15px_rgba(79,142,247,0.4)]' : 'bg-[var(--surface-primary)] border-[var(--interactive-border)] text-[var(--text-muted)] group-hover:border-[var(--interactive-border-hover)] group-hover:text-[var(--color-primary)]'}`}
+                        className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 border ${
+                          isOpen 
+                            ? 'bg-[var(--color-primary)] text-white border-transparent' 
+                            : 'bg-[var(--surface-secondary)] border-[var(--border-default)] text-[var(--text-muted)] group-hover:text-[var(--text-primary)]'
+                        }`}
                       >
-                        <Plus size={20} className={`transition-transform duration-300 ${isOpen ? 'rotate-45' : 'rotate-0'}`} />
+                        <Plus size={16} className={`transition-transform duration-200 ${isOpen ? 'rotate-45' : 'rotate-0'}`} />
                       </div>
                     </button>
+
                     <AnimatePresence>
                       {isOpen && (
                         <motion.div 
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3, ease: 'easeInOut' }}
+                          transition={{ duration: 0.2 }}
                         >
-                          <div className="p-5 md:p-6 pt-0 text-[var(--text-secondary)] leading-relaxed font-light border-t border-[var(--border-default)]/50 mx-5 md:mx-6 mt-2">
-                            {faq.a}
+                          <div className="p-5 pt-0 text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed border-t border-[var(--border-default)]/50 mx-5 mt-1">
+                            {answerText}
                           </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
                   </div>
-                )
+                );
               })}
             </motion.div>
           </AnimatePresence>

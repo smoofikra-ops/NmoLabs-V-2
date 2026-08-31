@@ -44,7 +44,7 @@ export const ProductsPage = () => {
   };
 
   return (
-    <div className="bg-[#050505] min-h-screen text-white relative">
+    <div className="bg-[var(--surface-primary)] min-h-screen text-[var(--text-primary)] relative transition-colors duration-300">
       <Helmet>
         <title>{isEn ? 'Products | NmoLabs' : 'المنتجات | NmoLabs'}</title>
         <meta name="description" content={isEn ? 'We design and build intelligent technology products that help businesses sell, operate, analyze, and grow more efficiently.' : 'نصمم ونبني منتجات تقنية ذكية تساعد الشركات على البيع، الإدارة، التحليل والنمو بكفاءة أعلى.'} />
@@ -55,23 +55,23 @@ export const ProductsPage = () => {
         className="fixed inset-0 opacity-20 pointer-events-none transition-colors duration-1000 mix-blend-screen z-0"
         style={{ background: `radial-gradient(circle at 50% 50%, ${activeProductColor} 0%, transparent 60%)` }}
       />
-      <div className="fixed inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-20 mix-blend-overlay pointer-events-none z-0" />
+      <div className="fixed inset-0 bg-grid-pattern opacity-10 pointer-events-none z-0" />
 
       {/* Hero Section */}
       <section className="relative min-h-[650px] max-h-[980px] h-[100svh] flex flex-col justify-center overflow-hidden z-10 pt-20">
-        <div className="absolute inset-0 flex items-center justify-center opacity-30">
+        <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none">
           {/* Abstract Tech Visuals */}
           <motion.div 
             animate={{ rotate: 360 }}
             transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
-            className="w-[800px] h-[800px] rounded-full border border-white/5 border-dashed absolute"
+            className="w-[800px] h-[800px] rounded-full border border-[var(--border-default)] border-dashed absolute"
           />
           <motion.div 
             animate={{ rotate: -360 }}
             transition={{ duration: 100, repeat: Infinity, ease: "linear" }}
             className="w-[600px] h-[600px] rounded-full border border-[var(--color-primary)]/10 absolute"
           />
-          <div className="absolute w-full h-full bg-gradient-to-b from-transparent via-[#050505]/50 to-[#050505]" />
+          <div className="absolute w-full h-full bg-gradient-to-b from-transparent via-[var(--surface-primary)]/50 to-[var(--surface-primary)]" />
         </div>
 
         <div className="max-w-5xl mx-auto px-6 relative z-20 text-center">
@@ -82,13 +82,13 @@ export const ProductsPage = () => {
           </motion.div>
           <motion.h1 
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1] tracking-tight"
+            className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1] tracking-tight text-[var(--text-primary)]"
           >
             {isEn ? 'We Turn Ideas Into Working Products' : 'نحوّل الأفكار إلى منتجات تعمل'}
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-            className="text-xl md:text-2xl text-white/60 max-w-3xl mx-auto mb-12 leading-relaxed"
+            className="text-xl md:text-2xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-12 leading-relaxed"
           >
             {isEn ? 'We design and build intelligent technology products that help businesses sell, operate, analyze, and grow more efficiently.' : 'نصمم ونبني منتجات تقنية ذكية تساعد الشركات على البيع، الإدارة، التحليل والنمو بكفاءة أعلى.'}
           </motion.p>
@@ -100,13 +100,13 @@ export const ProductsPage = () => {
               onClick={() => {
                 document.getElementById('featured-products')?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-[var(--surface-primary)] bg-[var(--text-primary)] hover:bg-[var(--color-primary)] transition-all shadow-lg shadow-white/5"
+              className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-white bg-[var(--color-primary)] hover:bg-[var(--color-primary)]/90 transition-all shadow-lg shadow-[var(--color-primary)]/20 cursor-pointer"
             >
               {isEn ? 'Explore Products' : 'استكشف المنتجات'}
             </button>
             <button 
               onClick={() => triggerBookingModal(isEn ? 'Talk to Us about Products' : 'تحدث معنا حول المنتجات')}
-              className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-white bg-white/10 hover:bg-white/20 border border-white/10 transition-all"
+              className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-[var(--text-primary)] bg-[var(--surface-secondary)] hover:bg-[var(--surface-elevated)] border border-[var(--border-default)] transition-all cursor-pointer"
             >
               {isEn ? 'Talk to Us' : 'تحدث معنا'}
             </button>
@@ -115,7 +115,7 @@ export const ProductsPage = () => {
       </section>
 
       {/* Featured Products */}
-      <div id="featured-products" className="relative z-10 flex flex-col gap-32 py-32">
+      <div id="featured-products" className="relative z-10 flex flex-col gap-32 py-24">
         {featuredProducts.map((product, index) => (
           <FeaturedProductSection 
             key={product.id} 
@@ -123,7 +123,7 @@ export const ProductsPage = () => {
             index={index} 
             isEn={isEn} 
             updateConfig={updateConfig}
-            onInView={(color) => setActiveProductColor(color)}
+            onInView={(color: string) => setActiveProductColor(color)}
             getStatusStyle={getStatusStyle}
             getStatusText={getStatusText}
           />
@@ -131,11 +131,11 @@ export const ProductsPage = () => {
       </div>
 
       {/* Other Products Grid */}
-      <section className="py-32 relative z-10 bg-black/40 border-t border-white/5">
+      <section className="py-24 relative z-10 bg-[var(--surface-secondary)]/40 border-t border-[var(--border-default)]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-16">
-            <h2 className="text-3xl md:text-5xl font-black mb-6">{isEn ? 'More Solutions' : 'حلول إضافية'}</h2>
-            <p className="text-xl text-white/60 max-w-2xl">
+            <h2 className="text-3xl md:text-5xl font-black mb-6 text-[var(--text-primary)]">{isEn ? 'More Solutions' : 'حلول إضافية'}</h2>
+            <p className="text-xl text-[var(--text-secondary)] max-w-2xl">
               {isEn ? 'Discover our other internal tools and on-demand systems designed for specialized operations.' : 'اكتشف أدواتنا الداخلية وأنظمتنا المخصصة المصممة للعمليات المتخصصة.'}
             </p>
           </div>
@@ -151,7 +151,7 @@ export const ProductsPage = () => {
                 onClick={() => {
                   updateConfig({ currentRoute: `products/${product.slug}` });
                 }}
-                className="group relative rounded-3xl p-8 bg-[#111] border border-white/10 hover:border-white/30 cursor-pointer overflow-hidden transition-all duration-300 flex flex-col h-full"
+                className="card-depth-2 group relative rounded-3xl p-8 bg-[var(--surface-secondary)] border border-[var(--border-default)] hover:border-[var(--interactive-border-active)] cursor-pointer overflow-hidden transition-all duration-300 flex flex-col h-full"
               >
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500" style={{ backgroundColor: product.brandColor }} />
                 
@@ -159,22 +159,22 @@ export const ProductsPage = () => {
                   <span className={`px-3 py-1 rounded-full text-xs font-bold border ${getStatusStyle(product.status)}`}>
                     {getStatusText(product.status, isEn)}
                   </span>
-                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40 group-hover:text-white transition-colors group-hover:bg-white/10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--surface-primary)] border border-[var(--border-default)] flex items-center justify-center text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors">
                     {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
                   </div>
                 </div>
 
                 <div className="relative z-10 flex-grow">
-                  <h3 className="text-2xl font-black mb-4 group-hover:text-transparent group-hover:bg-clip-text transition-all" style={{ backgroundImage: `linear-gradient(to right, #fff, ${product.brandColor})` }}>
+                  <h3 className="text-2xl font-black mb-4 text-[var(--text-primary)] group-hover:text-[var(--color-primary)] transition-colors">
                     {isEn ? product.titleEn : product.titleAr}
                   </h3>
-                  <p className="text-white/60 leading-relaxed mb-6">
+                  <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
                     {isEn ? product.summaryEn : product.summaryAr}
                   </p>
                 </div>
                 
-                <div className="relative z-10 pt-6 border-t border-white/10 mt-auto">
-                  <span className="text-sm font-bold text-white/40">{isEn ? product.category : product.category}</span>
+                <div className="relative z-10 pt-6 border-t border-[var(--border-default)] mt-auto">
+                  <span className="text-sm font-bold text-[var(--text-muted)]">{isEn ? product.category : product.category}</span>
                 </div>
               </motion.div>
             ))}
