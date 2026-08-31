@@ -1,19 +1,18 @@
 import React from 'react';
-import { motion, useTransform } from 'motion/react';
 import { useSite } from '../../context/SiteContext';
 import { 
   ShoppingBag, 
-  ExternalLink, 
   ArrowLeft, 
   ArrowRight, 
   TrendingUp,
   Sparkles,
-  Layers
+  ExternalLink
 } from 'lucide-react';
 import { PinnedStoryScene } from './PinnedStoryScene';
 import { STORY_ASSETS } from './storyAssets';
+import { CinematicStageContainer, CinematicCardWrapper } from './VerticalCinematicStage';
 
-const STORES = [
+const STORES迷 = [
   {
     id: 'rejeen',
     slug: 'regine',
@@ -91,9 +90,12 @@ const STORES = [
   }
 ];
 
+const STORES = STORES迷;
+
 export const StoryEcommerce: React.FC = () => {
   const { config, updateConfig } = useSite();
   const isEn = config.language === 'en';
+  const totalCount迷 = STORES.length + 1;
 
   return (
     <PinnedStoryScene
@@ -108,178 +110,142 @@ export const StoryEcommerce: React.FC = () => {
       titleEn="High-Converting E-Commerce Flagships"
       subtitleAr="نبني تجارب تسوق سلسة وسريعة تجمع بين الهوية الفريدة ومعدلات الشراء العالية."
       subtitleEn="We engineer lightning-fast shopping experiences optimized for maximum checkout conversion."
-      itemCount={STORES.length + 1}
+      itemCount={totalCount迷}
       isEn={isEn}
-      scrollMultiplier={2.5}
+      scrollMultiplier={2.6}
     >
-      {({ trackX, trackRef, activeProgress, isReducedMotion }) => (
-        <div className="w-full px-4 sm:px-8">
-          <motion.div
-            ref={trackRef}
-            style={{ x: trackX }}
-            className="flex flex-row flex-nowrap items-stretch gap-4 sm:gap-6 will-change-transform py-3"
-          >
-            {STORES.map((store, index) => (
-              <StoreStoryCard
-                key={store.id}
-                store={store}
-                index={index}
-                totalItems={STORES.length + 1}
-                activeProgress={activeProgress}
-                isEn={isEn}
-                isReducedMotion={isReducedMotion}
-                onSelect={() => {
-                  updateConfig({ currentRoute: 'work' });
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-              />
-            ))}
-
-            {/* Final CTA Card */}
-            <div className="w-[85vw] sm:w-[350px] md:w-[380px] lg:w-[400px] shrink-0 flex">
-              <div
-                onClick={() => {
-                  updateConfig({ currentRoute: 'work' });
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="card-depth-2 w-full p-6 sm:p-8 rounded-3xl border-2 border-dashed border-[var(--color-primary)]/40 hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/90 backdrop-blur-md flex flex-col justify-between items-center text-center cursor-pointer transition-all duration-300 group shadow-md hover:shadow-xl relative overflow-hidden"
-              >
-                <div className="my-auto py-4 flex flex-col items-center">
-                  <div className="w-16 h-16 rounded-2xl bg-amber-500 text-white flex items-center justify-center mb-4 shadow-lg shadow-amber-500/30 group-hover:scale-110 transition-transform">
-                    <ShoppingBag className="w-8 h-8" />
+      {({ activeProgress, isReducedMotion }) => (
+        <CinematicStageContainer>
+          {STORES.map((store, index) => (
+            <CinematicCardWrapper
+              key={store.id}
+              index={index}
+              totalItems={totalCount迷}
+              activeProgress={activeProgress}
+              isReducedMotion={isReducedMotion}
+              onClick={() => {
+                updateConfig({ currentRoute: 'work' });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            >
+              <div className="card-depth-2 w-full rounded-3xl border border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/95 backdrop-blur-xl transition-all duration-300 shadow-xl hover:shadow-2xl cursor-pointer flex flex-col sm:flex-row overflow-hidden group">
+                
+                {/* Visual Cover Header */}
+                <div className="relative w-full sm:w-2/5 h-36 sm:h-auto min-h-[140px] overflow-hidden bg-[var(--surface-secondary)] shrink-0">
+                  <img 
+                    src={store.coverImage} 
+                    alt={isEn ? store.nameEn : store.nameAr}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-black/60 via-transparent to-transparent rtl:sm:bg-gradient-to-l" />
+                  
+                  <div className="absolute top-3 right-3 rtl:right-auto rtl:left-3 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-white text-[10px] font-bold border border-white/15 font-mono">
+                    {store.domain}
                   </div>
 
-                  <span className="text-xs font-bold uppercase tracking-widest text-amber-500 mb-2 font-mono">
-                    Portfolio
-                  </span>
-
-                  <h3 className="text-xl sm:text-2xl font-black text-[var(--text-primary)] mb-2">
-                    {isEn ? 'View All E-Commerce Work' : 'استكشف كافة المتاجر'}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-[260px] leading-relaxed mb-6 font-medium">
-                    {isEn 
-                      ? 'Browse full store case studies, UI/UX designs, and revenue optimization results.'
-                      : 'تصفح دراسات الحالة الكاملة، تصاميم واجهات المتاجر، ونتائج تحسين معدلات الشراء.'}
-                  </p>
-
-                  <button
-                    className="px-6 py-3 rounded-full bg-[var(--color-primary)] text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-md group-hover:bg-[var(--color-primary)]/90 transition-colors"
-                  >
-                    <span>{isEn ? 'Explore All Stores' : 'عرض كافة المتاجر'}</span>
-                    {isEn ? <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /> : <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />}
-                  </button>
+                  <div className="absolute bottom-3 right-3 rtl:right-3 rtl:left-auto px-2.5 py-0.5 rounded-md bg-[var(--surface-primary)]/95 text-[var(--color-primary)] text-[11px] font-bold border border-[var(--border-default)]">
+                    {isEn ? store.sectorEn : store.sectorAr}
+                  </div>
                 </div>
 
-                <div className="w-full pt-4 border-t border-[var(--border-default)] flex items-center justify-center gap-2 text-[11px] text-[var(--text-muted)]">
-                  <TrendingUp className="w-3.5 h-3.5 text-amber-500" />
-                  <span>{isEn ? 'Conversion Science & Speed' : 'هندسة تحويل وسرعة قياسية'}</span>
+                {/* Card Body */}
+                <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)] font-mono">
+                        0{index + 1} / 0{totalCount迷}
+                      </span>
+                      <span className="flex items-center gap-1 text-[var(--color-primary)] font-semibold text-xs">
+                        <Sparkles className="w-3 h-3" />
+                        <span>{isEn ? 'Live Flagship' : 'متجر نشط'}</span>
+                      </span>
+                    </div>
+
+                    <h3 className="text-lg sm:text-xl font-bold text-[var(--text-primary)] mb-1.5 group-hover:text-[var(--color-primary)] transition-colors">
+                      {isEn ? store.nameEn : store.nameAr}
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed mb-3 font-normal line-clamp-2">
+                      {isEn ? store.highlightEn : store.highlightAr}
+                    </p>
+
+                    <div className="flex flex-wrap gap-1.5 mb-3">
+                      {store.tags.map((tag, tIdx) => (
+                        <span 
+                          key={tIdx}
+                          className="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-md bg-[var(--surface-secondary)] text-[var(--text-muted)] border border-[var(--border-default)]"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-[var(--border-default)] flex items-center justify-between text-xs text-[var(--text-muted)] font-medium">
+                    <span className="flex items-center gap-1 text-[11px]">
+                      <ShoppingBag className="w-3.5 h-3.5 text-amber-500" />
+                      <span>{isEn ? 'High Conversion Flow' : 'تحويل ومشتريات فورية'}</span>
+                    </span>
+
+                    <span className="text-[var(--color-primary)] font-bold text-xs flex items-center gap-1 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform">
+                      <span>{isEn ? 'View Store Details' : 'تفاصيل المشروع'}</span>
+                      {isEn ? <ArrowRight className="w-3.5 h-3.5" /> : <ArrowLeft className="w-3.5 h-3.5" />}
+                    </span>
+                  </div>
                 </div>
               </div>
+            </CinematicCardWrapper>
+          ))}
+
+          {/* Final CTA Card */}
+          <CinematicCardWrapper
+            index={STORES.length}
+            totalItems={totalCount迷}
+            activeProgress={activeProgress}
+            isReducedMotion={isReducedMotion}
+            onClick={() => {
+              updateConfig({ currentRoute: 'work' });
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          >
+            <div className="card-depth-3 w-full p-6 sm:p-8 rounded-3xl border-2 border-dashed border-amber-500/50 hover:border-amber-500 bg-[var(--surface-primary)]/95 backdrop-blur-xl flex flex-col justify-between items-center text-center cursor-pointer transition-all duration-300 group shadow-xl hover:shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-36 h-36 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
+
+              <div className="my-auto py-2 flex flex-col items-center">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-amber-500 text-white flex items-center justify-center mb-3 shadow-lg shadow-amber-500/30 group-hover:scale-110 transition-transform">
+                  <ShoppingBag className="w-7 h-7 sm:w-8 sm:h-8" />
+                </div>
+
+                <span className="text-xs font-bold uppercase tracking-widest text-amber-500 mb-1 font-mono">
+                  E-Commerce Portfolio
+                </span>
+
+                <h3 className="text-xl sm:text-2xl font-black text-[var(--text-primary)] mb-2">
+                  {isEn ? 'View All E-Commerce Work' : 'استكشف كافة المتاجر'}
+                </h3>
+
+                <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-md leading-relaxed mb-5 font-medium">
+                  {isEn 
+                    ? 'Browse full store case studies, UI/UX designs, and revenue optimization results.'
+                    : 'تصفح دراسات الحالة الكاملة، تصاميم واجهات المتاجر، ونتائج تحسين معدلات الشراء.'}
+                </p>
+
+                <button
+                  className="px-6 py-2.5 sm:py-3 rounded-full bg-amber-500 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-md group-hover:bg-amber-600 transition-colors cursor-pointer"
+                >
+                  <span>{isEn ? 'Explore All Stores' : 'عرض كافة المتاجر'}</span>
+                  {isEn ? <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /> : <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />}
+                </button>
+              </div>
+
+              <div className="w-full pt-3 border-t border-[var(--border-default)] flex items-center justify-center gap-2 text-[11px] text-[var(--text-muted)]">
+                <TrendingUp className="w-3.5 h-3.5 text-amber-500" />
+                <span>{isEn ? 'Conversion Science & Speed' : 'هندسة تحويل وسرعة قياسية'}</span>
+              </div>
             </div>
-          </motion.div>
-        </div>
+          </CinematicCardWrapper>
+        </CinematicStageContainer>
       )}
     </PinnedStoryScene>
-  );
-};
-
-interface StoreCardProps {
-  store: typeof STORES[0];
-  index: number;
-  totalItems: number;
-  activeProgress: any;
-  isEn: boolean;
-  isReducedMotion: boolean;
-  onSelect: () => void;
-}
-
-const StoreStoryCard: React.FC<StoreCardProps> = ({
-  store,
-  index,
-  totalItems,
-  activeProgress,
-  isEn,
-  isReducedMotion,
-  onSelect
-}) => {
-  const cardScale = useTransform(
-    activeProgress,
-    [index - 1.2, index, index + 1.2],
-    isReducedMotion ? [1, 1, 1] : [0.95, 1.02, 0.95]
-  );
-
-  const cardOpacity = useTransform(
-    activeProgress,
-    [index - 1.8, index - 0.2, index, index + 0.2, index + 1.8],
-    [0.7, 0.95, 1, 0.95, 0.7]
-  );
-
-  return (
-    <motion.div
-      style={{
-        scale: cardScale,
-        opacity: cardOpacity
-      }}
-      onClick={onSelect}
-      className="w-[85vw] sm:w-[340px] md:w-[360px] lg:w-[380px] shrink-0 flex"
-    >
-      <div className="card-depth-2 w-full rounded-3xl border border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/92 backdrop-blur-md transition-all duration-300 shadow-md hover:shadow-xl cursor-pointer flex flex-col justify-between group overflow-hidden">
-        
-        {/* Cover Media Header */}
-        <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-[var(--surface-secondary)]">
-          <img 
-            src={store.coverImage} 
-            alt={isEn ? store.nameEn : store.nameAr}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface-primary)] via-transparent to-black/30" />
-          
-          <div className="absolute top-3 right-3 rtl:right-auto rtl:left-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[11px] font-bold border border-white/10 font-mono">
-            {store.domain}
-          </div>
-
-          <div className="absolute bottom-3 right-3 rtl:right-3 rtl:left-auto px-2.5 py-1 rounded-md bg-[var(--surface-primary)]/95 text-[var(--color-primary)] text-xs font-bold border border-[var(--border-default)]">
-            {isEn ? store.sectorEn : store.sectorAr}
-          </div>
-        </div>
-
-        {/* Content Body */}
-        <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
-          <div>
-            <h3 className="text-lg sm:text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--color-primary)] transition-colors">
-              {isEn ? store.nameEn : store.nameAr}
-            </h3>
-
-            <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed mb-4 font-normal">
-              {isEn ? store.highlightEn : store.highlightAr}
-            </p>
-
-            <div className="flex flex-wrap gap-1.5 mb-4">
-              {store.tags.map((tag, tIdx) => (
-                <span 
-                  key={tIdx}
-                  className="text-[10px] sm:text-[11px] px-2.5 py-0.5 rounded-md bg-[var(--surface-secondary)] text-[var(--text-muted)] border border-[var(--border-default)]"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="pt-3 border-t border-[var(--border-default)] flex items-center justify-between text-xs text-[var(--text-muted)] font-medium">
-            <span className="flex items-center gap-1 text-[var(--color-primary)] font-semibold">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>{isEn ? 'Live Case Study' : 'مشروع نشط'}</span>
-            </span>
-
-            <span className="text-[var(--color-primary)] font-bold flex items-center gap-1 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform">
-              <span>{isEn ? 'View Store' : 'تفاصيل المشروع'}</span>
-              {isEn ? <ArrowRight className="w-3.5 h-3.5" /> : <ArrowLeft className="w-3.5 h-3.5" />}
-            </span>
-          </div>
-        </div>
-      </div>
-    </motion.div>
   );
 };

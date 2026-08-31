@@ -128,6 +128,29 @@ const InteractiveShowcase = () => {
 export const Hero = () => {
   const { config, updateConfig } = useSite();
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
+  const videoRefs = React.useRef<(HTMLVideoElement | null)[]>([]);
+
+  useEffect(() => {
+    // When tab becomes visible again, ensure active video attempts play safely
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        const activeVid = videoRefs.current[activeVideoIndex];
+        if (activeVid && activeVid.paused) {
+          const playPromise = activeVid.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {
+              // Ignore browser power saving / policy restrictions
+            });
+          }
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [activeVideoIndex]);
 
   if (!config.sections.hero) return null;
 
@@ -164,19 +187,29 @@ export const Hero = () => {
           ].map((src, index) => (
             <video
               key={src}
+              ref={(el) => (videoRefs.current[index] = el)}
               src={src}
               autoPlay={index === 0}
               muted
               playsInline
               preload="auto"
-              onEnded={(e) => {
-                 const nextIndex = (index + 1) % 2;
-                 setActiveVideoIndex(nextIndex);
-                 const nextVideo = e.currentTarget.parentElement.children[nextIndex];
-                 if (nextVideo) {
-                   nextVideo.currentTime = 0;
-                   nextVideo.play().catch(console.error);
-                 }
+              onEnded={() => {
+                const nextIndex = (index + 1) % 2;
+                setActiveVideoIndex(nextIndex);
+                const nextVideo = videoRefs.current[nextIndex];
+                if (nextVideo) {
+                  try {
+                    nextVideo.currentTime = 0;
+                    const playPromise = nextVideo.play();
+                    if (playPromise !== undefined) {
+                      playPromise.catch(() => {
+                        // Safely swallow power-saving or autoplay pause events
+                      });
+                    }
+                  } catch {
+                    // Safe swallow
+                  }
+                }
               }}
               className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 mix-blend-screen dark:mix-blend-lighten ${
                 activeVideoIndex === index ? 'opacity-55 dark:opacity-65' : 'opacity-0'
