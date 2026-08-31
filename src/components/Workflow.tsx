@@ -21,7 +21,7 @@ const JOURNEY_STAGES = [
     id: 'study',
     number: '01',
     nameAr: 'دراسة',
-    nameEn: 'Research & Discovery',
+    nameEn: 'Research',
     tagAr: 'فهم السوق والمنافسين',
     tagEn: 'Market & competitor audit',
     descAr: 'دراسة شاملة لنموذج العمل، سلوك الجمهور المستهدف، وتحليل نقاط القوة والفرص.',
@@ -33,10 +33,10 @@ const JOURNEY_STAGES = [
     id: 'analyze',
     number: '02',
     nameAr: 'تحليل',
-    nameEn: 'Data Diagnostics',
+    nameEn: 'Analysis',
     tagAr: 'تشخيص البيانات ونقاط التسرب',
     tagEn: 'Funnel & bottleneck analysis',
-    descAr: 'تشخيص مسارات الشراء الحالية، اكتشاف مواضع الهدر المالي، وتحديد مؤشرات الأداء الأساسية (KPIs).',
+    descAr: 'تشخيص مسارات الشراء الحالية، اكتشاف مواضع الهدر المالي، وتحديد مؤشرات الأداء الأساسية.',
     descEn: 'Diagnostic evaluation of user drop-offs, budget leakage points, and core KPI baseline.',
     icon: BarChart2,
     color: '#06B6D4',
@@ -45,7 +45,7 @@ const JOURNEY_STAGES = [
     id: 'plan',
     number: '03',
     nameAr: 'تخطيط',
-    nameEn: 'Strategic Roadmap',
+    nameEn: 'Planning',
     tagAr: 'هندسة خطة النمو',
     tagEn: 'Growth architecture',
     descAr: 'تصميم هيكل الحل الرقمي، رحلة العميل (Customer Journey)، واستراتيجية الإطلاق والتوسع.',
@@ -57,7 +57,7 @@ const JOURNEY_STAGES = [
     id: 'build',
     number: '04',
     nameAr: 'بناء',
-    nameEn: 'Engineering & Craft',
+    nameEn: 'Build & Code',
     tagAr: 'تطوير المنظومة والواجهات',
     tagEn: 'Agile development & UI/UX',
     descAr: 'برمجة وتصميم الواجهات، تكامل بوابات الدفع وقواعد البيانات، وضمان أعلى معايير السرعة والأمان.',
@@ -69,11 +69,11 @@ const JOURNEY_STAGES = [
     id: 'launch',
     number: '05',
     nameAr: 'إطلاق',
-    nameEn: 'Precision Launch',
+    nameEn: 'Launch',
     tagAr: 'الإطلاق التقني والإعلاني',
     tagEn: 'Go-live & tracking activation',
     descAr: 'تفعيل خوادم الإنتاج، فحص جودة العمليات، وربط بكسلات التتبع الإعلاني (CAPI & Pixel).',
-    descEn: 'Live production deployment, stress-testing workflows, and advanced tracking (Pixel & CAPI) setup.',
+    descEn: 'Live production deployment, stress-testing workflows, and advanced tracking setup.',
     icon: Rocket,
     color: '#EC4899',
   },
@@ -81,11 +81,11 @@ const JOURNEY_STAGES = [
     id: 'operate',
     number: '06',
     nameAr: 'تشغيل',
-    nameEn: 'Live Operations',
+    nameEn: 'Operations',
     tagAr: 'إدارة واستقرار المنظومة',
     tagEn: 'Operations & support',
     descAr: 'متابعة حية للعمليات، صيانة دورية، دعم فني مستمر، ومراقبة أداء الخوادم وقواعد البيانات.',
-    descEn: 'Real-time uptime monitoring, proactive infrastructure maintenance, and operational technical support.',
+    descEn: 'Real-time uptime monitoring, proactive infrastructure maintenance, and operational support.',
     icon: Cpu,
     color: '#10B981',
   },
@@ -93,7 +93,7 @@ const JOURNEY_STAGES = [
     id: 'grow',
     number: '07',
     nameAr: 'نمو',
-    nameEn: 'Scale & Performance',
+    nameEn: 'Scale & Growth',
     tagAr: 'مضاعفة العائد والأداء',
     tagEn: 'ROAS & revenue optimization',
     descAr: 'تحسين مستمر لمعدل التحويل (CRO)، مضاعفة العائد الإعلاني (ROAS)، وفتح قنوات بيع جديدة.',
@@ -111,7 +111,7 @@ export const Workflow: React.FC = () => {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start center', 'end center']
+    offset: ['start 80%', 'end 30%']
   });
 
   if (!config.sections.workflow) return null;
@@ -120,7 +120,7 @@ export const Workflow: React.FC = () => {
     <section 
       ref={containerRef}
       id="workflow"
-      className="py-20 sm:py-28 lg:py-32 relative overflow-hidden bg-[var(--surface-primary)] border-b border-[var(--border-default)] transition-colors duration-300"
+      className="py-14 sm:py-20 relative overflow-hidden bg-[var(--surface-primary)] border-b border-[var(--border-default)] transition-colors duration-300"
     >
       {/* Ambient background glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[70vw] max-w-4xl h-96 bg-[var(--color-primary)]/5 dark:bg-[var(--color-primary)]/10 blur-[120px] rounded-full pointer-events-none" />
@@ -128,14 +128,14 @@ export const Workflow: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-xs font-semibold text-[var(--color-primary)] mb-4 shadow-xs">
+        {/* Compact Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-xs font-semibold text-[var(--color-primary)] mb-3 shadow-xs">
             <Sparkles className="w-3.5 h-3.5" />
             <span>{isEn ? 'THE 7-STAGE LIFECYCLE' : 'رحلة الفكرة — من التأسيس إلى النمو'}</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--text-primary)] tracking-tight leading-tight mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[var(--text-primary)] tracking-tight leading-tight mb-2.5">
             {isEn ? (
               <>We don't just build, we <span className="text-[var(--color-primary)]">engineer growth</span></>
             ) : (
@@ -143,18 +143,19 @@ export const Workflow: React.FC = () => {
             )}
           </h2>
 
-          <p className="text-base sm:text-lg text-[var(--text-secondary)] font-normal max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-normal max-w-2xl mx-auto leading-relaxed">
             {isEn 
               ? 'Our battle-tested 7-stage methodology transforms raw concepts into scalable, revenue-generating digital systems.'
-              : 'منهجية من 7 مراحل متكاملة تحول الفكرة إلى منظومة برمجية وتجارية قابلة للتوسع ومضاعفة الأرباح.'}
+              : 'منهجية من 7 مراحل متكاملة تحول الفكرة إلى منظومة برمجية وتجارية متكاملة وقابلة للتوسع ومضاعفة الأرباح.'}
           </p>
         </div>
 
-        {/* Interactive Lifecycle Path (Desktop & Tablet) */}
-        <div className="relative mb-16">
-          
-          {/* Connecting Progress Line (Desktop) */}
-          <div className="hidden lg:block absolute top-[52px] left-[5%] right-[5%] h-1 bg-[var(--surface-secondary)] z-0 rounded-full overflow-hidden border border-[var(--border-default)]">
+        {/* Unified Journey Visualization */}
+        
+        {/* Desktop Connected Stream */}
+        <div className="hidden lg:block relative mb-12">
+          {/* Central Connecting Track */}
+          <div className="absolute top-[38px] left-[5%] right-[5%] h-1 bg-[var(--surface-secondary)] z-0 rounded-full overflow-hidden border border-[var(--border-default)]">
             <motion.div 
               className="h-full bg-gradient-to-r from-[#0F62FE] via-[#8B5CF6] to-[#F59E0B] rounded-full"
               style={{
@@ -167,45 +168,135 @@ export const Workflow: React.FC = () => {
             />
           </div>
 
-          {/* 7 Stages Grid / Node Stream */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4 lg:gap-3 relative z-10">
+          <div className="grid grid-cols-7 gap-2.5 relative z-10">
             {JOURNEY_STAGES.map((stage, index) => {
               const Icon = stage.icon;
-              const stageThreshold = index / (JOURNEY_STAGES.length - 1);
-              
+              const threshold = index / (JOURNEY_STAGES.length - 1);
+              const nodeActive = useTransform(
+                scrollYProgress,
+                [Math.max(0, threshold - 0.1), threshold, Math.min(1, threshold + 0.1)],
+                [0.55, 1, 0.8]
+              );
+              const nodeScale = useTransform(
+                scrollYProgress,
+                [Math.max(0, threshold - 0.08), threshold, Math.min(1, threshold + 0.08)],
+                shouldReduceMotion ? [1, 1, 1] : [0.94, 1.05, 0.98]
+              );
+
               return (
-                <StageNodeItem
+                <motion.div
                   key={stage.id}
-                  stage={stage}
-                  icon={Icon}
-                  index={index}
-                  total={JOURNEY_STAGES.length}
-                  stageThreshold={stageThreshold}
-                  scrollYProgress={scrollYProgress}
-                  isEn={isEn}
-                  isReducedMotion={!!shouldReduceMotion}
-                />
+                  style={{
+                    opacity: shouldReduceMotion ? 1 : nodeActive,
+                    scale: nodeScale
+                  }}
+                  className="p-3.5 rounded-2xl border border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/95 backdrop-blur-md transition-all flex flex-col justify-between"
+                >
+                  <div className="flex flex-col items-center text-center">
+                    <div 
+                      className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-xs mb-2 transition-transform"
+                      style={{ backgroundColor: `${stage.color}15`, color: stage.color }}
+                    >
+                      <Icon className="w-5 h-5" strokeWidth={2} />
+                    </div>
+
+                    <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-full bg-[var(--surface-secondary)] text-[var(--text-secondary)] border border-[var(--border-default)] mb-1">
+                      {stage.number}
+                    </span>
+
+                    <h4 className="text-sm font-bold text-[var(--text-primary)] mb-0.5">
+                      {isEn ? stage.nameEn : stage.nameAr}
+                    </h4>
+
+                    <p className="text-[10px] font-semibold text-[var(--color-primary)] mb-1.5 line-clamp-1">
+                      {isEn ? stage.tagEn : stage.tagAr}
+                    </p>
+
+                    <p className="text-[11px] text-[var(--text-muted)] leading-relaxed line-clamp-3">
+                      {isEn ? stage.descEn : stage.descAr}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Mobile / Tablet Compact Alternating Zig-Zag Journey Node Stream */}
+        <div className="lg:hidden relative mb-10 px-2">
+          {/* Vertical central connector line */}
+          <div className="absolute top-4 bottom-4 left-1/2 -translate-x-1/2 w-[3px] bg-[var(--surface-secondary)] z-0 rounded-full overflow-hidden border border-[var(--border-default)]">
+            <motion.div 
+              className="w-full bg-gradient-to-b from-[#0F62FE] via-[#8B5CF6] to-[#F59E0B] rounded-full origin-top"
+              style={{
+                height: useTransform(
+                  scrollYProgress, 
+                  [0.05, 0.95], 
+                  shouldReduceMotion ? ['100%', '100%'] : ['0%', '100%']
+                )
+              }}
+            />
+          </div>
+
+          <div className="flex flex-col gap-4 relative z-10">
+            {JOURNEY_STAGES.map((stage, index) => {
+              const Icon = stage.icon;
+              const isEven = index % 2 === 0;
+              const threshold = index / (JOURNEY_STAGES.length - 1);
+              const nodeActive = useTransform(
+                scrollYProgress,
+                [Math.max(0, threshold - 0.12), threshold, Math.min(1, threshold + 0.12)],
+                [0.6, 1, 0.85]
+              );
+
+              return (
+                <motion.div
+                  key={stage.id}
+                  style={{ opacity: shouldReduceMotion ? 1 : nodeActive }}
+                  className={`flex items-center w-full ${isEven ? 'justify-start pr-8 sm:pr-12' : 'justify-end pl-8 sm:pl-12'}`}
+                >
+                  <div className="w-[88%] sm:w-[75%] p-3.5 rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)]/95 backdrop-blur-md shadow-xs flex items-start gap-3">
+                    <div 
+                      className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: `${stage.color}15`, color: stage.color }}
+                    >
+                      <Icon className="w-4 h-4" strokeWidth={2} />
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-1 mb-0.5">
+                        <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)] truncate">
+                          {isEn ? stage.nameEn : stage.nameAr}
+                        </h4>
+                        <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded bg-[var(--surface-secondary)] text-[var(--text-muted)]">
+                          {stage.number}
+                        </span>
+                      </div>
+                      <p className="text-[10px] font-semibold text-[var(--color-primary)] mb-1 truncate">
+                        {isEn ? stage.tagEn : stage.tagAr}
+                      </p>
+                      <p className="text-[11px] text-[var(--text-muted)] leading-relaxed line-clamp-2">
+                        {isEn ? stage.descEn : stage.descAr}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
               );
             })}
           </div>
         </div>
 
         {/* Bottom Partnership Callout */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="card-depth-2 rounded-3xl p-6 sm:p-8 lg:p-10 border border-[var(--border-default)] bg-[var(--surface-secondary)]/70 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-6"
-        >
-          <div className="flex items-center gap-4 text-start">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center shrink-0">
-              <ShieldCheck className="w-6 h-6 sm:w-7 sm:h-7" />
+        <div className="card-depth-2 rounded-2xl p-5 sm:p-7 border border-[var(--border-default)] bg-[var(--surface-secondary)]/70 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5 text-start">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <div>
-              <h3 className="text-lg sm:text-xl font-bold text-[var(--text-primary)] mb-1">
+              <h3 className="text-sm sm:text-base font-bold text-[var(--text-primary)] mb-0.5">
                 {isEn ? 'End-to-End Execution Under One Roof' : 'تنفيذ متكامل من البداية إلى التوسع تحت سقف واحد'}
               </h3>
-              <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-normal">
+              <p className="text-xs text-[var(--text-secondary)] font-normal">
                 {isEn 
                   ? 'No fragmented vendors. Strategy, software engineering, and performance marketing in full synergy.'
                   : 'بدون تشتت بين جهات متعددة: الاستراتيجية، البرمجة، وتنمية المبيعات تعمل بتناغم كامل.'}
@@ -218,99 +309,14 @@ export const Workflow: React.FC = () => {
               updateConfig({ currentRoute: 'start-project' });
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="w-full md:w-auto px-7 py-3.5 rounded-full bg-[var(--color-primary)] text-white font-bold text-sm shadow-md hover:bg-[var(--color-primary)]/90 transition-all flex items-center justify-center gap-2 shrink-0 group cursor-pointer"
+            className="w-full md:w-auto px-6 py-2.5 sm:py-3 rounded-full bg-[var(--color-primary)] text-white font-bold text-xs sm:text-sm shadow-md hover:bg-[var(--color-primary)]/90 transition-all flex items-center justify-center gap-2 shrink-0 cursor-pointer"
           >
             <span>{isEn ? 'Start Your Project Journey' : 'ابدأ رحلة مشروعك الآن'}</span>
-            {isEn ? <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /> : <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />}
+            {isEn ? <ArrowRight className="w-3.5 h-3.5" /> : <ArrowLeft className="w-3.5 h-3.5" />}
           </button>
-        </motion.div>
+        </div>
 
       </div>
     </section>
-  );
-};
-
-interface StageNodeProps {
-  stage: typeof JOURNEY_STAGES[0];
-  icon: React.ElementType;
-  index: number;
-  total: number;
-  stageThreshold: number;
-  scrollYProgress: any;
-  isEn: boolean;
-  isReducedMotion: boolean;
-}
-
-const StageNodeItem: React.FC<StageNodeProps> = ({
-  stage,
-  icon: Icon,
-  index,
-  total,
-  stageThreshold,
-  scrollYProgress,
-  isEn,
-  isReducedMotion
-}) => {
-  // Bidirectional activation based on current scroll position
-  const stepActivation = useTransform(
-    scrollYProgress,
-    [Math.max(0, stageThreshold - 0.1), Math.min(1, stageThreshold + 0.05)],
-    [0.7, 1]
-  );
-
-  const nodeScale = useTransform(
-    scrollYProgress,
-    [Math.max(0, stageThreshold - 0.08), stageThreshold, Math.min(1, stageThreshold + 0.08)],
-    isReducedMotion ? [1, 1, 1] : [0.96, 1.03, 0.98]
-  );
-
-  return (
-    <motion.div
-      style={{
-        opacity: isReducedMotion ? 1 : stepActivation,
-        scale: nodeScale
-      }}
-      className="card-depth-1 group relative p-4 sm:p-5 rounded-2xl border border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/90 backdrop-blur-md transition-all duration-300 flex flex-col justify-between"
-    >
-      <div>
-        {/* Node Circle Header */}
-        <div className="flex items-center justify-between lg:flex-col lg:items-center gap-2 mb-3">
-          <div 
-            className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-xs transition-transform group-hover:scale-110"
-            style={{ backgroundColor: `${stage.color}15`, color: stage.color }}
-          >
-            <Icon className="w-5 h-5" strokeWidth={2} />
-          </div>
-
-          <div className="flex items-center gap-1.5">
-            <span className="text-[11px] font-bold font-mono px-2 py-0.5 rounded-full bg-[var(--surface-secondary)] text-[var(--text-secondary)] border border-[var(--border-default)]">
-              {stage.number}
-            </span>
-          </div>
-        </div>
-
-        {/* Stage Name */}
-        <h4 className="text-base font-bold text-[var(--text-primary)] text-start lg:text-center mb-1 group-hover:text-[var(--color-primary)] transition-colors">
-          {isEn ? stage.nameEn : stage.nameAr}
-        </h4>
-
-        {/* Tag line */}
-        <p className="text-[11px] font-semibold text-[var(--color-primary)] text-start lg:text-center mb-2">
-          {isEn ? stage.tagEn : stage.tagAr}
-        </p>
-
-        {/* Description */}
-        <p className="text-xs text-[var(--text-muted)] text-start lg:text-center leading-relaxed font-normal">
-          {isEn ? stage.descEn : stage.descAr}
-        </p>
-      </div>
-
-      <div className="mt-3 pt-2.5 border-t border-[var(--border-default)]/60 flex items-center justify-between lg:justify-center text-[10px] text-[var(--text-muted)]">
-        <span className="flex items-center gap-1">
-          <CheckCircle2 className="w-3 h-3 text-emerald-500" />
-          <span>{isEn ? 'Validated' : 'مرحلة معتمدة'}</span>
-        </span>
-      </div>
-    </motion.div>
   );
 };

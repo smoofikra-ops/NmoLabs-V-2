@@ -10,7 +10,8 @@ import {
 } from 'lucide-react';
 import { PinnedStoryScene } from './PinnedStoryScene';
 import { STORY_ASSETS } from './storyAssets';
-import { CinematicStageContainer, CinematicCardWrapper } from './VerticalCinematicStage';
+import { CinematicStageContainer } from './VerticalCinematicStage';
+import { DepthFocusCardWrapper } from './DepthFocusCardStage';
 
 const WEBSITES = [
   {
@@ -115,7 +116,7 @@ export const StoryWebsites: React.FC = () => {
       {({ activeProgress, isReducedMotion }) => (
         <CinematicStageContainer>
           {WEBSITES.map((site, index) => (
-            <CinematicCardWrapper
+            <DepthFocusCardWrapper
               key={site.id}
               index={index}
               totalItems={totalCount}
@@ -192,11 +193,11 @@ export const StoryWebsites: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </CinematicCardWrapper>
+            </DepthFocusCardWrapper>
           ))}
 
           {/* Final CTA Card */}
-          <CinematicCardWrapper
+          <DepthFocusCardWrapper
             index={WEBSITES.length}
             totalItems={totalCount}
             activeProgress={activeProgress}
@@ -241,7 +242,7 @@ export const StoryWebsites: React.FC = () => {
                 <span>{isEn ? 'High-Performance & SEO Authority' : 'هندسة معتمدة لتصدر نتائج البحث'}</span>
               </div>
             </div>
-          </CinematicCardWrapper>
+          </DepthFocusCardWrapper>
         </CinematicStageContainer>
       )}
     </PinnedStoryScene>

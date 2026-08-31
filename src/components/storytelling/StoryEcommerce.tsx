@@ -10,7 +10,8 @@ import {
 } from 'lucide-react';
 import { PinnedStoryScene } from './PinnedStoryScene';
 import { STORY_ASSETS } from './storyAssets';
-import { CinematicStageContainer, CinematicCardWrapper } from './VerticalCinematicStage';
+import { CinematicStageContainer } from './VerticalCinematicStage';
+import { ReverseCurvedCardWrapper } from './ReverseCurvedCardStage';
 
 const STORES迷 = [
   {
@@ -117,7 +118,7 @@ export const StoryEcommerce: React.FC = () => {
       {({ activeProgress, isReducedMotion }) => (
         <CinematicStageContainer>
           {STORES.map((store, index) => (
-            <CinematicCardWrapper
+            <ReverseCurvedCardWrapper
               key={store.id}
               index={index}
               totalItems={totalCount迷}
@@ -194,11 +195,11 @@ export const StoryEcommerce: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </CinematicCardWrapper>
+            </ReverseCurvedCardWrapper>
           ))}
 
           {/* Final CTA Card */}
-          <CinematicCardWrapper
+          <ReverseCurvedCardWrapper
             index={STORES.length}
             totalItems={totalCount迷}
             activeProgress={activeProgress}
@@ -243,7 +244,7 @@ export const StoryEcommerce: React.FC = () => {
                 <span>{isEn ? 'Conversion Science & Speed' : 'هندسة تحويل وسرعة قياسية'}</span>
               </div>
             </div>
-          </CinematicCardWrapper>
+          </ReverseCurvedCardWrapper>
         </CinematicStageContainer>
       )}
     </PinnedStoryScene>

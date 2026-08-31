@@ -215,10 +215,12 @@ export const BookingModal = () => {
 
   const handleSignInGoogle = async () => {
     try {
-      await googleSignIn();
-      setGcalSynced(true);
+      const result = await googleSignIn();
+      if (result) {
+        setGcalSynced(true);
+      }
     } catch (e) {
-      console.error('Failed to link Google Calendar:', e);
+      console.warn('Google Sign-in aborted:', e);
     }
   };
 

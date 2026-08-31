@@ -25,7 +25,11 @@ export const HiddenTrigger = () => {
       setIsLoggingIn(true);
       try {
         const result = await googleSignIn();
-        if (result?.user?.email === 'smoofikra@gmail.com') {
+        if (!result) {
+          // User closed or cancelled popup
+          return;
+        }
+        if (result.user?.email === 'smoofikra@gmail.com') {
           setIsAdminMode(true);
           setShowPrompt(false);
           setPassword('');
@@ -34,7 +38,7 @@ export const HiddenTrigger = () => {
           await auth.signOut();
         }
       } catch (error) {
-        console.error(error);
+        console.warn(error);
         alert('فشل تسجيل الدخول بحساب جوجل.');
       } finally {
         setIsLoggingIn(false);

@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion, useTransform } from 'motion/react';
 import { useSite } from '../../context/SiteContext';
 import { 
   TrendingUp, 
@@ -9,11 +10,11 @@ import {
   ArrowRight, 
   Sliders, 
   CheckCircle2,
-  Zap
+  Zap,
+  Sparkles
 } from 'lucide-react';
 import { PinnedStoryScene } from './PinnedStoryScene';
 import { STORY_ASSETS } from './storyAssets';
-import { CinematicStageContainer, CinematicCardWrapper } from './VerticalCinematicStage';
 
 const PERFORMANCE_STAGES = [
   {
@@ -24,7 +25,7 @@ const PERFORMANCE_STAGES = [
     subtitleEn: 'Ad account architecture & tracking',
     descAr: 'تجهيز الحسابات الإعلانية، ربط بكسلات التتبع (Pixel / CAPI)، وبناء الهياكل الإعلانية الموجهة للشراء المباشر.',
     descEn: 'Structuring high-converting ad sets, integrating Pixel & CAPI server-side tracking, and initial creative testing.',
-    kpis: ['إعداد Meta CAPI & Google Ads', 'اختبار الجمهور والاهتمامات', 'بناء نماذج الإعلانات'],
+    kpis: ['Meta CAPI & Google Ads', 'اختبار الجمهور والاهتمامات', 'بناء نماذج الإعلانات'],
     icon: Target,
     color: '#0F62FE'
   },
@@ -101,138 +102,263 @@ export const StoryGrowthCampaigns: React.FC = () => {
       scrollMultiplier={2.6}
     >
       {({ activeProgress, isReducedMotion }) => (
-        <CinematicStageContainer>
-          {PERFORMANCE_STAGES.map((stage, index) => {
-            const Icon = stage.icon;
-            return (
-              <CinematicCardWrapper
-                key={stage.step}
-                index={index}
-                totalItems={totalCount}
-                activeProgress={activeProgress}
-                isReducedMotion={isReducedMotion}
-                onClick={() => {
-                  updateConfig({ currentRoute: 'start-project' });
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+        <div className="relative w-full max-w-4xl mx-auto flex flex-col items-center justify-center px-4 sm:px-6">
+          
+          {/* Connected Data Stream / Signal Pipeline Header */}
+          <div className="w-full max-w-2xl mx-auto mb-4 sm:mb-6">
+            <div className="flex items-center justify-between relative px-2 sm:px-6">
+              {/* Central connecting track */}
+              <div className="absolute left-6 right-6 top-1/2 -translate-y-1/2 h-[3px] bg-[var(--border-default)] z-0">
+                <motion.div 
+                  className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500"
+                  style={{
+                    width: useTransform(
+                      activeProgress,
+                      [0, totalCount - 1],
+                      ['0%', '100%']
+                    )
+                  }}
+                />
+              </div>
+
+              {/* Stage Flow Indicator Nodes */}
+              {PERFORMANCE_STAGES.map((st, idx) => {
+                const nodeActive = useTransform(
+                  activeProgress,
+                  [idx - 0.4, idx, idx + 0.4],
+                  [0.4, 1, 0.6]
+                );
+                const nodeScale = useTransform(
+                  activeProgress,
+                  [idx - 0.4, idx, idx + 0.4],
+                  [0.85, 1.15, 0.9]
+                );
+
+                return (
+                  <motion.button
+                    key={st.step}
+                    style={{
+                      opacity: nodeActive,
+                      scale: isReducedMotion ? 1 : nodeScale
+                    }}
+                    onClick={() => {
+                      // Click on a node allows quick inspection
+                    }}
+                    className="relative z-10 w-7 h-7 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold border-2 transition-colors cursor-pointer bg-[var(--surface-primary)] shadow-sm"
+                  >
+                    <span style={{ color: st.color }}>{st.step}</span>
+                  </motion.button>
+                );
+              })}
+
+              {/* Final Target Node */}
+              <motion.div
+                style={{
+                  opacity: useTransform(activeProgress, [PERFORMANCE_STAGES.length - 0.5, PERFORMANCE_STAGES.length], [0.4, 1]),
+                  scale: useTransform(activeProgress, [PERFORMANCE_STAGES.length - 0.5, PERFORMANCE_STAGES.length], [0.85, 1.15])
                 }}
+                className="relative z-10 w-7 h-7 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold border-2 border-dashed border-emerald-500 text-emerald-500 bg-[var(--surface-primary)] shadow-sm"
               >
-                <div className="card-depth-2 w-full p-5 sm:p-7 rounded-3xl border border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/95 backdrop-blur-xl transition-all duration-300 shadow-xl hover:shadow-2xl cursor-pointer flex flex-col justify-between group relative overflow-hidden">
-                  
-                  <div 
-                    className="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-2xl opacity-15 pointer-events-none group-hover:opacity-30 transition-opacity" 
-                    style={{ backgroundColor: stage.color }}
-                  />
-
-                  <div>
-                    {/* Stage Header */}
-                    <div className="flex items-center justify-between mb-3">
-                      <div 
-                        className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-xs transition-transform duration-300 group-hover:scale-105"
-                        style={{ backgroundColor: `${stage.color}18`, color: stage.color }}
-                      >
-                        <Icon className="w-6 h-6" strokeWidth={1.75} />
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)] font-mono">
-                          {stage.step} / 0{totalCount}
-                        </span>
-                        <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)]">
-                          {isEn ? stage.subtitleEn : stage.subtitleAr}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Stage Title */}
-                    <h3 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--color-primary)] transition-colors">
-                      {isEn ? stage.titleEn : stage.titleAr}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed mb-4 font-normal">
-                      {isEn ? stage.descEn : stage.descAr}
-                    </p>
-
-                    {/* KPIs / Metrics */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-4">
-                      {stage.kpis.map((kpi, kIdx) => (
-                        <div 
-                          key={kIdx}
-                          className="p-2.5 rounded-xl bg-[var(--surface-secondary)]/80 border border-[var(--border-default)] text-center flex flex-col justify-center"
-                        >
-                          <span className="text-[11px] font-semibold text-[var(--text-primary)]">
-                            {kpi}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Stage Footer */}
-                  <div className="pt-3 border-t border-[var(--border-default)] flex items-center justify-between text-xs text-[var(--text-muted)] font-medium">
-                    <span className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                      <span className="text-[11px]">{isEn ? 'Data-Driven Loop' : 'إجراء منهجي مستمر'}</span>
-                    </span>
-
-                    <span className="text-[var(--color-primary)] font-bold text-xs flex items-center gap-1 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform">
-                      <span>{isEn ? 'Request Growth Audit' : 'طلب دراسة نمو'}</span>
-                      {isEn ? <ArrowRight className="w-3.5 h-3.5" /> : <ArrowLeft className="w-3.5 h-3.5" />}
-                    </span>
-                  </div>
-                </div>
-              </CinematicCardWrapper>
-            );
-          })}
-
-          {/* Final CTA Card */}
-          <CinematicCardWrapper
-            index={PERFORMANCE_STAGES.length}
-            totalItems={totalCount}
-            activeProgress={activeProgress}
-            isReducedMotion={isReducedMotion}
-            onClick={() => {
-              updateConfig({ currentRoute: 'start-project' });
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-          >
-            <div className="card-depth-3 w-full p-6 sm:p-8 rounded-3xl border-2 border-dashed border-emerald-500/50 hover:border-emerald-500 bg-[var(--surface-primary)]/95 backdrop-blur-xl flex flex-col justify-between items-center text-center cursor-pointer transition-all duration-300 group shadow-xl hover:shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-36 h-36 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
-
-              <div className="my-auto py-2 flex flex-col items-center">
-                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-emerald-600 text-white flex items-center justify-center mb-3 shadow-lg shadow-emerald-600/30 group-hover:scale-110 transition-transform">
-                  <TrendingUp className="w-7 h-7 sm:w-8 sm:h-8" />
-                </div>
-
-                <span className="text-xs font-bold uppercase tracking-widest text-emerald-500 mb-1 font-mono">
-                  Growth & ROAS Science
-                </span>
-
-                <h3 className="text-xl sm:text-2xl font-black text-[var(--text-primary)] mb-2">
-                  {isEn ? 'Scale Your Performance Marketing' : 'ابدأ قيادة نمو حملاتك الرقمية'}
-                </h3>
-
-                <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-md leading-relaxed mb-5 font-medium">
-                  {isEn 
-                    ? 'Schedule a direct growth diagnostic audit with our media buyers and conversion engineers.'
-                    : 'احصل على تحليل شامل لمسار التحويل، تدقيق بكسلات التتبع، واستراتيجية مضاعفة العائد الإعلاني.'}
-                </p>
-
-                <button
-                  className="px-6 py-2.5 sm:py-3 rounded-full bg-emerald-600 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-md group-hover:bg-emerald-700 transition-colors cursor-pointer"
-                >
-                  <span>{isEn ? 'Start Growth Consultation' : 'طلب دراسة نمو للحملات'}</span>
-                  {isEn ? <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /> : <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />}
-                </button>
-              </div>
-
-              <div className="w-full pt-3 border-t border-[var(--border-default)] flex items-center justify-center gap-2 text-[11px] text-[var(--text-muted)]">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-                <span>{isEn ? 'Real-Time Attribution & Server-Side CAPI' : 'تتبع خادم مباشر ودقة عزو إعلاني عالية'}</span>
-              </div>
+                <TrendingUp className="w-3.5 h-3.5" />
+              </motion.div>
             </div>
-          </CinematicCardWrapper>
-        </CinematicStageContainer>
+          </div>
+
+          {/* Active Stage Data Card Focus Deck */}
+          <div className="relative w-full h-[360px] sm:h-[380px] flex items-center justify-center">
+            {PERFORMANCE_STAGES.map((stage, index) => {
+              const Icon = stage.icon;
+
+              const opacity = useTransform(
+                activeProgress,
+                [index - 0.8, index - 0.2, index, index + 0.2, index + 0.8],
+                [0, 0.95, 1, 0.95, 0]
+              );
+              const scale = useTransform(
+                activeProgress,
+                [index - 0.8, index, index + 0.8],
+                isReducedMotion ? [1, 1, 1] : [0.9, 1, 0.9]
+              );
+              const y = useTransform(
+                activeProgress,
+                [index - 0.8, index, index + 0.8],
+                isReducedMotion ? [0, 0, 0] : [25, 0, -25]
+              );
+              const pointerEvents = useTransform(
+                activeProgress,
+                [index - 0.45, index, index + 0.45],
+                ['none', 'auto', 'none']
+              );
+
+              return (
+                <motion.div
+                  key={stage.step}
+                  style={{
+                    opacity,
+                    scale,
+                    y,
+                    pointerEvents: pointerEvents as any
+                  }}
+                  onClick={() => {
+                    updateConfig({ currentRoute: 'start-project' });
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="absolute inset-x-0 mx-auto w-full max-w-xl sm:max-w-2xl will-change-transform transform-gpu"
+                >
+                  <div className="card-depth-2 w-full p-5 sm:p-7 rounded-3xl border border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/95 backdrop-blur-xl transition-all duration-300 shadow-xl hover:shadow-2xl cursor-pointer flex flex-col justify-between group relative overflow-hidden">
+                    
+                    {/* Background Pulse Glow */}
+                    <div 
+                      className="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-2xl opacity-15 pointer-events-none group-hover:opacity-30 transition-opacity" 
+                      style={{ backgroundColor: stage.color }}
+                    />
+
+                    <div>
+                      {/* Flow Step Header */}
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div 
+                            className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-xs transition-transform duration-300 group-hover:scale-105"
+                            style={{ backgroundColor: `${stage.color}18`, color: stage.color }}
+                          >
+                            <Icon className="w-5 h-5" strokeWidth={1.75} />
+                          </div>
+
+                          <div>
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)] font-mono">
+                              PIPELINE STAGE {stage.step}
+                            </span>
+                            <h4 className="text-xs sm:text-sm font-bold text-[var(--color-primary)]">
+                              {isEn ? stage.subtitleEn : stage.subtitleAr}
+                            </h4>
+                          </div>
+                        </div>
+
+                        <div className="px-2.5 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[11px] font-mono text-[var(--text-secondary)] font-bold">
+                          {stage.step} / 0{totalCount}
+                        </div>
+                      </div>
+
+                      {/* Stage Main Title */}
+                      <h3 className="text-lg sm:text-xl font-bold text-[var(--text-primary)] mb-1.5 group-hover:text-[var(--color-primary)] transition-colors">
+                        {isEn ? stage.titleEn : stage.titleAr}
+                      </h3>
+
+                      {/* Stage Description */}
+                      <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed mb-3.5 font-normal">
+                        {isEn ? stage.descEn : stage.descAr}
+                      </p>
+
+                      {/* KPIs Data Row */}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3.5">
+                        {stage.kpis.map((kpi, kIdx) => (
+                          <div 
+                            key={kIdx}
+                            className="p-2 rounded-xl bg-[var(--surface-secondary)]/90 border border-[var(--border-default)] text-center flex flex-col justify-center"
+                          >
+                            <span className="text-[10px] sm:text-[11px] font-semibold text-[var(--text-primary)]">
+                              {kpi}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Stage Footer Connector */}
+                    <div className="pt-2.5 border-t border-[var(--border-default)] flex items-center justify-between text-xs text-[var(--text-muted)] font-medium">
+                      <span className="flex items-center gap-1.5 text-[11px]">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                        <span>{isEn ? 'Continuous Optimization Loop' : 'إجراء منهجي مستمر'}</span>
+                      </span>
+
+                      <span className="text-[var(--color-primary)] font-bold text-xs flex items-center gap-1 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform">
+                        <span>{isEn ? 'Request Growth Audit' : 'طلب دراسة نمو'}</span>
+                        {isEn ? <ArrowRight className="w-3.5 h-3.5" /> : <ArrowLeft className="w-3.5 h-3.5" />}
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+
+            {/* Final Target CTA Card */}
+            {(() => {
+              const ctaIdx = PERFORMANCE_STAGES.length;
+              const opacity = useTransform(
+                activeProgress,
+                [ctaIdx - 0.8, ctaIdx - 0.2, ctaIdx, ctaIdx + 0.2, ctaIdx + 0.8],
+                [0, 0.95, 1, 0.95, 0]
+              );
+              const scale = useTransform(
+                activeProgress,
+                [ctaIdx - 0.8, ctaIdx, ctaIdx + 0.8],
+                isReducedMotion ? [1, 1, 1] : [0.9, 1, 0.9]
+              );
+              const y = useTransform(
+                activeProgress,
+                [ctaIdx - 0.8, ctaIdx, ctaIdx + 0.8],
+                isReducedMotion ? [0, 0, 0] : [25, 0, -25]
+              );
+              const pointerEvents = useTransform(
+                activeProgress,
+                [ctaIdx - 0.45, ctaIdx, ctaIdx + 0.45],
+                ['none', 'auto', 'none']
+              );
+
+              return (
+                <motion.div
+                  style={{
+                    opacity,
+                    scale,
+                    y,
+                    pointerEvents: pointerEvents as any
+                  }}
+                  onClick={() => {
+                    updateConfig({ currentRoute: 'start-project' });
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="absolute inset-x-0 mx-auto w-full max-w-xl sm:max-w-2xl will-change-transform transform-gpu"
+                >
+                  <div className="card-depth-3 w-full p-6 sm:p-7 rounded-3xl border-2 border-dashed border-emerald-500/50 hover:border-emerald-500 bg-[var(--surface-primary)]/95 backdrop-blur-xl flex flex-col justify-between items-center text-center cursor-pointer transition-all duration-300 group shadow-xl hover:shadow-2xl relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-36 h-36 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
+
+                    <div className="my-auto py-1 flex flex-col items-center">
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-600 text-white flex items-center justify-center mb-2.5 shadow-lg shadow-emerald-600/30 group-hover:scale-110 transition-transform">
+                        <TrendingUp className="w-6 h-6 sm:w-7 sm:h-7" />
+                      </div>
+
+                      <span className="text-xs font-bold uppercase tracking-widest text-emerald-500 mb-1 font-mono">
+                        Growth & ROAS Science
+                      </span>
+
+                      <h3 className="text-lg sm:text-xl font-black text-[var(--text-primary)] mb-1.5">
+                        {isEn ? 'Scale Your Performance Marketing' : 'ابدأ قيادة نمو حملاتك الرقمية'}
+                      </h3>
+
+                      <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-md leading-relaxed mb-4 font-medium">
+                        {isEn 
+                          ? 'Schedule a direct growth diagnostic audit with our media buyers and conversion engineers.'
+                          : 'احصل على تحليل شامل لمسار التحويل، تدقيق بكسلات التتبع، واستراتيجية مضاعفة العائد الإعلاني.'}
+                      </p>
+
+                      <button
+                        className="px-5 py-2 sm:py-2.5 rounded-full bg-emerald-600 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-md group-hover:bg-emerald-700 transition-colors cursor-pointer"
+                      >
+                        <span>{isEn ? 'Start Growth Consultation' : 'طلب دراسة نمو للحملات'}</span>
+                        {isEn ? <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /> : <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />}
+                      </button>
+                    </div>
+
+                    <div className="w-full pt-2.5 border-t border-[var(--border-default)] flex items-center justify-center gap-2 text-[11px] text-[var(--text-muted)]">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                      <span>{isEn ? 'Real-Time Attribution & Server-Side CAPI' : 'تتبع خادم مباشر ودقة عزو إعلاني عالية'}</span>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })()}
+          </div>
+        </div>
       )}
     </PinnedStoryScene>
   );

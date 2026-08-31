@@ -16,7 +16,8 @@ import {
 } from 'lucide-react';
 import { PinnedStoryScene } from './PinnedStoryScene';
 import { STORY_ASSETS } from './storyAssets';
-import { CinematicStageContainer, CinematicCardWrapper } from './VerticalCinematicStage';
+import { CinematicStageContainer } from './VerticalCinematicStage';
+import { CurvedSystemsCardWrapper } from './CurvedSystemsCardStage';
 
 const PRODUCTS = [
   {
@@ -132,7 +133,7 @@ export const StoryCustomSolutions: React.FC = () => {
           {PRODUCTS.map((prod, index) => {
             const Icon = prod.icon;
             return (
-              <CinematicCardWrapper
+              <CurvedSystemsCardWrapper
                 key={prod.id}
                 index={index}
                 totalItems={totalCount}
@@ -207,12 +208,12 @@ export const StoryCustomSolutions: React.FC = () => {
                     </span>
                   </div>
                 </div>
-              </CinematicCardWrapper>
+              </CurvedSystemsCardWrapper>
             );
           })}
 
           {/* Final 8th CTA Card */}
-          <CinematicCardWrapper
+          <CurvedSystemsCardWrapper
             index={PRODUCTS.length}
             totalItems={totalCount}
             activeProgress={activeProgress}
@@ -257,7 +258,7 @@ export const StoryCustomSolutions: React.FC = () => {
                 <span>{isEn ? 'Ready for Instant API Integration' : 'جاهزة للربط الفوري والتخصيص السحابي'}</span>
               </div>
             </div>
-          </CinematicCardWrapper>
+          </CurvedSystemsCardWrapper>
         </CinematicStageContainer>
       )}
     </PinnedStoryScene>
