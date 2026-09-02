@@ -60,6 +60,7 @@ export const WorkGridCard: React.FC<Props> = ({ project, isEn, updateConfig, get
         <motion.img 
           src={project.coverImage} 
           alt={isEn ? project.titleEn : project.titleAr}
+          referrerPolicy="no-referrer"
           variants={isHoverable ? { hover: { scale: 1.05 } } : {}}
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"

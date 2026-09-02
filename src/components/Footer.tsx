@@ -1,5 +1,5 @@
 import { getWhatsAppUrl } from '../lib/utils';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { UserRound, FlaskConical } from 'lucide-react';
 import { Mail, Phone, MapPin } from 'lucide-react';
@@ -30,6 +30,38 @@ export const Footer = () => {
   const { config, updateConfig } = useSite();
   const currentYear = new Date().getFullYear();
   const isEn = config.language === 'en';
+
+  const clickCountRef = useRef(0);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
+
+  const handleNmoLabsClick = () => {
+    if (clickCountRef.current === 0) {
+      clickCountRef.current = 1;
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => {
+        clickCountRef.current = 0;
+        timerRef.current = null;
+      }, 2000);
+    } else {
+      clickCountRef.current += 1;
+      if (clickCountRef.current >= 5) {
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+          timerRef.current = null;
+        }
+        clickCountRef.current = 0;
+        window.dispatchEvent(new CustomEvent('nmolabs:open-admin-access'));
+      }
+    }
+  };
 
   const toggleSection = (section: string) => {
     setOpenSection(openSection === section ? null : section);
@@ -223,7 +255,12 @@ export const Footer = () => {
           <p>© {currentYear} {isEn ? 'NmoLabs. All rights reserved.' : 'نمو لابز. جميع الحقوق محفوظة.'}</p>
           <div className="flex items-center gap-2">
             <span>{isEn ? 'Built with precision by' : 'صُنع بشغف وابتكار في'}</span>
-            <span className="text-[var(--text-primary)] font-black tracking-widest font-english text-xs bg-[var(--surface-secondary)] px-2.5 py-1 rounded-md border border-[var(--border-default)]">NMOLABS</span>
+            <span 
+              onClick={handleNmoLabsClick}
+              className="text-[var(--text-primary)] font-black tracking-widest font-english text-xs bg-[var(--surface-secondary)] px-2.5 py-1 rounded-md border border-[var(--border-default)] select-none touch-manipulation cursor-pointer"
+            >
+              NMOLABS
+            </span>
           </div>
         </div>
       </div>

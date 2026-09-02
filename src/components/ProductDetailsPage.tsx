@@ -115,7 +115,7 @@ export const ProductDetailsPage = ({ slug }: Props) => {
             </div>
 
             <div className="flex-1 w-full max-w-2xl hidden lg:block">
-              {/* Abstract Hero Mockup */}
+              {/* Product Visual Mockup */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -129,17 +129,29 @@ export const ProductDetailsPage = ({ slug }: Props) => {
                   <div className="w-3 h-3 rounded-full bg-white/20" />
                   <div className="w-3 h-3 rounded-full bg-white/20" />
                 </div>
-                <div className="flex-grow flex flex-col gap-4 relative z-10">
-                  <div className="h-32 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/20 font-black text-6xl">
-                    {isEn ? product.shortNameEn.charAt(0) : product.shortNameAr.charAt(0)}
+                {product.coverVisual ? (
+                  <div className="flex-grow relative z-10 rounded-2xl overflow-hidden border border-white/10 group">
+                    <img 
+                      src={product.coverVisual} 
+                      alt={isEn ? product.titleEn : product.titleAr}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
                   </div>
-                  <div className="grid grid-cols-2 gap-4 flex-grow">
-                    <div className="rounded-2xl bg-white/5 border border-white/10" />
-                    <div className="rounded-2xl bg-white/5 border border-white/10" />
+                ) : (
+                  <div className="flex-grow flex flex-col gap-4 relative z-10">
+                    <div className="h-32 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/20 font-black text-6xl">
+                      {isEn ? product.shortNameEn.charAt(0) : product.shortNameAr.charAt(0)}
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 flex-grow">
+                      <div className="rounded-2xl bg-white/5 border border-white/10" />
+                      <div className="rounded-2xl bg-white/5 border border-white/10" />
+                    </div>
                   </div>
-                </div>
-                <div className="absolute bottom-6 right-6 px-4 py-2 rounded-full bg-white/5 text-xs text-white/40 border border-white/5 z-10">
-                  {isEn ? 'Concept Interface' : 'تصور مبدئي للواجهة'}
+                )}
+                <div className="absolute bottom-6 right-6 px-4 py-2 rounded-full bg-black/70 backdrop-blur-md text-xs text-white/60 border border-white/10 z-20">
+                  {product.coverVisual ? (isEn ? 'System Interface' : 'واجهة النظام') : (isEn ? 'Concept Interface' : 'تصور مبدئي للواجهة')}
                 </div>
               </motion.div>
             </div>

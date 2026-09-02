@@ -5,11 +5,11 @@ import {
   ArrowLeft, 
   ArrowRight, 
   Monitor, 
-  Sparkles,
-  CheckCircle
+  Sparkles, 
+  CheckCircle 
 } from 'lucide-react';
 import { PinnedStoryScene } from './PinnedStoryScene';
-import { STORY_ASSETS } from './storyAssets';
+import { STORY_ASSETS, PROJECT_ASSETS } from './storyAssets';
 import { CinematicStageContainer } from './VerticalCinematicStage';
 import { DepthFocusCardWrapper } from './DepthFocusCardStage';
 
@@ -26,7 +26,7 @@ const WEBSITES = [
     highlightAr: 'تصميم بصري سينمائي يركز على استعراض الفيديو، معرض التغطيات الحية، وتسهيل حجز الخدمات.',
     highlightEn: 'Cinematic visual experience showcasing live streaming, event archives, and quick booking.',
     color: '#0F62FE',
-    coverImage: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=900',
+    coverImage: PROJECT_ASSETS.WEBSITES_EVENTLIVE_KSA,
     tags: ['عرض بصري غامر', 'تجاوب فائق', 'بث وميديا']
   },
   {
@@ -41,7 +41,7 @@ const WEBSITES = [
     highlightAr: 'تقسيم هيكلي شامل للخدمات، طلب عروض الأسعار، ومعرض منظم للمشاريع المنفذة.',
     highlightEn: 'Structured service catalog, instant RFQ workflow, and high-res portfolio showcase.',
     color: '#06B6D4',
-    coverImage: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=900',
+    coverImage: PROJECT_ASSETS.WEBSITES_ALMITHALI,
     tags: ['معرض أعمال', 'طلب تسعير فوري', 'تصنيفات تفصيلية']
   },
   {
@@ -56,14 +56,14 @@ const WEBSITES = [
     highlightAr: 'موقع تعريفي يبرز المواصفات الهندسية، المشاريع المنجزة، وحاسبة التقدير التقديرية.',
     highlightEn: 'Spec-heavy corporate portal showing completed installations and quote estimators.',
     color: '#10B981',
-    coverImage: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=900',
+    coverImage: PROJECT_ASSETS.WEBSITES_SHABOUK_RAYAT_NAJD,
     tags: ['مشاريع هندسية', 'كتالوج المواصفات', 'تواصل مباشر']
   },
   {
     id: 'rayat-najd-afforestation',
     slug: 'rayatnajd',
     titleAr: 'رايات نجد للتشجير والاستدامة',
-    titleEn: 'Rayat Najd Afforestation & Sustainability',
+    titleEn: 'Rayat Najd Sustainability',
     domain: 'rayatnajd.com',
     url: 'https://rayatnajd.com',
     sectorAr: 'المشاريع البيئية، المشاتل، ومبادرات التشجير',
@@ -71,7 +71,7 @@ const WEBSITES = [
     highlightAr: 'بوابة مؤسسية متكاملة تضم مركز المعرفة، المقالات المتخصصة، واستعراض المبادرات الوطنية.',
     highlightEn: 'Corporate knowledge hub, sustainability initiatives showcase, and enterprise credibility.',
     color: '#8B5CF6',
-    coverImage: 'https://images.unsplash.com/photo-1585338107529-13afc5f02586?auto=format&fit=crop&q=80&w=900',
+    coverImage: PROJECT_ASSETS.WEBSITES_RAYAT_NAJD_SUSTAINABILITY,
     tags: ['مركز المعرفة', 'تحسين محركات البحث', 'استدامة وبيئة']
   },
   {
@@ -86,7 +86,7 @@ const WEBSITES = [
     highlightAr: 'واجهة تعريفية وترويجية لخطوط الإنتاج والتوزيع والعلامات التجارية التابعة.',
     highlightEn: 'Brand portfolio portal showcasing product lines, logistics and brand assets.',
     color: '#EC4899',
-    coverImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=900',
+    coverImage: PROJECT_ASSETS.WEBSITES_RAWAFID_ALJANOUB,
     tags: ['بوابة مؤسسية', 'تعدد العلامات', 'شراكات وتوزيع']
   }
 ];
@@ -130,19 +130,21 @@ export const StoryWebsites: React.FC = () => {
               <div className="card-depth-2 w-full rounded-3xl border border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/95 backdrop-blur-xl transition-all duration-300 shadow-xl hover:shadow-2xl cursor-pointer flex flex-col sm:flex-row overflow-hidden group">
                 
                 {/* Visual Cover Header */}
-                <div className="relative w-full sm:w-2/5 h-36 sm:h-auto min-h-[140px] overflow-hidden bg-[var(--surface-secondary)] shrink-0">
+                <div className="relative w-full sm:w-5/12 h-40 sm:h-auto min-h-[160px] overflow-hidden bg-[var(--surface-secondary)] shrink-0 flex items-center justify-center p-2.5 sm:p-3.5">
                   <img 
                     src={site.coverImage} 
                     alt={isEn ? site.titleEn : site.titleAr}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                    loading="lazy"
+                    decoding="async"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-700" 
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-black/60 via-transparent to-transparent rtl:sm:bg-gradient-to-l" />
                   
-                  <div className="absolute top-3 right-3 rtl:right-auto rtl:left-3 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-white text-[10px] font-bold border border-white/15 font-mono">
+                  <div className="absolute top-3 right-3 rtl:right-auto rtl:left-3 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md text-white text-[10px] font-bold border border-white/15 font-mono">
                     {site.domain}
                   </div>
 
-                  <div className="absolute bottom-3 right-3 rtl:right-3 rtl:left-auto px-2.5 py-0.5 rounded-md bg-[var(--surface-primary)]/95 text-[var(--color-primary)] text-[11px] font-bold border border-[var(--border-default)]">
+                  <div className="absolute bottom-3 right-3 rtl:right-auto rtl:left-3 px-2.5 py-0.5 rounded-md bg-[var(--surface-primary)]/95 text-[var(--color-primary)] text-[11px] font-bold border border-[var(--border-default)]">
                     {isEn ? site.sectorEn : site.sectorAr}
                   </div>
                 </div>
@@ -248,3 +250,4 @@ export const StoryWebsites: React.FC = () => {
     </PinnedStoryScene>
   );
 };
+

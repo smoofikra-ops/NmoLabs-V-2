@@ -10,3 +10,27 @@ export const STORY_ASSETS = {
 } as const;
 
 export type StoryAssetKey = keyof typeof STORY_ASSETS;
+
+export const PROJECT_ASSETS = {
+  // Digital Systems
+  SYSTEMS_NUCLEUS: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/nucleus.png',
+  SYSTEMS_NBOS: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/nbos.png',
+  SYSTEMS_NMO_ERP: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/nmo-erp.png',
+  SYSTEMS_STORE_INTELLIGENCE: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/store-intelligence.png',
+  SYSTEMS_AMBASSADOR_OF_GROWTH: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/ambassador-of-growth.png',
+
+  // E-Commerce
+  ECOMMERCE_REJEEN: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/rejeen.png',
+  ECOMMERCE_THALATHA_ALYOUM: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/thulutha-alyoum.jpeg',
+  ECOMMERCE_BATATIS_MUSCAT: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/batatis-muscat.jpeg',
+  ECOMMERCE_ESTIKANA_TEA: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/estikana-tea.jpeg',
+  ECOMMERCE_FUTURE_GATE_NETWORKS: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/uture-gate-networks-1.png',
+
+  // Websites & Platforms
+  WEBSITES_EVENTLIVE_KSA: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/eventlive-ksa.jpeg',
+  WEBSITES_ALMITHALI: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/almithali.jpeg',
+  WEBSITES_SHABOUK_RAYAT_NAJD: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/shabouk-rayat-najd.jpeg',
+  WEBSITES_RAYAT_NAJD_SUSTAINABILITY: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/rayat-najd-sustainability.jpeg',
+  WEBSITES_RAWAFID_ALJANOUB: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/rawafid-aljanoub.jpeg',
+} as const;
+

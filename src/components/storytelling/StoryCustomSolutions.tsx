@@ -15,7 +15,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { PinnedStoryScene } from './PinnedStoryScene';
-import { STORY_ASSETS } from './storyAssets';
+import { STORY_ASSETS, PROJECT_ASSETS } from './storyAssets';
 import { CinematicStageContainer } from './VerticalCinematicStage';
 import { CurvedSystemsCardWrapper } from './CurvedSystemsCardStage';
 
@@ -31,6 +31,7 @@ const PRODUCTS = [
     icon: Cpu,
     color: '#0F62FE',
     accentDot: 'bg-blue-500',
+    image: PROJECT_ASSETS.SYSTEMS_NUCLEUS,
   },
   {
     id: 'nbos',
@@ -43,6 +44,7 @@ const PRODUCTS = [
     icon: Layers,
     color: '#06B6D4',
     accentDot: 'bg-cyan-500',
+    image: PROJECT_ASSETS.SYSTEMS_NBOS,
   },
   {
     id: 'nmo-erp',
@@ -55,18 +57,7 @@ const PRODUCTS = [
     icon: Database,
     color: '#10B981',
     accentDot: 'bg-emerald-500',
-  },
-  {
-    id: 'smart-seller',
-    name: 'Smart Seller',
-    nameAr: 'البائع الذكي — Smart Seller',
-    badge: 'Sales Automation',
-    descAr: 'وكيل بيع ذكي ومؤتمت لمساعدة العملاء، اقتراح السلات، وإتمام الطلبات.',
-    descEn: 'Automated AI sales agent assisting buyers and closing transactions 24/7.',
-    specs: ['محادثات ذكية', 'اقتراح منتجات مخصص', 'ربط سلات الشراء'],
-    icon: Bot,
-    color: '#8B5CF6',
-    accentDot: 'bg-purple-500',
+    image: PROJECT_ASSETS.SYSTEMS_NMO_ERP,
   },
   {
     id: 'store-intelligence',
@@ -79,6 +70,7 @@ const PRODUCTS = [
     icon: BarChart3,
     color: '#F59E0B',
     accentDot: 'bg-amber-500',
+    image: PROJECT_ASSETS.SYSTEMS_STORE_INTELLIGENCE,
   },
   {
     id: 'ambassador-of-growth',
@@ -91,18 +83,7 @@ const PRODUCTS = [
     icon: Award,
     color: '#EC4899',
     accentDot: 'bg-pink-500',
-  },
-  {
-    id: 'ai-center',
-    name: 'AI Center',
-    nameAr: 'مركز الذكاء الاصطناعي — AI Center',
-    badge: 'GenAI & Automation',
-    descAr: 'محرك نماذج الذكاء الاصطناعي التوليدي والتحليلي المخصص لقطاع أعمالك.',
-    descEn: 'Custom generative & predictive AI engine tailored to your business domain.',
-    specs: ['توليد محتوى ذكي', 'أتمتة العمليات المعقدة', 'نماذج مخصصة'],
-    icon: Sparkles,
-    color: '#6366F1',
-    accentDot: 'bg-indigo-500',
+    image: PROJECT_ASSETS.SYSTEMS_AMBASSADOR_OF_GROWTH,
   }
 ];
 
@@ -144,7 +125,7 @@ export const StoryCustomSolutions: React.FC = () => {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
               >
-                <div className="card-depth-2 w-full p-5 sm:p-7 rounded-3xl border border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/95 backdrop-blur-xl shadow-xl hover:shadow-2xl cursor-pointer flex flex-col justify-between group relative overflow-hidden">
+                <div className="card-depth-2 w-full rounded-3xl border border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/95 backdrop-blur-xl shadow-xl hover:shadow-2xl cursor-pointer flex flex-col sm:flex-row overflow-hidden group relative transition-all duration-300">
                   
                   {/* Subtle Ambient Color Glow */}
                   <div 
@@ -152,60 +133,92 @@ export const StoryCustomSolutions: React.FC = () => {
                     style={{ backgroundColor: prod.color }}
                   />
 
-                  <div>
-                    {/* Card Top: Category Badge, Number, and Icon */}
-                    <div className="flex items-center justify-between mb-4">
-                      <div 
-                        className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-xs transition-transform duration-300 group-hover:scale-105"
-                        style={{ backgroundColor: `${prod.color}18`, color: prod.color }}
-                      >
-                        <Icon className="w-6 h-6" strokeWidth={1.75} />
+                  {/* Visual / Screenshot Cover */}
+                  {prod.image ? (
+                    <div className="relative w-full sm:w-5/12 h-36 sm:h-auto min-h-[140px] overflow-hidden bg-[var(--surface-secondary)] shrink-0 flex items-center justify-center p-2.5 sm:p-3.5">
+                      <img 
+                        src={prod.image} 
+                        alt={isEn ? prod.name : prod.nameAr}
+                        loading="lazy"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-contain rounded-xl group-hover:scale-105 transition-transform duration-700" 
+                      />
+                      <div className="absolute top-2.5 right-2.5 rtl:right-auto rtl:left-2.5 px-2.5 py-0.5 rounded-full bg-black/75 backdrop-blur-md text-white text-[10px] font-bold border border-white/15 font-mono">
+                        {prod.badge}
                       </div>
+                    </div>
+                  ) : (
+                    <div className="relative w-full sm:w-5/12 h-36 sm:h-auto min-h-[140px] overflow-hidden bg-[var(--surface-secondary)]/80 shrink-0 flex flex-col items-center justify-center p-4 border-b sm:border-b-0 sm:border-r rtl:sm:border-r-0 rtl:sm:border-l border-[var(--border-default)]">
+                      <div 
+                        className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shadow-md transition-transform duration-500 group-hover:scale-110"
+                        style={{ backgroundColor: `${prod.color}20`, color: prod.color }}
+                      >
+                        <Icon className="w-7 h-7 sm:w-8 sm:h-8" strokeWidth={1.75} />
+                      </div>
+                      <span className="mt-2 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[var(--surface-primary)] text-[var(--text-secondary)] border border-[var(--border-default)] font-mono">
+                        {prod.badge}
+                      </span>
+                    </div>
+                  )}
 
-                      <div className="flex items-center gap-2">
-                        <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)] font-mono">
-                          0{index + 1} / 0{totalCount}
-                        </span>
-                        <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)]">
+                  {/* Card Content Body */}
+                  <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                      {/* Card Top Details */}
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <div 
+                            className="w-8 h-8 rounded-lg flex items-center justify-center shadow-xs"
+                            style={{ backgroundColor: `${prod.color}18`, color: prod.color }}
+                          >
+                            <Icon className="w-4 h-4" strokeWidth={1.75} />
+                          </div>
+                          <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)] font-mono">
+                            0{index + 1} / 0{totalCount}
+                          </span>
+                        </div>
+
+                        <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)]">
                           {prod.badge}
                         </span>
                       </div>
+
+                      {/* Title */}
+                      <h3 className="text-lg sm:text-xl font-bold text-[var(--text-primary)] mb-1.5 group-hover:text-[var(--color-primary)] transition-colors">
+                        {isEn ? prod.name : prod.nameAr}
+                      </h3>
+
+                      {/* Description */}
+                      <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed mb-3 font-normal line-clamp-2">
+                        {isEn ? prod.descEn : prod.descAr}
+                      </p>
+
+                      {/* Specs / Tags */}
+                      <div className="flex flex-wrap gap-1.5 mb-3">
+                        {prod.specs?.map((spec, sIdx) => (
+                          <span 
+                            key={sIdx}
+                            className="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-md bg-[var(--surface-secondary)] text-[var(--text-muted)] border border-[var(--border-default)]"
+                          >
+                            {spec}
+                          </span>
+                        ))}
+                      </div>
                     </div>
 
-                    {/* Title */}
-                    <h3 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--color-primary)] transition-colors flex items-center gap-2">
-                      <span>{isEn ? prod.name : prod.nameAr}</span>
-                    </h3>
+                    {/* Card Footer */}
+                    <div className="pt-3 border-t border-[var(--border-default)] flex items-center justify-between text-xs text-[var(--text-muted)] font-medium">
+                      <span className="flex items-center gap-1.5">
+                        <span className={`w-2 h-2 rounded-full ${prod.accentDot} animate-pulse`} />
+                        <span className="text-[11px]">{isEn ? 'Operational System' : 'نظام تشغيلي متكامل'}</span>
+                      </span>
 
-                    {/* Description */}
-                    <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed mb-4 font-normal">
-                      {isEn ? prod.descEn : prod.descAr}
-                    </p>
-
-                    {/* Specs / Tags */}
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {prod.specs?.map((spec, sIdx) => (
-                        <span 
-                          key={sIdx}
-                          className="text-[10px] sm:text-[11px] px-2.5 py-0.5 rounded-md bg-[var(--surface-secondary)] text-[var(--text-muted)] border border-[var(--border-default)]"
-                        >
-                          {spec}
-                        </span>
-                      ))}
+                      <span className="text-[var(--color-primary)] font-bold text-xs flex items-center gap-1 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform">
+                        <span>{isEn ? 'Explore Specifications' : 'تفاصيل النظام'}</span>
+                        {isEn ? <ArrowRight className="w-3.5 h-3.5" /> : <ArrowLeft className="w-3.5 h-3.5" />}
+                      </span>
                     </div>
-                  </div>
-
-                  {/* Card Footer */}
-                  <div className="pt-3 border-t border-[var(--border-default)] flex items-center justify-between text-xs text-[var(--text-muted)] font-medium">
-                    <span className="flex items-center gap-1.5">
-                      <span className={`w-2 h-2 rounded-full ${prod.accentDot} animate-pulse`} />
-                      <span className="text-[11px]">{isEn ? 'Operational System' : 'نظام تشغيلي متكامل'}</span>
-                    </span>
-
-                    <span className="text-[var(--color-primary)] font-bold text-xs flex items-center gap-1 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform">
-                      <span>{isEn ? 'Explore Specifications' : 'تفاصيل النظام'}</span>
-                      {isEn ? <ArrowRight className="w-3.5 h-3.5" /> : <ArrowLeft className="w-3.5 h-3.5" />}
-                    </span>
                   </div>
                 </div>
               </CurvedSystemsCardWrapper>
@@ -264,3 +277,4 @@ export const StoryCustomSolutions: React.FC = () => {
     </PinnedStoryScene>
   );
 };
+

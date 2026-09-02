@@ -117,7 +117,12 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
             >
               <div className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-700 blur-3xl" style={{ backgroundColor: project.brandColor }} />
               {project.coverImage ? (
-                <img src={project.coverImage} alt={isEn ? project.titleEn : project.titleAr} className="relative z-10 w-full h-full object-cover object-top group-hover:object-bottom transition-all duration-[8000ms] ease-in-out" />
+                <img 
+                  src={project.coverImage} 
+                  alt={isEn ? project.titleEn : project.titleAr} 
+                  referrerPolicy="no-referrer"
+                  className="relative z-10 w-full h-full object-cover object-top group-hover:object-bottom transition-all duration-[8000ms] ease-in-out" 
+                />
               ) : (
                 <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
                    <div className="w-32 h-32 rounded-3xl blur-[40px] absolute opacity-30" style={{ backgroundColor: project.brandColor }} />

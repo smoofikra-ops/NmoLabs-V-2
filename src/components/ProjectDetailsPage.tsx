@@ -101,6 +101,7 @@ export const ProjectDetailsPage = ({ slug }: Props) => {
                   <img 
                     src={project.coverImage} 
                     alt={isEn ? project.titleEn : project.titleAr}
+                    referrerPolicy="no-referrer"
                     className="w-full h-full object-cover"
                   />
                 ) : (

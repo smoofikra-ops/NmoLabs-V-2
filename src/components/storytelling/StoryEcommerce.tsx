@@ -5,15 +5,14 @@ import {
   ArrowLeft, 
   ArrowRight, 
   TrendingUp,
-  Sparkles,
-  ExternalLink
+  Sparkles
 } from 'lucide-react';
 import { PinnedStoryScene } from './PinnedStoryScene';
-import { STORY_ASSETS } from './storyAssets';
+import { STORY_ASSETS, PROJECT_ASSETS } from './storyAssets';
 import { CinematicStageContainer } from './VerticalCinematicStage';
 import { ReverseCurvedCardWrapper } from './ReverseCurvedCardStage';
 
-const STORES迷 = [
+const STORES = [
   {
     id: 'rejeen',
     slug: 'regine',
@@ -21,34 +20,34 @@ const STORES迷 = [
     nameEn: 'Rejeen',
     domain: 'regine-sa.com',
     url: 'https://regine-sa.com/',
-    sectorAr: 'العناية والتجميل الفاخر',
-    sectorEn: 'Beauty & Skincare',
-    highlightAr: 'تصميم تجربة مستخدم تركز على سرعة التحويل والشراء بنقرة واحدة.',
-    highlightEn: 'Conversion-optimized UX with frictionless 1-click checkout flow.',
+    sectorAr: 'المناديل والمنظفات والبلاستيكات والمنتجات الاستهلاكية',
+    sectorEn: 'Tissues, Detergents, Plastics & Consumer Goods',
+    highlightAr: 'متجر متخصص في المناديل والمنظفات والبلاستيكات والمنتجات الاستهلاكية، مع تطوير تجربة الشراء والهوية الرقمية والتسويق وتحسين التحويل.',
+    highlightEn: 'Consumer goods ecommerce for tissues, cleaning products & plastics with high-conversion checkout.',
     color: '#D97706',
-    coverImage: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=900',
+    coverImage: PROJECT_ASSETS.ECOMMERCE_REJEEN,
     tags: ['متجر متكامل', 'بوابات دفع فورية', 'تجربة جوال فائقة']
   },
   {
-    id: 'thalathat-alyawm',
+    id: 'thulth-al-youm',
     slug: 'thulth-al-youm',
-    nameAr: 'ثلاثة اليوم',
-    nameEn: 'Thalathat Alyawm',
+    nameAr: 'ثلث اليوم — Thulth Al Youm',
+    nameEn: 'Thulth Al Youm',
     domain: 'thulthalyawm.com',
     url: '',
-    sectorAr: 'المفروشات ومنتجات النوم والراحة',
-    sectorEn: 'Luxury Home & Sleep Comfort',
-    highlightAr: 'عرض مرئي أنيق يبرز جودة الخامات وتفاصيل المنتجات بدقة.',
-    highlightEn: 'High-end visual showcase emphasizing fabrics, craftsmanship & comfort.',
+    sectorAr: 'المفروشات والبطانيات ومنتجات النوم والراحة',
+    sectorEn: 'Bedding, Blankets & Sleep Comfort Products',
+    highlightAr: 'متجر إلكتروني للمفروشات والبطانيات ومنتجات النوم والراحة، يبرز تفاصيل الخامات وتجربة تصفح سريعة للشراء المباشر.',
+    highlightEn: 'Specialized store for bedding, blankets & sleep comfort with a refined visual showcase and seamless ordering.',
     color: '#3B82F6',
-    coverImage: 'https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&q=80&w=900',
+    coverImage: PROJECT_ASSETS.ECOMMERCE_THALATHA_ALYOUM,
     tags: ['كتالوج ديناميكي', 'فلترة متقدمة', 'عروض مجمعة']
   },
   {
     id: 'muscat-potato',
     slug: 'muscat-potato',
-    nameAr: 'بطاطس مسقط',
-    nameEn: 'Muscat Potato',
+    nameAr: 'بطاطس مسقط — Batatis Muscat',
+    nameEn: 'Batatis Muscat',
     domain: 'muscatpotato.com',
     url: '',
     sectorAr: 'الأغذية والمنتجات الاستهلاكية المبتكرة',
@@ -56,14 +55,14 @@ const STORES迷 = [
     highlightAr: 'متجر سريع مصمم للشراء المتكرر وإدارة العروض والكميات.',
     highlightEn: 'Ultra-fast cart flow built for repeat orders and volume promotions.',
     color: '#EF4444',
-    coverImage: 'https://images.unsplash.com/photo-1518015878880-555b542a4a18?auto=format&fit=crop&q=80&w=900',
+    coverImage: PROJECT_ASSETS.ECOMMERCE_BATATIS_MUSCAT,
     tags: ['طلبات سريعة', 'إدارة المخزون', 'تتبع الشحنات']
   },
   {
     id: 'istikana-tea',
     slug: 'rawafid-al-janoub',
-    nameAr: 'شاي استكانة',
-    nameEn: 'Istikana Tea',
+    nameAr: 'شاي استكانة — Estikana Tea',
+    nameEn: 'Estikana Tea',
     domain: 'istikanatea.com',
     url: '',
     sectorAr: 'الشاي المختص والمنتجات الغذائية',
@@ -71,32 +70,30 @@ const STORES迷 = [
     highlightAr: 'هوية بصرية دافئة وتجربة تصفح سلسة لأصناف الشاي الفاخر.',
     highlightEn: 'Warm brand storytelling and seamless navigation for premium tea collections.',
     color: '#10B981',
-    coverImage: 'https://images.unsplash.com/photo-1576092762791-dd9e2220c476?auto=format&fit=crop&q=80&w=900',
+    coverImage: PROJECT_ASSETS.ECOMMERCE_ESTIKANA_TEA,
     tags: ['اشتراكات دورية', 'باقات هدايا', 'تقييمات موثقة']
   },
   {
     id: 'future-gate-networks',
     slug: 'network-gate',
-    nameAr: 'بوابة المستقبل للشبكات',
+    nameAr: 'بوابة المستقبل للشبكات — Future Gate Networks',
     nameEn: 'Future Gate Networks',
     domain: 'futuregate-net.com',
     url: '',
-    sectorAr: 'الشبكات والراوترات والأجهزة التقنية',
-    sectorEn: 'Networking, 5G Routers & Tech',
-    highlightAr: 'متجر إلكتروني للمواصفات الفنية المتقدمة والمقارنة بين الأجهزة.',
-    highlightEn: 'Spec-driven technical catalog with smart hardware comparison.',
+    sectorAr: 'راوترات وأنتينات وحلول شبكات الجيل الخامس',
+    sectorEn: '5G Routers, Antennas & Network Solutions',
+    highlightAr: 'متجر متخصص في حلول الشبكات والراوترات وأنتينات الجيل الخامس لتعزيز التغطية، مع مقارنة المواصفات الفنية وسهولة الشراء.',
+    highlightEn: 'Specialized networking ecommerce for 5G routers and high-gain antennas with technical spec guides and instant checkout.',
     color: '#6366F1',
-    coverImage: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=900',
+    coverImage: PROJECT_ASSETS.ECOMMERCE_FUTURE_GATE_NETWORKS,
     tags: ['مواصفات تقنية', 'ضمان وصيانة', 'دعم B2B و B2C']
   }
 ];
 
-const STORES = STORES迷;
-
 export const StoryEcommerce: React.FC = () => {
   const { config, updateConfig } = useSite();
   const isEn = config.language === 'en';
-  const totalCount迷 = STORES.length + 1;
+  const totalCount = STORES.length + 1;
 
   return (
     <PinnedStoryScene
@@ -111,7 +108,7 @@ export const StoryEcommerce: React.FC = () => {
       titleEn="High-Converting E-Commerce Flagships"
       subtitleAr="نبني تجارب تسوق سلسة وسريعة تجمع بين الهوية الفريدة ومعدلات الشراء العالية."
       subtitleEn="We engineer lightning-fast shopping experiences optimized for maximum checkout conversion."
-      itemCount={totalCount迷}
+      itemCount={totalCount}
       isEn={isEn}
       scrollMultiplier={2.6}
     >
@@ -121,7 +118,7 @@ export const StoryEcommerce: React.FC = () => {
             <ReverseCurvedCardWrapper
               key={store.id}
               index={index}
-              totalItems={totalCount迷}
+              totalItems={totalCount}
               activeProgress={activeProgress}
               isReducedMotion={isReducedMotion}
               onClick={() => {
@@ -132,19 +129,21 @@ export const StoryEcommerce: React.FC = () => {
               <div className="card-depth-2 w-full rounded-3xl border border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/95 backdrop-blur-xl transition-all duration-300 shadow-xl hover:shadow-2xl cursor-pointer flex flex-col sm:flex-row overflow-hidden group">
                 
                 {/* Visual Cover Header */}
-                <div className="relative w-full sm:w-2/5 h-36 sm:h-auto min-h-[140px] overflow-hidden bg-[var(--surface-secondary)] shrink-0">
+                <div className="relative w-full sm:w-5/12 h-40 sm:h-auto min-h-[160px] overflow-hidden bg-[var(--surface-secondary)] shrink-0 flex items-center justify-center p-2.5 sm:p-3.5">
                   <img 
                     src={store.coverImage} 
                     alt={isEn ? store.nameEn : store.nameAr}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                    loading="lazy"
+                    decoding="async"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-700" 
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-black/60 via-transparent to-transparent rtl:sm:bg-gradient-to-l" />
                   
-                  <div className="absolute top-3 right-3 rtl:right-auto rtl:left-3 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-white text-[10px] font-bold border border-white/15 font-mono">
+                  <div className="absolute top-3 right-3 rtl:right-auto rtl:left-3 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md text-white text-[10px] font-bold border border-white/15 font-mono">
                     {store.domain}
                   </div>
 
-                  <div className="absolute bottom-3 right-3 rtl:right-3 rtl:left-auto px-2.5 py-0.5 rounded-md bg-[var(--surface-primary)]/95 text-[var(--color-primary)] text-[11px] font-bold border border-[var(--border-default)]">
+                  <div className="absolute bottom-3 right-3 rtl:right-auto rtl:left-3 px-2.5 py-0.5 rounded-md bg-[var(--surface-primary)]/95 text-[var(--color-primary)] text-[11px] font-bold border border-[var(--border-default)]">
                     {isEn ? store.sectorEn : store.sectorAr}
                   </div>
                 </div>
@@ -154,7 +153,7 @@ export const StoryEcommerce: React.FC = () => {
                   <div>
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)] font-mono">
-                        0{index + 1} / 0{totalCount迷}
+                        0{index + 1} / 0{totalCount}
                       </span>
                       <span className="flex items-center gap-1 text-[var(--color-primary)] font-semibold text-xs">
                         <Sparkles className="w-3 h-3" />
@@ -201,7 +200,7 @@ export const StoryEcommerce: React.FC = () => {
           {/* Final CTA Card */}
           <ReverseCurvedCardWrapper
             index={STORES.length}
-            totalItems={totalCount迷}
+            totalItems={totalCount}
             activeProgress={activeProgress}
             isReducedMotion={isReducedMotion}
             onClick={() => {
@@ -250,3 +249,4 @@ export const StoryEcommerce: React.FC = () => {
     </PinnedStoryScene>
   );
 };
+

@@ -19,6 +19,41 @@ export const HiddenTrigger = () => {
     return () => unsubscribe();
   }, []);
 
+  // Keyboard shortcut listener and custom event listener
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const isModifier = e.ctrlKey || e.metaKey;
+      if (isModifier && e.shiftKey && (e.key === 'A' || e.key === 'a' || e.code === 'KeyA')) {
+        const target = e.target as HTMLElement | null;
+        const activeEl = document.activeElement as HTMLElement | null;
+        const isTextInput = (el: HTMLElement | null) => {
+          if (!el) return false;
+          const tag = el.tagName?.toLowerCase();
+          return tag === 'input' || tag === 'textarea' || tag === 'select' || el.isContentEditable;
+        };
+
+        if (isTextInput(target) || isTextInput(activeEl)) {
+          return;
+        }
+
+        e.preventDefault();
+        setShowPrompt(true);
+      }
+    };
+
+    const handleOpenAdmin = () => {
+      setShowPrompt(true);
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('nmolabs:open-admin-access', handleOpenAdmin);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('nmolabs:open-admin-access', handleOpenAdmin);
+    };
+  }, []);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password === '1122') {
@@ -50,11 +85,6 @@ export const HiddenTrigger = () => {
 
   return (
     <>
-      <div 
-        className="fixed bottom-0 left-0 w-16 h-16 opacity-0 hover:opacity-[0.02] bg-white z-[90] cursor-default"
-        onClick={() => setShowPrompt(true)}
-      />
-      
       {showPrompt && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] flex items-center justify-center p-4">
           <div className="bg-[var(--surface-primary)] shadow-2xl border border-[var(--border-default)] p-8 rounded-2xl w-full max-w-sm relative">
