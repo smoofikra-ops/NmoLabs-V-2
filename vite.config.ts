@@ -11,6 +11,7 @@ export default defineConfig(({mode}) => {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
     },
     resolve: {
+      dedupe: ['react', 'react-dom'],
       alias: {
         '@': path.resolve(__dirname, '.'),
         'node-fetch': path.resolve(__dirname, 'src/lib/empty.ts'),
@@ -19,6 +20,21 @@ export default defineConfig(({mode}) => {
         'cross-fetch': path.resolve(__dirname, 'src/lib/empty.ts'),
         'isomorphic-fetch': path.resolve(__dirname, 'src/lib/empty.ts'),
       },
+    },
+    optimizeDeps: {
+      include: [
+        'react',
+        'react/jsx-runtime',
+        'react/jsx-dev-runtime',
+        'react-dom',
+        'react-dom/client',
+        'motion/react',
+        'zustand',
+        'react-helmet-async',
+        'lucide-react',
+        'clsx',
+        'tailwind-merge'
+      ],
     },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.

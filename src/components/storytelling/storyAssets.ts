@@ -34,3 +34,9 @@ export const PROJECT_ASSETS = {
   WEBSITES_RAWAFID_ALJANOUB: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/rawafid-aljanoub.jpeg',
 } as const;
 
+export const SOCIAL_ASSETS = {
+  INSTAGRAM_IDEA: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/services/social/instgram-idea.jpeg',
+  SNAP_IDEA: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/services/social/snap-idea.jpeg',
+  TIKTOK_IDEA: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/services/social/tiktok-idea.jpeg',
+} as const;
+

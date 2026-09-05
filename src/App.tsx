@@ -41,9 +41,9 @@ const Disclaimer = lazy(() => import('./components/Policies').then(module => ({ 
 const WorkPage = lazy(() => import('./components/WorkPage').then(module => ({ default: module.WorkPage })));
 const ProjectDetailsPage = lazy(() => import('./components/ProjectDetailsPage').then(module => ({ default: module.ProjectDetailsPage })));
 const WorkPreview = lazy(() => import('./components/WorkPreview').then(module => ({ default: module.WorkPreview })));
-const ProductsPage = lazy(() => import('./components/ProductsPage').then(module => ({ default: module.ProductsPage })));
+const ProductsPage = lazy(() => import('./components/ProductsPage').then(module => ({ default: module.ProductsPage || module.default })));
 const ProductsPreview = lazy(() => import('./components/ProductsPreview').then(module => ({ default: module.ProductsPreview })));
-const ProductDetailsPage = lazy(() => import('./components/ProductDetailsPage').then(module => ({ default: module.ProductDetailsPage })));
+const ProductDetailsPage = lazy(() => import('./components/ProductDetailsPage').then(module => ({ default: module.ProductDetailsPage || module.default })));
 const ServiceDetailsPage = lazy(() => import('./components/ServiceDetailsPage').then(module => ({ default: module.ServiceDetailsPage })));
 
 const FounderPage = lazy(() => import('./components/FounderPage').then(module => ({ default: module.FounderPage })));

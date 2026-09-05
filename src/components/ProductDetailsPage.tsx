@@ -292,3 +292,5 @@ export const ProductDetailsPage = ({ slug }: Props) => {
     </article>
   );
 };
+
+export default ProductDetailsPage;

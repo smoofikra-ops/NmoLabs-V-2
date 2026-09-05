@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'motion/react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { motion, useInView } from 'motion/react';
 import { useSite } from '../context/SiteContext';
-import { productsData, Product } from '../data/products';
-import { ArrowRight, ArrowLeft, ExternalLink, Lightbulb, UserCheck, Layers, PenTool, Code, CheckCircle, Rocket, RefreshCw } from 'lucide-react';
+import { productsData } from '../data/products';
+import { ArrowRight, ArrowLeft, Lightbulb, UserCheck, Layers, PenTool, Code, CheckCircle, Rocket, RefreshCw } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { triggerBookingModal } from './BookingModal';
 
@@ -18,6 +18,10 @@ export const ProductsPage = () => {
   const otherProducts = productsData.filter(p => !p.featured);
 
   const [activeProductColor, setActiveProductColor] = useState<string>('var(--color-primary)');
+
+  const handleInView = useCallback((color: string) => {
+    setActiveProductColor(color);
+  }, []);
 
   const getStatusStyle = (status: string) => {
     switch(status) {
@@ -123,7 +127,7 @@ export const ProductsPage = () => {
             index={index} 
             isEn={isEn} 
             updateConfig={updateConfig}
-            onInView={(color: string) => setActiveProductColor(color)}
+            onInView={handleInView}
             getStatusStyle={getStatusStyle}
             getStatusText={getStatusText}
           />
@@ -411,3 +415,5 @@ const FeaturedProductSection = ({ product, index, isEn, updateConfig, onInView, 
     </section>
   );
 };
+
+export default ProductsPage;

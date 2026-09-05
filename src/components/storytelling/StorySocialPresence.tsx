@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { triggerBookingModal } from '../BookingModal';
 import { StorySceneContainer } from './StorySceneContainer';
-import { STORY_ASSETS } from './storyAssets';
+import { STORY_ASSETS, SOCIAL_ASSETS } from './storyAssets';
 
 const SOCIAL_PILLARS = [
   {
@@ -49,24 +49,30 @@ const SOCIAL_PILLARS = [
 const MOCK_POSTS = [
   {
     platform: 'Instagram Reels',
+    platformAr: 'إنستغرام ريلز',
     views: '240K+',
     engagement: '14.8%',
     category: 'ريلز نمو المنتجات',
-    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=600',
+    categoryEn: 'Product Growth Reels',
+    image: SOCIAL_ASSETS.INSTAGRAM_IDEA,
   },
   {
-    platform: 'X / Twitter Campaign',
+    platform: 'Snapchat Campaign',
+    platformAr: 'حملات سناب شات',
     views: '180K+',
     engagement: '9.2%',
-    category: 'محتوى بناء الثقة',
-    image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=600',
+    category: 'محتوى العروض وبناء الثقة',
+    categoryEn: 'Offers & Trust Content',
+    image: SOCIAL_ASSETS.SNAP_IDEA,
   },
   {
     platform: 'TikTok Trend Video',
+    platformAr: 'تيك توك تريند',
     views: '450K+',
     engagement: '18.4%',
     category: 'فيديو فيروسي موجه للشراء',
-    image: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&q=80&w=600',
+    categoryEn: 'Viral High-Conversion Video',
+    image: SOCIAL_ASSETS.TIKTOK_IDEA,
   }
 ];
 
@@ -152,13 +158,14 @@ export const StorySocialPresence: React.FC = () => {
                   <div className="relative h-44 overflow-hidden bg-slate-100 dark:bg-slate-800">
                     <img 
                       src={post.image} 
-                      alt={post.platform}
+                      alt={isEn ? post.platform : post.platformAr}
                       loading="lazy"
+                      referrerPolicy="no-referrer"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                     <div className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-black/60 backdrop-blur text-[11px] font-bold text-white">
-                      {post.platform}
+                      {isEn ? post.platform : post.platformAr}
                     </div>
                     <div className="absolute bottom-3 right-3 left-3 flex items-center justify-between text-white text-xs">
                       <span className="flex items-center gap-1 font-bold">
@@ -174,7 +181,7 @@ export const StorySocialPresence: React.FC = () => {
 
                   <div className="p-4 flex items-center justify-between">
                     <span className="text-xs font-bold text-[var(--text-secondary)]">
-                      {post.category}
+                      {isEn ? post.categoryEn : post.category}
                     </span>
                     <CheckCircle2 className="w-4 h-4 text-[var(--color-accent)]" />
                   </div>
