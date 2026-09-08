@@ -1,14 +1,43 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { TrendingUp, Percent, ArrowDownRight } from 'lucide-react';
+import { useSite } from '../context/SiteContext';
 
 const stats = [
-  { id: 1, num: '+300%', title: 'زيادة المبيعات', desc: 'بناء رحلة العميل بالكامل', icon: <TrendingUp className="w-5 h-5" /> },
-  { id: 2, num: '8X-26X', title: 'نمو العائد', desc: 'قد يصل العائد لـ 26X', icon: <Percent className="w-5 h-5" /> },
-  { id: 3, num: '-40%', title: 'تقليل المرتجعات', desc: 'تحليل دقيق وتوضيح صح', icon: <ArrowDownRight className="w-5 h-5" /> }
+  { 
+    id: 1, 
+    num: '+300%', 
+    titleAr: 'زيادة المبيعات', 
+    titleEn: 'Sales Increase',
+    descAr: 'بناء رحلة العميل بالكامل', 
+    descEn: 'Full customer journey architecture',
+    icon: <TrendingUp className="w-5 h-5" /> 
+  },
+  { 
+    id: 2, 
+    num: '8X-26X', 
+    titleAr: 'نمو العائد', 
+    titleEn: 'ROI Growth',
+    descAr: 'قد يصل العائد لـ 26X', 
+    descEn: 'Return on ad spend up to 26X',
+    icon: <Percent className="w-5 h-5" /> 
+  },
+  { 
+    id: 3, 
+    num: '-40%', 
+    titleAr: 'تقليل المرتجعات', 
+    titleEn: 'Reduced Returns',
+    descAr: 'تحليل دقيق وتوضيح صح', 
+    descEn: 'Precise analysis & clear product messaging',
+    icon: <ArrowDownRight className="w-5 h-5" /> 
+  }
 ];
 
 export const InteractiveStatsCard = () => {
+  const { config } = useSite();
+  const isEn = config.language === 'en';
+  const isRtl = !isEn;
+
   // A 2x2 grid has 4 positions: 0(top-left), 1(top-right), 2(bottom-left), 3(bottom-right)
   // We have 3 items. One spot is empty.
   // Initial state: positions of items 1, 2, 3 (indices 0, 1, 2)
@@ -16,14 +45,13 @@ export const InteractiveStatsCard = () => {
 
   const getCoordinates = (pos: number) => {
     // Return relative coordinates in the container for absolute positioning
-    // 0: top-left (or top-right in RTL, let's just use percentage from top/right)
-    const isRtl = document.documentElement.dir !== 'ltr';
     const xPos = pos % 2 === 0 ? 0 : 50; // 0 or 50%
     const yPos = pos < 2 ? 0 : 50; // 0 or 50%
     
     return {
       top: `${yPos}%`,
       [isRtl ? 'right' : 'left']: `${xPos}%`,
+      [isRtl ? 'left' : 'right']: 'auto',
     };
   };
 
@@ -48,9 +76,14 @@ export const InteractiveStatsCard = () => {
   };
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto h-[450px] sm:h-[400px] md:h-[450px] bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-3xl overflow-hidden glass-card p-4 sm:p-8">
-      <div className="absolute top-4 right-6 sm:top-6 sm:right-8 z-0 opacity-20 pointer-events-none">
-        <h3 className="text-4xl sm:text-6xl font-black text-[var(--color-primary)]">النتائج</h3>
+    <div 
+      className="relative w-full max-w-2xl mx-auto h-[450px] sm:h-[400px] md:h-[450px] bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-3xl overflow-hidden glass-card p-4 sm:p-8"
+      dir={isEn ? 'ltr' : 'rtl'}
+    >
+      <div className={`absolute top-4 ${isEn ? 'left-6 sm:left-8' : 'right-6 sm:right-8'} sm:top-6 z-0 opacity-20 pointer-events-none`}>
+        <h3 className="text-4xl sm:text-6xl font-black text-[var(--color-primary)]">
+          {isEn ? 'RESULTS' : 'النتائج'}
+        </h3>
       </div>
       
       {/* 2x2 Grid Container */}
@@ -76,18 +109,18 @@ export const InteractiveStatsCard = () => {
                 {stat.num}
               </div>
               <div className="font-bold text-[var(--text-primary)] text-sm sm:text-base leading-tight">
-                {stat.title}
+                {isEn ? stat.titleEn : stat.titleAr}
               </div>
               <div className="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed hidden sm:block">
-                {stat.desc}
+                {isEn ? stat.descEn : stat.descAr}
               </div>
             </motion.div>
           );
         })}
       </div>
       
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] sm:text-xs text-[var(--text-muted)] bg-[var(--surface-primary)]/80 px-3 py-1 rounded-full backdrop-blur-sm pointer-events-none">
-        مرر الماوس للتفاعل
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] sm:text-xs text-[var(--text-muted)] bg-[var(--surface-primary)]/80 px-3 py-1 rounded-full backdrop-blur-sm pointer-events-none whitespace-nowrap">
+        {isEn ? 'Hover to interact' : 'مرر الماوس للتفاعل'}
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ import { InteractiveBackground } from './components/InteractiveBackground';
 
 import { WhatsAppWidget } from './components/WhatsAppWidget';
 import { BackToTop } from './components/BackToTop';
+import { SectionDivider } from './components/SectionDivider';
 
 const StoryCustomSolutions = lazy(() => import('./components/storytelling/StoryCustomSolutions').then(module => ({ default: module.StoryCustomSolutions })));
 const StoryEcommerce = lazy(() => import('./components/storytelling/StoryEcommerce').then(module => ({ default: module.StoryEcommerce })));
@@ -103,6 +104,11 @@ const CustomSection: React.FC<{ id: string, title: string, content: string }> = 
 const MainContent = () => {
   const { config } = useSite();
 
+  const enabledSectionIds = config.sectionOrder.filter(id => {
+    if (config.sections[id] === false) return false;
+    return true;
+  });
+
   const renderSection = (id: string) => {
     if (config.sections[id] === false) return null;
 
@@ -137,7 +143,19 @@ const MainContent = () => {
 
   return (
     <main>
-      {config.sectionOrder.map(renderSection)}
+      {enabledSectionIds.map((id, index) => {
+        const sectionElement = renderSection(id);
+        if (!sectionElement) return null;
+
+        return (
+          <React.Fragment key={id}>
+            {sectionElement}
+            {index < enabledSectionIds.length - 1 && (
+              <SectionDivider key={`divider-${id}`} />
+            )}
+          </React.Fragment>
+        );
+      })}
     </main>
   );
 };
@@ -176,6 +194,15 @@ function AppContent() {
       <Helmet>
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />
+        <meta property="og:title" content={meta.title} />
+        <meta property="og:description" content={meta.description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://nmolabs.com" />
+        <meta property="og:site_name" content="NMOLABS | نمو لابز" />
+        <meta property="og:locale" content={isEn ? "en_US" : "ar_SA"} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={meta.title} />
+        <meta name="twitter:description" content={meta.description} />
         <script type="application/ld+json">{JSON.stringify(schemas)}</script>
       </Helmet>
       <ScrollProgress />

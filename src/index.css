@@ -661,22 +661,53 @@ div#root:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-o
   }
 }
 
-/* Mobile Section Spacing & Dividers */
+/* Mobile Section Spacing */
 @media (max-width: 768px) {
   #root > div > main > section {
     padding-top: 2rem !important;
     padding-bottom: 2rem !important;
     position: relative;
   }
-  
-  #root > div > main > section:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 5%;
-    width: 90%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
-    opacity: 0.4;
+}
+
+/* ==========================================================================
+   Haptic-Like Micro-Animations & Visual Tactile Feedback
+   Provides instantaneous physical feedback on press/touch without hardware APIs
+   ========================================================================== */
+button,
+[role="button"],
+.interactive-tap,
+a[class*="rounded-full"],
+a[class*="px-"][class*="py-"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), 
+              filter 0.15s ease, 
+              box-shadow 0.15s ease,
+              background-color 0.2s ease,
+              border-color 0.2s ease;
+  will-change: transform;
+}
+
+/* Mobile & Touch Devices: Expressive compression & micro-flash feedback */
+@media (hover: none) and (pointer: coarse), (max-width: 1024px) {
+  button:active,
+  [role="button"]:active,
+  .interactive-tap:active,
+  a[class*="rounded-full"]:active,
+  a[class*="px-"][class*="py-"]:active {
+    transform: scale(0.95) !important;
+    filter: brightness(1.12) contrast(1.05) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    transition: transform 0.06s cubic-bezier(0.2, 0.9, 0.3, 1.2), filter 0.06s ease !important;
   }
 }
+
+/* Desktop click tactile feedback */
+@media (hover: hover) and (pointer: fine) {
+  button:active,
+  [role="button"]:active {
+    transform: scale(0.97);
+  }
+}
+

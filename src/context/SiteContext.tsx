@@ -15,14 +15,17 @@ export type ScanLead = {
 export type Partner = {
   id: string;
   name: string;
+  nameEn?: string;
   color?: string;
   imageUrl: string;
   linkUrl?: string;
   types?: string[];
+  typesEn?: string[];
   year?: string;
   order?: number;
   isHidden?: boolean;
   description?: string;
+  descriptionEn?: string;
 };
 
 export type SectionData = {
@@ -58,8 +61,11 @@ export type SocialLink = {
 
 export type SiteConfig = {
   heroTitle: string;
+  heroTitleEn?: string;
   heroSubtitle: string;
+  heroSubtitleEn?: string;
   heroButtonText: string;
+  heroButtonTextEn?: string;
   heroVideoUrl: string;
   heroVideoPoster: string;
   heroThumbVideoUrl: string;
@@ -95,7 +101,9 @@ export type SiteConfig = {
   mobileLogoHeight?: number;
   language?: 'ar' | 'en';
   testimonialsTitle?: string;
+  testimonialsTitleEn?: string;
   testimonialsSubtitle?: string;
+  testimonialsSubtitleEn?: string;
   testimonialsSpeed?: number;
   testimonialsEffect?: 'glow' | 'minimal' | 'glass';
 };
@@ -110,8 +118,11 @@ export type ApiLinks = {
 
 const defaultConfig: SiteConfig = {
   heroTitle: 'نحوّل أفكارك لحلول رقمية تشتغل من صدق',
+  heroTitleEn: 'We Turn Your Ideas into Digital Solutions That Truly Work',
   heroSubtitle: 'من الفكرة للإطلاق، نبني لك مواقع، متاجر، تطبيقات وأنظمة مخصصة تضبط شغلك وتساعدك تكبر بثقة.',
+  heroSubtitleEn: 'From concept to launch, we build websites, stores, custom apps, and systems that streamline your operations and scale your business with confidence.',
   heroButtonText: 'ابدأ مشروعك الحين',
+  heroButtonTextEn: 'Start Your Project Now',
   heroVideoUrl: '', 
   heroVideoPoster: '',
   heroThumbVideoUrl: '',
@@ -153,6 +164,7 @@ const defaultConfig: SiteConfig = {
   },
   sectionOrder: [
     'hero',
+    'testimonials',
     'storySolutions',
     'storyEcommerce',
     'storyWebsites',
@@ -160,7 +172,6 @@ const defaultConfig: SiteConfig = {
     'storySocial',
     'workflow',
     'storyBigVision',
-    'testimonials',
     'faq',
     'blog'
   ],
@@ -227,43 +238,52 @@ const defaultConfig: SiteConfig = {
     }
   ],
   partners: [
-    { id: '1', name: 'الفكرة النادرة - دعاية واعلان', color: '#e63450', imageUrl: 'https://res.cloudinary.com/x6mkqvcj/image/upload/v1785245696/%D8%A7%D9%84%D9%81%D9%83%D8%B1%D8%A9_%D8%A7%D9%84%D9%86%D8%A7%D8%AF%D8%B1%D8%A9_fi5pw6.jpg', linkUrl: 'https://ric.com.sa/' },
-    { id: '2', name: 'بوابة الشبكات - انتينا ورواتر 5G', color: '#f29b6d', imageUrl: '', linkUrl: 'https://netgate-sa.com/' },
-    { id: '3', name: 'نخلتين واي فاي - انتينا وراتر', color: '#0e2f67', imageUrl: 'https://res.cloudinary.com/x6mkqvcj/image/upload/v1785245697/%D9%86%D8%AE%D9%84%D8%AA%D9%8A%D9%86_%D9%88%D8%A7%D9%8A_%D9%81%D8%A7%D9%8A_2_lz530o.jpg', linkUrl: 'https://nakhltain.com/' },
-    { id: '4', name: 'ثلث اليوم للمفروشات', color: '#235418', imageUrl: 'https://res.cloudinary.com/x6mkqvcj/image/upload/v1785245696/%D8%AB%D9%84%D8%AB_%D8%A7%D9%84%D9%8A%D9%88%D9%85_fkd0yu.jpg', linkUrl: 'https://thulth-sa.com/' },
-    { id: 'partner_1778961537430', name: 'مناديل ريجين', color: '#22b6ed', imageUrl: 'https://res.cloudinary.com/x6mkqvcj/image/upload/v1785245697/%D9%85%D9%86%D8%A7%D8%AF%D9%8A%D9%84_%D8%B1%D9%8A%D8%AC%D9%8A%D9%86_nj67xq.jpg', linkUrl: 'https://regine-sa.com' },
-    { id: 'partner_1779035910510', name: 'الأجهزة المبتكرة', color: '#de9336', imageUrl: '', linkUrl: '' },
-    { id: 'partner_1779035948609', name: 'صفقات كوم - كوزماتيكس', color: '#f5abc5', imageUrl: '', linkUrl: 'https://safaqatcom.com/' },
-    { id: 'partner_1779064216129', name: 'Rayflow Studio - ورشات عمل', color: '#414798', imageUrl: '', linkUrl: '' },
-    { id: 'partner_1779064264993', name: 'مناديل حصة', color: '#fdb700', imageUrl: '', linkUrl: '' },
-    { id: 'partner_1779064308309', name: 'بولي مارت - مصنع بلاستيك', color: '', imageUrl: '', linkUrl: '' },
-    { id: 'partner_1779064336725', name: 'شركة مقاولات', color: '', imageUrl: '', linkUrl: '' },
+    { id: '1', name: 'الفكرة النادرة - دعاية واعلان', nameEn: 'Rare Idea - Advertising & Production', color: '#e63450', imageUrl: 'https://res.cloudinary.com/x6mkqvcj/image/upload/v1785245696/%D8%A7%D9%84%D9%81%D9%83%D8%B1%D8%A9_%D8%A7%D9%84%D9%86%D8%A7%D8%AF%D8%B1%D8%A9_fi5pw6.jpg', linkUrl: 'https://ric.com.sa/' },
+    { id: '2', name: 'بوابة الشبكات - انتينا ورواتر 5G', nameEn: 'Network Gate - 5G Antennas & Routers', color: '#f29b6d', imageUrl: '', linkUrl: 'https://netgate-sa.com/' },
+    { id: '3', name: 'نخلتين واي فاي - انتينا وراتر', nameEn: 'Nakhltain WiFi - 5G Antennas & Solutions', color: '#0e2f67', imageUrl: 'https://res.cloudinary.com/x6mkqvcj/image/upload/v1785245697/%D9%86%D8%AE%D9%84%D8%AA%D9%8A%D9%86_%D9%88%D8%A7%D9%8A_%D9%81%D8%A7%D9%8A_2_lz530o.jpg', linkUrl: 'https://nakhltain.com/' },
+    { id: '4', name: 'ثلث اليوم للمفروشات', nameEn: 'Thuluth Al-Youm Furniture', color: '#235418', imageUrl: 'https://res.cloudinary.com/x6mkqvcj/image/upload/v1785245696/%D8%AB%D9%84%D8%AB_%D8%A7%D9%84%D9%8A%D9%88%D9%85_fkd0yu.jpg', linkUrl: 'https://thulth-sa.com/' },
+    { id: 'partner_1778961537430', name: 'مناديل ريجين', nameEn: 'Regine Tissues', color: '#22b6ed', imageUrl: 'https://res.cloudinary.com/x6mkqvcj/image/upload/v1785245697/%D9%85%D9%86%D8%A7%D8%AF%D9%8A%D9%84_%D8%B1%D9%8A%D8%AC%D9%8A%D9%86_nj67xq.jpg', linkUrl: 'https://regine-sa.com' },
+    { id: 'partner_1779035910510', name: 'الأجهزة المبتكرة', nameEn: 'Innovative Devices', color: '#de9336', imageUrl: '', linkUrl: '' },
+    { id: 'partner_1779035948609', name: 'صفقات كوم - كوزماتيكس', nameEn: 'Safaqatcom Cosmetics', color: '#f5abc5', imageUrl: '', linkUrl: 'https://safaqatcom.com/' },
+    { id: 'partner_1779064216129', name: 'Rayflow Studio - ورشات عمل', nameEn: 'Rayflow Studio - Workshops', color: '#414798', imageUrl: '', linkUrl: '' },
+    { id: 'partner_1779064264993', name: 'مناديل حصة', nameEn: 'Hessa Tissues', color: '#fdb700', imageUrl: '', linkUrl: '' },
+    { id: 'partner_1779064308309', name: 'بولي مارت - مصنع بلاستيك', nameEn: 'PolyMart - Plastics Factory', color: '', imageUrl: '', linkUrl: '' },
+    { id: 'partner_1779064336725', name: 'شركة مقاولات', nameEn: 'Contracting Company', color: '', imageUrl: '', linkUrl: '' },
     { 
       id: 'partner_rayatnajd', 
       name: 'رايات نجد', 
+      nameEn: 'Rayat Najd',
       color: '#3f7b49', 
       imageUrl: '', 
       linkUrl: 'https://rayatnajd.com',
       types: ['موقع مؤسسي متكامل'],
-      description: 'يعرض الشركة وخدمات التشجير والاستدامة والمشاتل والمشاريع السابقة، ويضم مركز معرفة ومدونة وأدوات ذكية. مناسب للشركات التي تحتاج إلى بناء الثقة، عرض خبراتها، واستهداف الظهور في نتائج البحث على المدى الطويل.'
+      typesEn: ['Corporate Web Platform'],
+      description: 'يعرض الشركة وخدمات التشجير والاستدامة والمشاتل والمشاريع السابقة، ويضم مركز معرفة ومدونة وأدوات ذكية. مناسب للشركات التي تحتاج إلى بناء الثقة، عرض خبراتها، واستهداف الظهور في نتائج البحث على المدى الطويل.',
+      descriptionEn: 'Showcases corporate services in afforestation, sustainability, and nurseries with an integrated knowledge base and intelligent tools.'
     },
     { 
       id: 'partner_eventlive', 
       name: 'إيفنت لايف', 
+      nameEn: 'EventLive KSA',
       color: '#e30a21', 
       imageUrl: '', 
       linkUrl: 'https://eventliveksa.com',
       types: ['موقع خدماتي بصري'],
-      description: 'يركز على التصوير الفوتوغرافي، إنتاج الفيديو، البث المباشر وتغطية الفعاليات والمؤتمرات. يتميز بالعرض البصري القوي، إبراز الأعمال السابقة، وسهولة الوصول إلى الاتصال والواتساب لطلب الخدمة.'
+      typesEn: ['Visual Media Platform'],
+      description: 'يركز على التصوير الفوتوغرافي، إنتاج الفيديو، البث المباشر وتغطية الفعاليات والمؤتمرات. يتميز بالعرض البصري القوي، إبراز الأعمال السابقة، وسهولة الوصول إلى الاتصال والواتساب لطلب الخدمة.',
+      descriptionEn: 'High-impact visual platform for photography, video production, live broadcasting, and conference coverage.'
     },
     { 
       id: 'partner_almethali', 
       name: 'المثالي للدعاية والإعلان', 
+      nameEn: 'Al-Mithali Advertising',
       color: '#1a56a4', 
       imageUrl: '', 
       linkUrl: 'https://almethaliadv.com',
       types: ['موقع خدمات ومعرض أعمال'],
-      description: 'يعرض مجموعة كبيرة من الخدمات مثل اللوحات الإعلانية، الطباعة الرقمية، تجهيز المعارض والأكشاك، الفعاليات، الاستاندات والهدايا الدعائية، مع تقسيم واضح للخدمات ومعرض للأعمال المنفذة.'
+      typesEn: ['Services & Portfolio Showcase'],
+      description: 'يعرض مجموعة كبيرة من الخدمات مثل اللوحات الإعلانية، الطباعة الرقمية، تجهيز المعارض والأكشاك، الفعاليات، الاستاندات والهدايا الدعائية، مع تقسيم واضح للخدمات ومعرض للأعمال المنفذة.',
+      descriptionEn: 'Presents an extensive range of advertising signage, digital printing, exhibition booths, event setups, and promotional gifts.'
     }
   ],
   socialLinks: [
@@ -283,7 +303,9 @@ const defaultConfig: SiteConfig = {
   mobileLogoHeight: 52,
   language: 'ar',
   testimonialsTitle: 'متاجر حققت نمو معنا',
+  testimonialsTitleEn: 'Stores That Grew With Us',
   testimonialsSubtitle: 'شركاء النجاح الذين حققنا معهم قفزات نوعية في التحويل والمبيعات.',
+  testimonialsSubtitleEn: 'Success partners with whom we achieved qualitative leaps in conversion and sales.',
   testimonialsSpeed: 80,
   testimonialsEffect: 'glow'
 };

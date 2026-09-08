@@ -7,36 +7,57 @@ import siteLogo from '../assets/images/site-logo.png';
 import { STORY_ASSETS } from './storytelling/storyAssets';
 
 
-const TYPEWRITER_PHRASES = [
-  "نبني لك موقع يبيّن قوة بزنسك.",
+const TYPEWRITER_PHRASES_AR = [
+  "نحوّل فكرتك لمنتج رقمي حقيقي.",
+  "نبني لك موقعاً يبيّن قوة بزنسك.",
   "نطلق متجرك جاهز للبيع ويكبر معاك.",
   "نبرمج لك نظام يحل لك كل مشاكل الشغل.",
   "نصمم برنامج محاسبي على مقاس عملياتك.",
   "نبني أنظمة ERP وCRM تضبط لك الإدارة.",
   "نحوّل الكتالوجات العادية لتجارب رقمية رهيبة.",
   "نطوّر تطبيقات مخصصة لفكرتك.",
-  "نربط شغلك بالأتمتة والذكاء الاصطناعي.",
-  "نحوّل فكرتك لمنتج رقمي حقيقي يشوف النور."
+  "نربط شغلك بالأتمتة والذكاء الاصطناعي."
+];
+
+const TYPEWRITER_PHRASES_EN = [
+  "We turn your idea into a real, thriving digital product.",
+  "We build websites that showcase your business power.",
+  "We launch high-converting stores built to scale.",
+  "We engineer custom systems that streamline your operations.",
+  "We design accounting software tailored to your workflow.",
+  "We build ERP and CRM systems to master your management.",
+  "We transform regular catalogs into extraordinary digital experiences.",
+  "We develop custom applications built for your vision.",
+  "We connect your business with automation and smart AI."
 ];
 
 const SHOWCASE_ITEMS = [
-  { id: 'web', icon: Monitor, label: 'موقع إلكتروني', color: 'var(--color-primary)', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80' },
-  { id: 'store', icon: ShoppingBag, label: 'Online Shop', color: 'var(--color-secondary)', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80' },
-  { id: 'market', icon: ShoppingBag, label: 'سوق إلكتروني', color: 'var(--color-accent)', image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&q=80' },
-  { id: 'app', icon: Smartphone, label: 'تطبيق مخصص', color: 'var(--color-purple)', image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80' },
-  { id: 'erp', icon: Database, label: 'نظام إداري ERP', color: 'var(--color-primary)', image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80' },
-  { id: 'crm', icon: LineChart, label: 'نظام عملاء CRM', color: 'var(--color-secondary)', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80' },
-  { id: 'ai', icon: Bot, label: 'ذكاء اصطناعي', color: 'var(--color-accent)', image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80' },
+  { id: 'web', icon: Monitor, labelAr: 'موقع إلكتروني', labelEn: 'Website', color: 'var(--color-primary)', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80' },
+  { id: 'store', icon: ShoppingBag, labelAr: 'متجر إلكتروني', labelEn: 'Online Store', color: 'var(--color-secondary)', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80' },
+  { id: 'market', icon: ShoppingBag, labelAr: 'سوق إلكتروني', labelEn: 'Marketplace', color: 'var(--color-accent)', image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&q=80' },
+  { id: 'app', icon: Smartphone, labelAr: 'تطبيق مخصص', labelEn: 'Custom App', color: 'var(--color-purple)', image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80' },
+  { id: 'erp', icon: Database, labelAr: 'نظام إداري ERP', labelEn: 'ERP System', color: 'var(--color-primary)', image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80' },
+  { id: 'crm', icon: LineChart, labelAr: 'نظام عملاء CRM', labelEn: 'CRM System', color: 'var(--color-secondary)', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80' },
+  { id: 'ai', icon: Bot, labelAr: 'ذكاء اصطناعي', labelEn: 'Artificial Intelligence', color: 'var(--color-accent)', image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80' },
 ];
 
-const DynamicTypewriter = () => {
+const DynamicTypewriter = ({ isEn }: { isEn: boolean }) => {
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(60);
 
+  const phrases = isEn ? TYPEWRITER_PHRASES_EN : TYPEWRITER_PHRASES_AR;
+
   useEffect(() => {
-    const currentPhrase = TYPEWRITER_PHRASES[phraseIndex];
+    setPhraseIndex(0);
+    setDisplayedText('');
+    setIsDeleting(false);
+    setTypingSpeed(60);
+  }, [isEn]);
+
+  useEffect(() => {
+    const currentPhrase = phrases[phraseIndex] || '';
     let timer: NodeJS.Timeout;
 
     if (!isDeleting && displayedText === currentPhrase) {
@@ -45,7 +66,7 @@ const DynamicTypewriter = () => {
     } else if (isDeleting && displayedText === '') {
       // Move to next phrase
       setIsDeleting(false);
-      setPhraseIndex((prev) => (prev + 1) % TYPEWRITER_PHRASES.length);
+      setPhraseIndex((prev) => (prev + 1) % phrases.length);
       setTypingSpeed(60);
     } else {
       // Typing or deleting
@@ -58,17 +79,19 @@ const DynamicTypewriter = () => {
     }
 
     return () => clearTimeout(timer);
-  }, [displayedText, isDeleting, phraseIndex, typingSpeed]);
+  }, [displayedText, isDeleting, phraseIndex, typingSpeed, phrases]);
 
   return (
-    <span className="inline">
+    <span className="inline text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] font-black tracking-normal">
       {displayedText}
-      <span className="inline-block w-[3px] bg-[var(--color-primary)] h-[1.1em] align-middle animate-pulse mx-1 shrink-0 rounded-full" />
+      <span className="inline-block w-[3px] bg-white h-[1.1em] align-middle animate-pulse mx-1.5 shrink-0 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.9)]" />
     </span>
   );
 };
 
 const InteractiveShowcase = () => {
+  const { config } = useSite();
+  const isEn = config.language === 'en';
   const [activeIndex, setActiveIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
 
@@ -114,7 +137,7 @@ const InteractiveShowcase = () => {
                 className: "mb-6 drop-shadow-lg"
               })}
               <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-2 bg-[var(--surface-primary)]/50 backdrop-blur-sm px-4 py-1 rounded-full">
-                {SHOWCASE_ITEMS[activeIndex].label}
+                {isEn ? SHOWCASE_ITEMS[activeIndex].labelEn : SHOWCASE_ITEMS[activeIndex].labelAr}
               </h3>
               <div className="w-16 h-1 rounded-full mx-auto mt-4" style={{ backgroundColor: SHOWCASE_ITEMS[activeIndex].color }} />
             </div>
@@ -155,6 +178,18 @@ export const Hero = () => {
   if (!config.sections.hero) return null;
 
   const isEn = config.language === 'en';
+
+  const heroTitle = isEn
+    ? (config.heroTitleEn || (/[ا-ي]/.test(config.heroTitle) ? 'We Turn Your Ideas into Digital Solutions That Truly Work' : config.heroTitle))
+    : config.heroTitle;
+
+  const heroSubtitle = isEn
+    ? (config.heroSubtitleEn || (/[ا-ي]/.test(config.heroSubtitle) ? 'From concept to launch, we build websites, stores, custom apps, and systems that streamline your operations and scale your business with confidence.' : config.heroSubtitle))
+    : config.heroSubtitle;
+
+  const heroButtonText = isEn
+    ? (config.heroButtonTextEn || (/[ا-ي]/.test(config.heroButtonText) ? 'Start Your Project Now' : config.heroButtonText))
+    : config.heroButtonText;
 
   return (
     <section className="relative min-h-auto py-16 sm:py-20 md:py-12 lg:py-24 lg:min-h-screen flex items-center overflow-hidden bg-[var(--surface-brand)]" id="hero">
@@ -241,15 +276,17 @@ export const Hero = () => {
           </div>
           
           <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[64px] font-black mb-4 sm:mb-6 leading-[1.18] tracking-tight text-[var(--text-primary)] hero-text-shadow break-words w-full overflow-wrap-anywhere">
-            {config.heroTitle}
+            {heroTitle}
           </h1>
           
-          <div className="text-lg sm:text-2xl md:text-3xl text-[var(--color-primary)] mb-4 sm:mb-6 font-black min-h-[3rem] sm:min-h-[4rem] flex items-center justify-center w-full break-words overflow-wrap-anywhere drop-shadow-sm">
-            <DynamicTypewriter />
+          <div className="mb-5 sm:mb-7 min-h-[3.8rem] sm:min-h-[4.6rem] flex items-center justify-center w-full px-2">
+            <div className="inline-flex items-center justify-center px-5 sm:px-8 py-2.5 sm:py-3.5 rounded-2xl bg-neutral-950/85 dark:bg-black/75 backdrop-blur-md border border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.35)] text-white text-lg sm:text-2xl md:text-3xl font-black max-w-full text-center transition-all duration-300 hover:border-white/40">
+              <DynamicTypewriter isEn={isEn} />
+            </div>
           </div>
 
           <p className="text-base sm:text-lg md:text-xl text-[var(--text-secondary)] mb-8 sm:mb-10 leading-relaxed font-medium max-w-2xl w-full break-words mx-auto drop-shadow-sm">
-            {config.heroSubtitle}
+            {heroSubtitle}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
@@ -258,12 +295,12 @@ export const Hero = () => {
               className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-8 py-4 rounded-full font-bold text-base text-white transition-all shadow-[0_8px_24px_-4px_rgba(15,98,254,0.4)] hover:shadow-[0_12px_32px_-4px_rgba(15,98,254,0.6)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
               style={{ backgroundColor: 'var(--color-primary)' }}
             >
-              <span>{config.heroButtonText}</span>
+              <span>{heroButtonText}</span>
               <ArrowLeft size={18} className={isEn ? 'rotate-180 shrink-0' : 'shrink-0'} />
             </button>
             
             <button
-              onClick={() => triggerBookingModal('استشارة مجانية')}
+              onClick={() => triggerBookingModal(isEn ? 'Free Consultation' : 'استشارة مجانية')}
               className="w-full sm:w-auto flex items-center justify-center px-8 py-4 rounded-full font-bold text-base text-[var(--text-primary)] bg-[var(--surface-primary)]/90 backdrop-blur-md border border-[var(--border-default)] shadow-[var(--card-shadow-1)] hover:shadow-[var(--card-shadow-2)] hover:border-[var(--border-hover)] hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
             >
               {isEn ? 'Book a Free Consultation' : 'احجز استشارة مجانية'}
