@@ -280,7 +280,7 @@ export const Hero = () => {
           </h1>
           
           <div className="mb-5 sm:mb-7 min-h-[3.8rem] sm:min-h-[4.6rem] flex items-center justify-center w-full px-2">
-            <div className="inline-flex items-center justify-center px-5 sm:px-8 py-2.5 sm:py-3.5 rounded-2xl bg-neutral-950/85 dark:bg-black/75 backdrop-blur-md border border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.35)] text-white text-lg sm:text-2xl md:text-3xl font-black max-w-full text-center transition-all duration-300 hover:border-white/40">
+            <div className="hero-intelligence-badge inline-flex items-center justify-center px-5 sm:px-8 py-2.5 sm:py-3.5 rounded-2xl backdrop-blur-md border border-white/30 text-white text-lg sm:text-2xl md:text-3xl font-black max-w-full text-center transition-all duration-300 hover:border-white/50">
               <DynamicTypewriter isEn={isEn} />
             </div>
           </div>

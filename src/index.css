@@ -711,3 +711,50 @@ a[class*="px-"][class*="py-"] {
   }
 }
 
+/* ==========================================================================
+   Hero Dynamic Gradient Badge:
+   Symbolizing Intelligence (Blue), Planning (Indigo), Creativity (Purple), Success (Emerald)
+   ========================================================================== */
+@keyframes heroIntelligenceGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.hero-intelligence-badge,
+div#root > div > main > section#hero > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) {
+  background: linear-gradient(
+    120deg,
+    #0b3780 0%,   /* الذكاء: أزرق تقني ملكي */
+    #1d2459 18%,  /* التخطيط: نيلي استراتيجي وعميق */
+    #6d28d9 40%,  /* الإبداع: بنفسجي إبداعي وابتكاري */
+    #047857 65%,  /* النجاح: أخضر زمردي للنمو والمبيعات */
+    #0284c7 85%,  /* الذكاء الرقمي والحلول السحابية */
+    #0b3780 100%  /* حلقة دورانية سلسة */
+  ) !important;
+  background-size: 260% 260% !important;
+  animation: heroIntelligenceGradient 9s ease-in-out infinite !important;
+  box-shadow: 0 10px 30px -4px rgba(15, 98, 254, 0.4),
+              0 0 25px -2px rgba(109, 40, 217, 0.35),
+              0 0 15px -2px rgba(4, 120, 87, 0.3),
+              inset 0 1px 1px rgba(255, 255, 255, 0.4),
+              inset 0 -1px 2px rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+}
+
+.hero-intelligence-badge:hover,
+div#root > div > main > section#hero > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1):hover {
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 0 14px 40px -4px rgba(15, 98, 254, 0.5),
+              0 0 35px 0px rgba(109, 40, 217, 0.45),
+              0 0 20px 0px rgba(4, 120, 87, 0.4),
+              inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
+  transform: translateY(-1px);
+}
+
