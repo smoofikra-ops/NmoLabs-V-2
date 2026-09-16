@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'motion/react';
 import { useSite } from '../context/SiteContext';
+import { NATIONAL_DAY_96_CONFIG } from '../config/nationalDay96';
+import { NationalDayBackgroundStory } from './seasonal/NationalDayBackgroundStory';
 
 const darkBackgrounds = [
   'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2944&auto=format&fit=crop', // Earth/Network
@@ -69,6 +71,11 @@ export const InteractiveBackground: React.FC = () => {
         className="absolute inset-0 transition-colors duration-1000"
         style={{ backgroundColor: 'var(--surface-primary)' }}
       />
+
+      {/* Saudi National Day 96 — Continuous Scroll-Linked Storytelling Background */}
+      {NATIONAL_DAY_96_CONFIG.isActive && (
+        <NationalDayBackgroundStory />
+      )}
 
       {true && (
         <AnimatePresence mode="wait">

@@ -15,6 +15,7 @@ import {
   CheckCircle2,
   Sparkles
 } from 'lucide-react';
+import { NATIONAL_DAY_96_CONFIG } from '../config/nationalDay96';
 
 const JOURNEY_STAGES = [
   {
@@ -130,6 +131,17 @@ export const Workflow: React.FC = () => {
         
         {/* Compact Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+          {NATIONAL_DAY_96_CONFIG.isActive && (
+            <div className="mb-3">
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-500/10 dark:bg-emerald-500/20 border border-emerald-500/25 shadow-xs">
+                <span>🇸🇦</span>
+                <span className="font-mono font-black">96</span>
+                <span className="opacity-40">•</span>
+                <span>{isEn ? NATIONAL_DAY_96_CONFIG.sloganEn : NATIONAL_DAY_96_CONFIG.sloganAr}</span>
+              </span>
+            </div>
+          )}
+
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-xs font-semibold text-[var(--color-primary)] mb-3 shadow-xs">
             <Sparkles className="w-3.5 h-3.5" />
             <span>{isEn ? 'THE 7-STAGE LIFECYCLE' : 'رحلة الفكرة — من التأسيس إلى النمو'}</span>

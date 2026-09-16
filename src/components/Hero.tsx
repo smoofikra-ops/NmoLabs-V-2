@@ -5,6 +5,8 @@ import { Sparkles, ArrowLeft, Monitor, ShoppingBag, Smartphone, Database, LineCh
 import { triggerBookingModal } from './BookingModal';
 import siteLogo from '../assets/images/site-logo.png';
 import { STORY_ASSETS } from './storytelling/storyAssets';
+import { NATIONAL_DAY_96_CONFIG } from '../config/nationalDay96';
+import { NationalDayCampaignBadge } from './seasonal/NationalDayElements';
 
 
 const TYPEWRITER_PHRASES_AR = [
@@ -256,6 +258,11 @@ export const Hero = () => {
       {/* Background Gradient Field - Localized gentle contrast preservation */}
       <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-primary)]/80 via-[var(--surface-primary)]/50 to-[var(--surface-primary)]/90 dark:from-[#070b14]/85 dark:via-[#070b14]/55 dark:to-[#070b14]/95 pointer-events-none z-[2]" />
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05] pointer-events-none z-[2]" />
+
+      {/* Saudi National Day 96 Atmospheric Accent */}
+      {NATIONAL_DAY_96_CONFIG.isActive && (
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(0,132,68,0.09),_transparent_65%)] pointer-events-none z-[2]" />
+      )}
       
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 w-full flex flex-col items-center justify-center text-center mt-10 lg:mt-0">
         
@@ -269,6 +276,13 @@ export const Hero = () => {
         >
           {/* Subtle localized glow/backdrop field behind headline */}
           <div className="absolute inset-0 -inset-x-6 bg-radial-glow opacity-60 dark:opacity-40 blur-2xl pointer-events-none -z-10" />
+
+          {/* Seasonal National Day 96 Opening Signature */}
+          {NATIONAL_DAY_96_CONFIG.isActive && (
+            <div className="mb-3.5">
+              <NationalDayCampaignBadge isEn={isEn} variant="hero" />
+            </div>
+          )}
 
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--surface-primary)]/90 dark:bg-[var(--surface-secondary)]/90 border border-[var(--border-default)] text-xs sm:text-sm font-bold mb-5 text-[var(--color-primary)] shadow-sm backdrop-blur-md shrink-0 max-w-full">
             <Sparkles size={14} className="shrink-0 text-[var(--color-primary)]" />

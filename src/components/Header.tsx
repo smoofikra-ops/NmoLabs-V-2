@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Globe, Moon, Sun, Menu, X, Bookmark } from 'lucide-react';
 import { triggerBookingModal } from './BookingModal';
 import siteLogo from '../assets/images/site-logo.png';
+import { NATIONAL_DAY_96_CONFIG } from '../config/nationalDay96';
 
 
 export const Header = () => {
@@ -109,9 +110,16 @@ export const Header = () => {
       className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
     >
       {/* Announcement Bar */}
-      <div className="bg-[var(--surface-primary)]/95 backdrop-blur-md border-b border-[var(--border-default)] px-4 py-1.5 flex items-center justify-between text-xs sm:text-sm text-[var(--text-secondary)] font-medium pointer-events-auto shadow-sm">
+      <div className={`bg-[var(--surface-primary)]/95 backdrop-blur-md border-b px-4 py-1.5 flex items-center justify-between text-xs sm:text-sm text-[var(--text-secondary)] font-medium pointer-events-auto shadow-sm ${NATIONAL_DAY_96_CONFIG.isActive ? 'border-emerald-600/20' : 'border-[var(--border-default)]'}`}>
         <div className="overflow-hidden whitespace-nowrap flex-1 ml-4 lg:ml-8 relative">
            <div className={isEn ? "inline-block animate-marquee" : "inline-block animate-marquee-rtl"}>
+             {NATIONAL_DAY_96_CONFIG.isActive && (
+               <span className="inline-flex items-center gap-1 font-bold text-emerald-700 dark:text-emerald-300 mr-3 rtl:mr-0 rtl:ml-3">
+                 <span>🇸🇦</span>
+                 <span>{isEn ? 'Celebrating Saudi National Day 96 — Our Pride is in Our Nature' : 'نحتفي باليوم الوطني السعودي 96 — عزّنا بطبعنا'}</span>
+                 <span className="mx-2 opacity-50">•</span>
+               </span>
+             )}
              {isEn 
                ? "Welcome to NmoLabs! We are different from any other agency; we are your growth partner, not just a marketing company. ✨ We innovate exceptional ideas and solutions for your success. Stay tuned for our new innovative products and tools coming soon! 🚀 (Please note that the website and tools are currently under continuous development and innovation)."
                : "مرحباً بك في نمو لابز! نختلف عن أي شركة أخرى، فنحن شريك نمو لك ولسنا مجرد شركة تسويقية. ✨ نبتكر أفكاراً وحلولاً استثنائية لنجاحك. ترقبوا الإعلان عن منتجاتنا وأدواتنا الجديدة المبتكرة قريباً! 🚀 (يرجى العلم أن الموقع والأدوات حالياً قيد التطوير والابتكار المستمر لتلبية تطلعاتكم)."}
@@ -120,7 +128,7 @@ export const Header = () => {
       </div>
 
       <div className="px-4 md:px-6 py-2.5 pointer-events-auto">
-        <div className="w-full lg:w-fit mx-auto flex items-center justify-between lg:justify-center gap-3 lg:gap-8 bg-[var(--surface-primary)]/90 dark:bg-[var(--surface-primary)]/85 shadow-[var(--card-shadow-2)] border border-[var(--border-default)] rounded-full px-4 md:px-6 py-2 transition-all backdrop-blur-xl">
+        <div className={`w-full lg:w-fit mx-auto flex items-center justify-between lg:justify-center gap-3 lg:gap-8 bg-[var(--surface-primary)]/90 dark:bg-[var(--surface-primary)]/85 shadow-[var(--card-shadow-2)] rounded-full px-4 md:px-6 py-2 transition-all backdrop-blur-xl ${NATIONAL_DAY_96_CONFIG.isActive ? 'border border-emerald-600/20 dark:border-emerald-500/25 shadow-[0_4px_20px_-4px_rgba(11,87,56,0.12)]' : 'border border-[var(--border-default)]'}`}>
         <button 
           className="lg:hidden text-[var(--text-secondary)] hover:text-[var(--color-primary)] transition-colors p-2 rounded-xl hover:bg-[var(--surface-secondary)]"
           onClick={() => setIsMobileMenuOpen(true)}

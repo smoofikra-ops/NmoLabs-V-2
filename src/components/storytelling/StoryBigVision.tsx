@@ -17,6 +17,8 @@ import {
 import { getWhatsAppUrl } from '../../lib/utils';
 import { StorySceneContainer } from './StorySceneContainer';
 import { STORY_ASSETS } from './storyAssets';
+import { NATIONAL_DAY_96_CONFIG } from '../../config/nationalDay96';
+import { NationalDay96Motif } from '../seasonal/NationalDayElements';
 
 const AUDIENCES = [
   'صاحب فكرة ناشئة',
@@ -136,7 +138,11 @@ export const StoryBigVision: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.6 }}
-            className="relative rounded-3xl border border-[var(--border-default)] bg-[var(--surface-primary)]/95 backdrop-blur-xl p-8 sm:p-10 shadow-xl overflow-hidden text-center mb-6"
+            className={`relative rounded-3xl bg-[var(--surface-primary)]/95 backdrop-blur-xl p-8 sm:p-10 shadow-xl overflow-hidden text-center mb-6 transition-all ${
+              NATIONAL_DAY_96_CONFIG.isActive 
+                ? 'border-2 border-emerald-600/30 dark:border-emerald-500/30 shadow-[0_16px_50px_-10px_rgba(11,87,56,0.2)]'
+                : 'border border-[var(--border-default)]'
+            }`}
           >
             <div className="absolute inset-0 pointer-events-none opacity-20">
               <img 
@@ -148,7 +154,25 @@ export const StoryBigVision: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface-primary)] via-[var(--surface-primary)]/80 to-transparent" />
             </div>
 
+            {/* National Day 96 Decorative Ambient Motif */}
+            {NATIONAL_DAY_96_CONFIG.isActive && (
+              <div className="absolute -top-12 -right-12 pointer-events-none opacity-25 dark:opacity-30 select-none">
+                <NationalDay96Motif size={180} glow={false} />
+              </div>
+            )}
+
             <div className="relative z-10">
+              {NATIONAL_DAY_96_CONFIG.isActive && (
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 dark:bg-emerald-500/20 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 text-xs font-bold mb-3 shadow-xs">
+                  <span>🇸🇦</span>
+                  <span>{isEn ? NATIONAL_DAY_96_CONFIG.partnershipEn : NATIONAL_DAY_96_CONFIG.partnershipAr}</span>
+                  <span className="opacity-40">•</span>
+                  <span className="text-amber-700 dark:text-amber-300 font-black">{isEn ? NATIONAL_DAY_96_CONFIG.sloganEn : NATIONAL_DAY_96_CONFIG.sloganAr}</span>
+                </div>
+              )}
+
+              <div className="block" />
+
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-xs font-bold mb-4">
                 <ShieldCheck className="w-4 h-4" />
                 <span>STORY 08 • {isEn ? 'Your Long-Term Growth Partner' : 'شريكك التقني والتشغيلي المستدام'}</span>
