@@ -54,7 +54,7 @@ export const DepthFocusCardWrapper: React.FC<DepthFocusCardWrapperProps> = ({
     activeProgress,
     [index - 1.3, index - 1, index - 0.2, index, index + 0.2, index + 1, index + 1.25],
     isReducedMotion
-      ? [0, 1, 1, 1, 1, 1, 0]
+      ? [0, 0, 0.95, 1, 0.95, 0, 0]
       : [0, 0.38, 0.95, 1, 0.95, 0.30, 0]
   );
 

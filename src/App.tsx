@@ -173,11 +173,62 @@ function AppContent() {
   const isHome = config.currentRoute === 'home' || !config.currentRoute;
   const isEn = config.language === 'en';
 
-  const metaRaw = pageMetadata[config.currentRoute as keyof typeof pageMetadata] || pageMetadata.home;
+  const routeKey = config.currentRoute || 'home';
+  let metaRaw = pageMetadata[routeKey as keyof typeof pageMetadata];
+
+  // Dynamic fallback for sub-routes (e.g. work/slug, products/slug, services/slug)
+  if (!metaRaw) {
+    if (routeKey.startsWith('work/')) {
+      const slug = routeKey.split('/')[1];
+      metaRaw = {
+        title: `تفاصيل المشروع (${slug}) | أعمال NMOLABS`,
+        titleAr: `تفاصيل المشروع (${slug}) | أعمال NMOLABS`,
+        titleEn: `Project Details (${slug}) | NmoLabs Portfolio`,
+        description: 'دراسة حالة تفصيلية لمشروع رقمي تم تطويره وتشغيله بواسطة NmoLabs في السوق السعودي.',
+        descriptionAr: 'دراسة حالة تفصيلية لمشروع رقمي تم تطويره وتشغيله بواسطة NmoLabs في السوق السعودي.',
+        descriptionEn: 'Detailed case study of a digital project developed and deployed by NmoLabs for the Saudi market.'
+      };
+    } else if (routeKey.startsWith('products/')) {
+      const slug = routeKey.split('/')[1];
+      metaRaw = {
+        title: `نظام ${slug.toUpperCase()} | منتجات NMOLABS السحابية`,
+        titleAr: `نظام ${slug.toUpperCase()} | منتجات NMOLABS السحابية`,
+        titleEn: `${slug.toUpperCase()} System | NmoLabs Cloud Platforms`,
+        description: 'حل برمجي سحابي متطور مصمم خصيصاً للشركات لرفع كفاءة العمليات والمبيعات.',
+        descriptionAr: 'حل برمجي سحابي متطور مصمم خصيصاً للشركات لرفع كفاءة العمليات والمبيعات.',
+        descriptionEn: 'Advanced cloud software solution engineered by NmoLabs for enterprise scale and operational efficiency.'
+      };
+    } else if (routeKey.startsWith('services/')) {
+      metaRaw = pageMetadata.services;
+    } else if (routeKey.startsWith('innovation-lab/')) {
+      metaRaw = pageMetadata['innovation-lab'];
+    } else {
+      metaRaw = pageMetadata.home;
+    }
+  }
+
   const meta = {
     title: isEn ? ((metaRaw as any).titleEn || metaRaw.title) : ((metaRaw as any).titleAr || metaRaw.title),
     description: isEn ? ((metaRaw as any).descriptionEn || metaRaw.description) : ((metaRaw as any).descriptionAr || metaRaw.description)
   };
+
+  // Direct DOM synchronization for robust client-side SPA navigation across all browsers
+  useEffect(() => {
+    document.title = meta.title;
+
+    const updateMetaTag = (selector: string, content: string) => {
+      let tag = document.querySelector(selector);
+      if (tag) {
+        tag.setAttribute('content', content);
+      }
+    };
+
+    updateMetaTag('meta[name="description"]', meta.description);
+    updateMetaTag('meta[property="og:title"]', meta.title);
+    updateMetaTag('meta[property="og:description"]', meta.description);
+    updateMetaTag('meta[name="twitter:title"]', meta.title);
+    updateMetaTag('meta[name="twitter:description"]', meta.description);
+  }, [meta.title, meta.description]);
 
   const schemas = [
     generateWebPageSchema(meta.title, meta.description),

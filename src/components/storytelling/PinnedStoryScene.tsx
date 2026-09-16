@@ -131,7 +131,7 @@ export const PinnedStoryScene: React.FC<PinnedStorySceneProps> = ({
         </div>
 
         {/* Center Vertical Cinematic Story Stage */}
-        <div className="w-full relative z-20 overflow-hidden my-auto py-1">
+        <div className="w-full relative z-20 overflow-visible my-auto py-1">
           {children({
             scrollYProgress,
             isReducedMotion: !!shouldReduceMotion,
