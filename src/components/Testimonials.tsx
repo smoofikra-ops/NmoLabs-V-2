@@ -81,7 +81,8 @@ const PartnerCard: React.FC<PartnerCardProps> = ({ partner, isEn, isLight, onCli
               <img 
                 src={currentSrc} 
                 alt={partnerName} 
-                loading="lazy" 
+                loading="eager"
+                decoding="async"
                 onError={handleImgError}
                 className="w-full h-full object-contain pointer-events-none transition-transform duration-300 group-hover/partner:scale-105" 
               />
