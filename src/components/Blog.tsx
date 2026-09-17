@@ -200,10 +200,12 @@ export const Blog = () => {
 
   return (
     <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden" id="blog">
-      <Helmet>
-        <title>{isEn ? 'Articles & Insights | NmoLabs' : 'المدونة والمقالات | نمو لابز'}</title>
-        <meta name="description" content={isEn ? 'Explore strategic articles on software, AI, e-commerce, and business growth.' : 'استكشف أحدث المقالات والرؤى التقنية في بناء الأنظمة، التجارة الإلكترونية، والنمو الرقمي.'} />
-      </Helmet>
+      {isStandalone && (
+        <Helmet>
+          <title>{isEn ? 'Articles & Insights | NmoLabs' : 'المدونة والمقالات | نمو لابز'}</title>
+          <meta name="description" content={isEn ? 'Explore strategic articles on software, AI, e-commerce, and business growth.' : 'استكشف أحدث المقالات والرؤى التقنية في بناء الأنظمة، التجارة الإلكترونية، والنمو الرقمي.'} />
+        </Helmet>
+      )}
 
       {/* Section Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-12 text-center relative z-10">

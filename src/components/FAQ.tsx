@@ -66,10 +66,12 @@ export const FAQ = () => {
 
   return (
     <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden" id="faq">
-      <Helmet>
-        <title>{isEn ? 'Frequently Asked Questions | NmoLabs' : 'الأسئلة الشائعة | نمو لابز'}</title>
-        <meta name="description" content={isEn ? 'Find verified answers to common questions about NmoLabs engineering, solutions, AI tools, and process.' : 'إجابات شاملة ومفصلة حول حلول نمو لابز البرمجية، أدوات الذكاء الاصطناعي، ومنهجية العمل.'} />
-      </Helmet>
+      {isStandalone && (
+        <Helmet>
+          <title>{isEn ? 'Frequently Asked Questions | NmoLabs' : 'الأسئلة الشائعة | نمو لابز'}</title>
+          <meta name="description" content={isEn ? 'Find verified answers to common questions about NmoLabs engineering, solutions, AI tools, and process.' : 'إجابات شاملة ومفصلة حول حلول نمو لابز البرمجية، أدوات الذكاء الاصطناعي، ومنهجية العمل.'} />
+        </Helmet>
+      )}
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="text-center mb-12">

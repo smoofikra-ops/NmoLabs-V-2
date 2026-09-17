@@ -1,5 +1,5 @@
 import { getWhatsAppUrl } from '../lib/utils';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSite } from '../context/SiteContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { Globe, Moon, Sun, Menu, X, Bookmark } from 'lucide-react';
@@ -13,6 +13,7 @@ export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredNav, setHoveredNav] = useState<number | null>(null);
   const [activeNav, setActiveNav] = useState<number>(0);
+  const headerRef = useRef<HTMLElement | null>(null);
 
   const isEn = config.language === 'en';
   const mainNavItems = [
@@ -98,6 +99,26 @@ export const Header = () => {
     document.documentElement.lang = isEn ? 'en' : 'ar';
   }, [config.language]);
 
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    const syncHeaderHeight = () => {
+      document.documentElement.style.setProperty('--nmolabs-header-height', `${Math.ceil(header.getBoundingClientRect().height)}px`);
+    };
+
+    syncHeaderHeight();
+
+    const observer = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(syncHeaderHeight) : null;
+    observer?.observe(header);
+    window.addEventListener('resize', syncHeaderHeight);
+
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('resize', syncHeaderHeight);
+    };
+  }, [config.language, config.showThemeToggle]);
+
   const handleToggleLanguage = () => {
     updateConfig({ language: config.language === 'en' ? 'ar' : 'en' });
   };
@@ -105,6 +126,7 @@ export const Header = () => {
   return (
     <>
     <motion.header 
+      ref={headerRef}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className="fixed top-0 left-0 right-0 z-50 pointer-events-none"

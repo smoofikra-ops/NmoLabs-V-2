@@ -194,7 +194,7 @@ export const Hero = () => {
     : config.heroButtonText;
 
   return (
-    <section className="relative min-h-auto py-16 sm:py-20 md:py-12 lg:py-24 lg:min-h-screen flex items-center overflow-hidden bg-[var(--surface-brand)]" id="hero">
+    <section className="relative min-h-auto pt-[calc(var(--nmolabs-header-height,105px)+1rem+env(safe-area-inset-top))] pb-14 sm:pt-[calc(var(--nmolabs-header-height,105px)+1.5rem+env(safe-area-inset-top))] sm:pb-20 md:pt-28 md:pb-16 lg:py-24 lg:min-h-screen flex items-center overflow-hidden bg-[var(--surface-brand)]" id="hero">
       {/* STORY 01 — Background World Layer */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <img
@@ -264,7 +264,7 @@ export const Hero = () => {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(0,132,68,0.09),_transparent_65%)] pointer-events-none z-[2]" />
       )}
       
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 w-full flex flex-col items-center justify-center text-center mt-10 lg:mt-0">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 w-full flex flex-col items-center justify-center text-center">
         
         {/* Text Content with Localized Readability Protection */}
         <motion.div
@@ -357,4 +357,3 @@ export const Hero = () => {
     </section>
   );
 };
-

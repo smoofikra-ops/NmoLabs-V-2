@@ -668,6 +668,18 @@ div#root:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-o
     padding-bottom: 2rem !important;
     position: relative;
   }
+
+  #root > div > main > section#hero {
+    padding-top: calc(var(--nmolabs-header-height, 105px) + 1rem + env(safe-area-inset-top)) !important;
+    padding-bottom: 3.5rem !important;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 768px) {
+  #root > div > main > section#hero {
+    padding-top: calc(var(--nmolabs-header-height, 105px) + 1.5rem + env(safe-area-inset-top)) !important;
+    padding-bottom: 5rem !important;
+  }
 }
 
 /* ==========================================================================
@@ -757,4 +769,3 @@ div#root > div > main > section#hero > div:nth-of-type(5) > div:nth-of-type(1) >
               inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
   transform: translateY(-1px);
 }
-
