@@ -22,14 +22,9 @@ const PartnerCard: React.FC<PartnerCardProps> = ({ partner, isEn, isLight, onCli
   const brandColor = partner.color || '#de9336';
 
   const handleImgError = () => {
-    if (!hasFailedOnce && currentSrc) {
+    if (!hasFailedOnce && partner.fallbackImageUrl && currentSrc !== partner.fallbackImageUrl) {
       setHasFailedOnce(true);
-      // Try local fallback if CDN was used, or CDN if local was used
-      if (partner.id === '1') setCurrentSrc(currentSrc.includes('cloudinary') ? '/partners/1.png' : 'https://res.cloudinary.com/x6mkqvcj/image/upload/v1785245696/%D8%A7%D9%84%D9%81%D9%83%D8%B1%D8%A9_%D8%A7%D9%84%D9%86%D8%A7%D8%AF%D8%B1%D8%A9_fi5pw6.jpg');
-      else if (partner.id === '3') setCurrentSrc(currentSrc.includes('cloudinary') ? '/partners/3.png' : 'https://res.cloudinary.com/x6mkqvcj/image/upload/v1785245697/%D9%86%D8%AE%D9%84%D8%AA%D9%8A%D9%86_%D9%88%D8%A7%D9%8A_%D9%81%D8%A7%D9%8A_2_lz530o.jpg');
-      else if (partner.id === '4') setCurrentSrc(currentSrc.includes('cloudinary') ? '/partners/4.png' : 'https://res.cloudinary.com/x6mkqvcj/image/upload/v1785245696/%D8%AB%D9%84%D8%AB_%D8%A7%D9%84%D9%8A%D9%88%D9%85_fkd0yu.jpg');
-      else if (partner.id === 'partner_1778961537430') setCurrentSrc(currentSrc.includes('cloudinary') ? '/partners/regine.png' : 'https://res.cloudinary.com/x6mkqvcj/image/upload/v1785245697/%D9%85%D9%86%D8%A7%D8%AF%D9%8A%D9%84_%D8%B1%D9%8A%D8%AC%D9%8A%D9%86_nj67xq.jpg');
-      else setImgError(true);
+      setCurrentSrc(partner.fallbackImageUrl);
     } else {
       setImgError(true);
     }

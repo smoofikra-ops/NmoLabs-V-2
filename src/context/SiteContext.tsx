@@ -18,6 +18,7 @@ export type Partner = {
   nameEn?: string;
   color?: string;
   imageUrl: string;
+  fallbackImageUrl?: string;
   linkUrl?: string;
   types?: string[];
   typesEn?: string[];
@@ -106,6 +107,64 @@ export type SiteConfig = {
   testimonialsSubtitleEn?: string;
   testimonialsSpeed?: number;
   testimonialsEffect?: 'glow' | 'minimal' | 'glass';
+};
+
+const PARTNER_LOGO_CDN_BASE = 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/partner-logos';
+
+const AUTHORITATIVE_PARTNER_LOGOS: Record<string, { primary: string; fallback?: string }> = {
+  '1': {
+    primary: `${PARTNER_LOGO_CDN_BASE}/Rare-Idea.jpg`,
+    fallback: '/partners/1.png',
+  },
+  '2': {
+    primary: `${PARTNER_LOGO_CDN_BASE}/Network-Gateway.jpg`,
+  },
+  '3': {
+    primary: `${PARTNER_LOGO_CDN_BASE}/Nakhlatain-WiFi-2.jpg`,
+    fallback: '/partners/3.png',
+  },
+  '4': {
+    primary: `${PARTNER_LOGO_CDN_BASE}/Thulth-Alyawm.jpg`,
+    fallback: '/partners/4.png',
+  },
+  partner_1778961537430: {
+    primary: `${PARTNER_LOGO_CDN_BASE}/Regine-Tissues.jpg`,
+    fallback: '/partners/regine.png',
+  },
+  partner_1779035910510: {
+    primary: `${PARTNER_LOGO_CDN_BASE}/INDEV.jpg`,
+  },
+  partner_1779035948609: {
+    primary: `${PARTNER_LOGO_CDN_BASE}/Safqat-Com.jpg`,
+  },
+  partner_1779064216129: {
+    primary: `${PARTNER_LOGO_CDN_BASE}/Ray-flow.jpg`,
+  },
+  partner_1779064264993: {
+    primary: `${PARTNER_LOGO_CDN_BASE}/Hessa-Tissues.jpg`,
+  },
+  partner_1779064308309: {
+    primary: `${PARTNER_LOGO_CDN_BASE}/Poly-Mart.jpg`,
+  },
+  partner_rayatnajd: {
+    primary: `${PARTNER_LOGO_CDN_BASE}/Rayat-Najd-Landscaping-Sustainability.jpeg`,
+  },
+  partner_eventlive: {
+    primary: `${PARTNER_LOGO_CDN_BASE}/Event-Live.jpg`,
+  },
+  partner_almethali: {
+    primary: `${PARTNER_LOGO_CDN_BASE}/Al-Mithali.jpeg`,
+  },
+};
+
+const applyAuthoritativePartnerLogo = (partner: Partner): Partner => {
+  const logo = AUTHORITATIVE_PARTNER_LOGOS[partner.id];
+  if (!logo) return partner;
+  return {
+    ...partner,
+    imageUrl: logo.primary,
+    fallbackImageUrl: logo.fallback || partner.fallbackImageUrl,
+  };
 };
 
 export type ApiLinks = {
@@ -238,23 +297,23 @@ const defaultConfig: SiteConfig = {
     }
   ],
   partners: [
-    { id: '1', name: 'الفكرة النادرة - دعاية واعلان', nameEn: 'Rare Idea - Advertising & Production', color: '#e63450', imageUrl: 'https://res.cloudinary.com/x6mkqvcj/image/upload/v1785245696/%D8%A7%D9%84%D9%81%D9%83%D8%B1%D8%A9_%D8%A7%D9%84%D9%86%D8%A7%D8%AF%D8%B1%D8%A9_fi5pw6.jpg', linkUrl: 'https://ric.com.sa/' },
-    { id: '2', name: 'بوابة الشبكات - انتينا ورواتر 5G', nameEn: 'Network Gate - 5G Antennas & Routers', color: '#f29b6d', imageUrl: '', linkUrl: 'https://netgate-sa.com/' },
-    { id: '3', name: 'نخلتين واي فاي - انتينا وراتر', nameEn: 'Nakhltain WiFi - 5G Antennas & Solutions', color: '#0e2f67', imageUrl: 'https://res.cloudinary.com/x6mkqvcj/image/upload/v1785245697/%D9%86%D8%AE%D9%84%D8%AA%D9%8A%D9%86_%D9%88%D8%A7%D9%8A_%D9%81%D8%A7%D9%8A_2_lz530o.jpg', linkUrl: 'https://nakhltain.com/' },
-    { id: '4', name: 'ثلث اليوم للمفروشات', nameEn: 'Thuluth Al-Youm Furniture', color: '#235418', imageUrl: 'https://res.cloudinary.com/x6mkqvcj/image/upload/v1785245696/%D8%AB%D9%84%D8%AB_%D8%A7%D9%84%D9%8A%D9%88%D9%85_fkd0yu.jpg', linkUrl: 'https://thulth-sa.com/' },
-    { id: 'partner_1778961537430', name: 'مناديل ريجين', nameEn: 'Regine Tissues', color: '#22b6ed', imageUrl: 'https://res.cloudinary.com/x6mkqvcj/image/upload/v1785245697/%D9%85%D9%86%D8%A7%D8%AF%D9%8A%D9%84_%D8%B1%D9%8A%D8%AC%D9%8A%D9%86_nj67xq.jpg', linkUrl: 'https://regine-sa.com' },
-    { id: 'partner_1779035910510', name: 'الأجهزة المبتكرة', nameEn: 'Innovative Devices', color: '#de9336', imageUrl: '', linkUrl: '' },
-    { id: 'partner_1779035948609', name: 'صفقات كوم - كوزماتيكس', nameEn: 'Safaqatcom Cosmetics', color: '#f5abc5', imageUrl: '', linkUrl: 'https://safaqatcom.com/' },
-    { id: 'partner_1779064216129', name: 'Rayflow Studio - ورشات عمل', nameEn: 'Rayflow Studio - Workshops', color: '#414798', imageUrl: '', linkUrl: '' },
-    { id: 'partner_1779064264993', name: 'مناديل حصة', nameEn: 'Hessa Tissues', color: '#fdb700', imageUrl: '', linkUrl: '' },
-    { id: 'partner_1779064308309', name: 'بولي مارت - مصنع بلاستيك', nameEn: 'PolyMart - Plastics Factory', color: '', imageUrl: '', linkUrl: '' },
+    { id: '1', name: 'الفكرة النادرة - دعاية واعلان', nameEn: 'Rare Idea - Advertising & Production', color: '#e63450', imageUrl: `${PARTNER_LOGO_CDN_BASE}/Rare-Idea.jpg`, fallbackImageUrl: '/partners/1.png', linkUrl: 'https://ric.com.sa/' },
+    { id: '2', name: 'بوابة الشبكات - انتينا ورواتر 5G', nameEn: 'Network Gate - 5G Antennas & Routers', color: '#f29b6d', imageUrl: `${PARTNER_LOGO_CDN_BASE}/Network-Gateway.jpg`, linkUrl: 'https://netgate-sa.com/' },
+    { id: '3', name: 'نخلتين واي فاي - انتينا وراتر', nameEn: 'Nakhltain WiFi - 5G Antennas & Solutions', color: '#0e2f67', imageUrl: `${PARTNER_LOGO_CDN_BASE}/Nakhlatain-WiFi-2.jpg`, fallbackImageUrl: '/partners/3.png', linkUrl: 'https://nakhltain.com/' },
+    { id: '4', name: 'ثلث اليوم للمفروشات', nameEn: 'Thuluth Al-Youm Furniture', color: '#235418', imageUrl: `${PARTNER_LOGO_CDN_BASE}/Thulth-Alyawm.jpg`, fallbackImageUrl: '/partners/4.png', linkUrl: 'https://thulth-sa.com/' },
+    { id: 'partner_1778961537430', name: 'مناديل ريجين', nameEn: 'Regine Tissues', color: '#22b6ed', imageUrl: `${PARTNER_LOGO_CDN_BASE}/Regine-Tissues.jpg`, fallbackImageUrl: '/partners/regine.png', linkUrl: 'https://regine-sa.com' },
+    { id: 'partner_1779035910510', name: 'الأجهزة المبتكرة', nameEn: 'Innovative Devices', color: '#de9336', imageUrl: `${PARTNER_LOGO_CDN_BASE}/INDEV.jpg`, linkUrl: '' },
+    { id: 'partner_1779035948609', name: 'صفقات كوم - كوزماتيكس', nameEn: 'Safaqatcom Cosmetics', color: '#f5abc5', imageUrl: `${PARTNER_LOGO_CDN_BASE}/Safqat-Com.jpg`, linkUrl: 'https://safaqatcom.com/' },
+    { id: 'partner_1779064216129', name: 'Rayflow Studio - ورشات عمل', nameEn: 'Rayflow Studio - Workshops', color: '#414798', imageUrl: `${PARTNER_LOGO_CDN_BASE}/Ray-flow.jpg`, linkUrl: '' },
+    { id: 'partner_1779064264993', name: 'مناديل حصة', nameEn: 'Hessa Tissues', color: '#fdb700', imageUrl: `${PARTNER_LOGO_CDN_BASE}/Hessa-Tissues.jpg`, linkUrl: '' },
+    { id: 'partner_1779064308309', name: 'بولي مارت - مصنع بلاستيك', nameEn: 'PolyMart - Plastics Factory', color: '', imageUrl: `${PARTNER_LOGO_CDN_BASE}/Poly-Mart.jpg`, linkUrl: '' },
     { id: 'partner_1779064336725', name: 'شركة مقاولات', nameEn: 'Contracting Company', color: '', imageUrl: '', linkUrl: '' },
     { 
       id: 'partner_rayatnajd', 
       name: 'رايات نجد', 
       nameEn: 'Rayat Najd',
       color: '#3f7b49', 
-      imageUrl: '', 
+      imageUrl: `${PARTNER_LOGO_CDN_BASE}/Rayat-Najd-Landscaping-Sustainability.jpeg`, 
       linkUrl: 'https://rayatnajd.com',
       types: ['موقع مؤسسي متكامل'],
       typesEn: ['Corporate Web Platform'],
@@ -266,7 +325,7 @@ const defaultConfig: SiteConfig = {
       name: 'إيفنت لايف', 
       nameEn: 'EventLive KSA',
       color: '#e30a21', 
-      imageUrl: '', 
+      imageUrl: `${PARTNER_LOGO_CDN_BASE}/Event-Live.jpg`, 
       linkUrl: 'https://eventliveksa.com',
       types: ['موقع خدماتي بصري'],
       typesEn: ['Visual Media Platform'],
@@ -278,7 +337,7 @@ const defaultConfig: SiteConfig = {
       name: 'المثالي للدعاية والإعلان', 
       nameEn: 'Al-Mithali Advertising',
       color: '#1a56a4', 
-      imageUrl: '', 
+      imageUrl: `${PARTNER_LOGO_CDN_BASE}/Al-Mithali.jpeg`, 
       linkUrl: 'https://almethaliadv.com',
       types: ['موقع خدمات ومعرض أعمال'],
       typesEn: ['Services & Portfolio Showcase'],
@@ -367,13 +426,7 @@ const getInitialConfig = () => {
               merged.push(defaultP);
             }
           }
-          return (merged.length > 0 ? merged : defaultConfig.partners).map((p: Partner) => {
-            if (p.id === '1' && (!p.imageUrl || p.imageUrl.includes('salla.sa') || p.imageUrl.startsWith('data:'))) p.imageUrl = '/partners/1.png';
-            if (p.id === '3' && (!p.imageUrl || p.imageUrl.includes('salla.sa') || p.imageUrl.startsWith('data:'))) p.imageUrl = '/partners/3.png';
-            if (p.id === '4' && (!p.imageUrl || p.imageUrl.includes('salla.sa') || p.imageUrl.startsWith('data:'))) p.imageUrl = '/partners/4.png';
-            if (p.id === 'partner_1778961537430' && (!p.imageUrl || p.imageUrl.includes('zid.store') || p.imageUrl.startsWith('data:'))) p.imageUrl = '/partners/regine.png';
-            return p;
-          });
+          return (merged.length > 0 ? merged : defaultConfig.partners).map(applyAuthoritativePartnerLogo);
         })(),
         partnerClicks: parsed.partnerClicks || [],
         socialLinks: parsed.socialLinks || defaultConfig.socialLinks,
