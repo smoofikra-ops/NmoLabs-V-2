@@ -5,12 +5,6 @@ import {
   Sparkles, 
   ArrowLeft, 
   ArrowRight, 
-  Search, 
-  Compass, 
-  FileCode2, 
-  Cpu, 
-  Rocket, 
-  TrendingUp, 
   MessageCircle,
   ShieldCheck
 } from 'lucide-react';
@@ -36,16 +30,6 @@ const AUDIENCES_EN = [
   'Investor & Entrepreneur',
   'Capital Seeking Opportunities',
   'Organization with a Complex Challenge'
-];
-
-const LIFECYCLE_STEPS = [
-  { step: '01', titleAr: 'دراسة', titleEn: 'Study', icon: Search },
-  { step: '02', titleAr: 'تحليل', titleEn: 'Analyze', icon: Compass },
-  { step: '03', titleAr: 'تخطيط', titleEn: 'Plan', icon: FileCode2 },
-  { step: '04', titleAr: 'بناء', titleEn: 'Build', icon: Cpu },
-  { step: '05', titleAr: 'إطلاق', titleEn: 'Launch', icon: Rocket },
-  { step: '06', titleAr: 'تشغيل', titleEn: 'Operate', icon: Sparkles },
-  { step: '07', titleAr: 'نمو مستدام', titleEn: 'Grow', icon: TrendingUp },
 ];
 
 export const StoryBigVision: React.FC = () => {
@@ -98,39 +82,6 @@ export const StoryBigVision: React.FC = () => {
               </span>
             ))}
           </div>
-
-          {/* End-to-End Visual Lifecycle Steps */}
-          <motion.div 
-            initial={{ opacity: 0, y: isReducedMotion ? 0 : 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.5 }}
-            className="p-6 sm:p-8 rounded-3xl border border-[var(--border-default)] bg-[var(--surface-primary)]/90 backdrop-blur-md mb-12 shadow-sm"
-          >
-            <div className="text-xs font-bold uppercase tracking-widest text-[var(--text-muted)] mb-6">
-              {isEn ? 'Our Complete Lifecycle Model' : 'نموذج التنفيذ المتكامل'}
-            </div>
-            
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4">
-              {LIFECYCLE_STEPS.map((stepItem) => {
-                const Icon = stepItem.icon;
-                return (
-                  <div 
-                    key={stepItem.step}
-                    className="p-3 sm:p-4 rounded-2xl bg-[var(--surface-secondary)]/80 border border-[var(--border-default)] flex flex-col items-center justify-center text-center shadow-xs hover:border-[var(--color-primary)]/40 transition-colors"
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center mb-2">
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    <span className="text-[10px] font-mono text-[var(--text-muted)]">{stepItem.step}</span>
-                    <span className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">
-                      {isEn ? stepItem.titleEn : stepItem.titleAr}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </motion.div>
 
           {/* Final Growth Partner Showcase Box (STORY 08) */}
           <motion.div 

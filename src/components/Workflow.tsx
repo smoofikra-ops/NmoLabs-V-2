@@ -29,6 +29,9 @@ const JOURNEY_STAGES = [
     descEn: 'Comprehensive business model audit, target audience mapping, and competitive analysis.',
     icon: Search,
     color: '#0F62FE',
+    coverUrl: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/study.jpg',
+    altAr: 'دراسة السوق والمنافسين',
+    altEn: 'Market & competitor audit',
   },
   {
     id: 'analyze',
@@ -41,6 +44,9 @@ const JOURNEY_STAGES = [
     descEn: 'Diagnostic evaluation of user drop-offs, budget leakage points, and core KPI baseline.',
     icon: BarChart2,
     color: '#06B6D4',
+    coverUrl: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/analysis.jpg',
+    altAr: 'تحليل البيانات',
+    altEn: 'Funnel & bottleneck analysis',
   },
   {
     id: 'plan',
@@ -53,6 +59,9 @@ const JOURNEY_STAGES = [
     descEn: 'Structuring the digital architecture, customer conversion journeys, and multi-channel scale plan.',
     icon: Compass,
     color: '#3B82F6',
+    coverUrl: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/planning.jpg',
+    altAr: 'التخطيط للنمو',
+    altEn: 'Growth architecture',
   },
   {
     id: 'build',
@@ -65,6 +74,9 @@ const JOURNEY_STAGES = [
     descEn: 'Engineering high-performance UI/UX, database integrations, payment gateways, and security standards.',
     icon: Code2,
     color: '#8B5CF6',
+    coverUrl: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/build.jpg',
+    altAr: 'بناء المنظومة',
+    altEn: 'Agile development & UI/UX',
   },
   {
     id: 'launch',
@@ -77,6 +89,9 @@ const JOURNEY_STAGES = [
     descEn: 'Live production deployment, stress-testing workflows, and advanced tracking setup.',
     icon: Rocket,
     color: '#EC4899',
+    coverUrl: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/launch.jpg',
+    altAr: 'إطلاق المشروع',
+    altEn: 'Go-live & tracking activation',
   },
   {
     id: 'operate',
@@ -89,6 +104,9 @@ const JOURNEY_STAGES = [
     descEn: 'Real-time uptime monitoring, proactive infrastructure maintenance, and operational support.',
     icon: Cpu,
     color: '#10B981',
+    coverUrl: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/operations.jpg',
+    altAr: 'تشغيل المنظومة',
+    altEn: 'Operations & support',
   },
   {
     id: 'grow',
@@ -101,6 +119,9 @@ const JOURNEY_STAGES = [
     descEn: 'Conversion rate optimization (CRO), ROAS maximization, and long-term brand scaling.',
     icon: TrendingUp,
     color: '#F59E0B',
+    coverUrl: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/growth.jpg',
+    altAr: 'النمو ومضاعفة الأداء',
+    altEn: 'ROAS & revenue optimization',
   },
 ];
 
@@ -167,7 +188,7 @@ export const Workflow: React.FC = () => {
         {/* Desktop Connected Stream */}
         <div className="hidden lg:block relative mb-12">
           {/* Central Connecting Track */}
-          <div className="absolute top-[38px] left-[5%] right-[5%] h-1 bg-[var(--surface-secondary)] z-0 rounded-full overflow-hidden border border-[var(--border-default)]">
+          <div className="absolute top-[124px] left-[5%] right-[5%] h-1 bg-[var(--surface-secondary)] z-0 rounded-full overflow-hidden border border-[var(--border-default)]">
             <motion.div 
               className="h-full bg-gradient-to-r from-[#0F62FE] via-[#8B5CF6] to-[#F59E0B] rounded-full"
               style={{
@@ -202,31 +223,47 @@ export const Workflow: React.FC = () => {
                     opacity: shouldReduceMotion ? 1 : nodeActive,
                     scale: nodeScale
                   }}
-                  className="p-3.5 rounded-2xl border border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/95 backdrop-blur-md transition-all flex flex-col justify-between"
+                  className="group rounded-2xl border border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/95 backdrop-blur-md transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-xs hover:shadow-md hover:-translate-y-0.5"
                 >
-                  <div className="flex flex-col items-center text-center">
-                    <div 
-                      className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-xs mb-2 transition-transform"
-                      style={{ backgroundColor: `${stage.color}15`, color: stage.color }}
-                    >
-                      <Icon className="w-5 h-5" strokeWidth={2} />
+                  {/* IMAGE COVER */}
+                  <div className="relative w-full h-24 overflow-hidden bg-[var(--surface-secondary)] shrink-0">
+                    <img 
+                      src={stage.coverUrl} 
+                      alt={isEn ? stage.altEn : stage.altAr} 
+                      loading="lazy" 
+                      decoding="async"
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[var(--surface-primary)] to-transparent pointer-events-none" />
+                    <div className="absolute inset-x-0 bottom-0 h-px bg-[var(--border-default)]/30 pointer-events-none" />
+                  </div>
+
+                  {/* CARD BODY */}
+                  <div className="p-3 pt-2.5 flex flex-col items-center text-center flex-1 justify-between">
+                    <div className="flex flex-col items-center">
+                      <div 
+                        className="w-9 h-9 rounded-xl flex items-center justify-center shadow-xs mb-1.5 transition-transform duration-300 group-hover:scale-105"
+                        style={{ backgroundColor: `${stage.color}15`, color: stage.color }}
+                      >
+                        <Icon className="w-4.5 h-4.5" strokeWidth={2} />
+                      </div>
+
+                      <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-full bg-[var(--surface-secondary)] text-[var(--text-secondary)] border border-[var(--border-default)] mb-1">
+                        {stage.number}
+                      </span>
+
+                      <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)] mb-0.5">
+                        {isEn ? stage.nameEn : stage.nameAr}
+                      </h4>
+
+                      <p className="text-[10px] font-semibold text-[var(--color-primary)] mb-1.5 line-clamp-1">
+                        {isEn ? stage.tagEn : stage.tagAr}
+                      </p>
+
+                      <p className="text-[11px] text-[var(--text-muted)] leading-relaxed line-clamp-3">
+                        {isEn ? stage.descEn : stage.descAr}
+                      </p>
                     </div>
-
-                    <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-full bg-[var(--surface-secondary)] text-[var(--text-secondary)] border border-[var(--border-default)] mb-1">
-                      {stage.number}
-                    </span>
-
-                    <h4 className="text-sm font-bold text-[var(--text-primary)] mb-0.5">
-                      {isEn ? stage.nameEn : stage.nameAr}
-                    </h4>
-
-                    <p className="text-[10px] font-semibold text-[var(--color-primary)] mb-1.5 line-clamp-1">
-                      {isEn ? stage.tagEn : stage.tagAr}
-                    </p>
-
-                    <p className="text-[11px] text-[var(--text-muted)] leading-relaxed line-clamp-3">
-                      {isEn ? stage.descEn : stage.descAr}
-                    </p>
                   </div>
                 </motion.div>
               );
@@ -265,31 +302,47 @@ export const Workflow: React.FC = () => {
                 <motion.div
                   key={stage.id}
                   style={{ opacity: shouldReduceMotion ? 1 : nodeActive }}
-                  className={`flex items-center w-full ${isEven ? 'justify-start pr-8 sm:pr-12' : 'justify-end pl-8 sm:pl-12'}`}
+                  className={`flex items-center w-full ${isEven ? 'justify-start pr-6 sm:pr-12' : 'justify-end pl-6 sm:pl-12'}`}
                 >
-                  <div className="w-[88%] sm:w-[75%] p-3.5 rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)]/95 backdrop-blur-md shadow-xs flex items-start gap-3">
-                    <div 
-                      className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                      style={{ backgroundColor: `${stage.color}15`, color: stage.color }}
-                    >
-                      <Icon className="w-4 h-4" strokeWidth={2} />
+                  <div className="w-[90%] sm:w-[75%] rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)]/95 backdrop-blur-md shadow-xs overflow-hidden flex flex-col group">
+                    {/* IMAGE COVER */}
+                    <div className="relative w-full h-20 sm:h-24 overflow-hidden bg-[var(--surface-secondary)] shrink-0">
+                      <img 
+                        src={stage.coverUrl} 
+                        alt={isEn ? stage.altEn : stage.altAr} 
+                        loading="lazy" 
+                        decoding="async"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[var(--surface-primary)] to-transparent pointer-events-none" />
+                      <div className="absolute inset-x-0 bottom-0 h-px bg-[var(--border-default)]/30 pointer-events-none" />
                     </div>
 
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-1 mb-0.5">
-                        <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)] truncate">
-                          {isEn ? stage.nameEn : stage.nameAr}
-                        </h4>
-                        <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded bg-[var(--surface-secondary)] text-[var(--text-muted)]">
-                          {stage.number}
-                        </span>
+                    {/* CONTENT ROW */}
+                    <div className="p-3 sm:p-3.5 flex items-start gap-2.5 sm:gap-3">
+                      <div 
+                        className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5 shadow-xs"
+                        style={{ backgroundColor: `${stage.color}15`, color: stage.color }}
+                      >
+                        <Icon className="w-4 h-4" strokeWidth={2} />
                       </div>
-                      <p className="text-[10px] font-semibold text-[var(--color-primary)] mb-1 truncate">
-                        {isEn ? stage.tagEn : stage.tagAr}
-                      </p>
-                      <p className="text-[11px] text-[var(--text-muted)] leading-relaxed line-clamp-2">
-                        {isEn ? stage.descEn : stage.descAr}
-                      </p>
+
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-1 mb-0.5">
+                          <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)] truncate">
+                            {isEn ? stage.nameEn : stage.nameAr}
+                          </h4>
+                          <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded-full bg-[var(--surface-secondary)] text-[var(--text-secondary)] border border-[var(--border-default)]">
+                            {stage.number}
+                          </span>
+                        </div>
+                        <p className="text-[10px] font-semibold text-[var(--color-primary)] mb-1 truncate">
+                          {isEn ? stage.tagEn : stage.tagAr}
+                        </p>
+                        <p className="text-[11px] text-[var(--text-muted)] leading-relaxed line-clamp-2">
+                          {isEn ? stage.descEn : stage.descAr}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </motion.div>
