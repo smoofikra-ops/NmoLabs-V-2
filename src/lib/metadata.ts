@@ -94,5 +94,21 @@ export const pageMetadata: Record<string, {
     description: 'إجابات شاملة على أكثر الأسئلة شيوعاً حول خدمات NmoLabs، آليات العمل، نماذج الشراكة، الجدول الزمني، وضمانات الجودة والأداء.',
     descriptionAr: 'إجابات شاملة على أكثر الأسئلة شيوعاً حول خدمات NmoLabs، آليات العمل، نماذج الشراكة، الجدول الزمني، وضمانات الجودة والأداء.',
     descriptionEn: 'Detailed answers to common questions about NmoLabs software services, partnership models, timelines, quality assurance, and execution workflows.'
+  },
+  brand: {
+    title: 'الهوية الرسمية وشعارات نمو لابز | NmoLabs Brand Assets',
+    titleAr: 'الهوية الرسمية وشعارات نمو لابز | NmoLabs Brand Assets',
+    titleEn: 'NmoLabs Official Brand Identity & Logo Assets',
+    description: 'حمّل الشعارات والأصول البصرية الرسمية لنمو لابز وتعرّف على ألوان الهوية وإرشادات الاستخدام المعتمدة.',
+    descriptionAr: 'حمّل الشعارات والأصول البصرية الرسمية لنمو لابز وتعرّف على ألوان الهوية وإرشادات الاستخدام المعتمدة.',
+    descriptionEn: 'Download official NmoLabs logos and brand assets and explore approved brand colors and logo usage guidelines.'
+  },
+  'brand-assets': {
+    title: 'الهوية الرسمية وشعارات نمو لابز | NmoLabs Brand Assets',
+    titleAr: 'الهوية الرسمية وشعارات نمو لابز | NmoLabs Brand Assets',
+    titleEn: 'NmoLabs Official Brand Identity & Logo Assets',
+    description: 'حمّل الشعارات والأصول البصرية الرسمية لنمو لابز وتعرّف على ألوان الهوية وإرشادات الاستخدام المعتمدة.',
+    descriptionAr: 'حمّل الشعارات والأصول البصرية الرسمية لنمو لابز وتعرّف على ألوان الهوية وإرشادات الاستخدام المعتمدة.',
+    descriptionEn: 'Download official NmoLabs logos and brand assets and explore approved brand colors and logo usage guidelines.'
   }
 };

@@ -90,6 +90,7 @@ export const Footer = () => {
     { nameAr: 'أعمالنا والمشاريع', nameEn: 'Our Works', route: 'work' },
     { nameAr: 'مختبر الابتكارات', nameEn: 'Innovation Lab', route: 'innovation-lab' },
     { nameAr: 'المؤسس والرئيس التنفيذي', nameEn: 'Founder & CEO', route: 'founder' },
+    { nameAr: 'الهوية الرسمية والشعارات', nameEn: 'Brand Identity', route: 'brand' },
   ];
 
   const productLinks = [

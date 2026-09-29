@@ -10,27 +10,27 @@ import { NationalDayCampaignBadge } from './seasonal/NationalDayElements';
 
 
 const TYPEWRITER_PHRASES_AR = [
-  "نحوّل فكرتك لمنتج رقمي حقيقي.",
-  "نبني لك موقعاً يبيّن قوة بزنسك.",
-  "نطلق متجرك جاهز للبيع ويكبر معاك.",
-  "نبرمج لك نظام يحل لك كل مشاكل الشغل.",
-  "نصمم برنامج محاسبي على مقاس عملياتك.",
-  "نبني أنظمة ERP وCRM تضبط لك الإدارة.",
-  "نحوّل الكتالوجات العادية لتجارب رقمية رهيبة.",
-  "نطوّر تطبيقات مخصصة لفكرتك.",
-  "نربط شغلك بالأتمتة والذكاء الاصطناعي."
+  "نحوّل فكرتك إلى منتج رقمي قابل للنمو والتوسع.",
+  "نبني مواقع ومنصات رقمية تبرز قوة علامتك وتجذب عملاءك.",
+  "نطلق متجرك الإلكتروني مهيأ للمبيعات ومصمم لمضاعفة الأرباح.",
+  "نطور أنظمة رقمية مخصصة تضبط العمليات وترفع الكفاءة.",
+  "نصمم برمجيات مالية وإدارية دقيقة تلائم حجم عملياتك.",
+  "نبني أنظمة ERP وCRM متكاملة تحكم إدارة الموارد والعملاء.",
+  "نحوّل المنتجات والكتالوجات إلى تجارب رقمية تفاعلية استثنائية.",
+  "نطور تطبيقات ذكية مصممة لتحقيق أهداف مشروعك.",
+  "نربط منظومة أعمالك بالأتمتة المتقدمة والذكاء الاصطناعي."
 ];
 
 const TYPEWRITER_PHRASES_EN = [
-  "We turn your idea into a real, thriving digital product.",
-  "We build websites that showcase your business power.",
-  "We launch high-converting stores built to scale.",
-  "We engineer custom systems that streamline your operations.",
-  "We design accounting software tailored to your workflow.",
-  "We build ERP and CRM systems to master your management.",
-  "We transform regular catalogs into extraordinary digital experiences.",
-  "We develop custom applications built for your vision.",
-  "We connect your business with automation and smart AI."
+  "We turn your vision into a scalable, high-performing digital product.",
+  "We build platforms and digital experiences that elevate your brand.",
+  "We launch high-converting e-commerce engines built to scale revenue.",
+  "We engineer custom digital systems that streamline operations and cut waste.",
+  "We design enterprise financial and operational software tailored to your workflow.",
+  "We build integrated ERP & CRM architectures for unified management control.",
+  "We transform products and catalogs into extraordinary interactive digital journeys.",
+  "We engineer intelligent applications aligned with your strategic goals.",
+  "We connect your business ecosystem with advanced automation and practical AI."
 ];
 
 const SHOWCASE_ITEMS = [

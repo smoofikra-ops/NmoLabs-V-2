@@ -49,6 +49,7 @@ const ServiceDetailsPage = lazy(() => import('./components/ServiceDetailsPage').
 
 const FounderPage = lazy(() => import('./components/FounderPage').then(module => ({ default: module.FounderPage })));
 const AboutPage = lazy(() => import('./components/AboutPage').then(module => ({ default: module.AboutPage })));
+const BrandAssetsPage = lazy(() => import('./components/BrandAssetsPage').then(module => ({ default: module.BrandAssetsPage })));
 const InnovationLabPage = lazy(() => import('./components/InnovationLabPage').then(module => ({ default: module.InnovationLabPage })));const ExperimentDetailsPage = lazy(() => import('./components/ExperimentDetailsPage').then(module => ({ default: module.ExperimentDetailsPage })));
 const StartProjectPage = lazy(() => import('./components/StartProjectPage').then(module => ({ default: module.StartProjectPage })));
 const DiscoveryPortal = lazy(() => import('./components/DiscoveryPortal').then(module => ({ default: module.DiscoveryPortal })));
@@ -272,6 +273,10 @@ function AppContent() {
       ) : config.currentRoute?.startsWith('work/') ? (
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
           <ProjectDetailsPage slug={config.currentRoute.split('/')[1]} />
+        </Suspense>
+      ) : (config.currentRoute === 'brand' || config.currentRoute === 'brand-assets') ? (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
+          <BrandAssetsPage />
         </Suspense>
       ) : config.currentRoute === 'founder' ? (
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>

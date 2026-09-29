@@ -176,10 +176,10 @@ export type ApiLinks = {
 };
 
 const defaultConfig: SiteConfig = {
-  heroTitle: 'نحوّل أفكارك لحلول رقمية تشتغل من صدق',
-  heroTitleEn: 'We Turn Your Ideas into Digital Solutions That Truly Work',
-  heroSubtitle: 'من الفكرة للإطلاق، نبني لك مواقع، متاجر، تطبيقات وأنظمة مخصصة تضبط شغلك وتساعدك تكبر بثقة.',
-  heroSubtitleEn: 'From concept to launch, we build websites, stores, custom apps, and systems that streamline your operations and scale your business with confidence.',
+  heroTitle: 'نحوّل أفكارك إلى حلول رقمية تعمل وتنمو',
+  heroTitleEn: 'We Turn Your Ideas into Scalable Digital Solutions That Perform',
+  heroSubtitle: 'من الفكرة إلى التشغيل والنمو، نبني لك مواقع، متاجر، تطبيقات وأنظمة مخصصة تنظم عملياتك وتساعدك تكبر بثقة.',
+  heroSubtitleEn: 'From concept to operations and growth, we build bespoke websites, stores, applications, and enterprise systems that streamline your workflow and scale your business with confidence.',
   heroButtonText: 'ابدأ مشروعك الحين',
   heroButtonTextEn: 'Start Your Project Now',
   heroVideoUrl: '', 
@@ -409,9 +409,20 @@ const getInitialConfig = () => {
         resolvedContactNumber = '0500804990';
       }
 
+      let resolvedHeroTitle = parsed.heroTitle;
+      if (!resolvedHeroTitle || resolvedHeroTitle.includes('تشتغل من صدق')) {
+        resolvedHeroTitle = defaultConfig.heroTitle;
+      }
+      let resolvedHeroSubtitle = parsed.heroSubtitle;
+      if (!resolvedHeroSubtitle || resolvedHeroSubtitle.includes('تضبط شغلك وتساعدك تكبر')) {
+        resolvedHeroSubtitle = defaultConfig.heroSubtitle;
+      }
+
       return {
         ...defaultConfig,
         ...parsed,
+        heroTitle: resolvedHeroTitle,
+        heroSubtitle: resolvedHeroSubtitle,
         contactNumber: resolvedContactNumber,
         theme: savedUserTheme || parsed.theme || defaultConfig.theme,
         sectionOrder: order,

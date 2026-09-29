@@ -6,7 +6,9 @@ import {
   ArrowLeft, 
   ArrowRight, 
   MessageCircle,
-  ShieldCheck
+  ShieldCheck,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { getWhatsAppUrl } from '../../lib/utils';
 import { StorySceneContainer } from './StorySceneContainer';
@@ -71,16 +73,25 @@ export const StoryBigVision: React.FC = () => {
             </p>
           </motion.div>
 
-          {/* Target Audiences Chips */}
-          <div className="flex flex-wrap justify-center gap-2.5 mb-12">
-            {(isEn ? AUDIENCES_EN : AUDIENCES).map((audience, idx) => (
-              <span 
-                key={idx}
-                className="text-xs sm:text-sm font-semibold px-4 py-2 rounded-full bg-[var(--surface-primary)]/90 backdrop-blur-md border border-[var(--border-default)] text-[var(--text-secondary)] shadow-xs"
-              >
-                {audience}
+          {/* Target Audiences / Business Stage Chips: Horizontal Rail on Mobile, Centered Wrap on Desktop */}
+          <div className="mb-10 lg:mb-12">
+            <div className="flex md:hidden items-center justify-between px-2 mb-2.5 text-[11px] font-semibold text-[var(--text-muted)]">
+              <span>{isEn ? 'Tailored for every business stage' : 'حلول مصممة لمرحلة مشروعك'}</span>
+              <span className="flex items-center gap-0.5 text-[var(--color-primary)]">
+                {isEn ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
               </span>
-            ))}
+            </div>
+
+            <div className="flex md:flex-wrap md:justify-center gap-2.5 overflow-x-auto md:overflow-visible pb-3 md:pb-0 snap-x snap-mandatory hide-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+              {(isEn ? AUDIENCES_EN : AUDIENCES).map((audience, idx) => (
+                <span 
+                  key={idx}
+                  className="text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-full bg-[var(--surface-primary)]/95 backdrop-blur-md border border-[var(--border-default)] text-[var(--text-secondary)] shadow-xs whitespace-nowrap snap-center shrink-0 md:shrink"
+                >
+                  {audience}
+                </span>
+              ))}
+            </div>
           </div>
 
           {/* Final Growth Partner Showcase Box (STORY 08) */}

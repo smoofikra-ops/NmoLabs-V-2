@@ -13,7 +13,9 @@ import {
   ArrowRight,
   ShieldCheck,
   CheckCircle2,
-  Sparkles
+  Sparkles,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { NATIONAL_DAY_96_CONFIG } from '../config/nationalDay96';
 
@@ -142,7 +144,7 @@ export const Workflow: React.FC = () => {
     <section 
       ref={containerRef}
       id="workflow"
-      className="py-14 sm:py-20 relative overflow-hidden bg-[var(--surface-primary)] border-b border-[var(--border-default)] transition-colors duration-300"
+      className="py-12 sm:py-20 relative overflow-hidden bg-[var(--surface-primary)] border-b border-[var(--border-default)] transition-colors duration-300"
     >
       {/* Ambient background glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[70vw] max-w-4xl h-96 bg-[var(--color-primary)]/5 dark:bg-[var(--color-primary)]/10 blur-[120px] rounded-full pointer-events-none" />
@@ -151,7 +153,7 @@ export const Workflow: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Compact Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-14">
           {NATIONAL_DAY_96_CONFIG.isActive && (
             <div className="mb-3">
               <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-500/10 dark:bg-emerald-500/20 border border-emerald-500/25 shadow-xs">
@@ -183,9 +185,9 @@ export const Workflow: React.FC = () => {
           </p>
         </div>
 
-        {/* Unified Journey Visualization */}
-        
-        {/* Desktop Connected Stream */}
+        {/* ======================================================== */}
+        {/* DESKTOP CONNECTED 7-STAGE STREAM (LG+) */}
+        {/* ======================================================== */}
         <div className="hidden lg:block relative mb-12">
           {/* Central Connecting Track */}
           <div className="absolute top-[124px] left-[5%] right-[5%] h-1 bg-[var(--surface-secondary)] z-0 rounded-full overflow-hidden border border-[var(--border-default)]">
@@ -271,97 +273,108 @@ export const Workflow: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile / Tablet Compact Alternating Zig-Zag Journey Node Stream */}
-        <div className="lg:hidden relative mb-10 px-2">
-          {/* Vertical central connector line */}
-          <div className="absolute top-4 bottom-4 left-1/2 -translate-x-1/2 w-[3px] bg-[var(--surface-secondary)] z-0 rounded-full overflow-hidden border border-[var(--border-default)]">
-            <motion.div 
-              className="w-full bg-gradient-to-b from-[#0F62FE] via-[#8B5CF6] to-[#F59E0B] rounded-full origin-top"
-              style={{
-                height: useTransform(
-                  scrollYProgress, 
-                  [0.05, 0.95], 
-                  shouldReduceMotion ? ['100%', '100%'] : ['0%', '100%']
-                )
-              }}
-            />
+        {/* ======================================================== */}
+        {/* MOBILE / TABLET CONTINUOUS HORIZONTAL JOURNEY RAIL */}
+        {/* ======================================================== */}
+        <div className="lg:hidden relative mb-8">
+          {/* Mobile Swipe / Sequence Hint */}
+          <div className="flex items-center justify-between px-2 mb-3 text-[11px] font-semibold text-[var(--text-muted)]">
+            <span className="flex items-center gap-1.5 text-[var(--color-primary)]">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>{isEn ? 'Swipe through 7 stages (01 → 07)' : 'اسحب لتتبع مراحل الرحلة (01 ← 07)'}</span>
+            </span>
+            <span className="flex items-center gap-0.5 text-[var(--color-primary)]">
+              {isEn ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
+            </span>
           </div>
 
-          <div className="flex flex-col gap-4 relative z-10">
+          {/* Horizontal Rail Container */}
+          <div className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 pb-4 px-2 -mx-2 hide-scrollbar">
             {JOURNEY_STAGES.map((stage, index) => {
               const Icon = stage.icon;
-              const isEven = index % 2 === 0;
-              const threshold = index / (JOURNEY_STAGES.length - 1);
-              const nodeActive = useTransform(
-                scrollYProgress,
-                [Math.max(0, threshold - 0.12), threshold, Math.min(1, threshold + 0.12)],
-                [0.6, 1, 0.85]
-              );
+              const isLast = index === JOURNEY_STAGES.length - 1;
 
               return (
-                <motion.div
+                <div 
                   key={stage.id}
-                  style={{ opacity: shouldReduceMotion ? 1 : nodeActive }}
-                  className={`flex items-center w-full ${isEven ? 'justify-start pr-6 sm:pr-12' : 'justify-end pl-6 sm:pl-12'}`}
+                  className="min-w-[75vw] sm:min-w-[270px] snap-center shrink-0 rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)]/95 backdrop-blur-md shadow-xs overflow-hidden flex flex-col justify-between group"
                 >
-                  <div className="w-[90%] sm:w-[75%] rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)]/95 backdrop-blur-md shadow-xs overflow-hidden flex flex-col group">
-                    {/* IMAGE COVER */}
-                    <div className="relative w-full h-20 sm:h-24 overflow-hidden bg-[var(--surface-secondary)] shrink-0">
-                      <img 
-                        src={stage.coverUrl} 
-                        alt={isEn ? stage.altEn : stage.altAr} 
-                        loading="lazy" 
-                        decoding="async"
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[var(--surface-primary)] to-transparent pointer-events-none" />
-                      <div className="absolute inset-x-0 bottom-0 h-px bg-[var(--border-default)]/30 pointer-events-none" />
+                  {/* IMAGE COVER */}
+                  <div className="relative w-full h-24 sm:h-28 overflow-hidden bg-[var(--surface-secondary)] shrink-0">
+                    <img 
+                      src={stage.coverUrl} 
+                      alt={isEn ? stage.altEn : stage.altAr} 
+                      loading="lazy" 
+                      decoding="async"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[var(--surface-primary)] to-transparent pointer-events-none" />
+                    <div className="absolute inset-x-0 bottom-0 h-px bg-[var(--border-default)]/30 pointer-events-none" />
+                    
+                    {/* Stage number badge */}
+                    <div className="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur text-[10px] font-mono font-bold text-white shadow-xs">
+                      {stage.number}
                     </div>
+                  </div>
 
-                    {/* CONTENT ROW */}
-                    <div className="p-3 sm:p-3.5 flex items-start gap-2.5 sm:gap-3">
-                      <div 
-                        className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5 shadow-xs"
-                        style={{ backgroundColor: `${stage.color}15`, color: stage.color }}
-                      >
-                        <Icon className="w-4 h-4" strokeWidth={2} />
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between gap-1 mb-0.5">
+                  {/* CARD BODY */}
+                  <div className="p-3.5 sm:p-4 flex flex-col flex-1 justify-between">
+                    <div>
+                      <div className="flex items-center gap-2.5 mb-2">
+                        <div 
+                          className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 shadow-xs"
+                          style={{ backgroundColor: `${stage.color}15`, color: stage.color }}
+                        >
+                          <Icon className="w-4 h-4" strokeWidth={2} />
+                        </div>
+                        <div className="min-w-0 flex-1">
                           <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)] truncate">
                             {isEn ? stage.nameEn : stage.nameAr}
                           </h4>
-                          <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded-full bg-[var(--surface-secondary)] text-[var(--text-secondary)] border border-[var(--border-default)]">
-                            {stage.number}
-                          </span>
+                          <p className="text-[10px] font-semibold text-[var(--color-primary)] truncate">
+                            {isEn ? stage.tagEn : stage.tagAr}
+                          </p>
                         </div>
-                        <p className="text-[10px] font-semibold text-[var(--color-primary)] mb-1 truncate">
-                          {isEn ? stage.tagEn : stage.tagAr}
-                        </p>
-                        <p className="text-[11px] text-[var(--text-muted)] leading-relaxed line-clamp-2">
-                          {isEn ? stage.descEn : stage.descAr}
-                        </p>
                       </div>
+
+                      <p className="text-[11px] text-[var(--text-muted)] leading-relaxed line-clamp-3 mb-2">
+                        {isEn ? stage.descEn : stage.descAr}
+                      </p>
+                    </div>
+
+                    {/* Step indicator */}
+                    <div className="pt-2 border-t border-[var(--border-default)]/50 flex items-center justify-between text-[10px] font-semibold text-[var(--text-secondary)]">
+                      <span>{isEn ? `Stage ${stage.number}` : `المرحلة ${stage.number}`}</span>
+                      {!isLast ? (
+                        <span className="flex items-center gap-1 text-[var(--color-primary)] font-bold">
+                          <span>{isEn ? 'Next' : 'التالي'}</span>
+                          {isEn ? <ArrowRight className="w-3 h-3" /> : <ArrowLeft className="w-3 h-3" />}
+                        </span>
+                      ) : (
+                        <span className="text-emerald-500 font-bold flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3" />
+                          <span>{isEn ? 'Growth' : 'النمو المستدام'}</span>
+                        </span>
+                      )}
                     </div>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </div>
         </div>
 
         {/* Bottom Partnership Callout */}
-        <div className="card-depth-2 rounded-2xl p-5 sm:p-7 border border-[var(--border-default)] bg-[var(--surface-secondary)]/70 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5 text-start">
+        <div className="card-depth-2 rounded-2xl p-4 sm:p-7 border border-[var(--border-default)] bg-[var(--surface-secondary)]/70 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3 text-start">
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center shrink-0">
               <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <div>
-              <h3 className="text-sm sm:text-base font-bold text-[var(--text-primary)] mb-0.5">
+              <h3 className="text-xs sm:text-base font-bold text-[var(--text-primary)] mb-0.5">
                 {isEn ? 'End-to-End Execution Under One Roof' : 'تنفيذ متكامل من البداية إلى التوسع تحت سقف واحد'}
               </h3>
-              <p className="text-xs text-[var(--text-secondary)] font-normal">
+              <p className="text-[11px] sm:text-xs text-[var(--text-secondary)] font-normal">
                 {isEn 
                   ? 'No fragmented vendors. Strategy, software engineering, and performance marketing in full synergy.'
                   : 'بدون تشتت بين جهات متعددة: الاستراتيجية، البرمجة، وتنمية المبيعات تعمل بتناغم كامل.'}
@@ -374,7 +387,7 @@ export const Workflow: React.FC = () => {
               updateConfig({ currentRoute: 'start-project' });
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="w-full md:w-auto px-6 py-2.5 sm:py-3 rounded-full bg-[var(--color-primary)] text-white font-bold text-xs sm:text-sm shadow-md hover:bg-[var(--color-primary)]/90 transition-all flex items-center justify-center gap-2 shrink-0 cursor-pointer"
+            className="w-full md:w-auto px-6 py-2.5 sm:py-3 rounded-full bg-[var(--color-primary)] text-white font-bold text-xs sm:text-sm shadow-md hover:bg-[var(--color-primary-hover)] transition-all flex items-center justify-center gap-2 shrink-0 cursor-pointer"
           >
             <span>{isEn ? 'Start Your Project Journey' : 'ابدأ رحلة مشروعك الآن'}</span>
             {isEn ? <ArrowRight className="w-3.5 h-3.5" /> : <ArrowLeft className="w-3.5 h-3.5" />}
