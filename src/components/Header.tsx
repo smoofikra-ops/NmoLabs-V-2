@@ -4,7 +4,6 @@ import { useSite } from '../context/SiteContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { Globe, Moon, Sun, Menu, X, Bookmark } from 'lucide-react';
 import { triggerBookingModal } from './BookingModal';
-import siteLogo from '../assets/images/site-logo.png';
 
 
 export const Header = () => {
@@ -153,8 +152,8 @@ export const Header = () => {
         </button>
 
         <div className="flex items-center justify-center absolute left-1/2 -translate-x-1/2 lg:relative lg:left-0 lg:translate-x-0 gap-2 cursor-pointer transition-transform hover:scale-[1.02]" onClick={() => handleScroll('hero')}>
-          <img src={config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="hidden lg:block object-contain drop-shadow-sm" style={{ height: `${config.desktopLogoHeight || 36}px` }} />
-          <img src={config.mobileLogoUrl || config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="block lg:hidden object-contain drop-shadow-sm" style={{ height: `${config.mobileLogoHeight || 28}px` }} />
+          <img src={config.desktopLogoUrl || '/logo-web.jpg'} alt="NMOLABS Logo" className="hidden lg:block object-contain drop-shadow-sm" style={{ height: `${config.desktopLogoHeight || 36}px` }} />
+          <img src={config.mobileLogoUrl || config.desktopLogoUrl || '/logo-web.jpg'} alt="NMOLABS Logo" className="block lg:hidden object-contain drop-shadow-sm" style={{ height: `${config.mobileLogoHeight || 28}px` }} />
         </div>
 
         <nav className="hidden lg:flex items-center gap-1 relative bg-[var(--surface-secondary)]/60 border border-[var(--border-default)] p-1 rounded-full" onMouseLeave={() => setHoveredNav(null)}>
@@ -235,7 +234,7 @@ export const Header = () => {
             >
               <div className="flex items-center justify-between mb-6 pb-4 border-b border-[var(--border-default)] shrink-0">
                 <div className="flex items-center gap-2">
-                  <img src={config.mobileLogoUrl || config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="object-contain drop-shadow-sm" style={{ height: `${config.mobileLogoHeight || 28}px` }} />
+                  <img src={config.mobileLogoUrl || config.desktopLogoUrl || '/logo-web.jpg'} alt="NMOLABS Logo" className="object-contain drop-shadow-sm" style={{ height: `${config.mobileLogoHeight || 28}px` }} />
                 </div>
                 <button 
                   onClick={() => setIsMobileMenuOpen(false)}
