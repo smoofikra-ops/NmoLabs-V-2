@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useSite } from '../context/SiteContext';
 import { motion } from 'motion/react';
 import { ExternalLink, Building2 } from 'lucide-react';
-import { InteractiveStatsCard } from "./InteractiveStatsCard";
 
 interface PartnerCardProps {
   partner: any;
@@ -183,10 +182,6 @@ export const Testimonials = () => {
             />
           ))}
         </div>
-      </div>
-      
-      <div className="max-w-7xl mx-auto px-6 mt-12 md:mt-16 relative z-10">
-         <InteractiveStatsCard />
       </div>
     </section>
   );
