@@ -224,13 +224,13 @@ const defaultConfig: SiteConfig = {
   sectionOrder: [
     'hero',
     'testimonials',
+    'storyBigVision',
     'storySolutions',
     'storyEcommerce',
     'storyWebsites',
     'storyGrowth',
     'storySocial',
     'workflow',
-    'storyBigVision',
     'faq',
     'blog'
   ],
@@ -404,6 +404,14 @@ const getInitialConfig = () => {
            order.splice(1, 0, 'testimonials');
         }
       }
+      // Keep STORY 07 immediately after success partners for returning visitors too.
+      const storyBigVisionIndex = order.indexOf('storyBigVision');
+      if (storyBigVisionIndex !== -1) {
+        order.splice(storyBigVisionIndex, 1);
+      }
+      const resolvedTestimonialsIndex = order.indexOf('testimonials');
+      order.splice(Math.max(0, resolvedTestimonialsIndex + 1), 0, 'storyBigVision');
+
       let resolvedContactNumber = parsed.contactNumber || defaultConfig.contactNumber;
       if (!resolvedContactNumber || resolvedContactNumber.includes('545698905')) {
         resolvedContactNumber = '0500804990';
