@@ -4,7 +4,6 @@ import { motion } from 'motion/react';
 import { UserRound, FlaskConical } from 'lucide-react';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { useSite, SocialLink } from '../context/SiteContext';
-import siteLogo from '../assets/images/site-logo.png';
 
 const getSocialSvg = (icon: string) => {
   switch (icon) {
@@ -112,7 +111,7 @@ export const Footer = () => {
           {/* Logo and About Us */}
           <div className="space-y-5 flex flex-col items-center lg:items-start text-center lg:text-start">
             <div className="flex items-center gap-2 cursor-pointer transition-transform hover:scale-105" onClick={() => handleScroll('hero')}>
-              <img src={config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="h-14 md:h-16 object-contain drop-shadow-sm" />
+              <img src={config.desktopLogoUrl || '/logo-web.jpg'} alt="NMOLABS Logo" className="h-14 md:h-16 object-contain drop-shadow-sm" />
             </div>
             <p className="text-[var(--text-secondary)] text-sm leading-relaxed max-w-sm">
               {config.footerDescription || (isEn 
