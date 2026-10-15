@@ -14,7 +14,7 @@ export type StoryAssetKey = keyof typeof STORY_ASSETS;
 export const PROJECT_ASSETS = {
   // Digital Systems
   SYSTEMS_NUCLEUS: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/nucleus.png',
-  SYSTEMS_NBOS: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/nbos.png',
+  SYSTEMS_NBOS: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/nbos.jpeg',
   SYSTEMS_NMO_ERP: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/nmo-erp.png',
   SYSTEMS_STORE_INTELLIGENCE: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/store-intelligence.png',
   SYSTEMS_AMBASSADOR_OF_GROWTH: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/ambassador-of-growth.png',
