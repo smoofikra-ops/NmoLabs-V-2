@@ -143,7 +143,7 @@ export const Workflow: React.FC = () => {
     <section 
       ref={containerRef}
       id="workflow"
-      className="py-12 sm:py-20 relative overflow-hidden bg-[var(--surface-primary)] border-b border-[var(--border-default)] transition-colors duration-300"
+      className="py-14 sm:py-20 relative overflow-hidden bg-[var(--page-background)] border-b border-[var(--section-divider)] transition-colors duration-300"
     >
       {/* Ambient background glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[70vw] max-w-4xl h-96 bg-[var(--color-primary)]/5 dark:bg-[var(--color-primary)]/10 blur-[120px] rounded-full pointer-events-none" />
@@ -166,7 +166,7 @@ export const Workflow: React.FC = () => {
             )}
           </h2>
 
-          <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-normal max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] font-medium max-w-2xl mx-auto leading-relaxed">
             {isEn 
               ? 'Our battle-tested 7-stage methodology transforms raw concepts into scalable, revenue-generating digital systems.'
               : 'منهجية من 7 مراحل متكاملة تحول الفكرة إلى منظومة برمجية وتجارية متكاملة وقابلة للتوسع ومضاعفة الأرباح.'}
@@ -213,7 +213,7 @@ export const Workflow: React.FC = () => {
                     opacity: shouldReduceMotion ? 1 : nodeActive,
                     scale: nodeScale
                   }}
-                  className="group rounded-2xl border border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-primary)]/95 backdrop-blur-md transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-xs hover:shadow-md hover:-translate-y-0.5"
+                  className="group rounded-2xl border-2 border-[var(--border-default)] hover:border-[var(--color-primary)] bg-[var(--surface-elevated)]/98 backdrop-blur-md transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-[var(--card-shadow-2)] hover:shadow-[var(--card-shadow-hover)] hover:-translate-y-0.5"
                 >
                   {/* IMAGE COVER */}
                   <div className="relative w-full h-24 overflow-hidden bg-[var(--surface-secondary)] shrink-0">
@@ -238,19 +238,19 @@ export const Workflow: React.FC = () => {
                         <Icon className="w-4.5 h-4.5" strokeWidth={2} />
                       </div>
 
-                      <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-full bg-[var(--surface-secondary)] text-[var(--text-secondary)] border border-[var(--border-default)] mb-1">
+                      <span className="text-xs font-bold font-mono px-2 py-0.5 rounded-full bg-[var(--surface-secondary)] text-[var(--text-secondary)] border border-[var(--border-default)] mb-1.5">
                         {stage.number}
                       </span>
 
-                      <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)] mb-0.5">
+                      <h4 className="text-sm xl:text-base font-bold text-[var(--text-primary)] mb-1">
                         {isEn ? stage.nameEn : stage.nameAr}
                       </h4>
 
-                      <p className="text-[10px] font-semibold text-[var(--color-primary)] mb-1.5 line-clamp-1">
+                      <p className="text-xs font-semibold text-[var(--color-primary)] mb-2 line-clamp-2">
                         {isEn ? stage.tagEn : stage.tagAr}
                       </p>
 
-                      <p className="text-[11px] text-[var(--text-muted)] leading-relaxed line-clamp-3">
+                      <p className="text-[13px] xl:text-sm text-[var(--text-secondary)] leading-relaxed line-clamp-4">
                         {isEn ? stage.descEn : stage.descAr}
                       </p>
                     </div>
@@ -285,7 +285,7 @@ export const Workflow: React.FC = () => {
               return (
                 <div 
                   key={stage.id}
-                  className="min-w-[75vw] sm:min-w-[270px] snap-center shrink-0 rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)]/95 backdrop-blur-md shadow-xs overflow-hidden flex flex-col justify-between group"
+                  className="min-w-[82vw] sm:min-w-[300px] snap-center shrink-0 rounded-2xl border-2 border-[var(--border-default)] bg-[var(--surface-elevated)]/98 backdrop-blur-md shadow-[var(--card-shadow-2)] overflow-hidden flex flex-col justify-between group"
                 >
                   {/* IMAGE COVER */}
                   <div className="relative w-full h-24 sm:h-28 overflow-hidden bg-[var(--surface-secondary)] shrink-0">
@@ -316,22 +316,22 @@ export const Workflow: React.FC = () => {
                           <Icon className="w-4 h-4" strokeWidth={2} />
                         </div>
                         <div className="min-w-0 flex-1">
-                          <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)] truncate">
+                          <h4 className="text-base sm:text-[17px] font-bold text-[var(--text-primary)] leading-snug">
                             {isEn ? stage.nameEn : stage.nameAr}
                           </h4>
-                          <p className="text-[10px] font-semibold text-[var(--color-primary)] truncate">
+                          <p className="text-xs sm:text-sm font-semibold text-[var(--color-primary)] leading-snug line-clamp-2">
                             {isEn ? stage.tagEn : stage.tagAr}
                           </p>
                         </div>
                       </div>
 
-                      <p className="text-[11px] text-[var(--text-muted)] leading-relaxed line-clamp-3 mb-2">
+                      <p className="text-sm text-[var(--text-secondary)] leading-6 line-clamp-4 mb-3">
                         {isEn ? stage.descEn : stage.descAr}
                       </p>
                     </div>
 
                     {/* Step indicator */}
-                    <div className="pt-2 border-t border-[var(--border-default)]/50 flex items-center justify-between text-[10px] font-semibold text-[var(--text-secondary)]">
+                    <div className="pt-3 border-t border-[var(--border-default)]/70 flex items-center justify-between text-xs font-semibold text-[var(--text-secondary)]">
                       <span>{isEn ? `Stage ${stage.number}` : `المرحلة ${stage.number}`}</span>
                       {!isLast ? (
                         <span className="flex items-center gap-1 text-[var(--color-primary)] font-bold">
@@ -359,10 +359,10 @@ export const Workflow: React.FC = () => {
               <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <div>
-              <h3 className="text-xs sm:text-base font-bold text-[var(--text-primary)] mb-0.5">
+              <h3 className="text-base sm:text-lg font-bold text-[var(--text-primary)] mb-1">
                 {isEn ? 'End-to-End Execution Under One Roof' : 'تنفيذ متكامل من البداية إلى التوسع تحت سقف واحد'}
               </h3>
-              <p className="text-[11px] sm:text-xs text-[var(--text-secondary)] font-normal">
+              <p className="text-sm text-[var(--text-secondary)] font-medium leading-relaxed">
                 {isEn 
                   ? 'No fragmented vendors. Strategy, software engineering, and performance marketing in full synergy.'
                   : 'بدون تشتت بين جهات متعددة: الاستراتيجية، البرمجة، وتنمية المبيعات تعمل بتناغم كامل.'}
