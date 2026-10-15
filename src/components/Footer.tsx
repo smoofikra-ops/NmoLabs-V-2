@@ -7,19 +7,42 @@ import { useSite, SocialLink } from '../context/SiteContext';
 
 const getSocialSvg = (icon: string) => {
   switch (icon) {
-    case 'Instagram': 
-      return <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#E1306C]"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>;
-    case 'Twitter': 
+    case 'Instagram':
+      return <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>;
+    case 'Twitter':
     case 'X':
-      return <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-black dark:text-white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 4.076H5.03z"/></svg>;
-    case 'TikTok': 
-      return <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-black dark:text-white drop-shadow-[1px_1px_0_#00f2fe]"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>;
-    case 'Snapchat': 
-      return <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-[#FFFC00] drop-shadow-sm"><path d="M22.54 16.42c-.08-.14-1.3-1.07-2.39-1.63-.48-.25-1.03-.49-1.57-.7 0-.02 0-.04 0-.05.15-.36.43-1.02.58-1.54.19-.65.23-.92.23-1 0-.15-.05-.28-.2-.36-.18-.1-.4-.1-.58 0-.17.09-.27.24-.3.41-.05.27-.22.84-.36 1.15a13.9 13.9 0 0 1-1.05-1.42c-.41-.5-1.28-1.43-2.14-2.11-.84-.66-1.58-.87-2.03-.87-.45 0-1.19.21-2.03.87-.86.68-1.73 1.61-2.14 2.11-.38.48-.74.96-1.05 1.42-.14-.31-.31-.88-.36-1.15-.03-.17-.13-.32-.3-.41-.18-.1-.4-.1-.58 0-.15.08-.2.21-.2.36 0 .08.04.35.23 1 .15.52.43 1.18.58 1.54 0 .01 0 .03 0 .05-.54.21-1.09.45-1.57.7-1.09.56-2.31 1.49-2.39 1.63-.09.15-.15.34-.13.51.02.17.11.33.25.43.27.18 1.19.5 2.15.54.2 0 .42-.02.66-.08.28 1.1.72 1.68.96 1.95.27.31.62.48 1.05.51h.14c.26 0 .5-.05.74-.15.34-.14.73-.39 1.19-.65.48-.27 1.02-.57 1.62-.57.6 0 1.14.3 1.62.57.46.26.85.51 1.19.65.24.1.48.15.74.15h.14c.43-.03.78-.2 1.05-.51.24-.27.68-.85.96-1.95.24.06.46.08.66.08.96-.04 1.88-.36 2.15-.54.14-.1.23-.26.25-.43.02-.17-.04-.36-.13-.51z"/></svg>;
-    case 'Ghost': return <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 10h.01"/><path d="M15 10h.01"/><path d="M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z"/></svg>;
-    case 'Facebook': return <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#1877F2]"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>;
-    case 'Linkedin': return <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#0A66C2]"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>;
-    default: return <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/></svg>;
+      return <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 4.076H5.03z"/></svg>;
+    case 'TikTok':
+      return <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>;
+    case 'Snapchat':
+    case 'Ghost':
+      return <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-white"><path d="M22.54 16.42c-.08-.14-1.3-1.07-2.39-1.63-.48-.25-1.03-.49-1.57-.7 0-.02 0-.04 0-.05.15-.36.43-1.02.58-1.54.19-.65.23-.92.23-1 0-.15-.05-.28-.2-.36-.18-.1-.4-.1-.58 0-.17.09-.27.24-.3.41-.05.27-.22.84-.36 1.15a13.9 13.9 0 0 1-1.05-1.42c-.41-.5-1.28-1.43-2.14-2.11-.84-.66-1.58-.87-2.03-.87-.45 0-1.19.21-2.03.87-.86.68-1.73 1.61-2.14 2.11-.38.48-.74.96-1.05 1.42-.14-.31-.31-.88-.36-1.15-.03-.17-.13-.32-.3-.41-.18-.1-.4-.1-.58 0-.15.08-.2.21-.2.36 0 .08.04.35.23 1 .15.52.43 1.18.58 1.54 0 .01 0 .03 0 .05-.54.21-1.09.45-1.57.7-1.09.56-2.31 1.49-2.39 1.63-.09.15-.15.34-.13.51.02.17.11.33.25.43.27.18 1.19.5 2.15.54.2 0 .42-.02.66-.08.28 1.1.72 1.68.96 1.95.27.31.62.48 1.05.51h.14c.26 0 .5-.05.74-.15.34-.14.73-.39 1.19-.65.48-.27 1.02-.57 1.62-.57.6 0 1.14.3 1.62.57.46.26.85.51 1.19.65.24.1.48.15.74.15h.14c.43-.03.78-.2 1.05-.51.24-.27.68-.85.96-1.95.24.06.46.08.66.08.96-.04 1.88-.36 2.15-.54.14-.1.23-.26.25-.43.02-.17-.04-.36-.13-.51z"/></svg>;
+    case 'Facebook':
+      return <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>;
+    case 'Linkedin':
+      return <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>;
+    default:
+      return <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/></svg>;
+  }
+};
+
+const getSocialBrandStyle = (icon: string): React.CSSProperties => {
+  switch (icon) {
+    case 'Instagram':
+      return { background: 'linear-gradient(135deg,#833AB4 0%,#E1306C 52%,#FCAF45 100%)' };
+    case 'Twitter':
+    case 'X':
+    case 'TikTok':
+      return { backgroundColor: '#050505' };
+    case 'Snapchat':
+    case 'Ghost':
+      return { backgroundColor: '#FFFC00' };
+    case 'Facebook':
+      return { backgroundColor: '#1877F2' };
+    case 'Linkedin':
+      return { backgroundColor: '#0A66C2' };
+    default:
+      return { backgroundColor: 'var(--color-primary)' };
   }
 };
 
@@ -111,7 +134,7 @@ export const Footer = () => {
           {/* Logo and About Us */}
           <div className="space-y-5 flex flex-col items-center lg:items-start text-center lg:text-start">
             <div className="flex items-center gap-2 cursor-pointer transition-transform hover:scale-105" onClick={() => handleScroll('hero')}>
-              <img src={config.desktopLogoUrl || '/logo-web.jpg'} alt="NMOLABS Logo" className="h-14 md:h-16 object-contain drop-shadow-sm" />
+              <img src={config.desktopLogoUrl || '/logo.png'} alt="NMOLABS Logo" className="h-14 md:h-16 w-auto object-contain drop-shadow-sm" />
             </div>
             <p className="text-[var(--text-secondary)] text-sm leading-relaxed max-w-sm">
               {config.footerDescription || (isEn 
@@ -126,7 +149,8 @@ export const Footer = () => {
                   target="_blank" 
                   rel="noreferrer" 
                   title={link.name} 
-                  className="w-9 h-9 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] flex items-center justify-center text-[var(--text-muted)] hover:bg-[var(--color-primary)] hover:text-white hover:border-transparent hover:shadow-md transition-all duration-200"
+                  className="w-10 h-10 rounded-full border border-black/10 dark:border-white/15 flex items-center justify-center text-white hover:-translate-y-1 hover:shadow-lg transition-all duration-200"
+                  style={getSocialBrandStyle(link.icon)}
                 >
                   {getSocialSvg(link.icon)}
                 </a>
@@ -163,7 +187,7 @@ export const Footer = () => {
                         window.scrollTo(0, 0);
                       }
                     }} 
-                    className={`relative flex items-center gap-2 w-fit text-right rtl:text-right ltr:text-left px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isHovered ? 'text-[var(--color-primary)] bg-[var(--surface-secondary)] border border-[var(--interactive-border)] shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+                    className={`relative flex items-center gap-2 w-fit text-right rtl:text-right ltr:text-left px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${isHovered ? 'text-[var(--color-primary)] bg-[var(--surface-secondary)] border border-[var(--interactive-border)] shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)]/40 shrink-0" />
                     {isEn ? link.nameEn : link.nameAr}
@@ -200,7 +224,7 @@ export const Footer = () => {
                       updateConfig({ currentRoute: link.route });
                       window.scrollTo(0, 0);
                     }}
-                    className={`relative flex items-center gap-2 w-fit text-right rtl:text-right ltr:text-left px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${isHovered ? 'text-[var(--color-primary)] bg-[var(--surface-secondary)] border border-[var(--interactive-border)] shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+                    className={`relative flex items-center gap-2 w-fit text-right rtl:text-right ltr:text-left px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${isHovered ? 'text-[var(--color-primary)] bg-[var(--surface-secondary)] border border-[var(--interactive-border)] shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]/50 shrink-0" />
                     {isEn ? link.nameEn : link.nameAr}
@@ -225,7 +249,7 @@ export const Footer = () => {
                 {isEn ? 'Contact & Headquarters' : 'التواصل والمقر'}
               </h4>
             </div>
-            <ul className={`space-y-2.5 text-xs text-[var(--text-secondary)] font-medium md:block ${openSection === 'contact' ? 'block' : 'hidden'}`}>
+            <ul className={`space-y-2.5 text-sm text-[var(--text-secondary)] font-medium md:block ${openSection === 'contact' ? 'block' : 'hidden'}`}>
               <li className="flex items-center gap-3 px-3.5 py-2.5 bg-[var(--surface-secondary)]/70 border border-[var(--border-default)] rounded-xl transition-all hover:border-[var(--interactive-border)]">
                 <MapPin size={16} className="text-[var(--color-primary)] shrink-0" />
                 <span>{isEn ? 'Riyadh, Kingdom of Saudi Arabia' : 'المملكة العربية السعودية، الرياض'}</span>
