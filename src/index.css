@@ -36,13 +36,13 @@
   --color-purple: #7C3AED;
   
   /* Light Theme Surfaces (High-Contrast, Dimensional Default) */
-  --page-background: #F8FAFC;
-  --surface-primary: #FFFFFF;
-  --surface-secondary: #F1F5F9;
-  --surface-tertiary: #E2E8F0;
+  --page-background: #EEF3F8;
+  --surface-primary: #F8FAFC;
+  --surface-secondary: #E5ECF4;
+  --surface-tertiary: #D9E3EE;
   --surface-elevated: #FFFFFF;
-  --surface-glass: rgba(255, 255, 255, 0.88);
-  --surface-brand: #F8FAFC;
+  --surface-glass: rgba(248, 250, 252, 0.90);
+  --surface-brand: #EEF3F8;
 
   /* Interactive & Nav */
   --interactive-border: rgba(15, 98, 254, 0.15);
@@ -58,12 +58,12 @@
 
   /* Text Colors */
   --text-primary: #0A0F1D; /* High contrast headings */
-  --text-secondary: #334155; /* Body copy */
+  --text-secondary: #243244; /* Body copy */
   --text-muted: #64748B; /* Secondary & notes */
   
   /* Borders & UI */
-  --border-default: rgba(15, 23, 42, 0.08);
-  --border-subtle: rgba(15, 23, 42, 0.04);
+  --border-default: rgba(15, 23, 42, 0.12);
+  --border-subtle: rgba(15, 23, 42, 0.07);
   --border-hover: rgba(15, 98, 254, 0.35);
   
   /* Card 3D Elevation Shadows - Light Mode */
@@ -76,8 +76,8 @@
   --color-brand-blue-val: #0F62FE;
   --color-brand-purple-val: #7C3AED;
   --color-brand-green-val: #10B981;
-  --bg-color: #FFFFFF;
-  --bg-color-darker: #F8FAFC;
+  --bg-color: #F8FAFC;
+  --bg-color-darker: #EEF3F8;
   --text-color: #0A0F1D;
   
   /* Glassmorphism */
@@ -156,8 +156,8 @@
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-100%); } 
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 0.75rem)); }
 }
 @keyframes marquee-rtl {
   0% { transform: translateX(0%); }
