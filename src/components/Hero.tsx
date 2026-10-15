@@ -81,7 +81,7 @@ const DynamicTypewriter = ({ isEn }: { isEn: boolean }) => {
   }, [displayedText, isDeleting, phraseIndex, typingSpeed, phrases]);
 
   return (
-    <span className="inline text-[var(--text-primary)] font-extrabold tracking-normal">
+    <span className="inline text-white font-extrabold tracking-normal">
       {displayedText}
       <span className="inline-block w-[2px] bg-[var(--color-primary)] h-[1.05em] align-middle animate-pulse mx-1.5 shrink-0 rounded-full" />
     </span>
@@ -174,12 +174,12 @@ export const Hero = () => {
           alt=""
           role="presentation"
           aria-hidden="true"
-          className="w-full h-full object-cover object-center opacity-[0.34] transition-transform duration-1000 scale-100"
+          className="w-full h-full object-cover object-center opacity-[0.12] dark:opacity-[0.28] saturate-[0.72] dark:saturate-100 transition-transform duration-1000 scale-100"
         />
       </div>
 
       {/* Background Gradient Field - Localized gentle contrast preservation */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-primary)]/80 via-[var(--surface-primary)]/50 to-[var(--surface-primary)]/90 dark:from-[#070b14]/85 dark:via-[#070b14]/55 dark:to-[#070b14]/95 pointer-events-none z-[2]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC]/96 via-[#EEF3F8]/90 to-[#EEF3F8]/98 dark:from-[#070b14]/88 dark:via-[#070b14]/66 dark:to-[#070b14]/97 pointer-events-none z-[2]" />
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05] pointer-events-none z-[2]" />
 
       
@@ -206,7 +206,7 @@ export const Hero = () => {
           </h1>
           
           <div className="mb-5 sm:mb-7 min-h-[3.8rem] sm:min-h-[4.6rem] flex items-center justify-center w-full px-2">
-            <div className="hero-intelligence-badge inline-flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl bg-[var(--surface-primary)]/82 backdrop-blur-md border border-[var(--border-default)] text-[var(--text-primary)] text-base sm:text-xl md:text-2xl font-extrabold max-w-3xl text-center leading-relaxed transition-all duration-300 shadow-[var(--card-shadow-1)]">
+            <div className="hero-intelligence-badge inline-flex items-center justify-center px-4 sm:px-6 py-3 sm:py-3.5 rounded-2xl border text-white text-[15px] sm:text-lg md:text-xl font-extrabold max-w-3xl text-center leading-relaxed transition-all duration-300 shadow-[var(--card-shadow-2)]">
               <DynamicTypewriter isEn={isEn} />
             </div>
           </div>
