@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { PinnedStoryScene } from './PinnedStoryScene';
 import { STORY_ASSETS } from './storyAssets';
+import { InteractiveStatsCard } from '../InteractiveStatsCard';
 
 const PERFORMANCE_STAGES = [
   {
@@ -85,6 +86,7 @@ export const StoryGrowthCampaigns: React.FC = () => {
   const totalCount = PERFORMANCE_STAGES.length + 1;
 
   return (
+    <>
     <PinnedStoryScene
       id="story-growth"
       bgUrl={STORY_ASSETS.STORY_05_GROWTH}
@@ -361,5 +363,24 @@ export const StoryGrowthCampaigns: React.FC = () => {
         </div>
       )}
     </PinnedStoryScene>
+
+    <section
+      aria-label={isEn ? 'Marketing performance indicators' : 'مؤشرات نتائج التسويق والأداء'}
+      className="relative py-14 sm:py-20 border-b border-[var(--border-default)]"
+      style={{ backgroundColor: 'var(--page-background)' }}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-8">
+          <p className="text-xs sm:text-sm font-bold text-[var(--color-primary)] mb-2">
+            {isEn ? 'Performance indicators' : 'مؤشرات نتائج الحملات'}
+          </p>
+          <h3 className="text-2xl sm:text-3xl font-black text-[var(--text-primary)]">
+            {isEn ? 'Growth outcomes belong with performance marketing' : 'النتائج ضمن منظومة التسويق وإدارة الحملات'}
+          </h3>
+        </div>
+        <InteractiveStatsCard />
+      </div>
+    </section>
+    </>
   );
 };

@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { useSite } from '../context/SiteContext';
 import { BookOpen, Calendar, ArrowLeft, ArrowRight, Tag, Sparkles, TrendingUp, Layers, Cpu, Compass } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import { STORY_ASSETS } from './storytelling/storyAssets';
 
 export interface BlogPost {
   id: number;
@@ -134,25 +135,18 @@ export const BlogCard: React.FC<{ post: BlogPost; isEn: boolean }> = ({ post, is
           {isEn ? (post.categoryEn || post.category) : post.category}
         </div>
 
-        {!imgError && post.image ? (
-          <img
-            src={post.image}
-            alt={isEn ? (post.titleEn || post.title) : post.title}
-            loading="lazy"
-            onError={() => setImgError(true)}
-            className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500"
-            referrerPolicy="no-referrer"
-          />
-        ) : (
-          /* Branded Fallback Visual */
-          <div className={`w-full h-full bg-gradient-to-br ${graphic.gradient} flex flex-col items-center justify-center p-6 text-center relative`}>
-            <div className="absolute inset-0 bg-grid-pattern opacity-10" />
-            <div className="p-3.5 rounded-2xl bg-[var(--surface-primary)]/80 border border-[var(--border-default)] shadow-sm mb-2 backdrop-blur-sm">
-              {graphic.icon}
-            </div>
-            <span className="text-xs font-bold text-[var(--text-muted)] tracking-wider uppercase">
-              {isEn ? (post.categoryEn || post.category) : post.category}
-            </span>
+        <img
+          src={!imgError && post.image ? post.image : STORY_ASSETS.STORY_01_HERO}
+          alt={isEn ? (post.titleEn || post.title) : post.title}
+          loading="lazy"
+          decoding="async"
+          onError={() => setImgError(true)}
+          className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500"
+          referrerPolicy="no-referrer"
+        />
+        {imgError && (
+          <div className="absolute bottom-3 left-3 z-10 p-2 rounded-xl bg-[var(--surface-primary)]/85 border border-[var(--border-default)] backdrop-blur-sm">
+            {graphic.icon}
           </div>
         )}
       </div>
@@ -254,10 +248,18 @@ export const Blog = () => {
       ) : (
         /* Homepage Marquee Showcase */
         <div className="relative z-10 overflow-hidden w-full" dir="ltr">
-          <div className="flex w-max animate-marquee hover:[animation-play-state:paused] gap-6 px-4">
-            {[...blogPosts, ...blogPosts].map((post, index) => (
-              <div key={`${post.id}-${index}`} className="w-[320px] sm:w-[380px] shrink-0">
-                <BlogCard post={post} isEn={isEn} />
+          <div className="flex w-max animate-marquee hover:[animation-play-state:paused] gap-6">
+            {[0, 1].map((groupIndex) => (
+              <div
+                key={groupIndex}
+                className="flex shrink-0 gap-6"
+                aria-hidden={groupIndex === 1 ? 'true' : undefined}
+              >
+                {blogPosts.map((post) => (
+                  <div key={`${groupIndex}-${post.id}`} className="w-[320px] sm:w-[380px] shrink-0">
+                    <BlogCard post={post} isEn={isEn} />
+                  </div>
+                ))}
               </div>
             ))}
           </div>

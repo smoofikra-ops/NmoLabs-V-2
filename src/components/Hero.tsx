@@ -3,7 +3,6 @@ import { useSite } from '../context/SiteContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, ArrowLeft, Monitor, ShoppingBag, Smartphone, Database, LineChart, BrainCircuit, Bot } from 'lucide-react';
 import { triggerBookingModal } from './BookingModal';
-import siteLogo from '../assets/images/site-logo.png';
 import { STORY_ASSETS } from './storytelling/storyAssets';
 
 
@@ -82,9 +81,9 @@ const DynamicTypewriter = ({ isEn }: { isEn: boolean }) => {
   }, [displayedText, isDeleting, phraseIndex, typingSpeed, phrases]);
 
   return (
-    <span className="inline text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] font-black tracking-normal">
+    <span className="inline text-white font-extrabold tracking-normal">
       {displayedText}
-      <span className="inline-block w-[3px] bg-white h-[1.1em] align-middle animate-pulse mx-1.5 shrink-0 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.9)]" />
+      <span className="inline-block w-[2px] bg-[var(--color-primary)] h-[1.05em] align-middle animate-pulse mx-1.5 shrink-0 rounded-full" />
     </span>
   );
 };
@@ -150,31 +149,6 @@ const InteractiveShowcase = () => {
 
 export const Hero = () => {
   const { config, updateConfig } = useSite();
-  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
-  const videoRefs = React.useRef<(HTMLVideoElement | null)[]>([]);
-
-  useEffect(() => {
-    // When tab becomes visible again, ensure active video attempts play safely
-    const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        const activeVid = videoRefs.current[activeVideoIndex];
-        if (activeVid && activeVid.paused) {
-          const playPromise = activeVid.play();
-          if (playPromise !== undefined) {
-            playPromise.catch(() => {
-              // Ignore browser power saving / policy restrictions
-            });
-          }
-        }
-      }
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, [activeVideoIndex]);
-
   if (!config.sections.hero) return null;
 
   const isEn = config.language === 'en';
@@ -200,61 +174,12 @@ export const Hero = () => {
           alt=""
           role="presentation"
           aria-hidden="true"
-          className="w-full h-full object-cover object-center opacity-85 dark:opacity-90 transition-transform duration-1000 scale-100"
+          className="w-full h-full object-cover object-center opacity-[0.28] dark:opacity-[0.42] saturate-[0.82] dark:saturate-110 transition-transform duration-1000 scale-100"
         />
       </div>
 
-      {config.heroVideoUrl ? (
-        <video
-          autoPlay
-          loop={config.heroVideoLoop !== false}
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-60 dark:opacity-70 pointer-events-none z-[1] mix-blend-screen dark:mix-blend-lighten"
-          src={config.heroVideoUrl}
-          poster={config.heroVideoPoster}
-        />
-      ) : (
-        <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-[1]">
-          {[
-            "https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/assets/videos/%D8%A7hero-vid1.mp4",
-            "https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/assets/videos/hero-vid2.mp4"
-          ].map((src, index) => (
-            <video
-              key={src}
-              ref={(el) => (videoRefs.current[index] = el)}
-              src={src}
-              autoPlay={index === 0}
-              muted
-              playsInline
-              preload="auto"
-              onEnded={() => {
-                const nextIndex = (index + 1) % 2;
-                setActiveVideoIndex(nextIndex);
-                const nextVideo = videoRefs.current[nextIndex];
-                if (nextVideo) {
-                  try {
-                    nextVideo.currentTime = 0;
-                    const playPromise = nextVideo.play();
-                    if (playPromise !== undefined) {
-                      playPromise.catch(() => {
-                        // Safely swallow power-saving or autoplay pause events
-                      });
-                    }
-                  } catch {
-                    // Safe swallow
-                  }
-                }
-              }}
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 mix-blend-screen dark:mix-blend-lighten ${
-                activeVideoIndex === index ? 'opacity-55 dark:opacity-65' : 'opacity-0'
-              }`}
-            />
-          ))}
-        </div>
-      )}
       {/* Background Gradient Field - Localized gentle contrast preservation */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-primary)]/80 via-[var(--surface-primary)]/50 to-[var(--surface-primary)]/90 dark:from-[#070b14]/85 dark:via-[#070b14]/55 dark:to-[#070b14]/95 pointer-events-none z-[2]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC]/80 via-[#EEF3F8]/68 to-[#EEF3F8]/88 dark:from-[#070b14]/72 dark:via-[#070b14]/48 dark:to-[#070b14]/88 pointer-events-none z-[2]" />
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05] pointer-events-none z-[2]" />
 
       
@@ -281,7 +206,7 @@ export const Hero = () => {
           </h1>
           
           <div className="mb-5 sm:mb-7 min-h-[3.8rem] sm:min-h-[4.6rem] flex items-center justify-center w-full px-2">
-            <div className="hero-intelligence-badge inline-flex items-center justify-center px-5 sm:px-8 py-2.5 sm:py-3.5 rounded-2xl backdrop-blur-md border border-white/30 text-white text-lg sm:text-2xl md:text-3xl font-black max-w-full text-center transition-all duration-300 hover:border-white/50">
+            <div className="hero-intelligence-badge inline-flex items-center justify-center px-4 sm:px-6 py-3 sm:py-3.5 rounded-2xl border text-white text-[15px] sm:text-lg md:text-xl font-extrabold max-w-3xl text-center leading-relaxed transition-all duration-300 shadow-[var(--card-shadow-2)]">
               <DynamicTypewriter isEn={isEn} />
             </div>
           </div>
@@ -323,7 +248,7 @@ export const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer text-[var(--text-muted)] hover:text-[var(--color-primary)] transition-colors"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer text-white/95 hover:text-white transition-colors drop-shadow-[0_2px_8px_rgba(0,0,0,0.55)]"
         onClick={() => {
           const nextSection = document.getElementById('about') || document.getElementById('services');
           if (nextSection) {

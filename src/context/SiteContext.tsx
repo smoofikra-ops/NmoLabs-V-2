@@ -175,6 +175,8 @@ export type ApiLinks = {
   claude: string;
 };
 
+const OFFICIAL_TRANSPARENT_LOGO_URL = 'https://eqwcrgiqghjewnltnsce.supabase.co/storage/v1/object/sign/NmoLabs%20V-2/N%20(3).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82Njk4MWE2Yy1hMWNkLTRiYjUtODkyNS01OGUxYjdmODgxNzUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJObW9MYWJzIFYtMi9OICgzKS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg0NjgwOTQ2LCJleHAiOjE4MTYyMTY5NDZ9.ADM9I-DCuOJR3uTH8fcBSb6pB68eu-eBfUsMtA4t00o';
+
 const defaultConfig: SiteConfig = {
   heroTitle: 'نحوّل أفكارك إلى حلول رقمية تعمل وتنمو',
   heroTitleEn: 'We Turn Your Ideas into Scalable Digital Solutions That Perform',
@@ -224,13 +226,13 @@ const defaultConfig: SiteConfig = {
   sectionOrder: [
     'hero',
     'testimonials',
+    'storyBigVision',
     'storySolutions',
     'storyEcommerce',
     'storyWebsites',
     'storyGrowth',
     'storySocial',
     'workflow',
-    'storyBigVision',
     'faq',
     'blog'
   ],
@@ -356,8 +358,8 @@ const defaultConfig: SiteConfig = {
   footerDescription: 'منصة وشريك نمو تقني لرواد الأعمال والمتاجر الإلكترونية في السعودية.',
   currentRoute: 'home',
   logoText: 'NMOLABS',
-  desktopLogoUrl: 'https://eqwcrgiqghjewnltnsce.supabase.co/storage/v1/object/sign/NmoLabs%20V-2/N%20(3).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82Njk4MWE2Yy1hMWNkLTRiYjUtODkyNS01OGUxYjdmODgxNzUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJObW9MYWJzIFYtMi9OICgzKS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg0NjgwOTQ2LCJleHAiOjE4MTYyMTY5NDZ9.ADM9I-DCuOJR3uTH8fcBSb6pB68eu-eBfUsMtA4t00o',
-  mobileLogoUrl: 'https://eqwcrgiqghjewnltnsce.supabase.co/storage/v1/object/sign/NmoLabs%20V-2/N%20(3).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82Njk4MWE2Yy1hMWNkLTRiYjUtODkyNS01OGUxYjdmODgxNzUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJObW9MYWJzIFYtMi9OICgzKS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg0NjgwOTQ2LCJleHAiOjE4MTYyMTY5NDZ9.ADM9I-DCuOJR3uTH8fcBSb6pB68eu-eBfUsMtA4t00o',
+  desktopLogoUrl: OFFICIAL_TRANSPARENT_LOGO_URL,
+  mobileLogoUrl: OFFICIAL_TRANSPARENT_LOGO_URL,
   desktopLogoHeight: 64,
   mobileLogoHeight: 52,
   language: 'ar',
@@ -404,6 +406,14 @@ const getInitialConfig = () => {
            order.splice(1, 0, 'testimonials');
         }
       }
+      // Keep STORY 07 immediately after success partners for returning visitors too.
+      const storyBigVisionIndex = order.indexOf('storyBigVision');
+      if (storyBigVisionIndex !== -1) {
+        order.splice(storyBigVisionIndex, 1);
+      }
+      const resolvedTestimonialsIndex = order.indexOf('testimonials');
+      order.splice(Math.max(0, resolvedTestimonialsIndex + 1), 0, 'storyBigVision');
+
       let resolvedContactNumber = parsed.contactNumber || defaultConfig.contactNumber;
       if (!resolvedContactNumber || resolvedContactNumber.includes('545698905')) {
         resolvedContactNumber = '0500804990';
@@ -444,8 +454,8 @@ const getInitialConfig = () => {
         footerDescription: parsed.footerDescription || defaultConfig.footerDescription,
         currentRoute: initialRoute,
         logoText: parsed.logoText || defaultConfig.logoText,
-        desktopLogoUrl: parsed.desktopLogoUrl || defaultConfig.desktopLogoUrl,
-        mobileLogoUrl: parsed.mobileLogoUrl || defaultConfig.mobileLogoUrl,
+        desktopLogoUrl: !parsed.desktopLogoUrl || parsed.desktopLogoUrl === '/logo-web.jpg' ? defaultConfig.desktopLogoUrl : parsed.desktopLogoUrl,
+        mobileLogoUrl: !parsed.mobileLogoUrl || parsed.mobileLogoUrl === '/logo-web.jpg' ? defaultConfig.mobileLogoUrl : parsed.mobileLogoUrl,
         desktopLogoHeight: parsed.desktopLogoHeight || defaultConfig.desktopLogoHeight,
         mobileLogoHeight: parsed.mobileLogoHeight || defaultConfig.mobileLogoHeight,
         language: parsed.language || 'ar',

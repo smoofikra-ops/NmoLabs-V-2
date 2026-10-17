@@ -100,15 +100,12 @@ export const StoryBigVision: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="relative rounded-3xl bg-[var(--surface-primary)]/95 backdrop-blur-xl p-8 sm:p-10 shadow-xl overflow-hidden text-center mb-6 transition-all border border-[var(--border-default)]"
           >
-            <div className="absolute inset-0 pointer-events-none opacity-20">
-              <img 
-                src={STORY_ASSETS.STORY_08_PARTNER}
-                alt="NmoLabs Growth Partner"
-                loading="lazy"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface-primary)] via-[var(--surface-primary)]/80 to-transparent" />
-            </div>
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: 'radial-gradient(circle at 50% 0%, rgba(15,98,254,0.10), transparent 46%), linear-gradient(180deg, transparent, rgba(15,98,254,0.025))'
+              }}
+            />
 
             <div className="relative z-10">
               <div className="block" />
