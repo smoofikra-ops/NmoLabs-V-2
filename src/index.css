@@ -168,18 +168,17 @@
 
 @keyframes nmolabsAnnouncementLtr {
   from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(-33.333333%, 0, 0); }
 }
 
 @keyframes nmolabsAnnouncementRtl {
-  from { transform: translate3d(-50%, 0, 0); }
+  from { transform: translate3d(-33.333333%, 0, 0); }
   to { transform: translate3d(0, 0, 0); }
 }
 
 .nmolabs-announcement-marquee {
   display: flex;
   width: max-content;
-  min-width: 200%;
   will-change: transform;
   animation: nmolabsAnnouncementRtl 52s linear infinite;
 }

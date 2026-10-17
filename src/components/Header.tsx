@@ -132,8 +132,8 @@ export const Header = () => {
       {/* Seamless announcement rail */}
       <div className="bg-[var(--surface-primary)]/96 backdrop-blur-md border-b border-[var(--border-default)] py-2 text-sm text-[var(--text-secondary)] font-semibold pointer-events-auto shadow-sm overflow-hidden">
         <div className="nmolabs-announcement-marquee" dir={isEn ? 'ltr' : 'rtl'}>
-          {[0, 1].map((copy) => (
-            <div key={copy} className="nmolabs-announcement-group" aria-hidden={copy === 1 ? 'true' : undefined}>
+          {[0, 1, 2].map((copy) => (
+            <div key={copy} className="nmolabs-announcement-group" aria-hidden={copy > 0 ? 'true' : undefined}>
               <span>{isEn ? 'NmoLabs — technology, systems and growth from idea to operation' : 'نمو لابز — تقنية وأنظمة ونمو من الفكرة إلى التشغيل'}</span>
               <span className="nmolabs-announcement-dot">•</span>
               <span>Nucleus</span>

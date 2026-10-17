@@ -174,12 +174,12 @@ export const Hero = () => {
           alt=""
           role="presentation"
           aria-hidden="true"
-          className="w-full h-full object-cover object-center opacity-[0.12] dark:opacity-[0.28] saturate-[0.72] dark:saturate-100 transition-transform duration-1000 scale-100"
+          className="w-full h-full object-cover object-center opacity-[0.12] dark:opacity-[0.42] saturate-[0.72] dark:saturate-110 transition-transform duration-1000 scale-100"
         />
       </div>
 
       {/* Background Gradient Field - Localized gentle contrast preservation */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC]/96 via-[#EEF3F8]/90 to-[#EEF3F8]/98 dark:from-[#070b14]/88 dark:via-[#070b14]/66 dark:to-[#070b14]/97 pointer-events-none z-[2]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC]/96 via-[#EEF3F8]/90 to-[#EEF3F8]/98 dark:from-[#070b14]/72 dark:via-[#070b14]/48 dark:to-[#070b14]/88 pointer-events-none z-[2]" />
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05] pointer-events-none z-[2]" />
 
       
