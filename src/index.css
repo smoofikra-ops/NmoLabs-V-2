@@ -180,7 +180,7 @@
   display: flex;
   width: max-content;
   will-change: transform;
-  animation: nmolabsAnnouncementRtl 52s linear infinite;
+  animation: nmolabsAnnouncementRtl 44s linear infinite;
 }
 
 html[dir="ltr"] .nmolabs-announcement-marquee {
