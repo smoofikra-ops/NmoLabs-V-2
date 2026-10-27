@@ -15,7 +15,7 @@ interface PinnedStorySceneProps {
   subtitleEn: string;
   itemCount: number;
   isEn?: boolean;
-  scrollMultiplier?: number; // default 2.6 (controls scroll duration)
+  scrollMultiplier?: number;
   children: (helpers: {
     scrollYProgress: any;
     isReducedMotion: boolean;
@@ -26,7 +26,7 @@ interface PinnedStorySceneProps {
 
 export const PinnedStoryScene: React.FC<PinnedStorySceneProps> = ({
   id,
-  bgUrl,
+  bgUrl: _bgUrl,
   badge,
   titleAr,
   titleEn,
@@ -46,22 +46,12 @@ export const PinnedStoryScene: React.FC<PinnedStorySceneProps> = ({
     offset: ['start start', 'end end']
   });
 
-  // Background subtle choreography
-  const bgOpacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0.5, 1, 1, 0.5]);
-  const bgScale = useTransform(
-    scrollYProgress, 
-    [0, 0.5, 1], 
-    shouldReduceMotion ? [1, 1, 1] : [1.04, 1.0, 1.04]
-  );
-
-  // Header subtle entrance and sticky lock
   const headerOpacity = useTransform(scrollYProgress, [0, 0.08], [0.85, 1]);
   const headerY = useTransform(scrollYProgress, [0, 0.08], shouldReduceMotion ? [0, 0] : [8, 0]);
 
-  // Indicator progress: maps smoothly from 0 to itemCount - 1
   const activeProgress = useTransform(
-    scrollYProgress, 
-    [0.05, 0.95], 
+    scrollYProgress,
+    [0.05, 0.95],
     [0, Math.max(0, itemCount - 1)]
   );
 
@@ -69,47 +59,23 @@ export const PinnedStoryScene: React.FC<PinnedStorySceneProps> = ({
     <section
       ref={containerRef}
       id={id}
-      style={{
-        // Height controls the scroll duration while remaining sticky
-        height: `${Math.max(200, Math.round(scrollMultiplier * 100))}vh`
-      }}
+      style={{ height: `${Math.max(200, Math.round(scrollMultiplier * 100))}vh` }}
       className="relative border-b border-[var(--border-default)] transition-colors duration-300"
     >
-      {/* Sticky Viewport Scene */}
       <div className="sticky top-0 h-[100svh] min-h-[640px] max-h-[1080px] w-full overflow-hidden flex flex-col justify-between py-4 sm:py-6 lg:py-8 z-10">
-        {/* Background Image Layer */}
-        <motion.div
-          style={{
-            opacity: bgOpacity,
-            scale: bgScale,
-          }}
-          className="absolute inset-0 z-0 pointer-events-none overflow-hidden"
-        >
-          <img
-            src={bgUrl}
-            alt=""
-            role="presentation"
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            className="w-full h-full object-cover object-center transform-gpu will-change-transform"
+        {/* Clean story canvas: no section photography or screen imagery */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute inset-0" style={{ backgroundColor: 'var(--page-background)' }} />
+          <div
+            className="absolute inset-0 opacity-60"
+            style={{
+              background: 'radial-gradient(circle at 50% 10%, rgba(15,98,254,0.07), transparent 38%), radial-gradient(circle at 12% 76%, rgba(51,177,255,0.04), transparent 32%)'
+            }}
           />
+        </div>
 
-          {/* Light Mode Layer */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-primary)]/88 via-[var(--surface-primary)]/75 to-[var(--surface-primary)]/92 dark:opacity-0 transition-opacity duration-300" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-[var(--surface-primary)]/40 to-[var(--surface-primary)]/80 dark:opacity-0 transition-opacity duration-300" />
-          
-          {/* Dark Mode Layer */}
-          <div className="absolute inset-0 opacity-0 dark:opacity-100 bg-gradient-to-b from-[#070B14]/90 via-[#070B14]/75 to-[#070B14]/94 transition-opacity duration-300" />
-          <div className="absolute inset-0 opacity-0 dark:opacity-100 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-[#070B14]/40 to-[#070B14]/85 transition-opacity duration-300" />
-
-          {/* Subtle grid accent */}
-          <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05]" />
-        </motion.div>
-
-        {/* Top Header Layer */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20 pt-16 sm:pt-14 md:pt-14">
-          <motion.div 
+          <motion.div
             style={{ opacity: headerOpacity, y: headerY }}
             className="text-center max-w-3xl mx-auto"
           >
@@ -130,7 +96,6 @@ export const PinnedStoryScene: React.FC<PinnedStorySceneProps> = ({
           </motion.div>
         </div>
 
-        {/* Center Vertical Cinematic Story Stage */}
         <div className="w-full relative z-20 overflow-visible my-auto py-1">
           {children({
             scrollYProgress,
@@ -139,7 +104,6 @@ export const PinnedStoryScene: React.FC<PinnedStorySceneProps> = ({
           })}
         </div>
 
-        {/* Bottom Interactive Progress & Indicators */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20 pb-3 flex flex-col items-center gap-2">
           {footerContent ? (
             footerContent
@@ -148,11 +112,9 @@ export const PinnedStoryScene: React.FC<PinnedStorySceneProps> = ({
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] animate-pulse" />
               <span>{isEn ? 'Scroll down to progress deeper' : 'مرر للأسفل للتقدم في القصة'}</span>
               <div className="w-20 h-1 bg-[var(--surface-secondary)] rounded-full overflow-hidden ml-2 rtl:ml-0 rtl:mr-2">
-                <motion.div 
+                <motion.div
                   className="h-full bg-[var(--color-primary)] rounded-full"
-                  style={{ 
-                    width: useTransform(scrollYProgress, [0, 1], ['0%', '100%']) 
-                  }}
+                  style={{ width: useTransform(scrollYProgress, [0, 1], ['0%', '100%']) }}
                 />
               </div>
             </div>

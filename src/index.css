@@ -36,13 +36,13 @@
   --color-purple: #7C3AED;
   
   /* Light Theme Surfaces (High-Contrast, Dimensional Default) */
-  --page-background: #F8FAFC;
-  --surface-primary: #FFFFFF;
-  --surface-secondary: #F1F5F9;
-  --surface-tertiary: #E2E8F0;
+  --page-background: #EEF3F8;
+  --surface-primary: #F8FAFC;
+  --surface-secondary: #E5ECF4;
+  --surface-tertiary: #D9E3EE;
   --surface-elevated: #FFFFFF;
-  --surface-glass: rgba(255, 255, 255, 0.88);
-  --surface-brand: #F8FAFC;
+  --surface-glass: rgba(248, 250, 252, 0.90);
+  --surface-brand: #EEF3F8;
 
   /* Interactive & Nav */
   --interactive-border: rgba(15, 98, 254, 0.15);
@@ -58,13 +58,14 @@
 
   /* Text Colors */
   --text-primary: #0A0F1D; /* High contrast headings */
-  --text-secondary: #334155; /* Body copy */
+  --text-secondary: #243244; /* Body copy */
   --text-muted: #64748B; /* Secondary & notes */
   
   /* Borders & UI */
-  --border-default: rgba(15, 23, 42, 0.08);
-  --border-subtle: rgba(15, 23, 42, 0.04);
-  --border-hover: rgba(15, 98, 254, 0.35);
+  --border-default: rgba(15, 23, 42, 0.17);
+  --border-subtle: rgba(15, 23, 42, 0.10);
+  --border-hover: rgba(15, 98, 254, 0.42);
+  --section-divider: rgba(15, 23, 42, 0.16);
   
   /* Card 3D Elevation Shadows - Light Mode */
   --card-shadow-1: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
@@ -76,8 +77,8 @@
   --color-brand-blue-val: #0F62FE;
   --color-brand-purple-val: #7C3AED;
   --color-brand-green-val: #10B981;
-  --bg-color: #FFFFFF;
-  --bg-color-darker: #F8FAFC;
+  --bg-color: #F8FAFC;
+  --bg-color-darker: #EEF3F8;
   --text-color: #0A0F1D;
   
   /* Glassmorphism */
@@ -129,9 +130,10 @@
   --text-muted: #94A3B8;
 
   /* Borders & UI */
-  --border-default: rgba(255, 255, 255, 0.09);
-  --border-subtle: rgba(255, 255, 255, 0.05);
-  --border-hover: rgba(69, 137, 255, 0.5);
+  --border-default: rgba(255, 255, 255, 0.11);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(69, 137, 255, 0.55);
+  --section-divider: rgba(255, 255, 255, 0.10);
 
   /* Card 3D Elevation Shadows - Dark Mode */
   --card-shadow-1: 0 2px 8px -2px rgba(0, 0, 0, 0.4);
@@ -156,12 +158,47 @@
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-100%); } 
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 0.75rem)); }
 }
 @keyframes marquee-rtl {
   0% { transform: translateX(0%); }
   100% { transform: translateX(100%); }
+}
+
+@keyframes nmolabsAnnouncementLtr {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-33.333333%, 0, 0); }
+}
+
+@keyframes nmolabsAnnouncementRtl {
+  from { transform: translate3d(-33.333333%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+.nmolabs-announcement-marquee {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: nmolabsAnnouncementRtl 44s linear infinite;
+}
+
+html[dir="ltr"] .nmolabs-announcement-marquee {
+  animation-name: nmolabsAnnouncementLtr;
+}
+
+.nmolabs-announcement-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 0 0 auto;
+  padding-inline: 1rem;
+  white-space: nowrap;
+}
+
+.nmolabs-announcement-dot {
+  color: var(--color-primary);
+  opacity: 0.78;
 }
 
 @keyframes glow {
@@ -220,6 +257,7 @@ body,
 
 body {
   font-family: var(--font-arabic);
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: transparent;
@@ -234,6 +272,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .font-english {
   font-family: var(--font-english);
+}
+
+/* Consistent section separation without image clutter */
+#root > div > main > section + section {
+  box-shadow: inset 0 1px 0 var(--section-divider);
 }
 
 /* Glassmorphism & 3D Surface Elevation Utilities */
@@ -724,48 +767,32 @@ a[class*="px-"][class*="py-"] {
 }
 
 /* ==========================================================================
-   Hero Dynamic Gradient Badge:
-   Symbolizing Intelligence (Blue), Planning (Indigo), Creativity (Purple), Success (Emerald)
+   Hero typewriter badge — restrained premium technology treatment
    ========================================================================== */
 @keyframes heroIntelligenceGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.hero-intelligence-badge,
-div#root > div > main > section#hero > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) {
-  background: linear-gradient(
-    120deg,
-    #0b3780 0%,   /* الذكاء: أزرق تقني ملكي */
-    #1d2459 18%,  /* التخطيط: نيلي استراتيجي وعميق */
-    #6d28d9 40%,  /* الإبداع: بنفسجي إبداعي وابتكاري */
-    #047857 65%,  /* النجاح: أخضر زمردي للنمو والمبيعات */
-    #0284c7 85%,  /* الذكاء الرقمي والحلول السحابية */
-    #0b3780 100%  /* حلقة دورانية سلسة */
-  ) !important;
-  background-size: 260% 260% !important;
-  animation: heroIntelligenceGradient 9s ease-in-out infinite !important;
-  box-shadow: 0 10px 30px -4px rgba(15, 98, 254, 0.4),
-              0 0 25px -2px rgba(109, 40, 217, 0.35),
-              0 0 15px -2px rgba(4, 120, 87, 0.3),
-              inset 0 1px 1px rgba(255, 255, 255, 0.4),
-              inset 0 -1px 2px rgba(0, 0, 0, 0.3) !important;
-  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+.hero-intelligence-badge {
+  background: linear-gradient(120deg, #071A36 0%, #0B3D75 28%, #0F62FE 54%, #075985 78%, #071A36 100%) !important;
+  background-size: 220% 220% !important;
+  animation: heroIntelligenceGradient 12s ease-in-out infinite !important;
+  color: #fff !important;
+  border: 1px solid rgba(120, 169, 255, 0.42) !important;
+  box-shadow: 0 10px 28px -10px rgba(15, 98, 254, 0.48), inset 0 1px 0 rgba(255,255,255,0.18) !important;
 }
 
-.hero-intelligence-badge:hover,
-div#root > div > main > section#hero > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1):hover {
-  border-color: rgba(255, 255, 255, 0.6) !important;
-  box-shadow: 0 14px 40px -4px rgba(15, 98, 254, 0.5),
-              0 0 35px 0px rgba(109, 40, 217, 0.45),
-              0 0 20px 0px rgba(4, 120, 87, 0.4),
-              inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
+.hero-intelligence-badge:hover {
+  border-color: rgba(120, 169, 255, 0.68) !important;
+  box-shadow: 0 14px 34px -10px rgba(15, 98, 254, 0.58), inset 0 1px 0 rgba(255,255,255,0.22) !important;
   transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nmolabs-announcement-marquee,
+  .hero-intelligence-badge {
+    animation: none !important;
+  }
 }

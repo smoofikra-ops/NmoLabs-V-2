@@ -1,97 +1,72 @@
-import React, { useEffect, useState } from 'react';
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'motion/react';
+import React from 'react';
 import { useSite } from '../context/SiteContext';
 
-const darkBackgrounds = [
-  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2944&auto=format&fit=crop', // Earth/Network
-  'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2940&auto=format&fit=crop', // Dark tech abstract
-  'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2940&auto=format&fit=crop', // AI grid
-  'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2940&auto=format&fit=crop', // Data / Dashboards
-  'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2940&auto=format&fit=crop', // Marketing / Business
-  'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2940&auto=format&fit=crop', // Circuit board
-  'https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=2940&auto=format&fit=crop', // Web Design / Code
-  'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2940&auto=format&fit=crop', // Digital Code
-];
-
-const lightBackgrounds = [
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2864&auto=format&fit=crop', // Light abstract waves
-  'https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=2874&auto=format&fit=crop', // Light glass
-  'https://images.unsplash.com/photo-1557682250-33bd709cbe85?q=80&w=2929&auto=format&fit=crop', // Soft light gradient
-  'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2940&auto=format&fit=crop', // Dashboard (works in light mode with mix-blend)
-  'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2940&auto=format&fit=crop', // Marketing / MacBook
-  'https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=2940&auto=format&fit=crop', // Web Design / Code
-  'https://images.unsplash.com/photo-1604871000636-074fa5117945?q=80&w=2874&auto=format&fit=crop', // Light abstract art
-  'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2874&auto=format&fit=crop', // Desk / Workspace
-];
-
 export const InteractiveBackground: React.FC = () => {
-  const { scrollYProgress } = useScroll();
   const { config } = useSite();
-  const [currentBg, setCurrentBg] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  
-  const backgrounds = config.theme === 'dark' ? darkBackgrounds : lightBackgrounds;
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  // Use a spring to make the scroll transition smooth
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
-  useEffect(() => {
-    
-    return smoothProgress.on("change", (latest) => {
-      // Divide the page into chunks based on the number of backgrounds
-      const index = Math.min(
-        Math.floor(latest * backgrounds.length),
-        backgrounds.length - 1
-      );
-      if (index !== currentBg) {
-        setCurrentBg(index);
-      }
-    });
-  }, [smoothProgress, currentBg, isMobile, backgrounds.length]);
+  const isDark = config.theme === 'dark';
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
-      {/* Base background color */}
-      <div 
-        className="absolute inset-0 transition-colors duration-1000"
-        style={{ backgroundColor: 'var(--surface-primary)' }}
+    <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden" aria-hidden="true">
+      <div
+        className="absolute inset-0 transition-colors duration-500"
+        style={{ backgroundColor: isDark ? '#05070D' : '#EEF3F8' }}
       />
 
-      {true && (
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentBg}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: config.theme === 'dark' ? 0.2 : 0.15, scale: 1.05 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ opacity: { duration: 1.2, ease: 'easeInOut' }, scale: { duration: 20, ease: 'linear', repeat: Infinity, repeatType: 'reverse' } }}
-            className="absolute inset-0"
-          >
-            <img 
-              src={backgrounds[currentBg]} 
-              alt="Background" 
-              className={`w-full h-full object-cover ${config.theme === 'light' ? 'mix-blend-multiply' : ''}`}
-              loading="lazy"
-            />
-          </motion.div>
-        </AnimatePresence>
-      )}
-      
-      {/* Gradient overlay for better text readability */}
-      <div className={`absolute inset-0 bg-gradient-to-b from-[var(--surface-primary)] via-transparent to-[var(--surface-primary)] ${config.theme === 'dark' ? 'opacity-80' : 'opacity-90'}`} />
+      {/* Clean ambient sky: no dashboard/screens, no rotating photo set */}
+      <div
+        className="absolute inset-0 opacity-70"
+        style={{
+          backgroundImage: isDark
+            ? [
+                'radial-gradient(circle at 12% 18%, rgba(255,255,255,0.72) 0 1px, transparent 1.4px)',
+                'radial-gradient(circle at 72% 26%, rgba(120,169,255,0.58) 0 1px, transparent 1.5px)',
+                'radial-gradient(circle at 34% 72%, rgba(255,255,255,0.44) 0 1px, transparent 1.4px)',
+                'radial-gradient(circle at 88% 78%, rgba(69,137,255,0.42) 0 1px, transparent 1.5px)'
+              ].join(',')
+            : [
+                'radial-gradient(circle at 18% 20%, rgba(15,98,254,0.16) 0 1px, transparent 1.5px)',
+                'radial-gradient(circle at 78% 24%, rgba(51,177,255,0.13) 0 1px, transparent 1.5px)',
+                'radial-gradient(circle at 42% 76%, rgba(15,23,42,0.08) 0 1px, transparent 1.5px)'
+              ].join(','),
+          backgroundSize: isDark
+            ? '180px 180px, 260px 260px, 320px 320px, 420px 420px'
+            : '240px 240px, 320px 320px, 400px 400px'
+        }}
+      />
+
+      {/* Subtle earth / horizon cue */}
+      <div
+        className="absolute -right-[22vw] -bottom-[38vw] w-[86vw] h-[86vw] min-w-[560px] min-h-[560px] rounded-full transition-opacity duration-500"
+        style={{
+          opacity: isDark ? 0.42 : 0.16,
+          background: isDark
+            ? 'radial-gradient(circle at 36% 28%, rgba(69,137,255,0.20), rgba(4,12,28,0.96) 56%, #02040A 72%)'
+            : 'radial-gradient(circle at 36% 28%, rgba(51,177,255,0.18), rgba(226,236,248,0.92) 58%, rgba(210,223,238,0.98) 74%)',
+          border: isDark ? '1px solid rgba(120,169,255,0.22)' : '1px solid rgba(15,98,254,0.10)',
+          boxShadow: isDark
+            ? '0 0 120px rgba(15,98,254,0.12), inset 24px 18px 80px rgba(69,137,255,0.08)'
+            : '0 0 100px rgba(15,98,254,0.06), inset 18px 14px 70px rgba(255,255,255,0.55)'
+        }}
+      />
+
+      <div
+        className="absolute -right-[13vw] -bottom-[29vw] w-[68vw] h-[68vw] min-w-[460px] min-h-[460px] rounded-full border"
+        style={{
+          opacity: isDark ? 0.16 : 0.10,
+          borderColor: isDark ? 'rgba(120,169,255,0.28)' : 'rgba(15,98,254,0.20)',
+          transform: 'rotate(-12deg) scaleY(0.34)'
+        }}
+      />
+
+      {/* Readability field keeps text dominant in both themes */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: isDark
+            ? 'linear-gradient(180deg, rgba(5,7,13,0.24) 0%, rgba(5,7,13,0.56) 100%)'
+            : 'linear-gradient(180deg, rgba(238,243,248,0.22) 0%, rgba(238,243,248,0.68) 100%)'
+        }}
+      />
     </div>
   );
 };

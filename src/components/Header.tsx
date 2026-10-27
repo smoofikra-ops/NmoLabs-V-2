@@ -4,7 +4,6 @@ import { useSite } from '../context/SiteContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { Globe, Moon, Sun, Menu, X, Bookmark } from 'lucide-react';
 import { triggerBookingModal } from './BookingModal';
-import siteLogo from '../assets/images/site-logo.png';
 
 
 export const Header = () => {
@@ -130,14 +129,31 @@ export const Header = () => {
       animate={{ y: 0 }}
       className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
     >
-      {/* Announcement Bar */}
-      <div className="bg-[var(--surface-primary)]/95 backdrop-blur-md border-b border-[var(--border-default)] px-4 py-1.5 flex items-center justify-between text-xs sm:text-sm text-[var(--text-secondary)] font-medium pointer-events-auto shadow-sm">
-        <div className="overflow-hidden whitespace-nowrap flex-1 ml-4 lg:ml-8 relative">
-           <div className={isEn ? "inline-block animate-marquee" : "inline-block animate-marquee-rtl"}>
-             {isEn 
-               ? "Welcome to NmoLabs! We are different from any other agency; we are your growth partner, not just a marketing company. ✨ We innovate exceptional ideas and solutions for your success. Stay tuned for our new innovative products and tools coming soon! 🚀 (Please note that the website and tools are currently under continuous development and innovation)."
-               : "مرحباً بك في نمو لابز! نختلف عن أي شركة أخرى، فنحن شريك نمو لك ولسنا مجرد شركة تسويقية. ✨ نبتكر أفكاراً وحلولاً استثنائية لنجاحك. ترقبوا الإعلان عن منتجاتنا وأدواتنا الجديدة المبتكرة قريباً! 🚀 (يرجى العلم أن الموقع والأدوات حالياً قيد التطوير والابتكار المستمر لتلبية تطلعاتكم)."}
-           </div>
+      {/* Seamless announcement rail */}
+      <div className="bg-[var(--surface-primary)]/96 backdrop-blur-md border-b border-[var(--border-default)] py-2 text-sm text-[var(--text-secondary)] font-semibold pointer-events-auto shadow-sm overflow-hidden">
+        <div className="nmolabs-announcement-marquee" dir={isEn ? 'ltr' : 'rtl'}>
+          {[0, 1, 2].map((copy) => (
+            <div key={copy} className="nmolabs-announcement-group" aria-hidden={copy > 0 ? 'true' : undefined}>
+              <span>{isEn ? 'NmoLabs — technology, systems and growth from idea to operation' : 'نمو لابز — تقنية وأنظمة ونمو من الفكرة إلى التشغيل'}</span>
+              <span className="nmolabs-announcement-dot">•</span>
+              <span>Nucleus</span>
+              <span className="nmolabs-announcement-dot">•</span>
+              <span>NBOS</span>
+              <span className="nmolabs-announcement-dot">•</span>
+              <span>NMO ERP</span>
+              <span className="nmolabs-announcement-dot">•</span>
+              <span>Store Intelligence</span>
+              <span className="nmolabs-announcement-dot">•</span>
+              <span>{isEn ? 'Websites & Digital Platforms' : 'مواقع ومنصات رقمية'}</span>
+              <span className="nmolabs-announcement-dot">•</span>
+              <span>{isEn ? 'E-Commerce' : 'متاجر إلكترونية'}</span>
+              <span className="nmolabs-announcement-dot">•</span>
+              <span>{isEn ? 'Automation & AI Solutions' : 'حلول الأتمتة والذكاء الاصطناعي'}</span>
+              <span className="nmolabs-announcement-dot">•</span>
+              <span>{isEn ? 'Performance Marketing & Growth' : 'إدارة الحملات والنمو'}</span>
+              <span className="nmolabs-announcement-dot">•</span>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -153,8 +169,8 @@ export const Header = () => {
         </button>
 
         <div className="flex items-center justify-center absolute left-1/2 -translate-x-1/2 lg:relative lg:left-0 lg:translate-x-0 gap-2 cursor-pointer transition-transform hover:scale-[1.02]" onClick={() => handleScroll('hero')}>
-          <img src={config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="hidden lg:block object-contain drop-shadow-sm" style={{ height: `${config.desktopLogoHeight || 36}px` }} />
-          <img src={config.mobileLogoUrl || config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="block lg:hidden object-contain drop-shadow-sm" style={{ height: `${config.mobileLogoHeight || 28}px` }} />
+          <img src={config.desktopLogoUrl || '/logo-web.jpg'} alt="NMOLABS Logo" className="hidden lg:block object-contain drop-shadow-sm" style={{ height: `${config.desktopLogoHeight || 36}px` }} />
+          <img src={config.mobileLogoUrl || config.desktopLogoUrl || '/logo-web.jpg'} alt="NMOLABS Logo" className="block lg:hidden object-contain drop-shadow-sm" style={{ height: `${config.mobileLogoHeight || 28}px` }} />
         </div>
 
         <nav className="hidden lg:flex items-center gap-1 relative bg-[var(--surface-secondary)]/60 border border-[var(--border-default)] p-1 rounded-full" onMouseLeave={() => setHoveredNav(null)}>
@@ -168,7 +184,7 @@ export const Header = () => {
                 onClick={() => handleNavClick(item, idx)}
                 onMouseEnter={() => setHoveredNav(idx)}
                 onFocus={() => setHoveredNav(idx)}
-                className={`relative px-4 py-1.5 text-xs font-bold transition-all z-10 rounded-full flex items-center justify-center gap-1.5 ${hasLiquid ? 'text-[var(--color-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+                className={`relative px-3.5 xl:px-4 py-2 text-[13px] xl:text-sm font-bold transition-all z-10 rounded-full flex items-center justify-center gap-1.5 ${hasLiquid ? 'text-[var(--color-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
               >
                 {hasLiquid && (
                   <motion.div
@@ -205,7 +221,7 @@ export const Header = () => {
           
           <button 
             onClick={() => { updateConfig({ currentRoute: 'kyc' }); window.scrollTo(0,0); }}
-            className="hidden sm:inline-flex items-center justify-center px-5 py-2 rounded-full font-bold text-xs text-white transition-all shadow-[0_4px_14px_rgba(15,98,254,0.35)] hover:shadow-[0_6px_20px_rgba(15,98,254,0.45)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+            className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full font-bold text-[13px] xl:text-sm text-white transition-all shadow-[0_4px_14px_rgba(15,98,254,0.35)] hover:shadow-[0_6px_20px_rgba(15,98,254,0.45)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
             style={{ backgroundColor: 'var(--color-primary)' }}
           >
             {config.language === 'en' ? 'Start Project' : 'ابدأ مشروعك'}
@@ -235,7 +251,7 @@ export const Header = () => {
             >
               <div className="flex items-center justify-between mb-6 pb-4 border-b border-[var(--border-default)] shrink-0">
                 <div className="flex items-center gap-2">
-                  <img src={config.mobileLogoUrl || config.desktopLogoUrl || siteLogo} alt="NMOLABS Logo" className="object-contain drop-shadow-sm" style={{ height: `${config.mobileLogoHeight || 28}px` }} />
+                  <img src={config.mobileLogoUrl || config.desktopLogoUrl || '/logo-web.jpg'} alt="NMOLABS Logo" className="object-contain drop-shadow-sm" style={{ height: `${config.mobileLogoHeight || 28}px` }} />
                 </div>
                 <button 
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -251,7 +267,7 @@ export const Header = () => {
                   <button
                     key={idx}
                     onClick={() => handleNavClick(item, idx)}
-                    className="text-right rtl:text-right ltr:text-left text-[var(--text-secondary)] hover:text-[var(--color-primary)] bg-[var(--surface-secondary)] hover:bg-[var(--surface-tertiary)] py-3 px-4 rounded-xl w-full font-bold transition-all duration-200 text-sm flex items-center gap-3 border border-[var(--border-default)] shadow-sm min-h-[44px]"
+                    className="text-right rtl:text-right ltr:text-left text-[var(--text-secondary)] hover:text-[var(--color-primary)] bg-[var(--surface-secondary)] hover:bg-[var(--surface-tertiary)] py-3.5 px-4 rounded-xl w-full font-bold transition-all duration-200 text-[15px] flex items-center gap-3 border border-[var(--border-default)] shadow-sm min-h-[48px]"
                   >
                     <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] shrink-0" />
                     <span className="truncate">{isEn ? item.nameEn : item.nameAr}</span>
