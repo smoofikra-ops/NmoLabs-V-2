@@ -23,6 +23,8 @@ import {
 } from "../services/kycSubmissionService";
 import { budgetsAr, budgetsEn, timelinesAr, timelinesEn } from "../data/projectIntake";
 import { useSite } from "../context/SiteContext";
+import { VoiceFieldButton } from "./VoiceFieldButton";
+import { KycTechBackground } from "./KycTechBackground";
 
 type MainGoalId =
   | "create-new"
@@ -461,11 +463,27 @@ export const DiscoveryPortal = () => {
               ? (isEn ? "Tell us what is unclear and we will guide the next step." : "قل لنا وين الحيرة، ونرتب لك الخطوة التالية.")
               : (isEn ? "Just the essentials so the team can follow up." : "بيانات بسيطة فقط عشان الفريق يقدر يتواصل معك.");
 
+  const encouragement =
+    screen === "goal" && formData.mainGoal
+      ? (isEn ? "Great — we now know the direction. Next we only show options relevant to you." : "ممتاز، كذا عرفنا الاتجاه العام. الخطوة الجاية بنعرض لك الخيارات الأقرب فقط.")
+      : screen === "service" && formData.subService
+        ? (isEn ? "Good choice. One more decision helps us shorten the rest of the form." : "اختيار واضح. باقي نعرف كيف تحب تكمل، وبنختصر عليك الأسئلة غير الضرورية.")
+        : screen === "path" && formData.continuePath
+          ? (isEn ? "Perfect — the next step adapts to the way you prefer to continue." : "تمام، من هنا المسار بيتكيف مع الطريقة اللي تناسبك.")
+          : screen === "details"
+            ? (isEn ? "Every useful detail helps us understand the project correctly from the first review." : "كل معلومة تضيفها تساعدنا نفهم المشروع من أول مرة ونرجع لك بصورة أدق.")
+            : screen === "help"
+              ? (isEn ? "Speak freely. We use your context to understand the need before suggesting a direction." : "خذ راحتك في الشرح. كل ما فهمنا سياقك أكثر، قدرنا نحدد احتياجك بشكل أدق.")
+              : screen === "contact"
+                ? (isEn ? "Last step — only the essentials we need to follow up with you." : "باقي خطوة أخيرة فقط: بيانات بسيطة عشان نقدر نرجع لك.")
+                : "";
+
   const backVisible = screen !== "goal";
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
-      <div className="sticky top-0 z-20 border-b border-[var(--border-default)] bg-[var(--bg-primary)]/92 backdrop-blur-xl">
+    <div className="relative min-h-screen overflow-hidden bg-[var(--bg-primary)] text-[var(--text-primary)]">
+      <KycTechBackground />
+      <div className="sticky top-0 z-30 border-b border-[var(--border-default)] bg-[var(--surface-primary)]/88 backdrop-blur-xl">
         <div className="mx-auto max-w-6xl px-5 py-4 sm:px-6">
           <div className="mb-3 flex items-center justify-between gap-4">
             <div className="flex items-center gap-2 font-black">
@@ -486,7 +504,7 @@ export const DiscoveryPortal = () => {
         </div>
       </div>
 
-      <main className="mx-auto w-full max-w-6xl px-5 pb-28 pt-9 sm:px-6 sm:pt-12">
+      <main className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-28 pt-9 sm:px-6 sm:pt-12">
         <motion.header
           key={screen + "-header"}
           initial={{ opacity: 0, y: 8 }}
@@ -499,6 +517,20 @@ export const DiscoveryPortal = () => {
           </div>
           <h1 className="mb-3 text-3xl font-black sm:text-5xl">{screenTitle}</h1>
           <p className="mx-auto max-w-2xl text-base font-medium leading-7 text-[var(--text-muted)] sm:text-lg">{screenDesc}</p>
+          <AnimatePresence mode="wait">
+            {encouragement && (
+              <motion.div
+                key={screen + "-encouragement"}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="mx-auto mt-4 inline-flex max-w-2xl items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/8 px-4 py-2 text-xs font-bold leading-5 text-emerald-700 dark:text-emerald-300"
+              >
+                <CircleCheckBig size={15} className="shrink-0" />
+                <span>{encouragement}</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.header>
 
         <AnimatePresence mode="wait">
@@ -676,6 +708,11 @@ export const DiscoveryPortal = () => {
                     className="w-full resize-none rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-4 outline-none focus:border-[var(--color-primary)]"
                     placeholder={isEn ? "A short practical description is enough..." : "وصف عملي قصير يكفي..."}
                   />
+                  <VoiceFieldButton
+                    value={formData.description}
+                    onChange={(value) => setField("description", value)}
+                    context="وصف المشروع وما الذي يريد العميل بناءه أو تطويره"
+                  />
                 </label>
 
                 {formData.mainGoal === "improve-existing" && (
@@ -700,6 +737,12 @@ export const DiscoveryPortal = () => {
                       onChange={(event) => setField("platform", event.target.value)}
                       className="w-full rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-3.5 outline-none focus:border-[var(--color-primary)]"
                       placeholder={isEn ? "Optional" : "اختياري"}
+                    />
+                    <VoiceFieldButton
+                      compact
+                      value={formData.platform}
+                      onChange={(value) => setField("platform", value)}
+                      context="اسم المنصة أو التقنية أو النظام الذي يريد العميل ربطه"
                     />
                   </label>
                 )}
@@ -749,6 +792,11 @@ export const DiscoveryPortal = () => {
                     className="w-full resize-none rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-4 outline-none focus:border-[var(--color-primary)]"
                     placeholder={isEn ? "Example: I know the outcome I want, but not the right system or approach..." : "مثال: أعرف النتيجة اللي أبغاها، لكن ما أعرف هل أحتاج موقع أو نظام أو أتمتة..."}
                   />
+                  <VoiceFieldButton
+                    value={formData.helpNeed}
+                    onChange={(value) => setField("helpNeed", value)}
+                    context="الفكرة أو المشكلة أو القرار الذي يحتاج العميل مساعدة في تحديده"
+                  />
                 </label>
               </div>
             )}
@@ -774,6 +822,12 @@ export const DiscoveryPortal = () => {
                         onChange={(event) => setField("company", event.target.value)}
                         className="w-full rounded-xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-3.5 outline-none focus:border-[var(--color-primary)]"
                         placeholder={isEn ? "Company or project name" : "اسم الشركة أو المشروع"}
+                      />
+                      <VoiceFieldButton
+                        compact
+                        value={formData.company}
+                        onChange={(value) => setField("company", value)}
+                        context="اسم الشركة أو المشروع فقط"
                       />
                     </label>
 
@@ -817,6 +871,12 @@ export const DiscoveryPortal = () => {
                           onChange={(event) => setField("preferredContactTime", event.target.value)}
                           className="w-full rounded-xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-3.5 outline-none focus:border-[var(--color-primary)]"
                           placeholder={isEn ? "Example: after 6 PM" : "مثال: بعد الساعة 6 مساءً"}
+                        />
+                        <VoiceFieldButton
+                          compact
+                          value={formData.preferredContactTime}
+                          onChange={(value) => setField("preferredContactTime", value)}
+                          context="وقت التواصل المفضل، مع الحفاظ على الوقت والأرقام بدقة"
                         />
                       </label>
                     )}

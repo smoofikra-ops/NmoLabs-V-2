@@ -796,3 +796,135 @@ a[class*="px-"][class*="py-"] {
     animation: none !important;
   }
 }
+
+
+/* ==========================================================
+   KYC / Start Project — quiet technical background + voice UX
+   ========================================================== */
+:root {
+  --kyc-tech-line: rgba(15, 98, 254, 0.075);
+  --kyc-tech-node: rgba(15, 98, 254, 0.22);
+  --kyc-tech-glow-a: rgba(15, 98, 254, 0.10);
+  --kyc-tech-glow-b: rgba(16, 185, 129, 0.075);
+}
+
+.theme-dark {
+  --kyc-tech-line: rgba(69, 137, 255, 0.085);
+  --kyc-tech-node: rgba(51, 177, 255, 0.24);
+  --kyc-tech-glow-a: rgba(69, 137, 255, 0.12);
+  --kyc-tech-glow-b: rgba(34, 211, 160, 0.08);
+}
+
+.kyc-tech-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 14%, var(--kyc-tech-glow-a), transparent 30%),
+    radial-gradient(circle at 82% 76%, var(--kyc-tech-glow-b), transparent 32%);
+}
+
+.kyc-tech-grid {
+  position: absolute;
+  inset: -10%;
+  opacity: 0.78;
+  background-image:
+    linear-gradient(var(--kyc-tech-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--kyc-tech-line) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: radial-gradient(circle at center, black 24%, rgba(0,0,0,.72) 58%, transparent 88%);
+  -webkit-mask-image: radial-gradient(circle at center, black 24%, rgba(0,0,0,.72) 58%, transparent 88%);
+}
+
+.kyc-tech-orb {
+  position: absolute;
+  width: min(42vw, 520px);
+  aspect-ratio: 1;
+  border: 1px solid var(--kyc-tech-line);
+  border-radius: 9999px;
+  opacity: 0.5;
+}
+
+.kyc-tech-orb::before,
+.kyc-tech-orb::after {
+  content: "";
+  position: absolute;
+  inset: 14%;
+  border: 1px dashed var(--kyc-tech-line);
+  border-radius: inherit;
+}
+
+.kyc-tech-orb::after {
+  inset: 31%;
+  border-style: solid;
+}
+
+.kyc-tech-orb-a {
+  top: -18%;
+  inset-inline-end: -10%;
+  animation: kycTechDrift 24s ease-in-out infinite alternate;
+}
+
+.kyc-tech-orb-b {
+  bottom: -22%;
+  inset-inline-start: -12%;
+  transform: scale(.78);
+  animation: kycTechDrift 29s ease-in-out infinite alternate-reverse;
+}
+
+.kyc-tech-constellation {
+  position: absolute;
+  width: 240px;
+  height: 150px;
+  opacity: .72;
+}
+
+.kyc-tech-constellation::before,
+.kyc-tech-constellation::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  width: 72%;
+  background: linear-gradient(90deg, transparent, var(--kyc-tech-line), transparent);
+  transform-origin: center;
+}
+
+.kyc-tech-constellation::before { top: 45%; left: 14%; transform: rotate(19deg); }
+.kyc-tech-constellation::after { top: 58%; left: 9%; transform: rotate(-14deg); }
+
+.kyc-tech-constellation i {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: var(--kyc-tech-node);
+  box-shadow: 0 0 14px var(--kyc-tech-node);
+}
+
+.kyc-tech-constellation i:nth-child(1) { top: 28%; left: 12%; }
+.kyc-tech-constellation i:nth-child(2) { top: 47%; left: 36%; }
+.kyc-tech-constellation i:nth-child(3) { top: 34%; left: 64%; }
+.kyc-tech-constellation i:nth-child(4) { top: 69%; left: 78%; }
+.kyc-tech-constellation i:nth-child(5) { top: 77%; left: 29%; }
+
+.kyc-tech-constellation-a { top: 23%; left: 3%; }
+.kyc-tech-constellation-b { right: 4%; bottom: 18%; transform: rotate(180deg) scale(.9); }
+
+@keyframes kycTechDrift {
+  from { translate: 0 0; rotate: 0deg; }
+  to { translate: 0 18px; rotate: 4deg; }
+}
+
+@media (max-width: 640px) {
+  .kyc-tech-grid { background-size: 42px 42px; opacity: .55; }
+  .kyc-tech-orb { width: 78vw; opacity: .34; }
+  .kyc-tech-constellation { opacity: .42; transform: scale(.72); }
+  .kyc-tech-constellation-a { left: -14%; top: 27%; }
+  .kyc-tech-constellation-b { right: -18%; bottom: 10%; transform: rotate(180deg) scale(.64); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kyc-tech-orb { animation: none !important; }
+}

@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import kycSubmitHandler from "./api/kyc-submit";
+import voiceNormalizeHandler from "./api/voice-normalize";
 
 async function startServer() {
   const app = express();
@@ -11,6 +12,7 @@ async function startServer() {
 
   // API routes FIRST
   app.post("/api/kyc-submit", kycSubmitHandler);
+  app.post("/api/voice-normalize", voiceNormalizeHandler);
 
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok" });
