@@ -51,6 +51,7 @@ export const VoiceFieldButton = ({
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
   const baseValueRef = useRef("");
   const finalTranscriptRef = useRef("");
+  const resultPartsRef = useRef<Map<number, string>>(new Map());
   const stopTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -115,26 +116,43 @@ export const VoiceFieldButton = ({
 
       baseValueRef.current = value;
       finalTranscriptRef.current = "";
+      resultPartsRef.current = new Map();
       recognitionRef.current = recognition;
 
       recognition.onresult = (event: any) => {
-        let finalText = finalTranscriptRef.current;
+        const finalParts = resultPartsRef.current;
         let interimText = "";
 
-        for (let i = event.resultIndex; i < event.results.length; i += 1) {
+        for (let i = 0; i < event.results.length; i += 1) {
           const piece = String(event.results[i][0]?.transcript || "").trim();
           if (!piece) continue;
+
           if (event.results[i].isFinal) {
-            finalText = [finalText, piece].filter(Boolean).join(" ");
+            finalParts.set(i, piece);
           } else {
             interimText = [interimText, piece].filter(Boolean).join(" ");
           }
         }
 
-        finalTranscriptRef.current = finalText.trim();
-        const liveText = [baseValueRef.current.trim(), finalText.trim(), interimText.trim()]
+        const orderedFinalParts = Array.from(finalParts.entries())
+          .sort(([a], [b]) => a - b)
+          .map(([, piece]) => piece)
+          .filter((piece, index, all) => {
+            if (index === 0) return true;
+            const current = piece.replace(/\s+/g, " ").trim().toLowerCase();
+            const previous = all[index - 1].replace(/\s+/g, " ").trim().toLowerCase();
+            return current !== previous;
+          });
+
+        const finalText = orderedFinalParts.join(" ").trim();
+        finalTranscriptRef.current = finalText;
+
+        const liveText = [baseValueRef.current.trim(), finalText, interimText.trim()]
           .filter(Boolean)
-          .join(" ");
+          .join(" ")
+          .replace(/\s+/g, " ")
+          .trim();
+
         onChange(liveText);
       };
 

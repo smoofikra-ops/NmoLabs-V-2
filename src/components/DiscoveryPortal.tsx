@@ -503,8 +503,8 @@ export const DiscoveryPortal = () => {
     <div className="relative min-h-screen overflow-hidden bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <KycTechBackground />
       <div className="sticky top-0 z-30 border-b border-[var(--border-default)] bg-[var(--surface-primary)]/88 backdrop-blur-xl">
-        <div className="mx-auto max-w-6xl px-5 py-4 sm:px-6">
-          <div className="mb-3 flex items-center justify-between gap-4">
+        <div className="mx-auto max-w-6xl px-4 py-2.5 sm:px-6 sm:py-4">
+          <div className="mb-2 flex items-center justify-between gap-3 sm:mb-3 sm:gap-4">
             <div className="flex items-center gap-2 font-black">
               <Sparkles size={20} className="text-[var(--color-primary)]" />
               <span>{isEn ? "Start Your Project" : "ابدأ مشروعك"}</span>
@@ -513,7 +513,7 @@ export const DiscoveryPortal = () => {
               {isEn ? "Smart project discovery" : "تحديد ذكي للاحتياج"}
             </div>
           </div>
-          <div className="h-2 overflow-hidden rounded-full bg-[var(--surface-secondary)]">
+          <div className="h-1.5 overflow-hidden rounded-full bg-[var(--surface-secondary)] sm:h-2">
             <motion.div
               className="h-full rounded-full bg-[var(--color-primary)]"
               animate={{ width: String(progress) + "%" }}
@@ -523,19 +523,19 @@ export const DiscoveryPortal = () => {
         </div>
       </div>
 
-      <main className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-28 pt-9 sm:px-6 sm:pt-12">
+      <main className="relative z-10 mx-auto w-full max-w-6xl px-3.5 pb-8 pt-4 sm:px-6 sm:pb-28 sm:pt-12">
         <motion.header
           key={screen + "-header"}
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mx-auto mb-9 max-w-3xl text-center"
+          className="mx-auto mb-4 max-w-3xl text-center sm:mb-9"
         >
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[var(--interactive-border)] bg-[var(--surface-secondary)] px-3 py-1 text-xs font-bold text-[var(--color-primary)]">
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-[var(--interactive-border)] bg-[var(--surface-secondary)] px-3 py-1 text-[11px] font-bold text-[var(--color-primary)] sm:mb-3 sm:text-xs">
             <WandSparkles size={14} />
             {isEn ? "Adaptive flow" : "مسار يتكيف مع اختيارك"}
           </div>
-          <h1 className="mb-3 text-3xl font-black sm:text-5xl">{screenTitle}</h1>
-          <p className="mx-auto max-w-2xl text-base font-medium leading-7 text-[var(--text-muted)] sm:text-lg">{screenDesc}</p>
+          <h1 className="mb-1.5 text-[28px] font-black leading-tight sm:mb-3 sm:text-5xl">{screenTitle}</h1>
+          <p className="mx-auto max-w-2xl text-[13px] font-medium leading-5 text-[var(--text-muted)] sm:text-lg sm:leading-7">{screenDesc}</p>
           <AnimatePresence mode="wait">
             {encouragement && (
               <motion.div
@@ -544,7 +544,7 @@ export const DiscoveryPortal = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -5, scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 360, damping: 24 }}
-                className="relative mx-auto mt-5 max-w-2xl overflow-visible rounded-2xl border-2 border-[var(--color-primary)]/45 bg-[var(--surface-primary)] px-5 py-4 text-start shadow-[0_16px_45px_rgba(15,98,254,0.18)]"
+                className="relative mx-auto mt-3 w-full max-w-2xl overflow-hidden rounded-2xl border-2 border-[var(--color-primary)]/45 bg-[var(--surface-primary)] px-3.5 py-3 text-start shadow-[0_12px_32px_rgba(15,98,254,0.16)] sm:mt-5 sm:px-5 sm:py-4 sm:shadow-[0_16px_45px_rgba(15,98,254,0.18)]"
               >
                 {[0, 1, 2, 3, 4, 5].map((particle) => (
                   <motion.span
@@ -560,37 +560,28 @@ export const DiscoveryPortal = () => {
                     transition={{ duration: 0.7, delay: particle * 0.035, ease: "easeOut" }}
                   />
                 ))}
-                <div className="relative flex items-start gap-3">
+                <div className="relative flex min-w-0 items-start gap-2.5 sm:gap-3">
                   <motion.div
                     initial={{ rotate: -18, scale: 0.6 }}
                     animate={{ rotate: 0, scale: 1 }}
                     transition={{ type: "spring", stiffness: 420, damping: 18 }}
-                    className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[var(--color-primary)] text-white shadow-[0_8px_20px_rgba(15,98,254,0.28)]"
+                    className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[var(--color-primary)] text-white shadow-[0_8px_20px_rgba(15,98,254,0.28)] sm:h-9 sm:w-9"
                   >
                     <CircleCheckBig size={19} />
                   </motion.div>
-                  <div>
-                    <div className="text-sm font-black leading-7 text-[var(--text-primary)] sm:text-[15px]">
-                      {Array.from(encouragement).map((char, index) => (
-                        <motion.span
-                          key={index}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: Math.min(index * 0.012, 1.15), duration: 0.03 }}
-                        >
-                          {char === " " ? "\u00A0" : char}
-                        </motion.span>
-                      ))}
+                  <div className="min-w-0 flex-1">
+                    <div className="break-words text-[13px] font-black leading-6 text-[var(--text-primary)] sm:text-[15px] sm:leading-7">
+                      {encouragement}
                     </div>
                     {encouragementAction && (
                       <motion.div
                         initial={{ opacity: 0, x: isEn ? -8 : 8 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.55, duration: 0.25 }}
-                        className="mt-1.5 flex items-center gap-1.5 text-xs font-black text-[var(--color-primary)] sm:text-sm"
+                        className="mt-1 flex min-w-0 items-center gap-1.5 text-[11px] font-black leading-5 text-[var(--color-primary)] sm:mt-1.5 sm:text-sm"
                       >
                         <Sparkles size={14} />
-                        <span>{encouragementAction}</span>
+                        <span className="min-w-0 break-words">{encouragementAction}</span>
                       </motion.div>
                     )}
                   </div>
@@ -609,7 +600,7 @@ export const DiscoveryPortal = () => {
             transition={{ duration: 0.22 }}
           >
             {screen === "goal" && (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid grid-cols-2 gap-2.5 sm:gap-4 lg:grid-cols-3">
                 {MAIN_GOALS.map((goal) => {
                   const selected = formData.mainGoal === goal.id;
                   return (
@@ -619,7 +610,7 @@ export const DiscoveryPortal = () => {
                       onClick={() => selectGoal(goal.id)}
                       aria-pressed={selected}
                       className={
-                        "group relative min-h-[235px] overflow-hidden rounded-[28px] border text-start shadow-md transition-all duration-300 active:translate-y-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)] " +
+                        "group relative min-h-[118px] overflow-hidden rounded-[20px] border text-start shadow-md transition-all duration-300 active:translate-y-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)] sm:min-h-[235px] sm:rounded-[28px] " +
                         (selected
                           ? "border-[var(--color-primary)] shadow-2xl ring-2 ring-[var(--color-primary)]"
                           : "border-white/10 hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-2xl")
@@ -634,11 +625,11 @@ export const DiscoveryPortal = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/15 transition-colors duration-300 group-hover:from-black group-hover:via-black/55" />
                       <div className="absolute inset-0 bg-[var(--color-primary)]/0 transition-colors duration-300 group-hover:bg-[var(--color-primary)]/10" />
 
-                      <div className="relative z-10 flex min-h-[235px] flex-col justify-between p-6">
+                      <div className="relative z-10 flex min-h-[118px] flex-col justify-between p-3 sm:min-h-[235px] sm:p-6">
                         <div className="flex justify-end">
                           <div
                             className={
-                              "flex h-8 w-8 items-center justify-center rounded-full border backdrop-blur-md transition-all " +
+                              "flex h-7 w-7 items-center justify-center rounded-full border backdrop-blur-md transition-all sm:h-8 sm:w-8 " +
                               (selected
                                 ? "border-white bg-[var(--color-primary)] text-white shadow-lg"
                                 : "border-white/35 bg-black/25 text-white")
@@ -648,11 +639,11 @@ export const DiscoveryPortal = () => {
                           </div>
                         </div>
 
-                        <div className="max-w-[92%]">
-                          <div className="mb-2 text-xl font-black text-white drop-shadow-sm sm:text-2xl">
+                        <div className="max-w-full sm:max-w-[92%]">
+                          <div className="mb-0.5 text-[15px] font-black leading-5 text-white drop-shadow-sm sm:mb-2 sm:text-2xl sm:leading-normal">
                             {isEn ? goal.en : goal.ar}
                           </div>
-                          <div className="text-sm font-medium leading-6 text-white/80 drop-shadow-sm">
+                          <div className="line-clamp-2 text-[10px] font-medium leading-4 text-white/80 drop-shadow-sm sm:text-sm sm:leading-6">
                             {isEn ? goal.descEn : goal.descAr}
                           </div>
                         </div>
@@ -993,7 +984,7 @@ export const DiscoveryPortal = () => {
           </motion.section>
         </AnimatePresence>
 
-        <div className="mx-auto mt-9 flex max-w-4xl flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mx-auto mt-4 flex max-w-4xl flex-col-reverse gap-2 sm:mt-9 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
           <button
             type="button"
             onClick={goBack}
@@ -1008,7 +999,7 @@ export const DiscoveryPortal = () => {
               type="button"
               disabled={!formData.mainGoal}
               onClick={() => { setScreen("service"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.mainGoal ? "bg-[var(--color-primary)] text-white shadow-[0_12px_30px_rgba(15,98,254,0.28)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(15,98,254,0.34)] transition-all" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
+              className={"inline-flex min-h-11 min-w-[150px] items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-black sm:min-w-[170px] sm:px-7 sm:py-3.5 " + (formData.mainGoal ? "bg-[var(--color-primary)] text-white shadow-[0_12px_30px_rgba(15,98,254,0.28)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(15,98,254,0.34)] transition-all" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
             >
               {isEn ? "Continue" : "متابعة"}
               {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
@@ -1020,7 +1011,7 @@ export const DiscoveryPortal = () => {
               type="button"
               disabled={!formData.subService}
               onClick={() => { setScreen("path"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.subService ? "bg-[var(--color-primary)] text-white shadow-[0_12px_30px_rgba(15,98,254,0.28)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(15,98,254,0.34)] transition-all" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
+              className={"inline-flex min-h-11 min-w-[150px] items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-black sm:min-w-[170px] sm:px-7 sm:py-3.5 " + (formData.subService ? "bg-[var(--color-primary)] text-white shadow-[0_12px_30px_rgba(15,98,254,0.28)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(15,98,254,0.34)] transition-all" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
             >
               {isEn ? "Continue" : "متابعة"}
               {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
@@ -1037,7 +1028,7 @@ export const DiscoveryPortal = () => {
                 else setScreen("contact");
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.continuePath ? "bg-[var(--color-primary)] text-white shadow-[0_12px_30px_rgba(15,98,254,0.28)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(15,98,254,0.34)] transition-all" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
+              className={"inline-flex min-h-11 min-w-[150px] items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-black sm:min-w-[170px] sm:px-7 sm:py-3.5 " + (formData.continuePath ? "bg-[var(--color-primary)] text-white shadow-[0_12px_30px_rgba(15,98,254,0.28)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(15,98,254,0.34)] transition-all" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
             >
               {isEn ? "Continue" : "متابعة"}
               {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
@@ -1049,7 +1040,7 @@ export const DiscoveryPortal = () => {
               type="button"
               disabled={!formData.description.trim()}
               onClick={() => { setScreen("contact"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.description.trim() ? "bg-[var(--color-primary)] text-white shadow-[0_12px_30px_rgba(15,98,254,0.28)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(15,98,254,0.34)] transition-all" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
+              className={"inline-flex min-h-11 min-w-[150px] items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-black sm:min-w-[170px] sm:px-7 sm:py-3.5 " + (formData.description.trim() ? "bg-[var(--color-primary)] text-white shadow-[0_12px_30px_rgba(15,98,254,0.28)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(15,98,254,0.34)] transition-all" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
             >
               {isEn ? "Continue" : "متابعة"}
               {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
@@ -1061,7 +1052,7 @@ export const DiscoveryPortal = () => {
               type="button"
               disabled={!formData.helpNeed.trim()}
               onClick={() => { setScreen("contact"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.helpNeed.trim() ? "bg-[var(--color-primary)] text-white shadow-[0_12px_30px_rgba(15,98,254,0.28)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(15,98,254,0.34)] transition-all" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
+              className={"inline-flex min-h-11 min-w-[150px] items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-black sm:min-w-[170px] sm:px-7 sm:py-3.5 " + (formData.helpNeed.trim() ? "bg-[var(--color-primary)] text-white shadow-[0_12px_30px_rgba(15,98,254,0.28)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(15,98,254,0.34)] transition-all" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
             >
               {isEn ? "Continue" : "متابعة"}
               {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
