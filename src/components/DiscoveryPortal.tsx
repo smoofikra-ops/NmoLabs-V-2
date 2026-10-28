@@ -150,6 +150,15 @@ const GCC_COUNTRIES = [
   { code: "+968", label: "🇴🇲 +968" },
 ];
 
+const CONTACT_TIME_SLOTS = Array.from({ length: 10 }, (_, index) => {
+  const hour = index + 1;
+  return {
+    value: `${hour}:00 م`,
+    labelAr: String(hour),
+    labelEn: `${hour} PM`,
+  };
+});
+
 type FormData = {
   mainGoal: MainGoalId | "";
   subService: string;
@@ -278,10 +287,13 @@ export const DiscoveryPortal = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const contactTimeRequired = formData.continuePath === "contact";
+
   const contactValid =
     formData.name.trim().length > 1 &&
     formData.phone.trim().length > 5 &&
     (formData.email.trim() === "" || formData.email.includes("@")) &&
+    (!contactTimeRequired || formData.preferredContactTime !== "") &&
     agreedToTerms;
 
   const buildWhatsAppMessage = (requestId: string, saved: boolean) => {
@@ -711,25 +723,25 @@ export const DiscoveryPortal = () => {
             )}
 
             {screen === "path" && (
-              <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
                 <button
                   type="button"
                   onClick={() => setField("continuePath", "details")}
                   className={
-                    "relative min-h-[260px] rounded-[30px] border p-7 text-start transition-all duration-200 active:translate-y-[2px] " +
+                    "relative min-h-[152px] rounded-2xl border p-4 text-start transition-all duration-200 active:translate-y-[2px] sm:min-h-[210px] sm:rounded-[26px] sm:p-6 " +
                     (formData.continuePath === "details"
                       ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-[0_16px_45px_rgba(15,98,254,0.20)] ring-1 ring-[var(--color-primary)]"
                       : "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-[0_14px_35px_rgba(15,98,254,0.15)] hover:-translate-y-1")
                   }
                 >
-                  <div className="absolute end-5 top-5 rounded-full bg-[var(--color-primary)] px-3 py-1 text-xs font-black text-white">
+                  <div className="absolute end-3 top-3 rounded-full bg-[var(--color-primary)] px-2 py-0.5 text-[9px] font-black text-white sm:end-5 sm:top-5 sm:px-3 sm:py-1 sm:text-xs">
                     {isEn ? "Recommended" : "موصى به"}
                   </div>
-                  <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-3xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] shadow-inner">
+                  <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] shadow-inner sm:mb-6 sm:h-14 sm:w-14 sm:rounded-3xl">
                     <Code2 size={30} />
                   </div>
-                  <div className="mb-2 text-[22px] font-black">{isEn ? "Continue the details" : "أكمل التفاصيل"}</div>
-                  <p className="text-[15px] font-medium leading-7 text-[var(--text-muted)]">
+                  <div className="mb-1 text-[15px] font-black leading-5 sm:mb-2 sm:text-[20px]">{isEn ? "Continue the details" : "أكمل التفاصيل"}</div>
+                  <p className="text-[11px] font-medium leading-4 text-[var(--text-muted)] sm:text-sm sm:leading-6">
                     {isEn ? "Answer a few smart questions so we can assess scope, timing and fit more accurately." : "جاوب على أسئلة ذكية قصيرة عشان نقيّم النطاق والوقت والحل بشكل أدق وأسرع."}
                   </p>
                 </button>
@@ -738,17 +750,17 @@ export const DiscoveryPortal = () => {
                   type="button"
                   onClick={() => setField("continuePath", "contact")}
                   className={
-                    "min-h-[260px] rounded-[30px] border p-7 text-start transition-all duration-200 active:translate-y-[2px] " +
+                    "min-h-[152px] rounded-2xl border p-4 text-start transition-all duration-200 active:translate-y-[2px] sm:min-h-[210px] sm:rounded-[26px] sm:p-6 " +
                     (formData.continuePath === "contact"
                       ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-xl ring-1 ring-[var(--color-primary)]"
                       : "border-[var(--border-default)] bg-[var(--surface-primary)] hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-xl")
                   }
                 >
-                  <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-3xl border border-[var(--interactive-border)] bg-[var(--surface-secondary)] text-[var(--color-primary)]">
+                  <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--interactive-border)] bg-[var(--surface-secondary)] text-[var(--color-primary)] sm:mb-6 sm:h-14 sm:w-14 sm:rounded-3xl">
                     <Phone size={29} />
                   </div>
-                  <div className="mb-2 text-[22px] font-black">{isEn ? "Contact me" : "تواصلوا معي"}</div>
-                  <p className="text-[15px] font-medium leading-7 text-[var(--text-muted)]">
+                  <div className="mb-1 text-[15px] font-black leading-5 sm:mb-2 sm:text-[20px]">{isEn ? "Contact me" : "تواصلوا معي"}</div>
+                  <p className="text-[11px] font-medium leading-4 text-[var(--text-muted)] sm:text-sm sm:leading-6">
                     {isEn ? "Leave your contact details and preferred time. The team will follow up directly." : "اترك بياناتك ووقت التواصل المناسب، والفريق يتواصل معك مباشرة."}
                   </p>
                 </button>
@@ -757,17 +769,17 @@ export const DiscoveryPortal = () => {
                   type="button"
                   onClick={() => setField("continuePath", "help")}
                   className={
-                    "min-h-[260px] rounded-[30px] border p-7 text-start transition-all duration-200 active:translate-y-[2px] " +
+                    "min-h-[152px] rounded-2xl border p-4 text-start transition-all duration-200 active:translate-y-[2px] sm:min-h-[210px] sm:rounded-[26px] sm:p-6 " +
                     (formData.continuePath === "help"
                       ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-xl ring-1 ring-[var(--color-primary)]"
                       : "border-[var(--border-default)] bg-[var(--surface-primary)] hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-xl")
                   }
                 >
-                  <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-3xl border border-[var(--interactive-border)] bg-[var(--surface-secondary)] text-[var(--color-primary)]">
+                  <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--interactive-border)] bg-[var(--surface-secondary)] text-[var(--color-primary)] sm:mb-6 sm:h-14 sm:w-14 sm:rounded-3xl">
                     <Compass size={29} />
                   </div>
-                  <div className="mb-2 text-[22px] font-black">{isEn ? "Help me define the need" : "ساعدوني أحدد احتياجي"}</div>
-                  <p className="text-[15px] font-medium leading-7 text-[var(--text-muted)]">
+                  <div className="mb-1 text-[15px] font-black leading-5 sm:mb-2 sm:text-[20px]">{isEn ? "Help me define the need" : "ساعدوني أحدد احتياجي"}</div>
+                  <p className="text-[11px] font-medium leading-4 text-[var(--text-muted)] sm:text-sm sm:leading-6">
                     {isEn ? "Use a guided path when you are not sure about the exact scope or solution yet." : "مسار استكشافي إذا الفكرة أو النطاق لسه مو واضحين وتحتاج توجيه قبل التنفيذ."}
                   </p>
                 </button>
@@ -941,21 +953,44 @@ export const DiscoveryPortal = () => {
                     </label>
 
                     {(formData.continuePath === "contact" || formData.continuePath === "help") && (
-                      <label className="space-y-2 sm:col-span-2">
-                        <span className="text-sm font-bold">{isEn ? "Preferred contact time (Optional)" : "وقت التواصل المفضل (اختياري)"}</span>
-                        <input
-                          value={formData.preferredContactTime}
-                          onChange={(event) => setField("preferredContactTime", event.target.value)}
-                          className="w-full rounded-xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-3.5 outline-none focus:border-[var(--color-primary)]"
-                          placeholder={isEn ? "Example: after 6 PM" : "مثال: بعد الساعة 6 مساءً"}
-                        />
-                        <VoiceFieldButton
-                          compact
-                          value={formData.preferredContactTime}
-                          onChange={(value) => setField("preferredContactTime", value)}
-                          context="وقت التواصل المفضل، مع الحفاظ على الوقت والأرقام بدقة"
-                        />
-                      </label>
+                      <div className="space-y-3 sm:col-span-2">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <span className="text-sm font-bold">
+                            {isEn
+                              ? `Preferred contact time${contactTimeRequired ? " *" : " (Optional)"}`
+                              : `متى الوقت المناسب للتواصل؟${contactTimeRequired ? " *" : " (اختياري)"}`}
+                          </span>
+                          <span className="text-[11px] font-bold text-[var(--text-muted)]">
+                            {isEn ? "1 PM – 10 PM" : "من 1 ظهرًا إلى 10 مساءً"}
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-5 gap-2" role="group" aria-label={isEn ? "Preferred contact time" : "وقت التواصل المفضل"}>
+                          {CONTACT_TIME_SLOTS.map((slot) => {
+                            const selected = formData.preferredContactTime === slot.value;
+                            return (
+                              <button
+                                key={slot.value}
+                                type="button"
+                                aria-pressed={selected}
+                                onClick={() => setField("preferredContactTime", slot.value)}
+                                className={
+                                  "min-h-11 rounded-xl border px-2 py-2 text-sm font-black transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] " +
+                                  (selected
+                                    ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white shadow-[0_8px_22px_rgba(15,98,254,0.24)]"
+                                    : "border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-primary)] hover:border-[var(--color-primary)]")
+                                }
+                              >
+                                {isEn ? slot.labelEn : slot.labelAr}
+                              </button>
+                            );
+                          })}
+                        </div>
+                        {!isEn && (
+                          <p className="text-[11px] font-medium text-[var(--text-muted)]">
+                            اختر ساعة واحدة فقط؛ كل الخيارات من بعد الظهر إلى المساء.
+                          </p>
+                        )}
+                      </div>
                     )}
                   </div>
                 </div>
