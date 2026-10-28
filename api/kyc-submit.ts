@@ -19,9 +19,9 @@ export default async function handler(req: Request, res: Response) {
 
   try {
     const payload = req.body;
-    console.log("Payload:", JSON.stringify(payload, null, 2));
 
-    console.log("Sending request to Google Apps Script...");
+    // Never log the raw KYC payload; it can contain personal data.
+    console.log("Sending KYC request to Google Apps Script...");
     
     // We can use AbortController for fetch if we want to enforce timeout on the backend as well
     const controller = new AbortController();

@@ -1,7 +1,7 @@
 export const siteMetadata = {
   title: 'NMOLABS | نمو لابز',
   description: 'شركة حلول تقنية وابتكار للأعمال، متخصصة في تحويل الأفكار والتحديات التشغيلية والتجارية إلى مواقع، متاجر، تطبيقات وأنظمة رقمية قابلة للاستخدام والتوسع.',
-  url: 'https://nmolabs.com',
+  url: 'https://www.nmolabs.com',
   siteName: 'NMOLABS',
   locale: 'ar_SA',
   type: 'website',

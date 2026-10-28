@@ -213,6 +213,9 @@ function AppContent() {
     description: isEn ? ((metaRaw as any).descriptionEn || metaRaw.description) : ((metaRaw as any).descriptionAr || metaRaw.description)
   };
 
+  const canonicalPath = routeKey === 'home' ? '' : `/${routeKey}`;
+  const canonicalUrl = `${siteMetadata.url}${canonicalPath}`;
+
   // Direct DOM synchronization for robust client-side SPA navigation across all browsers
   useEffect(() => {
     document.title = meta.title;
@@ -249,7 +252,8 @@ function AppContent() {
         <meta property="og:title" content={meta.title} />
         <meta property="og:description" content={meta.description} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://nmolabs.com" />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:url" content={canonicalUrl} />
         <meta property="og:site_name" content="NMOLABS | نمو لابز" />
         <meta property="og:locale" content={isEn ? "en_US" : "ar_SA"} />
         <meta name="twitter:card" content="summary_large_image" />
