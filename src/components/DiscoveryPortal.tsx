@@ -2,361 +2,341 @@ import React, { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import {
   AlertCircle,
-  Building2,
+  AppWindow,
+  ArrowLeft,
+  ArrowRight,
+  Bot,
+  Boxes,
   Check,
-  ChevronLeft,
-  ChevronRight,
   CircleCheckBig,
+  Code2,
+  Compass,
+  Layers3,
   Loader2,
   Mail,
   Phone,
+  Rocket,
   Send,
   Sparkles,
   UserRound,
+  WandSparkles,
+  Wrench,
 } from "lucide-react";
 import { getWhatsAppUrl } from "../lib/utils";
 import {
   KYCSubmissionPayload,
   submitKYCForm,
 } from "../services/kycSubmissionService";
-import { projectTypes } from "../data/projectIntake";
+import { budgetsAr, budgetsEn, timelinesAr, timelinesEn } from "../data/projectIntake";
 import { useSite } from "../context/SiteContext";
 
-type GoalOption = {
+type MainGoalId =
+  | "create-new"
+  | "improve-existing"
+  | "applications"
+  | "systems"
+  | "ai-automation"
+  | "integrated";
+
+type ContinuePath = "details" | "contact" | "help";
+
+type SubService = {
   id: string;
   ar: string;
   en: string;
+  descAr: string;
+  descEn: string;
 };
 
-type SmartGoalMap = Record<string, GoalOption[]>;
+type MainGoal = {
+  id: MainGoalId;
+  ar: string;
+  en: string;
+  descAr: string;
+  descEn: string;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  services: SubService[];
+};
+
+const MAIN_GOALS: MainGoal[] = [
+  {
+    id: "create-new",
+    ar: "إنشاء شيء جديد",
+    en: "Build Something New",
+    descAr: "موقع، متجر، ملف تعريفي أو تجربة رقمية جديدة.",
+    descEn: "A new website, store, profile or digital experience.",
+    icon: Rocket,
+    services: [
+      { id: "website", ar: "موقع إلكتروني", en: "Website", descAr: "موقع شركة، خدمات، تعريفي أو صفحة هبوط.", descEn: "Corporate, service, profile or landing website." },
+      { id: "ecommerce", ar: "متجر إلكتروني", en: "E-commerce Store", descAr: "متجر جديد مع الدفع والشحن وتجربة الشراء.", descEn: "A new online store with checkout, payments and shipping." },
+      { id: "catalog-profile", ar: "ملف تعريفي أو كتالوج", en: "Company Profile / Catalog", descAr: "عرض احترافي للشركة أو المنتجات أو الخدمات.", descEn: "Professional presentation for your company, products or services." },
+      { id: "digital-platform", ar: "منصة أو بوابة رقمية", en: "Digital Platform / Portal", descAr: "منصة محتوى، بوابة عملاء أو تجربة رقمية مخصصة.", descEn: "Content platform, customer portal or tailored digital experience." },
+    ],
+  },
+  {
+    id: "improve-existing",
+    ar: "تطوير مشروع قائم",
+    en: "Improve an Existing Project",
+    descAr: "تحليل وتحسين موقع، متجر، نظام أو نمو مشروع قائم.",
+    descEn: "Audit and improve an existing site, store, system or growth engine.",
+    icon: Wrench,
+    services: [
+      { id: "audit-improvement", ar: "تحليل شامل وتطوير", en: "Audit & Improvement", descAr: "UX/UI، أداء، تحويل، بنية تقنية وفرص تحسين.", descEn: "UX/UI, performance, conversion and technical improvement." },
+      { id: "website-redesign", ar: "إعادة تصميم موقع", en: "Website Redesign", descAr: "تحسين تجربة الموقع والواجهة والمحتوى والأداء.", descEn: "Improve website experience, UI, content and performance." },
+      { id: "store-growth", ar: "تطوير متجر وزيادة التحويل", en: "Store Growth & Conversion", descAr: "تحسين تجربة الشراء، صفحات المنتجات والتحويل.", descEn: "Improve shopping flow, product pages and conversion." },
+      { id: "marketing-growth", ar: "تسويق ونمو", en: "Marketing & Growth", descAr: "حملات، SEO، محتوى، قياس وتحسين الأداء.", descEn: "Campaigns, SEO, content, measurement and optimization." },
+    ],
+  },
+  {
+    id: "applications",
+    ar: "تطبيقات",
+    en: "Applications",
+    descAr: "تطبيقات جوال وويب وبوابات للعملاء أو الفرق.",
+    descEn: "Mobile apps, web apps and portals for customers or teams.",
+    icon: AppWindow,
+    services: [
+      { id: "mobile-app", ar: "تطبيق جوال", en: "Mobile App", descAr: "iOS / Android لتجربة عميل أو خدمة رقمية.", descEn: "iOS / Android for a customer experience or digital service." },
+      { id: "web-app", ar: "تطبيق ويب", en: "Web Application", descAr: "تطبيق يعمل من المتصفح بواجهة وتدفقات مخصصة.", descEn: "Browser-based application with custom workflows." },
+      { id: "customer-portal", ar: "بوابة عملاء", en: "Customer Portal", descAr: "حسابات، طلبات، ملفات، حالات ومتابعة العملاء.", descEn: "Accounts, requests, files, status and customer follow-up." },
+      { id: "internal-app", ar: "تطبيق داخلي للموظفين", en: "Internal Team App", descAr: "مهام، عمليات، نماذج، صلاحيات ومتابعة.", descEn: "Tasks, operations, forms, permissions and tracking." },
+    ],
+  },
+  {
+    id: "systems",
+    ar: "أنظمة وبرامج",
+    en: "Systems & Software",
+    descAr: "ERP، CRM، لوحات تحكم وأنظمة تشغيل مخصصة.",
+    descEn: "ERP, CRM, dashboards and custom operating systems.",
+    icon: Boxes,
+    services: [
+      { id: "custom-system", ar: "نظام مخصص", en: "Custom System", descAr: "نظام مبني حسب عمليات الشركة واحتياجها.", descEn: "Software built around your company operations." },
+      { id: "erp", ar: "ERP / إدارة العمليات", en: "ERP / Operations", descAr: "مبيعات، مشتريات، مخزون، مهام وتقارير.", descEn: "Sales, purchasing, inventory, tasks and reporting." },
+      { id: "crm", ar: "CRM / إدارة العملاء", en: "CRM / Customer Management", descAr: "عملاء، فرص، متابعة، مبيعات وخدمة ما بعد البيع.", descEn: "Customers, opportunities, follow-up, sales and service." },
+      { id: "dashboard", ar: "لوحات تحكم وتقارير", en: "Dashboards & Reporting", descAr: "مؤشرات، تقارير، صلاحيات وربط مصادر البيانات.", descEn: "KPIs, reporting, permissions and data integrations." },
+    ],
+  },
+  {
+    id: "ai-automation",
+    ar: "الذكاء الاصطناعي والأتمتة",
+    en: "AI & Automation",
+    descAr: "مساعدات ذكية، أتمتة عمليات وربط الأنظمة والبيانات.",
+    descEn: "AI assistants, workflow automation, integrations and data intelligence.",
+    icon: Bot,
+    services: [
+      { id: "ai-assistant", ar: "مساعد ذكي", en: "AI Assistant", descAr: "للعملاء أو الموظفين أو فرق المبيعات والدعم.", descEn: "For customers, employees, sales or support teams." },
+      { id: "workflow-automation", ar: "أتمتة عمليات", en: "Workflow Automation", descAr: "ربط خطوات العمل وتقليل المهام اليدوية.", descEn: "Connect workflows and reduce manual work." },
+      { id: "ai-data", ar: "تحليل بيانات وذكاء أعمال", en: "AI Data & Intelligence", descAr: "تحليل، تلخيص، تنبؤ ولوحات رؤى.", descEn: "Analysis, summarization, prediction and insight dashboards." },
+      { id: "system-integration", ar: "ربط أنظمة وواجهات API", en: "Systems & API Integration", descAr: "تكامل التطبيقات والبيانات والخدمات.", descEn: "Connect applications, data sources and services." },
+    ],
+  },
+  {
+    id: "integrated",
+    ar: "مشروع متكامل",
+    en: "Integrated Project",
+    descAr: "بناء + تشغيل + تسويق + نمو في مشروع واحد مترابط.",
+    descEn: "Build + operations + marketing + growth in one connected engagement.",
+    icon: Layers3,
+    services: [
+      { id: "end-to-end", ar: "من الفكرة إلى التشغيل", en: "Idea to Operations", descAr: "دراسة، تصميم، بناء، إطلاق وتشغيل.", descEn: "Discovery, design, build, launch and operations." },
+      { id: "digital-transformation", ar: "تحول رقمي للأعمال", en: "Digital Transformation", descAr: "إعادة بناء العمليات وربط الأنظمة والتجارب الرقمية.", descEn: "Redesign operations, systems and digital experiences." },
+      { id: "commerce-growth", ar: "تجارة إلكترونية + نمو", en: "Commerce + Growth", descAr: "متجر، تشغيل، حملات، محتوى وقياس.", descEn: "Store, operations, campaigns, content and measurement." },
+      { id: "consultation", ar: "استشارة وخارطة تنفيذ", en: "Consultation & Roadmap", descAr: "تحديد الحل والنطاق والأولويات قبل التنفيذ.", descEn: "Define the right solution, scope and priorities first." },
+    ],
+  },
+];
 
 const GCC_COUNTRIES = [
-  { code: "+966", nameAr: "السعودية", nameEn: "Saudi Arabia", flag: "🇸🇦" },
-  { code: "+971", nameAr: "الإمارات", nameEn: "UAE", flag: "🇦🇪" },
-  { code: "+965", nameAr: "الكويت", nameEn: "Kuwait", flag: "🇰🇼" },
-  { code: "+974", nameAr: "قطر", nameEn: "Qatar", flag: "🇶🇦" },
-  { code: "+973", nameAr: "البحرين", nameEn: "Bahrain", flag: "🇧🇭" },
-  { code: "+968", nameAr: "عمان", nameEn: "Oman", flag: "🇴🇲" },
+  { code: "+966", label: "🇸🇦 +966" },
+  { code: "+971", label: "🇦🇪 +971" },
+  { code: "+965", label: "🇰🇼 +965" },
+  { code: "+974", label: "🇶🇦 +974" },
+  { code: "+973", label: "🇧🇭 +973" },
+  { code: "+968", label: "🇴🇲 +968" },
 ];
 
-const SMART_GOALS: SmartGoalMap = {
-  website: [
-    { id: "professional-presence", ar: "إطلاق حضور رقمي احترافي", en: "Launch a professional digital presence" },
-    { id: "lead-generation", ar: "زيادة طلبات التواصل والعملاء", en: "Generate more leads and enquiries" },
-    { id: "service-clarity", ar: "عرض الخدمات بشكل أوضح", en: "Present services more clearly" },
-    { id: "seo", ar: "تحسين الظهور في محركات البحث", en: "Improve search visibility" },
-  ],
-  ecommerce: [
-    { id: "launch-store", ar: "إطلاق متجر جديد", en: "Launch a new store" },
-    { id: "increase-sales", ar: "زيادة المبيعات والتحويل", en: "Increase sales and conversion" },
-    { id: "checkout-ux", ar: "تحسين تجربة الشراء", en: "Improve the buying experience" },
-    { id: "payments-shipping", ar: "ربط الدفع والشحن والتشغيل", en: "Connect payments, shipping and operations" },
-  ],
-  "custom-system": [
-    { id: "automation", ar: "أتمتة العمليات الداخلية", en: "Automate internal operations" },
-    { id: "dashboard", ar: "لوحة تحكم مركزية", en: "Build a central dashboard" },
-    { id: "crm-workflow", ar: "إدارة العملاء والمهام", en: "Manage customers and workflows" },
-    { id: "reports-permissions", ar: "تقارير وصلاحيات متقدمة", en: "Advanced reports and permissions" },
-  ],
-  "accounting-system": [
-    { id: "sales-purchases", ar: "تنظيم المبيعات والمشتريات", en: "Organize sales and purchases" },
-    { id: "inventory", ar: "إدارة المخزون", en: "Manage inventory" },
-    { id: "financial-reports", ar: "تقارير مالية وإدارية", en: "Financial and management reporting" },
-    { id: "multi-branch", ar: "ربط الفروع والعمليات", en: "Connect branches and operations" },
-  ],
-  "ai-automation": [
-    { id: "task-automation", ar: "أتمتة المهام المتكررة", en: "Automate repetitive tasks" },
-    { id: "ai-assistant", ar: "مساعد ذكي للموظفين أو العملاء", en: "AI assistant for staff or customers" },
-    { id: "data-analysis", ar: "تحليل البيانات واستخراج الرؤى", en: "Analyze data and extract insights" },
-    { id: "system-integration", ar: "ربط الأنظمة بالذكاء الاصطناعي", en: "Connect systems with AI" },
-  ],
-  marketing: [
-    { id: "sales-growth", ar: "زيادة المبيعات والعملاء", en: "Increase sales and customers" },
-    { id: "brand-awareness", ar: "رفع الوعي بالعلامة التجارية", en: "Grow brand awareness" },
-    { id: "ads-performance", ar: "تحسين أداء الإعلانات", en: "Improve advertising performance" },
-    { id: "seo-content", ar: "SEO والمحتوى والنمو العضوي", en: "SEO, content and organic growth" },
-  ],
-  "catalog-profile": [
-    { id: "company-profile", ar: "ملف شركة احترافي", en: "Professional company profile" },
-    { id: "product-catalog", ar: "كتالوج منتجات", en: "Product catalog" },
-    { id: "service-presentation", ar: "عرض خدمات واضح ومقنع", en: "Clear service presentation" },
-    { id: "portfolio", ar: "Portfolio للأعمال والمشاريع", en: "Portfolio for work and projects" },
-  ],
-  "audit-improvement": [
-    { id: "conversion", ar: "رفع معدل التحويل", en: "Improve conversion rate" },
-    { id: "performance", ar: "تحسين السرعة والأداء", en: "Improve speed and performance" },
-    { id: "ux-ui", ar: "تحسين تجربة وواجهة المستخدم", en: "Improve UX and UI" },
-    { id: "full-audit", ar: "تحليل تقني وتسويقي شامل", en: "Full technical and marketing audit" },
-  ],
-  consultation: [
-    { id: "find-solution", ar: "تحديد الحل المناسب", en: "Identify the right solution" },
-    { id: "priorities", ar: "ترتيب الأولويات", en: "Prioritize the work" },
-    { id: "scope-budget", ar: "تحديد النطاق والتكلفة المتوقعة", en: "Define scope and expected budget" },
-    { id: "roadmap", ar: "بناء خارطة تنفيذ", en: "Build an execution roadmap" },
-  ],
-  "integrated-project": [
-    { id: "build", ar: "بناء المنتج أو المنصة", en: "Build the product or platform" },
-    { id: "growth", ar: "التسويق والنمو", en: "Marketing and growth" },
-    { id: "operations", ar: "التشغيل والأتمتة", en: "Operations and automation" },
-    { id: "end-to-end", ar: "حل متكامل من البداية للنهاية", en: "End-to-end integrated solution" },
-  ],
-  "events-management": [
-    { id: "coverage", ar: "التغطية والتوثيق", en: "Event coverage and documentation" },
-    { id: "live-stream", ar: "البث المباشر", en: "Live streaming" },
-    { id: "production", ar: "التصوير والمونتاج", en: "Photography and video production" },
-    { id: "event-content", ar: "إدارة محتوى الفعالية", en: "Event content management" },
-  ],
-  other: [
-    { id: "custom-solution", ar: "أحتاج حلًا مخصصًا", en: "I need a custom solution" },
-    { id: "improve-existing", ar: "أحتاج تطوير مشروع قائم", en: "I need to improve an existing project" },
-    { id: "combined-services", ar: "أحتاج ربط عدة خدمات", en: "I need multiple connected services" },
-    { id: "not-sure", ar: "لست متأكدًا وأحتاج توجيهًا", en: "I am not sure and need guidance" },
-  ],
-};
-
-const DEFAULT_GOALS: GoalOption[] = [
-  { id: "growth", ar: "تحقيق نمو واضح", en: "Achieve measurable growth" },
-  { id: "efficiency", ar: "رفع الكفاءة وتقليل العمل اليدوي", en: "Improve efficiency and reduce manual work" },
-  { id: "experience", ar: "تحسين تجربة العميل", en: "Improve customer experience" },
-  { id: "clarity", ar: "تحديد الحل المناسب", en: "Identify the right solution" },
-];
-
-type LiteFormData = {
-  type: string;
-  goals: string[];
+type FormData = {
+  mainGoal: MainGoalId | "";
+  subService: string;
+  continuePath: ContinuePath | "";
+  description: string;
+  currentUrl: string;
+  platform: string;
+  budget: string;
+  timeline: string;
+  helpNeed: string;
   name: string;
   company: string;
   phone: string;
   email: string;
+  preferredContactTime: string;
 };
 
-const STORAGE_KEY = "nmolabsSmartKycLite_v1";
-const STEP_KEY = "nmolabsSmartKycLiteStep_v1";
+const STORAGE_KEY = "nmolabsSmartKycDecisionFlow_v2";
 
 export const DiscoveryPortal = () => {
   const { config } = useSite();
   const isEn = config.language === "en";
 
-  const [formData, setFormData] = useState<LiteFormData>(() => {
-    const fallback: LiteFormData = {
-      type: "",
-      goals: [],
-      name: "",
-      company: "",
-      phone: "",
-      email: "",
-    };
+  const emptyForm: FormData = {
+    mainGoal: "",
+    subService: "",
+    continuePath: "",
+    description: "",
+    currentUrl: "",
+    platform: "",
+    budget: "",
+    timeline: "",
+    helpNeed: "",
+    name: "",
+    company: "",
+    phone: "",
+    email: "",
+    preferredContactTime: "",
+  };
 
+  const [formData, setFormData] = useState<FormData>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      return saved ? { ...fallback, ...JSON.parse(saved) } : fallback;
+      return saved ? { ...emptyForm, ...JSON.parse(saved) } : emptyForm;
     } catch {
-      return fallback;
+      return emptyForm;
     }
   });
 
-  const [stepIndex, setStepIndex] = useState(() => {
-    const saved = Number(localStorage.getItem(STEP_KEY) || "0");
-    return Number.isFinite(saved) && saved >= 0 && saved <= 2 ? saved : 0;
-  });
-
+  const [screen, setScreen] = useState<"goal" | "service" | "path" | "details" | "help" | "contact">("goal");
   const [countryCode, setCountryCode] = useState("+966");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submissionId, setSubmissionId] = useState("");
   const [backendSaved, setBackendSaved] = useState(false);
-  const [submitError, setSubmitError] = useState("");
   const [whatsAppMessage, setWhatsAppMessage] = useState("");
 
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
-      localStorage.setItem(STEP_KEY, String(stepIndex));
-    } catch {
-      // Ignore storage failures and keep the form usable.
-    }
-  }, [formData, stepIndex]);
+    } catch {}
+  }, [formData]);
 
   useEffect(() => {
     const value = formData.phone.trim();
     if (!value) return;
-
-    const matchedCountry = GCC_COUNTRIES.find((country) =>
-      value.startsWith(country.code),
-    );
-
-    if (matchedCountry) {
-      setCountryCode(matchedCountry.code);
-      setPhoneNumber(value.replace(matchedCountry.code, "").trim());
-    } else {
-      setPhoneNumber(value);
+    const match = GCC_COUNTRIES.find((country) => value.startsWith(country.code));
+    if (match) {
+      setCountryCode(match.code);
+      setPhoneNumber(value.replace(match.code, "").trim());
     }
   }, []);
 
+  const selectedGoal = useMemo(
+    () => MAIN_GOALS.find((goal) => goal.id === formData.mainGoal),
+    [formData.mainGoal],
+  );
+
   const selectedService = useMemo(
-    () => projectTypes.find((item) => item.value === formData.type),
-    [formData.type],
+    () => selectedGoal?.services.find((service) => service.id === formData.subService),
+    [selectedGoal, formData.subService],
   );
 
-  const goalOptions = useMemo(
-    () => SMART_GOALS[formData.type] || DEFAULT_GOALS,
-    [formData.type],
-  );
+  const screenOrder = useMemo(() => {
+    if (formData.continuePath === "details") return ["goal", "service", "path", "details", "contact"];
+    if (formData.continuePath === "help") return ["goal", "service", "path", "help", "contact"];
+    return ["goal", "service", "path", "contact"];
+  }, [formData.continuePath]);
 
-  const selectedGoalOptions = useMemo(
-    () => goalOptions.filter((goal) => formData.goals.includes(goal.id)),
-    [goalOptions, formData.goals],
-  );
+  const currentIndex = Math.max(0, screenOrder.indexOf(screen));
+  const progress = ((currentIndex + 1) / screenOrder.length) * 100;
 
-  const steps = [
-    {
-      id: "service",
-      titleAr: "وش تحتاج من نمو لابز؟",
-      titleEn: "What do you need from NomoLabs?",
-      descAr: "اختر الخدمة الأقرب لاحتياجك. نقدر نضبط التفاصيل بعد التواصل.",
-      descEn: "Choose the service closest to your need. We can refine the details later.",
-    },
-    {
-      id: "goals",
-      titleAr: "وش الهدف الأهم لك؟",
-      titleEn: "What matters most to you?",
-      descAr: "اختر من هدف واحد إلى ثلاثة أهداف. الخيارات تتغير حسب الخدمة.",
-      descEn: "Choose one to three goals. Options adapt to the selected service.",
-    },
-    {
-      id: "contact",
-      titleAr: "خلّنا نتواصل معك",
-      titleEn: "How can we reach you?",
-      descAr: "بيانات بسيطة فقط عشان نراجع الطلب ونتواصل معك.",
-      descEn: "Just the essentials so we can review your request and contact you.",
-    },
-  ];
+  const setField = <K extends keyof FormData>(key: K, value: FormData[K]) => {
+    setFormData((current) => ({ ...current, [key]: value }));
+  };
+
+  const selectGoal = (goal: MainGoalId) => {
+    setFormData((current) => ({
+      ...current,
+      mainGoal: goal,
+      subService: "",
+      continuePath: "",
+    }));
+  };
 
   const handlePhoneChange = (code: string, number: string) => {
     setCountryCode(code);
-    let cleanNumber = number.replace(/[^0-9]/g, "");
-    if (code === "+966" && cleanNumber.startsWith("0")) {
-      cleanNumber = cleanNumber.substring(1);
-    }
-
-    setPhoneNumber(cleanNumber);
-    setFormData((current) => ({
-      ...current,
-      phone: cleanNumber ? code + " " + cleanNumber : "",
-    }));
-  };
-
-  const selectService = (type: string) => {
-    setFormData((current) => ({
-      ...current,
-      type,
-      goals: current.type === type ? current.goals : [],
-    }));
-  };
-
-  const toggleGoal = (goalId: string) => {
-    setFormData((current) => {
-      const selected = current.goals.includes(goalId);
-
-      if (selected) {
-        return {
-          ...current,
-          goals: current.goals.filter((item) => item !== goalId),
-        };
-      }
-
-      if (current.goals.length >= 3) {
-        return current;
-      }
-
-      return {
-        ...current,
-        goals: [...current.goals, goalId],
-      };
-    });
-  };
-
-  const isStepValid = (index: number) => {
-    if (index === 0) return Boolean(formData.type);
-    if (index === 1) return formData.goals.length > 0;
-    return (
-      formData.name.trim().length > 1 &&
-      formData.phone.trim().length > 5 &&
-      (formData.email.trim() === "" || formData.email.includes("@")) &&
-      agreedToTerms
-    );
-  };
-
-  const goNext = () => {
-    if (!isStepValid(stepIndex) || stepIndex >= 2) return;
-    setStepIndex((current) => current + 1);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    let clean = number.replace(/[^0-9]/g, "");
+    if (code === "+966" && clean.startsWith("0")) clean = clean.substring(1);
+    setPhoneNumber(clean);
+    setField("phone", clean ? code + " " + clean : "");
   };
 
   const goBack = () => {
-    if (stepIndex <= 0) return;
-    setStepIndex((current) => current - 1);
+    if (screen === "service") setScreen("goal");
+    else if (screen === "path") setScreen("service");
+    else if (screen === "details" || screen === "help") setScreen("path");
+    else if (screen === "contact") {
+      if (formData.continuePath === "details") setScreen("details");
+      else if (formData.continuePath === "help") setScreen("help");
+      else setScreen("path");
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const getGoalLabels = (language: "ar" | "en") =>
-    selectedGoalOptions.map((goal) => (language === "en" ? goal.en : goal.ar));
+  const contactValid =
+    formData.name.trim().length > 1 &&
+    formData.phone.trim().length > 5 &&
+    (formData.email.trim() === "" || formData.email.includes("@")) &&
+    agreedToTerms;
 
-  const buildWhatsAppMessage = (
-    requestId: string,
-    backendWasSaved: boolean,
-  ) => {
-    const serviceLabel = isEn
-      ? selectedService?.labelEn
-      : selectedService?.labelAr;
-    const goals = getGoalLabels(isEn ? "en" : "ar");
+  const buildWhatsAppMessage = (requestId: string, saved: boolean) => {
+    const goalLabel = isEn ? selectedGoal?.en : selectedGoal?.ar;
+    const serviceLabel = isEn ? selectedService?.en : selectedService?.ar;
+    const pathLabel =
+      formData.continuePath === "details"
+        ? "أكمل التفاصيل"
+        : formData.continuePath === "contact"
+          ? "تواصلوا معي"
+          : "ساعدوني أحدد احتياجي";
 
-    const lines = [
-      "🔵 طلب Smart KYC جديد — NMOLABS",
+    return [
+      "🔵 طلب KYC جديد — NMOLABS",
       "",
-      backendWasSaved
-        ? "✅ تم حفظ الطلب في النظام"
-        : "⚠️ تعذر الحفظ التلقائي — يرجى مراجعة الطلب عبر واتساب",
+      saved ? "✅ تم حفظ الطلب في النظام" : "⚠️ تعذر الحفظ التلقائي — راجع الطلب عبر واتساب",
       "",
-      "━━━━━━━━━━━━━━━━━━",
+      "الهدف الرئيسي: " + (goalLabel || ""),
+      "الخدمة الفرعية: " + (serviceLabel || ""),
+      "طريقة الاستمرار: " + pathLabel,
+      formData.description ? "تفاصيل المشروع: " + formData.description : "",
+      formData.helpNeed ? "ما يحتاج المساعدة فيه: " + formData.helpNeed : "",
+      formData.currentUrl ? "الرابط الحالي: " + formData.currentUrl : "",
+      formData.platform ? "المنصة / التقنية: " + formData.platform : "",
+      formData.budget ? "الميزانية: " + formData.budget : "",
+      formData.timeline ? "الموعد: " + formData.timeline : "",
       "",
-      "👤 بيانات العميل",
       "الاسم: " + formData.name,
       "الجوال: " + formData.phone,
       "البريد: " + (formData.email || "غير مدخل"),
       "الشركة / المشروع: " + (formData.company || "غير مدخل"),
-      "",
-      "📋 الاحتياج",
-      "الخدمة: " + (serviceLabel || formData.type),
-      "الأهداف: " + goals.join("، "),
+      formData.preferredContactTime ? "وقت التواصل المفضل: " + formData.preferredContactTime : "",
       "",
       "Request ID: " + requestId,
-    ];
-
-    return lines.join("\n");
+    ].filter(Boolean).join("\n");
   };
 
   const handleSubmit = async () => {
-    if (!isStepValid(2) || isSubmitting) return;
-
+    if (!contactValid || isSubmitting) return;
     setIsSubmitting(true);
     setSubmitError("");
 
-    const requestId =
-      "NML-" + Math.random().toString(36).substring(2, 9).toUpperCase();
-
-    const goalsAr = getGoalLabels("ar");
-    const goalsEn = getGoalLabels("en");
+    const requestId = "NML-" + Math.random().toString(36).substring(2, 9).toUpperCase();
 
     const payload: KYCSubmissionPayload = {
       submission_id: requestId,
       submitted_at: new Date().toISOString(),
       language: config.language,
       completion_percentage: 100,
-      primary_service: selectedService?.labelEn || formData.type,
-      selected_subservices: goalsEn.join(", "),
+      primary_service: (selectedGoal?.en || formData.mainGoal) + " > " + (selectedService?.en || formData.subService),
+      selected_subservices: selectedService?.en || formData.subService,
       client_information: {
         name: formData.name.trim(),
         phone: formData.phone.trim(),
@@ -366,38 +346,42 @@ export const DiscoveryPortal = () => {
         company: formData.company.trim(),
       },
       project_information: {
-        description: goalsAr.join("، "),
-        budget: "",
-        timeline: "",
+        description: [formData.description, formData.helpNeed, formData.currentUrl, formData.platform]
+          .filter(Boolean)
+          .join(" | "),
+        budget: formData.budget,
+        timeline: formData.timeline,
       },
-      platform_information: "",
+      platform_information: formData.platform,
       content_information: "",
       attachments_information: "",
-      approval_response_time: "",
+      approval_response_time: formData.preferredContactTime,
       answers: {
-        smart_goals_ar: goalsAr.join(" | "),
-        smart_goals_en: goalsEn.join(" | "),
-        form_version: "smart-kyc-lite-v1",
+        main_goal_ar: selectedGoal?.ar || "",
+        main_goal_en: selectedGoal?.en || "",
+        sub_service_ar: selectedService?.ar || "",
+        sub_service_en: selectedService?.en || "",
+        continue_path: formData.continuePath,
+        current_url: formData.currentUrl,
+        help_need: formData.helpNeed,
+        form_version: "smart-kyc-decision-flow-v2",
       },
     };
 
     try {
       const result = await submitKYCForm(payload);
       const saved = result.success === true;
-      const finalRequestId = result.submission_id || requestId;
-      const message = buildWhatsAppMessage(finalRequestId, saved);
+      const finalId = result.submission_id || requestId;
+      const message = buildWhatsAppMessage(finalId, saved);
 
       setBackendSaved(saved);
-      setSubmissionId(finalRequestId);
+      setSubmissionId(finalId);
       setWhatsAppMessage(message);
       setSubmitSuccess(true);
 
       try {
         localStorage.removeItem(STORAGE_KEY);
-        localStorage.removeItem(STEP_KEY);
-      } catch {
-        // Ignore storage cleanup failures.
-      }
+      } catch {}
 
       if (config.contactNumber) {
         setTimeout(() => {
@@ -406,7 +390,7 @@ export const DiscoveryPortal = () => {
             "_blank",
             "noopener,noreferrer",
           );
-        }, 400);
+        }, 350);
       }
     } catch (error: any) {
       setSubmitError(
@@ -420,366 +404,419 @@ export const DiscoveryPortal = () => {
     }
   };
 
-  const openWhatsApp = () => {
-    if (!config.contactNumber || !whatsAppMessage) return;
-    window.open(
-      getWhatsAppUrl(config.contactNumber, whatsAppMessage),
-      "_blank",
-      "noopener,noreferrer",
-    );
-  };
-
   if (submitSuccess) {
     return (
       <div className="min-h-screen bg-[var(--bg-primary)] px-5 py-10 flex items-center justify-center">
         <motion.div
-          initial={{ opacity: 0, y: 16, scale: 0.98 }}
+          initial={{ opacity: 0, y: 18, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          className="w-full max-w-xl rounded-3xl border border-[var(--border-default)] bg-[var(--surface-secondary)] p-7 sm:p-10 text-center shadow-2xl"
+          className="w-full max-w-xl rounded-[28px] border border-[var(--border-default)] bg-[var(--surface-primary)] p-8 text-center shadow-2xl"
         >
-          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500">
+          <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-3xl bg-emerald-500/10 text-emerald-500">
             <CircleCheckBig size={42} />
           </div>
-
           <h1 className="mb-3 text-3xl font-black text-[var(--text-primary)]">
-            {backendSaved
-              ? isEn
-                ? "Your request is in ✓"
-                : "تم استلام طلبك ✓"
-              : isEn
-                ? "Your request is ready for WhatsApp review"
-                : "طلبك جاهز للمراجعة عبر واتساب"}
+            {backendSaved ? (isEn ? "Request received" : "تم استلام طلبك") : (isEn ? "Request prepared" : "طلبك جاهز للمراجعة")}
           </h1>
-
           <p className="mb-6 text-[var(--text-muted)]">
             {backendSaved
-              ? isEn
-                ? "We saved the request successfully and the team can review it now."
-                : "تم حفظ الطلب بنجاح، وفريق نمو لابز يقدر يراجعه الآن."
-              : isEn
-                ? "Automatic saving did not complete. Send the prepared request through WhatsApp so the team can review it."
-                : "الحفظ التلقائي ما اكتمل. أرسل الطلب الجاهز عبر واتساب عشان يراجعه الفريق."}
+              ? (isEn ? "The team can review your request now." : "فريق نمو لابز يقدر يراجع طلبك الآن.")
+              : (isEn ? "Send the prepared request through WhatsApp." : "أرسل الطلب الجاهز عبر واتساب للمراجعة.")}
           </p>
-
-          <div className="mb-7 rounded-2xl border border-[var(--border-default)] bg-[var(--bg-primary)] p-4">
-            <div className="mb-1 text-xs font-bold uppercase tracking-wider text-[var(--text-muted)]">
-              {isEn ? "Request ID" : "رقم الطلب"}
-            </div>
-            <div className="font-mono text-xl font-black text-[var(--color-primary)]">
-              {submissionId}
-            </div>
+          <div className="mb-6 rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] p-4">
+            <div className="text-xs font-bold text-[var(--text-muted)]">{isEn ? "Request ID" : "رقم الطلب"}</div>
+            <div className="mt-1 font-mono text-xl font-black text-[var(--color-primary)]">{submissionId}</div>
           </div>
-
-          <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-            {config.contactNumber && (
-              <button
-                type="button"
-                onClick={openWhatsApp}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3.5 font-bold text-white shadow-lg transition-transform hover:scale-[1.02]"
-              >
-                <Send size={18} />
-                {isEn ? "Open WhatsApp" : "فتح واتساب"}
-              </button>
-            )}
-
+          {config.contactNumber && (
             <button
-              type="button"
-              onClick={() => window.location.reload()}
-              className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-primary)] px-6 py-3.5 font-bold text-[var(--text-primary)]"
+              onClick={() => window.open(getWhatsAppUrl(config.contactNumber, whatsAppMessage), "_blank", "noopener,noreferrer")}
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3.5 font-bold text-white shadow-lg"
             >
-              {isEn ? "New request" : "طلب جديد"}
+              <Send size={18} />
+              {isEn ? "Open WhatsApp" : "فتح واتساب"}
             </button>
-          </div>
+          )}
         </motion.div>
       </div>
     );
   }
 
-  const currentStep = steps[stepIndex];
+  const screenTitle =
+    screen === "goal"
+      ? (isEn ? "What are you trying to achieve?" : "وش هدفك الرئيسي؟")
+      : screen === "service"
+        ? (isEn ? "Choose the closest service" : "اختر الخدمة الأقرب لاحتياجك")
+        : screen === "path"
+          ? (isEn ? "How would you like to continue?" : "كيف تحب نكمل معك؟")
+          : screen === "details"
+            ? (isEn ? "Give us the useful details" : "أعطنا التفاصيل اللي تفرق")
+            : screen === "help"
+              ? (isEn ? "Let us help define the need" : "خلّنا نساعدك نحدد الاحتياج")
+              : (isEn ? "How can we reach you?" : "بيانات التواصل");
+
+  const screenDesc =
+    screen === "goal"
+      ? (isEn ? "Start with the outcome, not the service name." : "ابدأ بالنتيجة اللي تبغاها، مو باسم الخدمة.")
+      : screen === "service"
+        ? (isEn ? "We only show services related to your selected goal." : "نعرض لك فقط الخدمات المرتبطة بالهدف اللي اخترته.")
+        : screen === "path"
+          ? (isEn ? "Choose the fastest route for you." : "اختر المسار الأنسب لك، ونكمل بدون تعقيد.")
+          : screen === "details"
+            ? (isEn ? "A few focused questions help us assess the project faster." : "أسئلة قصيرة ومركزة تساعدنا نقيم المشروع بشكل أدق وأسرع.")
+            : screen === "help"
+              ? (isEn ? "Tell us what is unclear and we will guide the next step." : "قل لنا وين الحيرة، ونرتب لك الخطوة التالية.")
+              : (isEn ? "Just the essentials so the team can follow up." : "بيانات بسيطة فقط عشان الفريق يقدر يتواصل معك.");
+
+  const backVisible = screen !== "goal";
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
-      <div className="sticky top-0 z-20 border-b border-[var(--border-default)] bg-[var(--bg-primary)]/90 backdrop-blur-xl">
-        <div className="mx-auto max-w-5xl px-5 py-4 sm:px-6">
+      <div className="sticky top-0 z-20 border-b border-[var(--border-default)] bg-[var(--bg-primary)]/92 backdrop-blur-xl">
+        <div className="mx-auto max-w-6xl px-5 py-4 sm:px-6">
           <div className="mb-3 flex items-center justify-between gap-4">
             <div className="flex items-center gap-2 font-black">
               <Sparkles size={20} className="text-[var(--color-primary)]" />
-              <span>Smart KYC Lite</span>
+              <span>{isEn ? "Start Your Project" : "ابدأ مشروعك"}</span>
             </div>
             <div className="text-sm font-bold text-[var(--text-muted)]">
-              {isEn
-                ? "Step " + (stepIndex + 1) + " of 3"
-                : "الخطوة " + (stepIndex + 1) + " من 3"}
+              {isEn ? "Smart project discovery" : "تحديد ذكي للاحتياج"}
             </div>
           </div>
-
           <div className="h-2 overflow-hidden rounded-full bg-[var(--surface-secondary)]">
             <motion.div
               className="h-full rounded-full bg-[var(--color-primary)]"
-              animate={{ width: ((stepIndex + 1) / 3) * 100 + "%" }}
-              transition={{ duration: 0.35 }}
+              animate={{ width: String(progress) + "%" }}
+              transition={{ duration: 0.3 }}
             />
           </div>
         </div>
       </div>
 
-      <main className="mx-auto w-full max-w-5xl px-5 pb-28 pt-8 sm:px-6 sm:pt-12">
+      <main className="mx-auto w-full max-w-6xl px-5 pb-28 pt-9 sm:px-6 sm:pt-12">
         <motion.header
-          key={currentStep.id + "-header"}
+          key={screen + "-header"}
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mx-auto mb-8 max-w-3xl text-center"
+          className="mx-auto mb-9 max-w-3xl text-center"
         >
-          <div className="mb-3 inline-flex rounded-full border border-[var(--border-default)] bg-[var(--surface-secondary)] px-3 py-1 text-xs font-bold text-[var(--color-primary)]">
-            {isEn ? "Fast project discovery" : "تحديد احتياجك بسرعة"}
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[var(--interactive-border)] bg-[var(--surface-secondary)] px-3 py-1 text-xs font-bold text-[var(--color-primary)]">
+            <WandSparkles size={14} />
+            {isEn ? "Adaptive flow" : "مسار يتكيف مع اختيارك"}
           </div>
-          <h1 className="mb-3 text-3xl font-black sm:text-5xl">
-            {isEn ? currentStep.titleEn : currentStep.titleAr}
-          </h1>
-          <p className="mx-auto max-w-2xl text-base font-medium leading-7 text-[var(--text-muted)] sm:text-lg">
-            {isEn ? currentStep.descEn : currentStep.descAr}
-          </p>
+          <h1 className="mb-3 text-3xl font-black sm:text-5xl">{screenTitle}</h1>
+          <p className="mx-auto max-w-2xl text-base font-medium leading-7 text-[var(--text-muted)] sm:text-lg">{screenDesc}</p>
         </motion.header>
 
         <AnimatePresence mode="wait">
           <motion.section
-            key={currentStep.id}
-            initial={{ opacity: 0, x: isEn ? 20 : -20 }}
+            key={screen}
+            initial={{ opacity: 0, x: isEn ? 24 : -24 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: isEn ? -20 : 20 }}
-            transition={{ duration: 0.25 }}
+            exit={{ opacity: 0, x: isEn ? -24 : 24 }}
+            transition={{ duration: 0.22 }}
           >
-            {stepIndex === 0 && (
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                {projectTypes.map((service) => {
-                  const selected = formData.type === service.value;
-
+            {screen === "goal" && (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {MAIN_GOALS.map((goal) => {
+                  const selected = formData.mainGoal === goal.id;
+                  const Icon = goal.icon;
                   return (
                     <button
+                      key={goal.id}
                       type="button"
-                      key={service.id}
-                      onClick={() => selectService(service.value)}
+                      onClick={() => selectGoal(goal.id)}
                       className={
-                        "group rounded-2xl border p-5 text-start transition-all " +
+                        "group min-h-[190px] rounded-[28px] border p-6 text-start shadow-sm transition-all duration-200 active:translate-y-[2px] " +
                         (selected
-                          ? "border-[var(--color-primary)] bg-[var(--surface-secondary)] shadow-lg ring-1 ring-[var(--color-primary)]"
-                          : "border-[var(--border-default)] bg-[var(--surface-secondary)] hover:-translate-y-0.5 hover:border-[var(--color-primary)]")
+                          ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-xl ring-1 ring-[var(--color-primary)]"
+                          : "border-[var(--border-default)] bg-[var(--surface-primary)] hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-xl")
                       }
                     >
-                      <div className="flex items-start gap-4">
-                        <div
-                          className={
-                            "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border " +
-                            (selected
-                              ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white"
-                              : "border-[var(--border-default)] bg-[var(--bg-primary)]")
-                          }
-                        >
-                          {selected && <Check size={14} strokeWidth={3} />}
+                      <div className="mb-5 flex items-start justify-between gap-4">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--interactive-border)] bg-[var(--surface-secondary)] text-[var(--color-primary)] shadow-[0_8px_20px_rgba(15,98,254,0.12)]">
+                          <Icon size={28} />
                         </div>
-                        <div>
-                          <div className="mb-1 font-black">
-                            {isEn ? service.labelEn : service.labelAr}
-                          </div>
-                          <div className="text-sm leading-6 text-[var(--text-muted)]">
-                            {isEn ? service.descEn : service.descAr}
-                          </div>
+                        <div className={"flex h-7 w-7 items-center justify-center rounded-full border " + (selected ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white" : "border-[var(--border-default)] bg-[var(--surface-secondary)]")}>
+                          {selected && <Check size={15} strokeWidth={3} />}
                         </div>
                       </div>
+                      <div className="mb-2 text-xl font-black">{isEn ? goal.en : goal.ar}</div>
+                      <div className="text-sm font-medium leading-6 text-[var(--text-muted)]">{isEn ? goal.descEn : goal.descAr}</div>
                     </button>
                   );
                 })}
               </div>
             )}
 
-            {stepIndex === 1 && (
-              <div className="mx-auto max-w-3xl">
+            {screen === "service" && selectedGoal && (
+              <div className="mx-auto max-w-4xl">
                 <div className="mb-5 rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] p-4">
-                  <div className="text-xs font-bold text-[var(--text-muted)]">
-                    {isEn ? "Selected service" : "الخدمة المختارة"}
-                  </div>
-                  <div className="mt-1 font-black text-[var(--color-primary)]">
-                    {isEn ? selectedService?.labelEn : selectedService?.labelAr}
-                  </div>
+                  <div className="text-xs font-bold text-[var(--text-muted)]">{isEn ? "Main goal" : "الهدف الرئيسي"}</div>
+                  <div className="mt-1 font-black text-[var(--color-primary)]">{isEn ? selectedGoal.en : selectedGoal.ar}</div>
                 </div>
-
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  {goalOptions.map((goal) => {
-                    const selected = formData.goals.includes(goal.id);
-                    const locked =
-                      !selected && formData.goals.length >= 3;
-
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  {selectedGoal.services.map((service) => {
+                    const selected = formData.subService === service.id;
                     return (
                       <button
+                        key={service.id}
                         type="button"
-                        key={goal.id}
-                        disabled={locked}
-                        onClick={() => toggleGoal(goal.id)}
+                        onClick={() => setField("subService", service.id)}
                         className={
-                          "rounded-2xl border p-5 text-start transition-all " +
+                          "rounded-2xl border p-5 text-start transition-all active:translate-y-[2px] " +
                           (selected
-                            ? "border-[var(--color-primary)] bg-[var(--surface-secondary)] shadow-md ring-1 ring-[var(--color-primary)]"
-                            : locked
-                              ? "cursor-not-allowed border-[var(--border-default)] bg-[var(--surface-secondary)] opacity-45"
-                              : "border-[var(--border-default)] bg-[var(--surface-secondary)] hover:border-[var(--color-primary)]")
+                            ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-lg ring-1 ring-[var(--color-primary)]"
+                            : "border-[var(--border-default)] bg-[var(--surface-primary)] hover:-translate-y-0.5 hover:border-[var(--color-primary)]")
                         }
                       >
-                        <div className="flex items-start gap-3">
-                          <div
-                            className={
-                              "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md border " +
-                              (selected
-                                ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white"
-                                : "border-[var(--border-default)] bg-[var(--bg-primary)]")
-                            }
-                          >
-                            {selected && <Check size={14} strokeWidth={3} />}
+                        <div className="flex items-start gap-4">
+                          <div className={"mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border " + (selected ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white" : "border-[var(--border-default)] bg-[var(--surface-secondary)]")}>
+                            {selected && <Check size={15} strokeWidth={3} />}
                           </div>
-                          <span className="font-bold">
-                            {isEn ? goal.en : goal.ar}
-                          </span>
+                          <div>
+                            <div className="mb-1 text-lg font-black">{isEn ? service.en : service.ar}</div>
+                            <div className="text-sm leading-6 text-[var(--text-muted)]">{isEn ? service.descEn : service.descAr}</div>
+                          </div>
                         </div>
                       </button>
                     );
                   })}
                 </div>
-
-                <p className="mt-4 text-center text-sm font-medium text-[var(--text-muted)]">
-                  {isEn
-                    ? formData.goals.length + " of 3 selected"
-                    : "تم اختيار " + formData.goals.length + " من 3"}
-                </p>
               </div>
             )}
 
-            {stepIndex === 2 && (
+            {screen === "path" && (
+              <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+                <button
+                  type="button"
+                  onClick={() => setField("continuePath", "details")}
+                  className={
+                    "relative min-h-[260px] rounded-[30px] border p-7 text-start transition-all duration-200 active:translate-y-[2px] " +
+                    (formData.continuePath === "details"
+                      ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-[0_16px_45px_rgba(15,98,254,0.20)] ring-1 ring-[var(--color-primary)]"
+                      : "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-[0_14px_35px_rgba(15,98,254,0.15)] hover:-translate-y-1")
+                  }
+                >
+                  <div className="absolute end-5 top-5 rounded-full bg-[var(--color-primary)] px-3 py-1 text-xs font-black text-white">
+                    {isEn ? "Recommended" : "موصى به"}
+                  </div>
+                  <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-3xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] shadow-inner">
+                    <Code2 size={30} />
+                  </div>
+                  <div className="mb-2 text-[22px] font-black">{isEn ? "Continue the details" : "أكمل التفاصيل"}</div>
+                  <p className="text-[15px] font-medium leading-7 text-[var(--text-muted)]">
+                    {isEn ? "Answer a few smart questions so we can assess scope, timing and fit more accurately." : "جاوب على أسئلة ذكية قصيرة عشان نقيّم النطاق والوقت والحل بشكل أدق وأسرع."}
+                  </p>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setField("continuePath", "contact")}
+                  className={
+                    "min-h-[260px] rounded-[30px] border p-7 text-start transition-all duration-200 active:translate-y-[2px] " +
+                    (formData.continuePath === "contact"
+                      ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-xl ring-1 ring-[var(--color-primary)]"
+                      : "border-[var(--border-default)] bg-[var(--surface-primary)] hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-xl")
+                  }
+                >
+                  <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-3xl border border-[var(--interactive-border)] bg-[var(--surface-secondary)] text-[var(--color-primary)]">
+                    <Phone size={29} />
+                  </div>
+                  <div className="mb-2 text-[22px] font-black">{isEn ? "Contact me" : "تواصلوا معي"}</div>
+                  <p className="text-[15px] font-medium leading-7 text-[var(--text-muted)]">
+                    {isEn ? "Leave your contact details and preferred time. The team will follow up directly." : "اترك بياناتك ووقت التواصل المناسب، والفريق يتواصل معك مباشرة."}
+                  </p>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setField("continuePath", "help")}
+                  className={
+                    "min-h-[260px] rounded-[30px] border p-7 text-start transition-all duration-200 active:translate-y-[2px] " +
+                    (formData.continuePath === "help"
+                      ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-xl ring-1 ring-[var(--color-primary)]"
+                      : "border-[var(--border-default)] bg-[var(--surface-primary)] hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-xl")
+                  }
+                >
+                  <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-3xl border border-[var(--interactive-border)] bg-[var(--surface-secondary)] text-[var(--color-primary)]">
+                    <Compass size={29} />
+                  </div>
+                  <div className="mb-2 text-[22px] font-black">{isEn ? "Help me define the need" : "ساعدوني أحدد احتياجي"}</div>
+                  <p className="text-[15px] font-medium leading-7 text-[var(--text-muted)]">
+                    {isEn ? "Use a guided path when you are not sure about the exact scope or solution yet." : "مسار استكشافي إذا الفكرة أو النطاق لسه مو واضحين وتحتاج توجيه قبل التنفيذ."}
+                  </p>
+                </button>
+              </div>
+            )}
+
+            {screen === "details" && (
               <div className="mx-auto max-w-3xl space-y-5">
-                <div className="rounded-3xl border border-[var(--border-default)] bg-[var(--surface-secondary)] p-5 sm:p-7">
+                <label className="block rounded-3xl border border-[var(--border-default)] bg-[var(--surface-primary)] p-6">
+                  <span className="mb-2 block font-black">{isEn ? "Describe what you want to build or improve" : "اشرح لنا باختصار وش تبغى نبني أو نطوّر"}</span>
+                  <textarea
+                    rows={5}
+                    value={formData.description}
+                    onChange={(event) => setField("description", event.target.value)}
+                    className="w-full resize-none rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-4 outline-none focus:border-[var(--color-primary)]"
+                    placeholder={isEn ? "A short practical description is enough..." : "وصف عملي قصير يكفي..."}
+                  />
+                </label>
+
+                {formData.mainGoal === "improve-existing" && (
+                  <label className="block rounded-3xl border border-[var(--border-default)] bg-[var(--surface-primary)] p-6">
+                    <span className="mb-2 block font-black">{isEn ? "Current website / store / system URL" : "رابط الموقع / المتجر / النظام الحالي"}</span>
+                    <input
+                      dir="ltr"
+                      type="url"
+                      value={formData.currentUrl}
+                      onChange={(event) => setField("currentUrl", event.target.value)}
+                      className="w-full rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-3.5 text-left outline-none focus:border-[var(--color-primary)]"
+                      placeholder="https://"
+                    />
+                  </label>
+                )}
+
+                {(formData.mainGoal === "applications" || formData.mainGoal === "systems" || formData.mainGoal === "ai-automation") && (
+                  <label className="block rounded-3xl border border-[var(--border-default)] bg-[var(--surface-primary)] p-6">
+                    <span className="mb-2 block font-black">{isEn ? "Any preferred platform, technology or system to connect?" : "هل عندك منصة أو تقنية أو نظام لازم نربطه؟"}</span>
+                    <input
+                      value={formData.platform}
+                      onChange={(event) => setField("platform", event.target.value)}
+                      className="w-full rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-3.5 outline-none focus:border-[var(--color-primary)]"
+                      placeholder={isEn ? "Optional" : "اختياري"}
+                    />
+                  </label>
+                )}
+
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <label className="rounded-3xl border border-[var(--border-default)] bg-[var(--surface-primary)] p-6">
+                    <span className="mb-2 block font-black">{isEn ? "Budget range" : "الميزانية التقريبية"}</span>
+                    <select
+                      value={formData.budget}
+                      onChange={(event) => setField("budget", event.target.value)}
+                      className="w-full rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-3.5 outline-none focus:border-[var(--color-primary)]"
+                    >
+                      <option value="">{isEn ? "Choose..." : "اختر..."}</option>
+                      {(isEn ? budgetsEn : budgetsAr).map((item) => <option key={item} value={item}>{item}</option>)}
+                    </select>
+                  </label>
+
+                  <label className="rounded-3xl border border-[var(--border-default)] bg-[var(--surface-primary)] p-6">
+                    <span className="mb-2 block font-black">{isEn ? "Preferred timeline" : "الموعد المتوقع"}</span>
+                    <select
+                      value={formData.timeline}
+                      onChange={(event) => setField("timeline", event.target.value)}
+                      className="w-full rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-3.5 outline-none focus:border-[var(--color-primary)]"
+                    >
+                      <option value="">{isEn ? "Choose..." : "اختر..."}</option>
+                      {(isEn ? timelinesEn : timelinesAr).map((item) => <option key={item} value={item}>{item}</option>)}
+                    </select>
+                  </label>
+                </div>
+              </div>
+            )}
+
+            {screen === "help" && (
+              <div className="mx-auto max-w-3xl rounded-[30px] border border-[var(--border-default)] bg-[var(--surface-primary)] p-6 sm:p-8">
+                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-3xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                  <Compass size={30} />
+                </div>
+                <label className="block">
+                  <span className="mb-2 block text-xl font-black">{isEn ? "What is unclear right now?" : "وش الشيء اللي مو واضح لك الآن؟"}</span>
+                  <p className="mb-4 text-sm leading-6 text-[var(--text-muted)]">
+                    {isEn ? "Tell us about the idea, problem or decision you are trying to make. We will use it to guide the consultation." : "اكتب الفكرة أو المشكلة أو القرار اللي محتار فيه، ونستخدمه عشان نوجّه الاستشارة بشكل صحيح."}
+                  </p>
+                  <textarea
+                    rows={6}
+                    value={formData.helpNeed}
+                    onChange={(event) => setField("helpNeed", event.target.value)}
+                    className="w-full resize-none rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-4 outline-none focus:border-[var(--color-primary)]"
+                    placeholder={isEn ? "Example: I know the outcome I want, but not the right system or approach..." : "مثال: أعرف النتيجة اللي أبغاها، لكن ما أعرف هل أحتاج موقع أو نظام أو أتمتة..."}
+                  />
+                </label>
+              </div>
+            )}
+
+            {screen === "contact" && (
+              <div className="mx-auto max-w-3xl space-y-5">
+                <div className="rounded-[30px] border border-[var(--border-default)] bg-[var(--surface-primary)] p-6 sm:p-8">
                   <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     <label className="space-y-2">
-                      <span className="flex items-center gap-2 text-sm font-bold">
-                        <UserRound size={16} className="text-[var(--color-primary)]" />
-                        {isEn ? "Name" : "الاسم"}
-                      </span>
+                      <span className="flex items-center gap-2 text-sm font-bold"><UserRound size={16} className="text-[var(--color-primary)]" />{isEn ? "Name" : "الاسم"}</span>
                       <input
-                        type="text"
                         value={formData.name}
-                        onChange={(event) =>
-                          setFormData((current) => ({
-                            ...current,
-                            name: event.target.value,
-                          }))
-                        }
-                        className="w-full rounded-xl border border-[var(--border-default)] bg-[var(--bg-primary)] px-4 py-3.5 outline-none transition-colors focus:border-[var(--color-primary)]"
+                        onChange={(event) => setField("name", event.target.value)}
+                        className="w-full rounded-xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-3.5 outline-none focus:border-[var(--color-primary)]"
                         placeholder={isEn ? "Your full name" : "اسمك الكريم"}
                       />
                     </label>
 
                     <label className="space-y-2">
-                      <span className="flex items-center gap-2 text-sm font-bold">
-                        <Building2 size={16} className="text-[var(--color-primary)]" />
-                        {isEn ? "Company / Project (Optional)" : "الشركة / المشروع (اختياري)"}
-                      </span>
+                      <span className="text-sm font-bold">{isEn ? "Company / Project (Optional)" : "الشركة / المشروع (اختياري)"}</span>
                       <input
-                        type="text"
                         value={formData.company}
-                        onChange={(event) =>
-                          setFormData((current) => ({
-                            ...current,
-                            company: event.target.value,
-                          }))
-                        }
-                        className="w-full rounded-xl border border-[var(--border-default)] bg-[var(--bg-primary)] px-4 py-3.5 outline-none transition-colors focus:border-[var(--color-primary)]"
+                        onChange={(event) => setField("company", event.target.value)}
+                        className="w-full rounded-xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-3.5 outline-none focus:border-[var(--color-primary)]"
                         placeholder={isEn ? "Company or project name" : "اسم الشركة أو المشروع"}
                       />
                     </label>
 
                     <label className="space-y-2">
-                      <span className="flex items-center gap-2 text-sm font-bold">
-                        <Phone size={16} className="text-[var(--color-primary)]" />
-                        {isEn ? "Phone" : "رقم الجوال"}
-                      </span>
+                      <span className="flex items-center gap-2 text-sm font-bold"><Phone size={16} className="text-[var(--color-primary)]" />{isEn ? "Phone" : "رقم الجوال"}</span>
                       <div className="flex" dir="ltr">
                         <select
                           value={countryCode}
-                          onChange={(event) =>
-                            handlePhoneChange(event.target.value, phoneNumber)
-                          }
-                          className="min-w-[94px] rounded-l-xl border border-r-0 border-[var(--border-default)] bg-[var(--bg-primary)] px-2 py-3.5 outline-none focus:border-[var(--color-primary)]"
+                          onChange={(event) => handlePhoneChange(event.target.value, phoneNumber)}
+                          className="min-w-[100px] rounded-l-xl border border-r-0 border-[var(--border-default)] bg-[var(--surface-secondary)] px-2 py-3.5 outline-none"
                         >
-                          {GCC_COUNTRIES.map((country) => (
-                            <option key={country.code} value={country.code}>
-                              {country.flag} {country.code}
-                            </option>
-                          ))}
+                          {GCC_COUNTRIES.map((country) => <option key={country.code} value={country.code}>{country.label}</option>)}
                         </select>
                         <input
                           type="tel"
                           value={phoneNumber}
-                          onChange={(event) =>
-                            handlePhoneChange(countryCode, event.target.value)
-                          }
-                          className="w-full rounded-r-xl border border-[var(--border-default)] bg-[var(--bg-primary)] px-4 py-3.5 text-left outline-none transition-colors focus:border-[var(--color-primary)]"
+                          onChange={(event) => handlePhoneChange(countryCode, event.target.value)}
+                          className="w-full rounded-r-xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-3.5 text-left outline-none focus:border-[var(--color-primary)]"
                           placeholder="5X XXX XXXX"
                         />
                       </div>
                     </label>
 
                     <label className="space-y-2">
-                      <span className="flex items-center gap-2 text-sm font-bold">
-                        <Mail size={16} className="text-[var(--color-primary)]" />
-                        {isEn ? "Email (Optional)" : "البريد الإلكتروني (اختياري)"}
-                      </span>
+                      <span className="flex items-center gap-2 text-sm font-bold"><Mail size={16} className="text-[var(--color-primary)]" />{isEn ? "Email (Optional)" : "البريد الإلكتروني (اختياري)"}</span>
                       <input
-                        type="email"
                         dir="ltr"
+                        type="email"
                         value={formData.email}
-                        onChange={(event) =>
-                          setFormData((current) => ({
-                            ...current,
-                            email: event.target.value,
-                          }))
-                        }
-                        className="w-full rounded-xl border border-[var(--border-default)] bg-[var(--bg-primary)] px-4 py-3.5 text-left outline-none transition-colors focus:border-[var(--color-primary)]"
+                        onChange={(event) => setField("email", event.target.value)}
+                        className="w-full rounded-xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-3.5 text-left outline-none focus:border-[var(--color-primary)]"
                         placeholder="name@example.com"
                       />
                     </label>
-                  </div>
-                </div>
 
-                <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] p-5">
-                  <div className="mb-3 text-xs font-bold text-[var(--text-muted)]">
-                    {isEn ? "Your request at a glance" : "ملخص طلبك"}
-                  </div>
-                  <div className="font-black text-[var(--color-primary)]">
-                    {isEn ? selectedService?.labelEn : selectedService?.labelAr}
-                  </div>
-                  <div className="mt-2 text-sm leading-6 text-[var(--text-muted)]">
-                    {selectedGoalOptions
-                      .map((goal) => (isEn ? goal.en : goal.ar))
-                      .join(" • ")}
+                    {(formData.continuePath === "contact" || formData.continuePath === "help") && (
+                      <label className="space-y-2 sm:col-span-2">
+                        <span className="text-sm font-bold">{isEn ? "Preferred contact time (Optional)" : "وقت التواصل المفضل (اختياري)"}</span>
+                        <input
+                          value={formData.preferredContactTime}
+                          onChange={(event) => setField("preferredContactTime", event.target.value)}
+                          className="w-full rounded-xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-3.5 outline-none focus:border-[var(--color-primary)]"
+                          placeholder={isEn ? "Example: after 6 PM" : "مثال: بعد الساعة 6 مساءً"}
+                        />
+                      </label>
+                    )}
                   </div>
                 </div>
 
                 <button
                   type="button"
                   onClick={() => setAgreedToTerms((current) => !current)}
-                  className="flex w-full items-start gap-3 rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] p-4 text-start"
+                  className="flex w-full items-start gap-3 rounded-2xl border border-[var(--border-default)] bg-[var(--surface-primary)] p-4 text-start"
                 >
-                  <div
-                    className={
-                      "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md border-2 " +
-                      (agreedToTerms
-                        ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white"
-                        : "border-[var(--border-default)] bg-[var(--bg-primary)]")
-                    }
-                  >
+                  <div className={"mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md border-2 " + (agreedToTerms ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white" : "border-[var(--border-default)] bg-[var(--surface-secondary)]")}>
                     {agreedToTerms && <Check size={14} strokeWidth={3} />}
                   </div>
                   <span className="text-sm font-medium leading-6">
-                    {isEn
-                      ? "I confirm the information is correct and agree to use it to review and prepare my request."
-                      : "أؤكد صحة المعلومات وأوافق على استخدامها لمراجعة وتجهيز طلبي."}
+                    {isEn ? "I confirm the information is correct and agree to use it to review and prepare my request." : "أؤكد صحة المعلومات وأوافق على استخدامها لمراجعة وتجهيز طلبي."}
                   </span>
                 </button>
 
@@ -794,60 +831,89 @@ export const DiscoveryPortal = () => {
           </motion.section>
         </AnimatePresence>
 
-        <div className="mx-auto mt-9 flex max-w-3xl flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mx-auto mt-9 flex max-w-4xl flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
           <button
             type="button"
             onClick={goBack}
-            disabled={stepIndex === 0}
-            className={
-              "inline-flex items-center justify-center gap-2 rounded-xl border px-6 py-3.5 text-sm font-bold transition-all " +
-              (stepIndex === 0
-                ? "pointer-events-none opacity-0"
-                : "border-[var(--border-default)] bg-[var(--surface-secondary)]")
-            }
+            className={"inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--surface-primary)] px-6 py-3.5 text-sm font-bold transition-all " + (backVisible ? "" : "pointer-events-none opacity-0")}
           >
-            {isEn ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
+            {isEn ? <ArrowLeft size={18} /> : <ArrowRight size={18} />}
             {isEn ? "Back" : "السابق"}
           </button>
 
-          {stepIndex < 2 ? (
+          {screen === "goal" && (
             <button
               type="button"
-              onClick={goNext}
-              disabled={!isStepValid(stepIndex)}
-              className={
-                "inline-flex min-w-[160px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black transition-all " +
-                (isStepValid(stepIndex)
-                  ? "bg-[var(--color-primary)] text-white shadow-lg hover:scale-[1.02]"
-                  : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")
-              }
+              disabled={!formData.mainGoal}
+              onClick={() => { setScreen("service"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.mainGoal ? "bg-[var(--color-primary)] text-white shadow-lg" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
             >
               {isEn ? "Continue" : "متابعة"}
-              {isEn ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+              {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
             </button>
-          ) : (
+          )}
+
+          {screen === "service" && (
+            <button
+              type="button"
+              disabled={!formData.subService}
+              onClick={() => { setScreen("path"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.subService ? "bg-[var(--color-primary)] text-white shadow-lg" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
+            >
+              {isEn ? "Continue" : "متابعة"}
+              {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
+            </button>
+          )}
+
+          {screen === "path" && (
+            <button
+              type="button"
+              disabled={!formData.continuePath}
+              onClick={() => {
+                if (formData.continuePath === "details") setScreen("details");
+                else if (formData.continuePath === "help") setScreen("help");
+                else setScreen("contact");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.continuePath ? "bg-[var(--color-primary)] text-white shadow-lg" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
+            >
+              {isEn ? "Continue" : "متابعة"}
+              {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
+            </button>
+          )}
+
+          {screen === "details" && (
+            <button
+              type="button"
+              disabled={!formData.description.trim()}
+              onClick={() => { setScreen("contact"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.description.trim() ? "bg-[var(--color-primary)] text-white shadow-lg" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
+            >
+              {isEn ? "Continue" : "متابعة"}
+              {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
+            </button>
+          )}
+
+          {screen === "help" && (
+            <button
+              type="button"
+              disabled={!formData.helpNeed.trim()}
+              onClick={() => { setScreen("contact"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.helpNeed.trim() ? "bg-[var(--color-primary)] text-white shadow-lg" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
+            >
+              {isEn ? "Continue" : "متابعة"}
+              {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
+            </button>
+          )}
+
+          {screen === "contact" && (
             <button
               type="button"
               onClick={handleSubmit}
-              disabled={!isStepValid(2) || isSubmitting}
-              className={
-                "inline-flex min-w-[180px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black transition-all " +
-                (isStepValid(2) && !isSubmitting
-                  ? "bg-[var(--color-primary)] text-white shadow-lg hover:scale-[1.02]"
-                  : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")
-              }
+              disabled={!contactValid || isSubmitting}
+              className={"inline-flex min-w-[190px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (contactValid && !isSubmitting ? "bg-[var(--color-primary)] text-white shadow-lg" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
             >
-              {isSubmitting ? (
-                <>
-                  <Loader2 size={18} className="animate-spin" />
-                  {isEn ? "Sending..." : "جاري الإرسال..."}
-                </>
-              ) : (
-                <>
-                  <Send size={18} />
-                  {isEn ? "Send request" : "إرسال الطلب"}
-                </>
-              )}
+              {isSubmitting ? <><Loader2 size={18} className="animate-spin" />{isEn ? "Sending..." : "جاري الإرسال..."}</> : <><Send size={18} />{isEn ? "Send request" : "إرسال الطلب"}</>}
             </button>
           )}
         </div>
