@@ -107,9 +107,10 @@ export const VoiceFieldButton = ({
       const recognition: SpeechRecognitionLike = new SpeechRecognitionCtor();
       recognition.continuous = true;
       recognition.interimResults = true;
-      // Use the visitor's browser language so non-Arabic speakers can talk naturally.
-      // Arabic visitors normally resolve to ar-SA / ar-* automatically.
-      recognition.lang = navigator.languages?.[0] || navigator.language || "ar-SA";
+      // The KYC experience is Arabic-first. Pin speech recognition to Saudi Arabic so
+      // an English browser locale never makes Arabic speech get interpreted as English.
+      // Multilingual speech-to-Saudi-Arabic belongs in the server AI audio path.
+      recognition.lang = "ar-SA";
       recognition.maxAlternatives = 1;
 
       baseValueRef.current = value;
