@@ -1,32 +1,34 @@
-import { getWhatsAppUrl } from "../lib/utils";
-import React, { useState, useEffect, useMemo, useRef } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import React, { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import {
-  ChevronRight,
-  ChevronLeft,
-  Check,
-  Download,
   AlertCircle,
+  Building2,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  CircleCheckBig,
   Loader2,
-  Edit2,
-  Clock,
+  Mail,
+  Phone,
+  Send,
   Sparkles,
-  Mic,
-  Type,
+  UserRound,
 } from "lucide-react";
+import { getWhatsAppUrl } from "../lib/utils";
 import {
-  submitKYCForm,
   KYCSubmissionPayload,
+  submitKYCForm,
 } from "../services/kycSubmissionService";
-import {
-  projectTypes,
-  budgetsAr,
-  timelinesAr,
-  budgetsEn,
-  timelinesEn,
-} from "../data/projectIntake";
+import { projectTypes } from "../data/projectIntake";
 import { useSite } from "../context/SiteContext";
-import { dynamicStepsConfig } from "../data/dynamicSteps";
+
+type GoalOption = {
+  id: string;
+  ar: string;
+  en: string;
+};
+
+type SmartGoalMap = Record<string, GoalOption[]>;
 
 const GCC_COUNTRIES = [
   { code: "+966", nameAr: "السعودية", nameEn: "Saudi Arabia", flag: "🇸🇦" },
@@ -37,165 +39,200 @@ const GCC_COUNTRIES = [
   { code: "+968", nameAr: "عمان", nameEn: "Oman", flag: "🇴🇲" },
 ];
 
-const BackgroundEffects = ({
-  sectionId,
-  logoUrl,
-}: {
-  sectionId: string;
-  logoUrl: string;
-}) => {
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-      <AnimatePresence mode="popLayout">
-        {sectionId === "client_info" && (
-          <motion.div
-            key="client_info"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-transparent"
-          />
-        )}
-        {sectionId === "service" && (
-          <motion.div
-            key="service"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0"
-          >
-            <div className="absolute top-0 right-0 w-2/3 h-2/3 bg-gradient-to-bl from-indigo-500/10 to-transparent rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-cyan-500/5 to-transparent rounded-full blur-3xl" />
-          </motion.div>
-        )}
-        {sectionId === "project_details" && (
-          <motion.div
-            key="project_details"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0"
-          >
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl mix-blend-screen" />
-          </motion.div>
-        )}
-        {sectionId === "identity_content" && (
-          <motion.div
-            key="identity_content"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0"
-          >
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl" />
-          </motion.div>
-        )}
-        {sectionId === "platforms" && (
-          <motion.div
-            key="platforms"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0"
-          >
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
-          </motion.div>
-        )}
-        {sectionId === "timeline" && (
-          <motion.div
-            key="timeline"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0"
-          >
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-amber-500/5 to-transparent" />
-          </motion.div>
-        )}
-        {sectionId === "additional_notes" && (
-          <motion.div
-            key="additional_notes"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0 bg-gradient-to-tr from-emerald-500/5 via-transparent to-transparent"
-          />
-        )}
-        {sectionId === "review" && (
-          <motion.div
-            key="review"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-transparent to-green-500/5"
-          />
-        )}
-      </AnimatePresence>
-      <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none mix-blend-luminosity">
-        {logoUrl && (
-          <img
-            src={logoUrl}
-            alt="NomoLabs Watermark"
-            className="w-1/2 max-w-md grayscale"
-          />
-        )}
-      </div>
-    </div>
-  );
+const SMART_GOALS: SmartGoalMap = {
+  website: [
+    { id: "professional-presence", ar: "إطلاق حضور رقمي احترافي", en: "Launch a professional digital presence" },
+    { id: "lead-generation", ar: "زيادة طلبات التواصل والعملاء", en: "Generate more leads and enquiries" },
+    { id: "service-clarity", ar: "عرض الخدمات بشكل أوضح", en: "Present services more clearly" },
+    { id: "seo", ar: "تحسين الظهور في محركات البحث", en: "Improve search visibility" },
+  ],
+  ecommerce: [
+    { id: "launch-store", ar: "إطلاق متجر جديد", en: "Launch a new store" },
+    { id: "increase-sales", ar: "زيادة المبيعات والتحويل", en: "Increase sales and conversion" },
+    { id: "checkout-ux", ar: "تحسين تجربة الشراء", en: "Improve the buying experience" },
+    { id: "payments-shipping", ar: "ربط الدفع والشحن والتشغيل", en: "Connect payments, shipping and operations" },
+  ],
+  "custom-system": [
+    { id: "automation", ar: "أتمتة العمليات الداخلية", en: "Automate internal operations" },
+    { id: "dashboard", ar: "لوحة تحكم مركزية", en: "Build a central dashboard" },
+    { id: "crm-workflow", ar: "إدارة العملاء والمهام", en: "Manage customers and workflows" },
+    { id: "reports-permissions", ar: "تقارير وصلاحيات متقدمة", en: "Advanced reports and permissions" },
+  ],
+  "accounting-system": [
+    { id: "sales-purchases", ar: "تنظيم المبيعات والمشتريات", en: "Organize sales and purchases" },
+    { id: "inventory", ar: "إدارة المخزون", en: "Manage inventory" },
+    { id: "financial-reports", ar: "تقارير مالية وإدارية", en: "Financial and management reporting" },
+    { id: "multi-branch", ar: "ربط الفروع والعمليات", en: "Connect branches and operations" },
+  ],
+  "ai-automation": [
+    { id: "task-automation", ar: "أتمتة المهام المتكررة", en: "Automate repetitive tasks" },
+    { id: "ai-assistant", ar: "مساعد ذكي للموظفين أو العملاء", en: "AI assistant for staff or customers" },
+    { id: "data-analysis", ar: "تحليل البيانات واستخراج الرؤى", en: "Analyze data and extract insights" },
+    { id: "system-integration", ar: "ربط الأنظمة بالذكاء الاصطناعي", en: "Connect systems with AI" },
+  ],
+  marketing: [
+    { id: "sales-growth", ar: "زيادة المبيعات والعملاء", en: "Increase sales and customers" },
+    { id: "brand-awareness", ar: "رفع الوعي بالعلامة التجارية", en: "Grow brand awareness" },
+    { id: "ads-performance", ar: "تحسين أداء الإعلانات", en: "Improve advertising performance" },
+    { id: "seo-content", ar: "SEO والمحتوى والنمو العضوي", en: "SEO, content and organic growth" },
+  ],
+  "catalog-profile": [
+    { id: "company-profile", ar: "ملف شركة احترافي", en: "Professional company profile" },
+    { id: "product-catalog", ar: "كتالوج منتجات", en: "Product catalog" },
+    { id: "service-presentation", ar: "عرض خدمات واضح ومقنع", en: "Clear service presentation" },
+    { id: "portfolio", ar: "Portfolio للأعمال والمشاريع", en: "Portfolio for work and projects" },
+  ],
+  "audit-improvement": [
+    { id: "conversion", ar: "رفع معدل التحويل", en: "Improve conversion rate" },
+    { id: "performance", ar: "تحسين السرعة والأداء", en: "Improve speed and performance" },
+    { id: "ux-ui", ar: "تحسين تجربة وواجهة المستخدم", en: "Improve UX and UI" },
+    { id: "full-audit", ar: "تحليل تقني وتسويقي شامل", en: "Full technical and marketing audit" },
+  ],
+  consultation: [
+    { id: "find-solution", ar: "تحديد الحل المناسب", en: "Identify the right solution" },
+    { id: "priorities", ar: "ترتيب الأولويات", en: "Prioritize the work" },
+    { id: "scope-budget", ar: "تحديد النطاق والتكلفة المتوقعة", en: "Define scope and expected budget" },
+    { id: "roadmap", ar: "بناء خارطة تنفيذ", en: "Build an execution roadmap" },
+  ],
+  "integrated-project": [
+    { id: "build", ar: "بناء المنتج أو المنصة", en: "Build the product or platform" },
+    { id: "growth", ar: "التسويق والنمو", en: "Marketing and growth" },
+    { id: "operations", ar: "التشغيل والأتمتة", en: "Operations and automation" },
+    { id: "end-to-end", ar: "حل متكامل من البداية للنهاية", en: "End-to-end integrated solution" },
+  ],
+  "events-management": [
+    { id: "coverage", ar: "التغطية والتوثيق", en: "Event coverage and documentation" },
+    { id: "live-stream", ar: "البث المباشر", en: "Live streaming" },
+    { id: "production", ar: "التصوير والمونتاج", en: "Photography and video production" },
+    { id: "event-content", ar: "إدارة محتوى الفعالية", en: "Event content management" },
+  ],
+  other: [
+    { id: "custom-solution", ar: "أحتاج حلًا مخصصًا", en: "I need a custom solution" },
+    { id: "improve-existing", ar: "أحتاج تطوير مشروع قائم", en: "I need to improve an existing project" },
+    { id: "combined-services", ar: "أحتاج ربط عدة خدمات", en: "I need multiple connected services" },
+    { id: "not-sure", ar: "لست متأكدًا وأحتاج توجيهًا", en: "I am not sure and need guidance" },
+  ],
 };
+
+const DEFAULT_GOALS: GoalOption[] = [
+  { id: "growth", ar: "تحقيق نمو واضح", en: "Achieve measurable growth" },
+  { id: "efficiency", ar: "رفع الكفاءة وتقليل العمل اليدوي", en: "Improve efficiency and reduce manual work" },
+  { id: "experience", ar: "تحسين تجربة العميل", en: "Improve customer experience" },
+  { id: "clarity", ar: "تحديد الحل المناسب", en: "Identify the right solution" },
+];
+
+type LiteFormData = {
+  type: string;
+  goals: string[];
+  name: string;
+  company: string;
+  phone: string;
+  email: string;
+};
+
+const STORAGE_KEY = "nmolabsSmartKycLite_v1";
+const STEP_KEY = "nmolabsSmartKycLiteStep_v1";
 
 export const DiscoveryPortal = () => {
   const { config } = useSite();
   const isEn = config.language === "en";
 
-  const [formData, setFormData] = useState(() => {
-    const saved = localStorage.getItem("nomoDiscoveryProgress_v3");
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {}
-    }
-    return {
+  const [formData, setFormData] = useState<LiteFormData>(() => {
+    const fallback: LiteFormData = {
+      type: "",
+      goals: [],
       name: "",
       company: "",
       phone: "",
       email: "",
-      type: "",
-      description: "",
-      budget: "",
-      timeline: "",
-      dynamicAnswers: {} as Record<string, string>,
-      approval_response_time: "",
-      platform_information: "",
-      content_information: "",
-      attachments_information: "",
-      additional_notes: "",
     };
+
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? { ...fallback, ...JSON.parse(saved) } : fallback;
+    } catch {
+      return fallback;
+    }
+  });
+
+  const [stepIndex, setStepIndex] = useState(() => {
+    const saved = Number(localStorage.getItem(STEP_KEY) || "0");
+    return Number.isFinite(saved) && saved >= 0 && saved <= 2 ? saved : 0;
   });
 
   const [countryCode, setCountryCode] = useState("+966");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submissionId, setSubmissionId] = useState("");
+  const [backendSaved, setBackendSaved] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [whatsAppMessage, setWhatsAppMessage] = useState("");
 
-  // Initialize phone parts on mount
   useEffect(() => {
-    if (formData.phone) {
-      const parts = formData.phone.split(" ");
-      if (parts.length > 1) {
-        setCountryCode(parts[0]);
-        setPhoneNumber(parts.slice(1).join(" "));
-      } else {
-        setPhoneNumber(formData.phone);
-      }
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+      localStorage.setItem(STEP_KEY, String(stepIndex));
+    } catch {
+      // Ignore storage failures and keep the form usable.
+    }
+  }, [formData, stepIndex]);
+
+  useEffect(() => {
+    const value = formData.phone.trim();
+    if (!value) return;
+
+    const matchedCountry = GCC_COUNTRIES.find((country) =>
+      value.startsWith(country.code),
+    );
+
+    if (matchedCountry) {
+      setCountryCode(matchedCountry.code);
+      setPhoneNumber(value.replace(matchedCountry.code, "").trim());
+    } else {
+      setPhoneNumber(value);
     }
   }, []);
+
+  const selectedService = useMemo(
+    () => projectTypes.find((item) => item.value === formData.type),
+    [formData.type],
+  );
+
+  const goalOptions = useMemo(
+    () => SMART_GOALS[formData.type] || DEFAULT_GOALS,
+    [formData.type],
+  );
+
+  const selectedGoalOptions = useMemo(
+    () => goalOptions.filter((goal) => formData.goals.includes(goal.id)),
+    [goalOptions, formData.goals],
+  );
+
+  const steps = [
+    {
+      id: "service",
+      titleAr: "وش تحتاج من نمو لابز؟",
+      titleEn: "What do you need from NomoLabs?",
+      descAr: "اختر الخدمة الأقرب لاحتياجك. نقدر نضبط التفاصيل بعد التواصل.",
+      descEn: "Choose the service closest to your need. We can refine the details later.",
+    },
+    {
+      id: "goals",
+      titleAr: "وش الهدف الأهم لك؟",
+      titleEn: "What matters most to you?",
+      descAr: "اختر من هدف واحد إلى ثلاثة أهداف. الخيارات تتغير حسب الخدمة.",
+      descEn: "Choose one to three goals. Options adapt to the selected service.",
+    },
+    {
+      id: "contact",
+      titleAr: "خلّنا نتواصل معك",
+      titleEn: "How can we reach you?",
+      descAr: "بيانات بسيطة فقط عشان نراجع الطلب ونتواصل معك.",
+      descEn: "Just the essentials so we can review your request and contact you.",
+    },
+  ];
 
   const handlePhoneChange = (code: string, number: string) => {
     setCountryCode(code);
@@ -203,414 +240,254 @@ export const DiscoveryPortal = () => {
     if (code === "+966" && cleanNumber.startsWith("0")) {
       cleanNumber = cleanNumber.substring(1);
     }
+
     setPhoneNumber(cleanNumber);
-    setFormData((prev) => ({ ...prev, phone: `${code} ${cleanNumber}` }));
+    setFormData((current) => ({
+      ...current,
+      phone: cleanNumber ? code + " " + cleanNumber : "",
+    }));
   };
 
-    const [backendStatusText, setBackendStatusText] = useState('');
-  const [fullWaMessage, setFullWaMessage] = useState('');
-  const [isWhatsAppOpened, setIsWhatsAppOpened] = useState(false);
-const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState("");
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [submissionId, setSubmissionId] = useState("");
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const selectService = (type: string) => {
+    setFormData((current) => ({
+      ...current,
+      type,
+      goals: current.type === type ? current.goals : [],
+    }));
+  };
 
-  const dynamicFields = useMemo(() => {
-    return dynamicStepsConfig[formData.type] || [];
-  }, [formData.type]);
+  const toggleGoal = (goalId: string) => {
+    setFormData((current) => {
+      const selected = current.goals.includes(goalId);
 
-  const sections = useMemo(() => {
-    const s = [
-      {
-        id: "client_info",
-        titleEn: "Client Information",
-        titleAr: "معلومات العميل",
-        descEn: "Let's get to know you better.",
-        descAr: "لنتعرف عليك بشكل أفضل.",
-      },
-      {
-        id: "service",
-        titleEn: "Requested Service",
-        titleAr: "الخدمة المطلوبة",
-        descEn: "What service are you looking for?",
-        descAr: "ما هي الخدمة التي تبحث عنها؟",
-      },
+      if (selected) {
+        return {
+          ...current,
+          goals: current.goals.filter((item) => item !== goalId),
+        };
+      }
+
+      if (current.goals.length >= 3) {
+        return current;
+      }
+
+      return {
+        ...current,
+        goals: [...current.goals, goalId],
+      };
+    });
+  };
+
+  const isStepValid = (index: number) => {
+    if (index === 0) return Boolean(formData.type);
+    if (index === 1) return formData.goals.length > 0;
+    return (
+      formData.name.trim().length > 1 &&
+      formData.phone.trim().length > 5 &&
+      (formData.email.trim() === "" || formData.email.includes("@")) &&
+      agreedToTerms
+    );
+  };
+
+  const goNext = () => {
+    if (!isStepValid(stepIndex) || stepIndex >= 2) return;
+    setStepIndex((current) => current + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const goBack = () => {
+    if (stepIndex <= 0) return;
+    setStepIndex((current) => current - 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const getGoalLabels = (language: "ar" | "en") =>
+    selectedGoalOptions.map((goal) => (language === "en" ? goal.en : goal.ar));
+
+  const buildWhatsAppMessage = (
+    requestId: string,
+    backendWasSaved: boolean,
+  ) => {
+    const serviceLabel = isEn
+      ? selectedService?.labelEn
+      : selectedService?.labelAr;
+    const goals = getGoalLabels(isEn ? "en" : "ar");
+
+    const lines = [
+      "🔵 طلب Smart KYC جديد — NMOLABS",
+      "",
+      backendWasSaved
+        ? "✅ تم حفظ الطلب في النظام"
+        : "⚠️ تعذر الحفظ التلقائي — يرجى مراجعة الطلب عبر واتساب",
+      "",
+      "━━━━━━━━━━━━━━━━━━",
+      "",
+      "👤 بيانات العميل",
+      "الاسم: " + formData.name,
+      "الجوال: " + formData.phone,
+      "البريد: " + (formData.email || "غير مدخل"),
+      "الشركة / المشروع: " + (formData.company || "غير مدخل"),
+      "",
+      "📋 الاحتياج",
+      "الخدمة: " + (serviceLabel || formData.type),
+      "الأهداف: " + goals.join("، "),
+      "",
+      "Request ID: " + requestId,
     ];
-    if (dynamicFields.length > 0) {
-      s.push({
-        id: "project_details",
-        titleEn: "Project Details",
-        titleAr: "تفاصيل المشروع",
-        descEn: "Tell us more about your project.",
-        descAr: "أخبرنا المزيد عن مشروعك.",
-      });
-    }
-    s.push({
-      id: "identity_content",
-      titleEn: "Identity & Content",
-      titleAr: "الهوية والمحتوى",
-      descEn: "Visual identity and available content.",
-      descAr: "الهوية البصرية والمحتوى المتوفر.",
-    });
-    s.push({
-      id: "platforms",
-      titleEn: "Platforms & Accounts",
-      titleAr: "المنصات والحسابات",
-      descEn: "Target platforms and social accounts.",
-      descAr: "المنصات المستهدفة وحسابات التواصل الاجتماعي.",
-    });
-    s.push({
-      id: "timeline",
-      titleEn: "Timeline & Approvals",
-      titleAr: "الجدول الزمني والموافقات",
-      descEn:
-        "This helps us build a realistic execution plan and reduce delays.",
-      descAr:
-        "تساعدنا هذه المعلومات على بناء خطة تنفيذ واقعية وتقليل أي تأخير أثناء المشروع.",
-    });
-    s.push({
-      id: "additional_notes",
-      titleEn: "Additional Notes",
-      titleAr: "ملاحظات إضافية",
-      descEn: "Anything else you want to add?",
-      descAr: "هل هناك أي شيء آخر تود إضافته؟",
-    });
-    s.push({
-      id: "review",
-      titleEn: "Final Review",
-      titleAr: "المراجعة النهائية",
-      descEn: "Review your details before submitting.",
-      descAr: "راجع تفاصيل طلبك قبل الإرسال.",
-    });
-    return s;
-  }, [dynamicFields]);
 
-  const [stepIndex, setStepIndex] = useState(() => {
-    const savedStep = localStorage.getItem("nomoDiscoveryStep_v3");
-    return savedStep ? parseInt(savedStep, 10) : 0;
-  });
-
-  useEffect(() => {
-    localStorage.setItem("nomoDiscoveryProgress_v3", JSON.stringify(formData));
-    localStorage.setItem("nomoDiscoveryStep_v3", stepIndex.toString());
-  }, [formData, stepIndex]);
-
-  const currentSection = sections[stepIndex]?.id || "client_info";
-
-  const validateSection = (sectionId: string) => {
-    switch (sectionId) {
-      case "client_info":
-        return (
-          formData.name.trim().length > 1 &&
-          formData.company.trim().length > 1 &&
-          formData.phone.trim().length > 5 &&
-          (formData.email.trim() === "" || formData.email.trim().includes("@"))
-        );
-
-      case "service":
-        return formData.type !== "" && formData.description.trim().length > 10;
-
-      case "project_details":
-        return dynamicFields.every(
-          (f) => (formData.dynamicAnswers[f.id] || "").trim().length > 0,
-        );
-
-      case "identity_content":
-        return true;
-
-      case "platforms":
-        return true;
-
-      case "timeline":
-        return (
-          formData.budget !== "" &&
-          formData.timeline !== "" &&
-          formData.approval_response_time !== ""
-        );
-
-      case "additional_notes":
-        return true;
-
-      case "review":
-        return agreedToTerms && !isSubmitting;
-
-      default:
-        return true;
-    }
+    return lines.join("\n");
   };
 
-  const handleNext = () => {
-    if (stepIndex < sections.length - 1) {
-      setStepIndex(stepIndex + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
+  const handleSubmit = async () => {
+    if (!isStepValid(2) || isSubmitting) return;
 
-  const handlePrev = () => {
-    if (stepIndex > 0) {
-      setStepIndex(stepIndex - 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-
-    const handleSubmit = async () => {
     setIsSubmitting(true);
     setSubmitError("");
-    const sub_id = "NML-" + Math.random().toString(36).substring(2, 9).toUpperCase();
+
+    const requestId =
+      "NML-" + Math.random().toString(36).substring(2, 9).toUpperCase();
+
+    const goalsAr = getGoalLabels("ar");
+    const goalsEn = getGoalLabels("en");
 
     const payload: KYCSubmissionPayload = {
-      submission_id: sub_id,
+      submission_id: requestId,
       submitted_at: new Date().toISOString(),
       language: config.language,
       completion_percentage: 100,
-      primary_service:
-        projectTypes.find((t) => t.value === formData.type)?.labelEn ||
-        formData.type,
-      selected_subservices: dynamicFields
-        .map((f) => (isEn ? f.labelEn : f.labelAr))
-        .join(", "),
+      primary_service: selectedService?.labelEn || formData.type,
+      selected_subservices: goalsEn.join(", "),
       client_information: {
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email,
+        name: formData.name.trim(),
+        phone: formData.phone.trim(),
+        email: formData.email.trim(),
       },
       business_information: {
-        company: formData.company,
+        company: formData.company.trim(),
       },
       project_information: {
-        description: formData.description,
-        budget: formData.budget,
-        timeline: formData.timeline,
+        description: goalsAr.join("، "),
+        budget: "",
+        timeline: "",
       },
-      platform_information: formData.platform_information,
-      content_information: formData.content_information,
-      attachments_information: formData.attachments_information,
-      approval_response_time: formData.approval_response_time,
+      platform_information: "",
+      content_information: "",
+      attachments_information: "",
+      approval_response_time: "",
       answers: {
-        ...formData.dynamicAnswers,
-        additional_notes: formData.additional_notes,
+        smart_goals_ar: goalsAr.join(" | "),
+        smart_goals_en: goalsEn.join(" | "),
+        form_version: "smart-kyc-lite-v1",
       },
     };
 
-    let result: any = { success: false, submission_id: '', row_number: null, message: '' };
     try {
-      result = await submitKYCForm(payload);
-    } catch (e: any) {
-      result = { success: false, submission_id: '', row_number: null, message: e.message };
-    }
+      const result = await submitKYCForm(payload);
+      const saved = result.success === true;
+      const finalRequestId = result.submission_id || requestId;
+      const message = buildWhatsAppMessage(finalRequestId, saved);
 
-    setIsSubmitting(false);
+      setBackendSaved(saved);
+      setSubmissionId(finalRequestId);
+      setWhatsAppMessage(message);
+      setSubmitSuccess(true);
 
-    const isBackendSuccess = result.success === true;
-    const backendStatusMsg = isBackendSuccess 
-        ? "✅ RESPONDED / SAVED" 
-        : "⚠️ NOT RESPONDED\nAction Required: مراجعة الطلب وإدخاله يدويًا عند الحاجة.";
-        
-    setBackendStatusText(backendStatusMsg);
-    setSubmissionId(result.submission_id || sub_id);
-    
-    // Build WhatsApp message
-    const date = new Date();
-    const dateStr = date.toLocaleDateString('en-GB');
-    const timeStr = date.toLocaleTimeString('en-US', { hour12: false });
-    
-    const serviceName = isEn 
-        ? (projectTypes.find(t => t.value === payload.primary_service)?.labelEn || payload.primary_service)
-        : (projectTypes.find(t => t.value === payload.primary_service)?.labelAr || payload.primary_service);
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(STEP_KEY);
+      } catch {
+        // Ignore storage cleanup failures.
+      }
 
-    let msg = `🔵 طلب KYC جديد — NMOLABS\n\n`;
-    msg += `⚙️ حالة النظام:\nBackend: ${backendStatusMsg}\n\n`;
-    msg += `━━━━━━━━━━━━━━━━━━\n\n`;
-    msg += `👤 بيانات العميل\n\n`;
-    msg += `الاسم:\n${payload.client_information.name}\n\n`;
-    msg += `رقم الجوال:\n${payload.client_information.phone}\n\n`;
-    msg += `البريد الإلكتروني:\n${payload.client_information.email || 'لم يتم الإدخال'}\n\n`;
-    msg += `اسم المؤسسة / الشركة:\n${payload.business_information.company}\n\n`;
-    
-    msg += `━━━━━━━━━━━━━━━━━━\n\n`;
-    msg += `📋 تفاصيل الطلب\n\n`;
-    msg += `الخدمة الرئيسية:\n${serviceName}\n\n`;
-    
-    if (payload.selected_subservices) {
-      msg += `الخدمات الفرعية:\n${payload.selected_subservices}\n\n`;
-    }
-    
-    if (payload.project_information.description) {
-      msg += `وصف المشروع:\n${payload.project_information.description}\n\n`;
-    }
-    if (payload.project_information.budget) {
-      msg += `الميزانية:\n${payload.project_information.budget}\n\n`;
-    }
-    if (payload.project_information.timeline) {
-      msg += `الإطار الزمني:\n${payload.project_information.timeline}\n\n`;
-    }
-    if (payload.approval_response_time) {
-      msg += `وقت الاستجابة للموافقات:\n${payload.approval_response_time}\n\n`;
-    }
-    if (payload.platform_information) {
-      msg += `المنصات والحسابات:\n${payload.platform_information}\n\n`;
-    }
-    if (payload.content_information) {
-      msg += `الهوية والمحتوى:\n${payload.content_information}\n\n`;
-    }
-    if (payload.attachments_information) {
-      msg += `المرفقات والروابط:\n${payload.attachments_information}\n\n`;
-    }
-    
-    // Dynamic answers
-    const dynamicKeys = Object.keys(payload.answers).filter(k => k !== 'additional_notes');
-    if (dynamicKeys.length > 0) {
-       msg += `تفاصيل إضافية:\n`;
-       dynamicKeys.forEach(k => {
-          let label = k;
-          for (const type in dynamicStepsConfig) {
-             const field = dynamicStepsConfig[type].find(f => f.id === k);
-             if (field) {
-               label = isEn ? field.labelEn : field.labelAr;
-               break;
-             }
-          }
-          msg += `- ${label}:\n  ${payload.answers[k]}\n\n`;
-       });
-    }
-
-    if (payload.answers.additional_notes) {
-      msg += `ملاحظات إضافية:\n${payload.answers.additional_notes}\n\n`;
-    }
-
-    msg += `━━━━━━━━━━━━━━━━━━\n\n`;
-    msg += `🕐 بيانات الطلب\n\n`;
-    msg += `تاريخ الإرسال:\n${dateStr}\n\n`;
-    msg += `وقت الإرسال:\n${timeStr}\n\n`;
-    msg += `Request ID:\n${result.submission_id || sub_id}\n`;
-
-    setFullWaMessage(msg);
-    setSubmitSuccess(true);
-    localStorage.removeItem("nomoDiscoveryProgress_v3");
-    localStorage.removeItem("nomoDiscoveryStep_v3");
-
-    const waUrl = getWhatsAppUrl(config.contactNumber, msg);
-    setTimeout(() => {
-        window.open(waUrl, '_blank');
-    }, 500);
-  };
-
-  const handleWhatsAppClick = () => {
-    setIsWhatsAppOpened(true);
-    const waUrl = getWhatsAppUrl(config.contactNumber, fullWaMessage);
-    window.open(waUrl, '_blank');
-    
-    setTimeout(() => {
-        setIsWhatsAppOpened(false);
-    }, 4000);
-  };
-
-const getMotivationalText = (idx: number) => {
-    const textsEn = [
-      "Let's start with the basics.",
-      "Great! Let's get into the details.",
-      "Awesome. This helps us plan better.",
-      "Almost there! Just a few more questions.",
-      "Perfect! Ready for the final review.",
-    ];
-    const textsAr = [
-      "لنبداً بالمعلومات الأساسية.",
-      "ممتاز، بدأت الصورة تتضح 👌",
-      "رائع، هذه المعلومات تساعدنا في التخطيط.",
-      "وصلنا تقريباً للنهاية.",
-      "جاهزين للمراجعة النهائية!",
-    ];
-    // Map index approximately
-    const mapped = Math.floor((idx / sections.length) * textsEn.length);
-    return isEn
-      ? textsEn[Math.min(mapped, textsEn.length - 1)]
-      : textsAr[Math.min(mapped, textsAr.length - 1)];
-  };
-
-  const [isRecording, setIsRecording] = useState(false);
-  const startRecording = () => {
-    const SpeechRecognition =
-      (window as any).SpeechRecognition ||
-      (window as any).webkitSpeechRecognition;
-    if (SpeechRecognition) {
-      const recognition = new SpeechRecognition();
-      recognition.lang = isEn ? "en-US" : "ar-SA";
-      recognition.interimResults = false;
-      recognition.maxAlternatives = 1;
-
-      recognition.onstart = () => setIsRecording(true);
-      recognition.onresult = (event: any) => {
-        const transcript = event.results[0][0].transcript;
-        setFormData((prev) => ({
-          ...prev,
-          additional_notes:
-            (prev.additional_notes ? prev.additional_notes + " " : "") +
-            transcript,
-        }));
-      };
-      recognition.onerror = (event: any) => {
-        console.error(event.error);
-        setIsRecording(false);
-      };
-      recognition.onend = () => setIsRecording(false);
-
-      recognition.start();
-    } else {
-      alert(
-        isEn
-          ? "Speech recognition is not supported in this browser."
-          : "التعرف على الصوت غير مدعوم في هذا المتصفح.",
+      if (config.contactNumber) {
+        setTimeout(() => {
+          window.open(
+            getWhatsAppUrl(config.contactNumber, message),
+            "_blank",
+            "noopener,noreferrer",
+          );
+        }, 400);
+      }
+    } catch (error: any) {
+      setSubmitError(
+        error?.message ||
+          (isEn
+            ? "We could not submit your request. Please try again."
+            : "تعذر إرسال الطلب. حاول مرة أخرى."),
       );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-    if (submitSuccess) {
+  const openWhatsApp = () => {
+    if (!config.contactNumber || !whatsAppMessage) return;
+    window.open(
+      getWhatsAppUrl(config.contactNumber, whatsAppMessage),
+      "_blank",
+      "noopener,noreferrer",
+    );
+  };
+
+  if (submitSuccess) {
     return (
-      <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col items-center justify-center font-sans px-6 relative z-10">
-        <BackgroundEffects sectionId="review" logoUrl={config.desktopLogoUrl} />
+      <div className="min-h-screen bg-[var(--bg-primary)] px-5 py-10 flex items-center justify-center">
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-2xl w-full bg-[var(--surface-secondary)]/80 backdrop-blur-xl p-8 sm:p-12 rounded-3xl border border-[var(--border-default)] text-center shadow-2xl relative z-10"
+          initial={{ opacity: 0, y: 16, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          className="w-full max-w-xl rounded-3xl border border-[var(--border-default)] bg-[var(--surface-secondary)] p-7 sm:p-10 text-center shadow-2xl"
         >
-          <div className="w-20 h-20 bg-[#25D366]/20 text-[#25D366] rounded-full flex items-center justify-center mx-auto mb-6">
-            <Check size={40} />
+          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500">
+            <CircleCheckBig size={42} />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-[var(--text-primary)] mb-4">
-            {isEn
-              ? "Request Received Successfully ✓"
-              : "تم استلام معلومات مشروعك بنجاح ✓"}
+
+          <h1 className="mb-3 text-3xl font-black text-[var(--text-primary)]">
+            {backendSaved
+              ? isEn
+                ? "Your request is in ✓"
+                : "تم استلام طلبك ✓"
+              : isEn
+                ? "Your request is ready for WhatsApp review"
+                : "طلبك جاهز للمراجعة عبر واتساب"}
           </h1>
-          <p className="text-lg text-[var(--text-muted)] mb-8">
-            {isEn
-              ? "Your request has been saved and the NomoLabs team will review it and start the preparation steps."
-              : "تم حفظ طلبك وسيقوم فريق NomoLabs بمراجعته وبدء خطوات التجهيز."}
+
+          <p className="mb-6 text-[var(--text-muted)]">
+            {backendSaved
+              ? isEn
+                ? "We saved the request successfully and the team can review it now."
+                : "تم حفظ الطلب بنجاح، وفريق نمو لابز يقدر يراجعه الآن."
+              : isEn
+                ? "Automatic saving did not complete. Send the prepared request through WhatsApp so the team can review it."
+                : "الحفظ التلقائي ما اكتمل. أرسل الطلب الجاهز عبر واتساب عشان يراجعه الفريق."}
           </p>
-          <div className="bg-[var(--bg-primary)] p-4 rounded-xl border border-[var(--border-default)] inline-flex flex-col items-center gap-1 mb-8">
-            <span className="text-xs text-[var(--text-muted)] uppercase tracking-wider">
-              {isEn ? "Order Number" : "رقم الطلب"}
-            </span>
-            <span className="font-mono text-xl font-bold text-[var(--color-primary)]">
+
+          <div className="mb-7 rounded-2xl border border-[var(--border-default)] bg-[var(--bg-primary)] p-4">
+            <div className="mb-1 text-xs font-bold uppercase tracking-wider text-[var(--text-muted)]">
+              {isEn ? "Request ID" : "رقم الطلب"}
+            </div>
+            <div className="font-mono text-xl font-black text-[var(--color-primary)]">
               {submissionId}
-            </span>
+            </div>
           </div>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+
+          <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
+            {config.contactNumber && (
+              <button
+                type="button"
+                onClick={openWhatsApp}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3.5 font-bold text-white shadow-lg transition-transform hover:scale-[1.02]"
+              >
+                <Send size={18} />
+                {isEn ? "Open WhatsApp" : "فتح واتساب"}
+              </button>
+            )}
+
             <button
+              type="button"
               onClick={() => window.location.reload()}
-              className="px-8 py-3 bg-[var(--surface-secondary)] text-[var(--text-primary)] border border-[var(--border-default)] rounded-xl font-bold shadow-sm hover:border-[var(--text-muted)] transition-colors w-full sm:w-auto"
+              className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-primary)] px-6 py-3.5 font-bold text-[var(--text-primary)]"
             >
-              {isEn ? "Return Home" : "العودة للرئيسية"}
-            </button>
-            <button
-              onClick={handleWhatsAppClick}
-              className="px-8 py-3 bg-[#25D366] text-white rounded-xl font-bold shadow-lg hover:bg-[#20b858] transition-colors w-full sm:w-auto flex items-center justify-center gap-2"
-            >
-              {isWhatsAppOpened ? (
-                isEn ? 'WhatsApp Opened ✓' : 'تم فتح واتساب ✓'
-              ) : (
-                isEn ? 'Fast Review via WhatsApp' : 'تسريع المراجعة عبر واتساب'
-              )}
+              {isEn ? "New request" : "طلب جديد"}
             </button>
           </div>
         </motion.div>
@@ -618,996 +495,363 @@ const getMotivationalText = (idx: number) => {
     );
   }
 
-  const renderSectionContent = () => {
-    switch (currentSection) {
-      case "client_info":
-        return (
-          <div className="space-y-6">
-            <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] p-6 sm:p-8 rounded-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-full bg-[var(--bg-primary)] border border-[var(--border-default)] flex items-center justify-center font-bold text-[var(--color-primary)]">
-                  A
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-[var(--text-primary)]">
-                    {isEn ? "Personal Details" : "البيانات الشخصية"}
-                  </h3>
-                  <p className="text-xs text-[var(--text-muted)]">
-                    {isEn
-                      ? "Enter your name. Email is optional."
-                      : "أدخل اسمك الكريم، والبريد الإلكتروني اختياري."}
-                  </p>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-bold text-[var(--text-primary)]">
-                    {isEn ? "Full Name" : "الاسم الكريم"}
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-xl px-4 py-3.5 text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)] transition-colors shadow-sm"
-                    placeholder={isEn ? "John Doe" : "عبدالله محمد"}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-bold text-[var(--text-primary)]">
-                    {isEn ? "Email (Optional)" : "البريد الإلكتروني (اختياري)"}
-                  </label>
-                  <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    dir="ltr"
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-xl px-4 py-3.5 text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)] transition-colors text-left shadow-sm"
-                    placeholder={
-                      isEn
-                        ? "example@domain.com — Optional"
-                        : "example@domain.com — اختياري"
-                    }
-                  />
-                  <p className="text-xs text-[var(--text-muted)]">
-                    {isEn
-                      ? "You can continue without entering an email address."
-                      : "يمكنك المتابعة بدون إدخال البريد الإلكتروني."}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] p-6 sm:p-8 rounded-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-full bg-[var(--bg-primary)] border border-[var(--border-default)] flex items-center justify-center font-bold text-[var(--color-primary)]">
-                  B
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-[var(--text-primary)]">
-                    {isEn ? "Business Info" : "بيانات العمل"}
-                  </h3>
-                  <p className="text-xs text-[var(--text-muted)]">
-                    {isEn
-                      ? "Company name and contact phone"
-                      : "اسم الشركة أو المشروع ورقم الجوال"}
-                  </p>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-bold text-[var(--text-primary)]">
-                    {isEn ? "Company / Project Name" : "اسم الشركة / المشروع"}
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.company}
-                    onChange={(e) =>
-                      setFormData({ ...formData, company: e.target.value })
-                    }
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-xl px-4 py-3.5 text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)] transition-colors shadow-sm"
-                    placeholder={isEn ? "NomoLabs" : "نمو لابز"}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-bold text-[var(--text-primary)]">
-                    {isEn ? "Phone Number" : "رقم الجوال"}
-                  </label>
-                  <div className="flex" dir="ltr">
-                    <select
-                      value={countryCode}
-                      onChange={(e) =>
-                        handlePhoneChange(e.target.value, phoneNumber)
-                      }
-                      className="bg-[var(--surface-secondary)] border border-r-0 border-[var(--border-default)] rounded-l-xl px-2 py-3.5 text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)] transition-colors shadow-sm min-w-[80px]"
-                    >
-                      {GCC_COUNTRIES.map((c) => (
-                        <option key={c.code} value={c.code}>
-                          {c.flag} {c.code}
-                        </option>
-                      ))}
-                    </select>
-                    <input
-                      type="tel"
-                      value={phoneNumber}
-                      onChange={(e) =>
-                        handlePhoneChange(countryCode, e.target.value)
-                      }
-                      className="w-full bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-r-xl px-4 py-3.5 text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)] transition-colors shadow-sm"
-                      placeholder="5X XXX XXXX"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-
-      case "service":
-        return (
-          <div className="space-y-6">
-            <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] p-6 sm:p-8 rounded-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-full bg-[var(--bg-primary)] border border-[var(--border-default)] flex items-center justify-center font-bold text-[var(--color-primary)]">
-                  A
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-[var(--text-primary)]">
-                    {isEn ? "Primary Service" : "الخدمة الأساسية المطلوبة"}
-                  </h3>
-                  <p className="text-xs text-[var(--text-muted)]">
-                    {isEn
-                      ? "Select the main service you need"
-                      : "اختر الخدمة الرئيسية التي تحتاجها"}
-                  </p>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {projectTypes.map((t) => (
-                  <button
-                    key={t.id}
-                    onClick={() =>
-                      setFormData({
-                        ...formData,
-                        type: t.value,
-                        dynamicAnswers: {},
-                      })
-                    }
-                    className={`text-start p-4 rounded-2xl border transition-all flex items-start gap-3 ${formData.type === t.value ? "bg-[var(--bg-primary)] border-[var(--color-primary)] ring-1 ring-[var(--color-primary)] shadow-md" : "bg-[var(--bg-primary)] border-[var(--border-default)] hover:border-[var(--text-muted)]"}`}
-                  >
-                    <div
-                      className={`mt-0.5 shrink-0 w-5 h-5 rounded-full border flex items-center justify-center ${formData.type === t.value ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-white" : "border-[var(--border-default)]"}`}
-                    >
-                      {formData.type === t.value && (
-                        <div className="w-2 h-2 rounded-full bg-white" />
-                      )}
-                    </div>
-                    <div>
-                      <div
-                        className={`font-bold mb-1 ${formData.type === t.value ? "text-[var(--color-primary)]" : "text-[var(--text-primary)]"}`}
-                      >
-                        {isEn ? t.labelEn : t.labelAr}
-                      </div>
-                      <div className="text-xs text-[var(--text-muted)] leading-relaxed">
-                        {isEn ? t.descEn : t.descAr}
-                      </div>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] p-6 sm:p-8 rounded-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-full bg-[var(--bg-primary)] border border-[var(--border-default)] flex items-center justify-center font-bold text-[var(--color-primary)]">
-                  B
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-[var(--text-primary)]">
-                    {isEn ? "General Description" : "وصف عام للمشروع / الفكرة"}
-                  </h3>
-                  <p className="text-xs text-[var(--text-muted)]">
-                    {isEn
-                      ? "Tell us more about your project goals"
-                      : "حدثنا أكثر عن أهداف مشروعك ورؤيتك"}
-                  </p>
-                </div>
-              </div>
-              <textarea
-                value={formData.description}
-                onChange={(e) =>
-                  setFormData({ ...formData, description: e.target.value })
-                }
-                className="w-full h-32 bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-xl p-4 text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)] transition-colors resize-none shadow-sm"
-                placeholder={
-                  isEn ? "Tell us about your idea..." : "حدثنا عن فكرتك..."
-                }
-              />
-            </div>
-          </div>
-        );
-
-      case "project_details":
-        return (
-          <div className="space-y-6">
-            <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] p-6 sm:p-8 rounded-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-full bg-[var(--bg-primary)] border border-[var(--border-default)] flex items-center justify-center font-bold text-[var(--color-primary)]">
-                  A
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-[var(--text-primary)]">
-                    {isEn ? "Specific Details" : "التفاصيل الدقيقة"}
-                  </h3>
-                  <p className="text-xs text-[var(--text-muted)]">
-                    {isEn
-                      ? "Help us understand the technical requirements"
-                      : "يساعدنا هذا في فهم المتطلبات التقنية الدقيقة"}
-                  </p>
-                </div>
-              </div>
-              <div className="space-y-6">
-                {dynamicFields.map((field, idx) => (
-                  <div key={field.id} className="space-y-3">
-                    <label className="text-sm font-bold text-[var(--text-primary)]">
-                      {isEn ? field.labelEn : field.labelAr}
-                    </label>
-                    {field.type === "textarea" ? (
-                      <textarea
-                        value={formData.dynamicAnswers[field.id] || ""}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            dynamicAnswers: {
-                              ...formData.dynamicAnswers,
-                              [field.id]: e.target.value,
-                            },
-                          })
-                        }
-                        className="w-full h-24 bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-xl p-4 text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)] transition-colors resize-none shadow-sm"
-                      />
-                    ) : field.type === "checkbox" ? (
-                      <div className="flex flex-wrap gap-3">
-                        {(isEn ? field.optionsEn : field.optionsAr)?.map(
-                          (opt, oIdx) => {
-                            const currentAnswers = formData.dynamicAnswers[
-                              field.id
-                            ]
-                              ? formData.dynamicAnswers[field.id].split(", ")
-                              : [];
-                            const isSelected = currentAnswers.includes(opt);
-                            return (
-                              <button
-                                key={oIdx}
-                                onClick={() => {
-                                  let newAnswers = [...currentAnswers];
-                                  if (isSelected) {
-                                    newAnswers = newAnswers.filter(
-                                      (a) => a !== opt,
-                                    );
-                                  } else {
-                                    newAnswers.push(opt);
-                                  }
-                                  setFormData({
-                                    ...formData,
-                                    dynamicAnswers: {
-                                      ...formData.dynamicAnswers,
-                                      [field.id]: newAnswers.join(", "),
-                                    },
-                                  });
-                                }}
-                                className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all flex items-center gap-2 ${isSelected ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-white shadow-md" : "bg-[var(--bg-primary)] border-[var(--border-default)] text-[var(--text-primary)] hover:border-[var(--color-primary)]"}`}
-                              >
-                                {isSelected && (
-                                  <Check size={14} strokeWidth={3} />
-                                )}
-                                {opt}
-                              </button>
-                            );
-                          },
-                        )}
-                      </div>
-                    ) : (
-                      <input
-                        type="text"
-                        value={formData.dynamicAnswers[field.id] || ""}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            dynamicAnswers: {
-                              ...formData.dynamicAnswers,
-                              [field.id]: e.target.value,
-                            },
-                          })
-                        }
-                        className="w-full bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-xl px-4 py-3.5 text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)] transition-colors shadow-sm"
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        );
-
-      case "identity_content":
-        return (
-          <div className="space-y-6">
-            <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] p-6 sm:p-8 rounded-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-full bg-[var(--bg-primary)] border border-[var(--border-default)] flex items-center justify-center font-bold text-[var(--color-primary)]">
-                  A
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-[var(--text-primary)]">
-                    {isEn
-                      ? "Visual Identity & Content"
-                      : "الهوية البصرية والمحتوى"}
-                  </h3>
-                  <p className="text-xs text-[var(--text-muted)]">
-                    {isEn
-                      ? "Do you have an existing logo or content?"
-                      : "هل تمتلك هوية بصرية أو محتوى جاهز؟"}
-                  </p>
-                </div>
-              </div>
-              <textarea
-                value={formData.content_information}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    content_information: e.target.value,
-                  })
-                }
-                className="w-full h-32 bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-xl p-4 text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)] transition-colors resize-none shadow-sm"
-                placeholder={
-                  isEn
-                    ? "e.g., We have a logo and brand guidelines..."
-                    : "مثال: لدينا شعار وهوية بصرية كاملة، ونحتاج تصميم..."
-                }
-              />
-            </div>
-
-            <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] p-6 sm:p-8 rounded-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-full bg-[var(--bg-primary)] border border-[var(--border-default)] flex items-center justify-center font-bold text-[var(--color-primary)]">
-                  B
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-[var(--text-primary)]">
-                    {isEn ? "Files & Attachments" : "الملفات والمرفقات"}
-                  </h3>
-                  <p className="text-xs text-[var(--text-muted)]">
-                    {isEn
-                      ? "Provide any links to drive folders or references"
-                      : "قم بتوفير روابط لملفات Google Drive أو مراجع"}
-                  </p>
-                </div>
-              </div>
-              <textarea
-                value={formData.attachments_information}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    attachments_information: e.target.value,
-                  })
-                }
-                className="w-full h-24 bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-xl p-4 text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)] transition-colors resize-none shadow-sm"
-                placeholder={isEn ? "Paste links here..." : "ضع الروابط هنا..."}
-              />
-            </div>
-          </div>
-        );
-
-      case "platforms":
-        return (
-          <div className="space-y-6">
-            <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] p-6 sm:p-8 rounded-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-full bg-[var(--bg-primary)] border border-[var(--border-default)] flex items-center justify-center font-bold text-[var(--color-primary)]">
-                  A
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-[var(--text-primary)]">
-                    {isEn ? "Platforms & Accounts" : "المنصات والحسابات"}
-                  </h3>
-                  <p className="text-xs text-[var(--text-muted)]">
-                    {isEn
-                      ? "What are your target platforms or existing accounts?"
-                      : "ما هي المنصات المستهدفة أو حساباتك الحالية؟"}
-                  </p>
-                </div>
-              </div>
-              <textarea
-                value={formData.platform_information}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    platform_information: e.target.value,
-                  })
-                }
-                className="w-full h-32 bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-xl p-4 text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)] transition-colors resize-none shadow-sm"
-                placeholder={
-                  isEn
-                    ? "e.g., Instagram, Twitter, TikTok..."
-                    : "مثال: انستقرام، تويتر، تيك توك..."
-                }
-              />
-            </div>
-          </div>
-        );
-
-      case "timeline":
-        return (
-          <div className="space-y-6">
-            <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] p-6 sm:p-8 rounded-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-full bg-[var(--bg-primary)] border border-[var(--border-default)] flex items-center justify-center font-bold text-[var(--color-primary)]">
-                  A
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-[var(--text-primary)]">
-                    {isEn ? "Estimated Budget" : "الميزانية المتوقعة"}
-                  </h3>
-                  <p className="text-xs text-[var(--text-muted)]">
-                    {isEn
-                      ? "Select your expected budget range"
-                      : "اختر النطاق المتوقع للميزانية"}
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                {(isEn ? budgetsEn : budgetsAr).map((b, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setFormData({ ...formData, budget: b })}
-                    className={`px-5 py-3 rounded-full text-sm font-medium border transition-all flex items-center gap-2 ${formData.budget === b ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-white shadow-md" : "bg-[var(--bg-primary)] border-[var(--border-default)] text-[var(--text-primary)] hover:border-[var(--text-muted)]"}`}
-                  >
-                    {formData.budget === b && (
-                      <Check size={14} strokeWidth={3} />
-                    )}
-                    {b}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] p-6 sm:p-8 rounded-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-full bg-[var(--bg-primary)] border border-[var(--border-default)] flex items-center justify-center font-bold text-[var(--color-primary)]">
-                  B
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-[var(--text-primary)]">
-                    {isEn ? "Expected Timeline" : "الإطار الزمني المتوقع"}
-                  </h3>
-                  <p className="text-xs text-[var(--text-muted)]">
-                    {isEn
-                      ? "When do you expect the project to be delivered?"
-                      : "متى تتوقع استلام المشروع؟"}
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                {(isEn ? timelinesEn : timelinesAr).map((t, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setFormData({ ...formData, timeline: t })}
-                    className={`px-5 py-3 rounded-full text-sm font-medium border transition-all flex items-center gap-2 ${formData.timeline === t ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-white shadow-md" : "bg-[var(--bg-primary)] border-[var(--border-default)] text-[var(--text-primary)] hover:border-[var(--text-muted)]"}`}
-                  >
-                    {formData.timeline === t && (
-                      <Check size={14} strokeWidth={3} />
-                    )}
-                    {t}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] p-6 sm:p-8 rounded-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-full bg-[var(--bg-primary)] border border-[var(--border-default)] flex items-center justify-center font-bold text-[var(--color-primary)]">
-                  C
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-[var(--text-primary)]">
-                    {isEn
-                      ? "Approval Response Time"
-                      : "وقت الاستجابة للموافقات"}
-                  </h3>
-                  <p className="text-xs text-[var(--text-muted)]">
-                    {isEn
-                      ? "Expected time for approvals (hosting, domains, etc.)"
-                      : "الوقت المتوقع لاعتماد بعض المتطلبات (استضافة، دومين، الخ)"}
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                {(isEn
-                  ? [
-                      "Immediately",
-                      "Within hours",
-                      "Same day",
-                      "Next business day",
-                      "More than a day",
-                    ]
-                  : [
-                      "مباشرة",
-                      "خلال ساعات",
-                      "في نفس اليوم",
-                      "يوم العمل التالي",
-                      "أكثر من يوم",
-                    ]
-                ).map((t, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() =>
-                      setFormData({ ...formData, approval_response_time: t })
-                    }
-                    className={`px-5 py-3 rounded-full text-sm font-medium border transition-all flex items-center gap-2 ${formData.approval_response_time === t ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-white shadow-md" : "bg-[var(--bg-primary)] border-[var(--border-default)] text-[var(--text-primary)] hover:border-[var(--text-muted)]"}`}
-                  >
-                    {formData.approval_response_time === t && (
-                      <Check size={14} strokeWidth={3} />
-                    )}
-                    {t}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        );
-
-      case "additional_notes":
-        return (
-          <div className="space-y-6">
-            <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] p-6 sm:p-8 rounded-2xl relative overflow-hidden">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-full bg-[var(--bg-primary)] border border-[var(--border-default)] flex items-center justify-center font-bold text-[var(--color-primary)]">
-                  A
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-[var(--text-primary)]">
-                    {isEn ? "Any other notes?" : "أية ملاحظات أخرى؟"}
-                  </h3>
-                  <p className="text-xs text-[var(--text-muted)]">
-                    {isEn
-                      ? "You can type or record your voice"
-                      : "يمكنك التحدث مباشرة، وسنحوّل كلامك إلى نص لتسهيل إضافة ملاحظاتك."}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4 mb-4">
-                <button
-                  onClick={startRecording}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-colors ${isRecording ? "bg-red-500 text-white animate-pulse" : "bg-[var(--bg-primary)] border border-[var(--border-default)] text-[var(--text-primary)] hover:border-[var(--color-primary)]"}`}
-                >
-                  <Mic size={16} />
-                  {isRecording
-                    ? isEn
-                      ? "Recording..."
-                      : "جاري التسجيل..."
-                    : isEn
-                      ? "Voice Recording"
-                      : "تسجيل صوتي"}
-                </button>
-                <div className="flex items-center gap-2 text-sm text-[var(--text-muted)] font-medium">
-                  <Type size={16} />
-                  {isEn ? "Text Input" : "كتابة"}
-                </div>
-              </div>
-
-              <textarea
-                value={formData.additional_notes}
-                onChange={(e) =>
-                  setFormData({ ...formData, additional_notes: e.target.value })
-                }
-                className="w-full h-40 bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-xl p-4 text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)] transition-colors resize-none shadow-sm"
-                placeholder={
-                  isEn ? "Add your notes here..." : "أضف ملاحظاتك هنا..."
-                }
-              />
-            </div>
-          </div>
-        );
-
-      case "review":
-        return (
-          <div className="space-y-6">
-            <div className="space-y-4">
-              {/* Client Info Summary */}
-              <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-2xl p-6 flex flex-col sm:flex-row sm:items-start gap-4 justify-between relative group">
-                <div className="flex-1">
-                  <h3 className="font-bold text-lg text-[var(--color-primary)] mb-4">
-                    {isEn ? "Client Information" : "معلومات العميل"}
-                  </h3>
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <span className="block text-[var(--text-muted)] text-xs mb-1">
-                        {isEn ? "Name" : "الاسم"}
-                      </span>
-                      <span className="font-medium text-[var(--text-primary)]">
-                        {formData.name}
-                      </span>
-                    </div>
-                    <div>
-                      <span className="block text-[var(--text-muted)] text-xs mb-1">
-                        {isEn ? "Company" : "الشركة"}
-                      </span>
-                      <span className="font-medium text-[var(--text-primary)]">
-                        {formData.company}
-                      </span>
-                    </div>
-                    <div>
-                      <span className="block text-[var(--text-muted)] text-xs mb-1">
-                        {isEn ? "Phone" : "الجوال"}
-                      </span>
-                      <span
-                        className="font-medium text-[var(--text-primary)]"
-                        dir="ltr"
-                      >
-                        {formData.phone}
-                      </span>
-                    </div>
-                    <div>
-                      <span className="block text-[var(--text-muted)] text-xs mb-1">
-                        {isEn ? "Email" : "البريد"}
-                      </span>
-                      <span className="font-medium text-[var(--text-primary)]">
-                        {formData.email}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <button
-                  onClick={() =>
-                    setStepIndex(
-                      sections.findIndex((s) => s.id === "client_info"),
-                    )
-                  }
-                  className="mt-4 sm:mt-0 text-sm font-bold text-[var(--text-muted)] hover:text-[var(--color-primary)] flex items-center gap-2 transition-colors rtl:mr-auto ltr:ml-auto"
-                >
-                  <Edit2 size={16} /> {isEn ? "Edit" : "تعديل"}
-                </button>
-              </div>
-
-              {/* Service Summary */}
-              <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-2xl p-6 flex flex-col sm:flex-row sm:items-start gap-4 justify-between relative group">
-                <div className="flex-1">
-                  <h3 className="font-bold text-lg text-[var(--color-primary)] mb-4">
-                    {isEn ? "Project & Service" : "المشروع والخدمة"}
-                  </h3>
-                  <div className="space-y-4 text-sm">
-                    <div>
-                      <span className="block text-[var(--text-muted)] text-xs mb-1">
-                        {isEn ? "Service Type" : "نوع الخدمة"}
-                      </span>
-                      <span className="font-medium text-[var(--text-primary)]">
-                        {isEn
-                          ? projectTypes.find((t) => t.value === formData.type)
-                              ?.labelEn
-                          : projectTypes.find((t) => t.value === formData.type)
-                              ?.labelAr}
-                      </span>
-                    </div>
-                    <div>
-                      <span className="block text-[var(--text-muted)] text-xs mb-1">
-                        {isEn ? "General Description" : "الوصف العام"}
-                      </span>
-                      <span className="font-medium text-[var(--text-primary)] whitespace-pre-wrap">
-                        {formData.description}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <button
-                  onClick={() =>
-                    setStepIndex(sections.findIndex((s) => s.id === "service"))
-                  }
-                  className="mt-4 sm:mt-0 text-sm font-bold text-[var(--text-muted)] hover:text-[var(--color-primary)] flex items-center gap-2 transition-colors rtl:mr-auto ltr:ml-auto"
-                >
-                  <Edit2 size={16} /> {isEn ? "Edit" : "تعديل"}
-                </button>
-              </div>
-
-              {/* Project Details Summary */}
-              {dynamicFields.length > 0 && (
-                <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-2xl p-6 flex flex-col sm:flex-row sm:items-start gap-4 justify-between relative group">
-                  <div className="flex-1">
-                    <h3 className="font-bold text-lg text-[var(--color-primary)] mb-4">
-                      {isEn ? "Project Details" : "تفاصيل المشروع"}
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                      {dynamicFields.map((f) => (
-                        <div key={f.id}>
-                          <span className="block text-[var(--text-muted)] text-xs mb-1">
-                            {isEn ? f.labelEn : f.labelAr}
-                          </span>
-                          <span className="font-medium text-[var(--text-primary)] line-clamp-2">
-                            {formData.dynamicAnswers[f.id] || "-"}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() =>
-                      setStepIndex(
-                        sections.findIndex((s) => s.id === "project_details"),
-                      )
-                    }
-                    className="mt-4 sm:mt-0 text-sm font-bold text-[var(--text-muted)] hover:text-[var(--color-primary)] flex items-center gap-2 transition-colors rtl:mr-auto ltr:ml-auto"
-                  >
-                    <Edit2 size={16} /> {isEn ? "Edit" : "تعديل"}
-                  </button>
-                </div>
-              )}
-
-              {/* Identity & Content Summary */}
-              {(formData.content_information ||
-                formData.attachments_information) && (
-                <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-2xl p-6 flex flex-col sm:flex-row sm:items-start gap-4 justify-between relative group">
-                  <div className="flex-1">
-                    <h3 className="font-bold text-lg text-[var(--color-primary)] mb-4">
-                      {isEn ? "Identity & Content" : "الهوية والمحتوى"}
-                    </h3>
-                    <div className="space-y-4 text-sm">
-                      {formData.content_information && (
-                        <div>
-                          <span className="block text-[var(--text-muted)] text-xs mb-1">
-                            {isEn ? "Content Info" : "معلومات المحتوى"}
-                          </span>
-                          <span className="font-medium text-[var(--text-primary)] whitespace-pre-wrap">
-                            {formData.content_information}
-                          </span>
-                        </div>
-                      )}
-                      {formData.attachments_information && (
-                        <div>
-                          <span className="block text-[var(--text-muted)] text-xs mb-1">
-                            {isEn ? "Attachments" : "المرفقات"}
-                          </span>
-                          <span className="font-medium text-[var(--text-primary)] whitespace-pre-wrap">
-                            {formData.attachments_information}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() =>
-                      setStepIndex(
-                        sections.findIndex((s) => s.id === "identity_content"),
-                      )
-                    }
-                    className="mt-4 sm:mt-0 text-sm font-bold text-[var(--text-muted)] hover:text-[var(--color-primary)] flex items-center gap-2 transition-colors rtl:mr-auto ltr:ml-auto"
-                  >
-                    <Edit2 size={16} /> {isEn ? "Edit" : "تعديل"}
-                  </button>
-                </div>
-              )}
-
-              {/* Timeline Summary */}
-              <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-2xl p-6 flex flex-col sm:flex-row sm:items-start gap-4 justify-between relative group">
-                <div className="flex-1">
-                  <h3 className="font-bold text-lg text-[var(--color-primary)] mb-4">
-                    {isEn ? "Timeline & Approvals" : "الجدول الزمني والموافقات"}
-                  </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <span className="block text-[var(--text-muted)] text-xs mb-1">
-                        {isEn ? "Budget" : "الميزانية"}
-                      </span>
-                      <span className="font-medium text-[var(--text-primary)]">
-                        {formData.budget}
-                      </span>
-                    </div>
-                    <div>
-                      <span className="block text-[var(--text-muted)] text-xs mb-1">
-                        {isEn ? "Timeline" : "المدة المطلوبة"}
-                      </span>
-                      <span className="font-medium text-[var(--text-primary)]">
-                        {formData.timeline}
-                      </span>
-                    </div>
-                    <div className="sm:col-span-2">
-                      <span className="block text-[var(--text-muted)] text-xs mb-1">
-                        {isEn ? "Approval Time" : "وقت الاستجابة للموافقات"}
-                      </span>
-                      <span className="font-medium text-[var(--text-primary)]">
-                        {formData.approval_response_time}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <button
-                  onClick={() =>
-                    setStepIndex(sections.findIndex((s) => s.id === "timeline"))
-                  }
-                  className="mt-4 sm:mt-0 text-sm font-bold text-[var(--text-muted)] hover:text-[var(--color-primary)] flex items-center gap-2 transition-colors rtl:mr-auto ltr:ml-auto"
-                >
-                  <Edit2 size={16} /> {isEn ? "Edit" : "تعديل"}
-                </button>
-              </div>
-
-              {/* Additional Notes */}
-              {formData.additional_notes && (
-                <div className="bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-2xl p-6 flex flex-col sm:flex-row sm:items-start gap-4 justify-between relative group">
-                  <div className="flex-1">
-                    <h3 className="font-bold text-lg text-[var(--color-primary)] mb-4">
-                      {isEn ? "Additional Notes" : "ملاحظات إضافية"}
-                    </h3>
-                    <div className="text-sm">
-                      <span className="font-medium text-[var(--text-primary)] whitespace-pre-wrap">
-                        {formData.additional_notes}
-                      </span>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() =>
-                      setStepIndex(
-                        sections.findIndex((s) => s.id === "additional_notes"),
-                      )
-                    }
-                    className="mt-4 sm:mt-0 text-sm font-bold text-[var(--text-muted)] hover:text-[var(--color-primary)] flex items-center gap-2 transition-colors rtl:mr-auto ltr:ml-auto"
-                  >
-                    <Edit2 size={16} /> {isEn ? "Edit" : "تعديل"}
-                  </button>
-                </div>
-              )}
-            </div>
-
-            <div
-              className="mt-6 p-4 bg-[var(--surface-secondary)] rounded-xl border border-[var(--border-default)] flex items-start gap-4 cursor-pointer hover:bg-[var(--bg-primary)] transition-colors"
-              onClick={() => setAgreedToTerms(!agreedToTerms)}
-            >
-              <div
-                className={`mt-0.5 shrink-0 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-colors ${agreedToTerms ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-white" : "border-[var(--border-default)] bg-[var(--bg-primary)]"}`}
-              >
-                {agreedToTerms && <Check size={14} strokeWidth={3} />}
-              </div>
-              <p className="text-sm font-medium text-[var(--text-primary)]">
-                {isEn
-                  ? "I confirm the information is correct and I agree to use it to prepare and execute the project."
-                  : "أؤكد صحة المعلومات وأوافق على استخدامها لتجهيز وتنفيذ المشروع."}
-              </p>
-            </div>
-
-            {submitError && (
-              <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-3 text-red-500">
-                <AlertCircle size={20} />
-                <p className="text-sm font-bold">{submitError}</p>
-              </div>
-            )}
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  };
+  const currentStep = steps[stepIndex];
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col font-sans selection:bg-[var(--color-primary)] selection:text-white relative z-0 overflow-hidden">
-      <BackgroundEffects
-        sectionId={currentSection}
-        logoUrl={config.desktopLogoUrl}
-      />
-
-      {/* Header/Progress Area */}
-      <div className="sticky top-0 z-20 bg-[var(--bg-primary)]/80 backdrop-blur-xl border-b border-[var(--border-default)]">
-        <div className="max-w-4xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between mb-3">
-            <h1 className="font-black text-xl text-[var(--text-primary)] flex items-center gap-2">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
+      <div className="sticky top-0 z-20 border-b border-[var(--border-default)] bg-[var(--bg-primary)]/90 backdrop-blur-xl">
+        <div className="mx-auto max-w-5xl px-5 py-4 sm:px-6">
+          <div className="mb-3 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-2 font-black">
               <Sparkles size={20} className="text-[var(--color-primary)]" />
-              NomoLabs Discovery
-            </h1>
+              <span>Smart KYC Lite</span>
+            </div>
             <div className="text-sm font-bold text-[var(--text-muted)]">
               {isEn
-                ? `Step ${stepIndex + 1} of ${sections.length}`
-                : `الخطوة ${stepIndex + 1} من ${sections.length}`}
+                ? "Step " + (stepIndex + 1) + " of 3"
+                : "الخطوة " + (stepIndex + 1) + " من 3"}
             </div>
           </div>
 
-          <div className="h-2 w-full bg-[var(--surface-secondary)] rounded-full overflow-hidden">
+          <div className="h-2 overflow-hidden rounded-full bg-[var(--surface-secondary)]">
             <motion.div
-              className="h-full bg-[var(--color-primary)] rounded-full"
-              initial={{ width: 0 }}
-              animate={{
-                width: `${((stepIndex + 1) / sections.length) * 100}%`,
-              }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="h-full rounded-full bg-[var(--color-primary)]"
+              animate={{ width: ((stepIndex + 1) / 3) * 100 + "%" }}
+              transition={{ duration: 0.35 }}
             />
           </div>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto pt-8 pb-32 px-4 sm:px-6">
-        <div className="max-w-3xl mx-auto w-full relative z-10">
-          {/* Section Header */}
-          <motion.div
-            key={`header-${currentSection}`}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-8 text-center sm:text-start"
-          >
-            <h2 className="text-3xl sm:text-4xl font-black text-[var(--text-primary)] mb-2">
-              {isEn ? sections[stepIndex].titleEn : sections[stepIndex].titleAr}
-            </h2>
-            <p className="text-[var(--text-muted)] font-medium">
-              {isEn ? sections[stepIndex].descEn : sections[stepIndex].descAr}
-            </p>
-          </motion.div>
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSection}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-            >
-              {renderSectionContent()}
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Navigation */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <button
-              onClick={handlePrev}
-              disabled={stepIndex === 0}
-              className={`w-full sm:w-auto flex items-center justify-center gap-2 text-sm font-bold px-6 py-3.5 rounded-xl transition-all ${stepIndex === 0 ? "opacity-0 pointer-events-none" : "text-[var(--text-primary)] bg-[var(--surface-secondary)] border border-[var(--border-default)] hover:border-[var(--color-primary)]"}`}
-            >
-              {isEn ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
-              {isEn ? "Back" : "السابق"}
-            </button>
-
-            <div className="hidden sm:block flex-1 text-center">
-              <motion.span
-                key={stepIndex}
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-sm font-bold text-[var(--text-muted)] bg-[var(--surface-secondary)]/50 px-4 py-2 rounded-full border border-[var(--border-default)] inline-block"
-              >
-                {getMotivationalText(stepIndex)}
-              </motion.span>
-            </div>
-
-            {currentSection !== "review" ? (
-              <button
-                onClick={handleNext}
-                disabled={!validateSection(currentSection)}
-                className={`w-full sm:w-auto flex items-center justify-center gap-2 text-sm font-bold px-8 py-3.5 rounded-xl transition-all min-w-[140px] ${validateSection(currentSection) ? "bg-[var(--color-primary)] text-white shadow-lg hover:shadow-xl hover:scale-105" : "bg-[var(--surface-secondary)] text-[var(--text-muted)] cursor-not-allowed border border-[var(--border-default)]"}`}
-              >
-                {isEn ? "Next Step" : "الخطوة التالية"}
-                {isEn ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
-              </button>
-            ) : (
-              <button
-                onClick={handleSubmit}
-                disabled={!validateSection("review") || isSubmitting}
-                className={`w-full sm:w-auto flex items-center justify-center gap-2 text-sm font-bold px-8 py-3.5 rounded-xl transition-all min-w-[160px] ${validateSection("review") && !isSubmitting ? "bg-[var(--color-primary)] text-white shadow-[0_0_20px_rgba(79,142,247,0.4)] hover:scale-105" : "bg-[var(--surface-secondary)] text-[var(--text-muted)] cursor-not-allowed border border-[var(--border-default)]"}`}
-              >
-                {isSubmitting
-                  ? isEn
-                    ? "Submitting..."
-                    : "جاري الإرسال..."
-                  : isEn
-                    ? "Submit Request"
-                    : "إرسال الطلب"}
-                {isSubmitting ? (
-                  <Loader2 size={18} className="animate-spin" />
-                ) : (
-                  <Check size={18} />
-                )}
-              </button>
-            )}
+      <main className="mx-auto w-full max-w-5xl px-5 pb-28 pt-8 sm:px-6 sm:pt-12">
+        <motion.header
+          key={currentStep.id + "-header"}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mx-auto mb-8 max-w-3xl text-center"
+        >
+          <div className="mb-3 inline-flex rounded-full border border-[var(--border-default)] bg-[var(--surface-secondary)] px-3 py-1 text-xs font-bold text-[var(--color-primary)]">
+            {isEn ? "Fast project discovery" : "تحديد احتياجك بسرعة"}
           </div>
+          <h1 className="mb-3 text-3xl font-black sm:text-5xl">
+            {isEn ? currentStep.titleEn : currentStep.titleAr}
+          </h1>
+          <p className="mx-auto max-w-2xl text-base font-medium leading-7 text-[var(--text-muted)] sm:text-lg">
+            {isEn ? currentStep.descEn : currentStep.descAr}
+          </p>
+        </motion.header>
+
+        <AnimatePresence mode="wait">
+          <motion.section
+            key={currentStep.id}
+            initial={{ opacity: 0, x: isEn ? 20 : -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: isEn ? -20 : 20 }}
+            transition={{ duration: 0.25 }}
+          >
+            {stepIndex === 0 && (
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                {projectTypes.map((service) => {
+                  const selected = formData.type === service.value;
+
+                  return (
+                    <button
+                      type="button"
+                      key={service.id}
+                      onClick={() => selectService(service.value)}
+                      className={
+                        "group rounded-2xl border p-5 text-start transition-all " +
+                        (selected
+                          ? "border-[var(--color-primary)] bg-[var(--surface-secondary)] shadow-lg ring-1 ring-[var(--color-primary)]"
+                          : "border-[var(--border-default)] bg-[var(--surface-secondary)] hover:-translate-y-0.5 hover:border-[var(--color-primary)]")
+                      }
+                    >
+                      <div className="flex items-start gap-4">
+                        <div
+                          className={
+                            "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border " +
+                            (selected
+                              ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white"
+                              : "border-[var(--border-default)] bg-[var(--bg-primary)]")
+                          }
+                        >
+                          {selected && <Check size={14} strokeWidth={3} />}
+                        </div>
+                        <div>
+                          <div className="mb-1 font-black">
+                            {isEn ? service.labelEn : service.labelAr}
+                          </div>
+                          <div className="text-sm leading-6 text-[var(--text-muted)]">
+                            {isEn ? service.descEn : service.descAr}
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
+            {stepIndex === 1 && (
+              <div className="mx-auto max-w-3xl">
+                <div className="mb-5 rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] p-4">
+                  <div className="text-xs font-bold text-[var(--text-muted)]">
+                    {isEn ? "Selected service" : "الخدمة المختارة"}
+                  </div>
+                  <div className="mt-1 font-black text-[var(--color-primary)]">
+                    {isEn ? selectedService?.labelEn : selectedService?.labelAr}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {goalOptions.map((goal) => {
+                    const selected = formData.goals.includes(goal.id);
+                    const locked =
+                      !selected && formData.goals.length >= 3;
+
+                    return (
+                      <button
+                        type="button"
+                        key={goal.id}
+                        disabled={locked}
+                        onClick={() => toggleGoal(goal.id)}
+                        className={
+                          "rounded-2xl border p-5 text-start transition-all " +
+                          (selected
+                            ? "border-[var(--color-primary)] bg-[var(--surface-secondary)] shadow-md ring-1 ring-[var(--color-primary)]"
+                            : locked
+                              ? "cursor-not-allowed border-[var(--border-default)] bg-[var(--surface-secondary)] opacity-45"
+                              : "border-[var(--border-default)] bg-[var(--surface-secondary)] hover:border-[var(--color-primary)]")
+                        }
+                      >
+                        <div className="flex items-start gap-3">
+                          <div
+                            className={
+                              "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md border " +
+                              (selected
+                                ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white"
+                                : "border-[var(--border-default)] bg-[var(--bg-primary)]")
+                            }
+                          >
+                            {selected && <Check size={14} strokeWidth={3} />}
+                          </div>
+                          <span className="font-bold">
+                            {isEn ? goal.en : goal.ar}
+                          </span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <p className="mt-4 text-center text-sm font-medium text-[var(--text-muted)]">
+                  {isEn
+                    ? formData.goals.length + " of 3 selected"
+                    : "تم اختيار " + formData.goals.length + " من 3"}
+                </p>
+              </div>
+            )}
+
+            {stepIndex === 2 && (
+              <div className="mx-auto max-w-3xl space-y-5">
+                <div className="rounded-3xl border border-[var(--border-default)] bg-[var(--surface-secondary)] p-5 sm:p-7">
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <label className="space-y-2">
+                      <span className="flex items-center gap-2 text-sm font-bold">
+                        <UserRound size={16} className="text-[var(--color-primary)]" />
+                        {isEn ? "Name" : "الاسم"}
+                      </span>
+                      <input
+                        type="text"
+                        value={formData.name}
+                        onChange={(event) =>
+                          setFormData((current) => ({
+                            ...current,
+                            name: event.target.value,
+                          }))
+                        }
+                        className="w-full rounded-xl border border-[var(--border-default)] bg-[var(--bg-primary)] px-4 py-3.5 outline-none transition-colors focus:border-[var(--color-primary)]"
+                        placeholder={isEn ? "Your full name" : "اسمك الكريم"}
+                      />
+                    </label>
+
+                    <label className="space-y-2">
+                      <span className="flex items-center gap-2 text-sm font-bold">
+                        <Building2 size={16} className="text-[var(--color-primary)]" />
+                        {isEn ? "Company / Project (Optional)" : "الشركة / المشروع (اختياري)"}
+                      </span>
+                      <input
+                        type="text"
+                        value={formData.company}
+                        onChange={(event) =>
+                          setFormData((current) => ({
+                            ...current,
+                            company: event.target.value,
+                          }))
+                        }
+                        className="w-full rounded-xl border border-[var(--border-default)] bg-[var(--bg-primary)] px-4 py-3.5 outline-none transition-colors focus:border-[var(--color-primary)]"
+                        placeholder={isEn ? "Company or project name" : "اسم الشركة أو المشروع"}
+                      />
+                    </label>
+
+                    <label className="space-y-2">
+                      <span className="flex items-center gap-2 text-sm font-bold">
+                        <Phone size={16} className="text-[var(--color-primary)]" />
+                        {isEn ? "Phone" : "رقم الجوال"}
+                      </span>
+                      <div className="flex" dir="ltr">
+                        <select
+                          value={countryCode}
+                          onChange={(event) =>
+                            handlePhoneChange(event.target.value, phoneNumber)
+                          }
+                          className="min-w-[94px] rounded-l-xl border border-r-0 border-[var(--border-default)] bg-[var(--bg-primary)] px-2 py-3.5 outline-none focus:border-[var(--color-primary)]"
+                        >
+                          {GCC_COUNTRIES.map((country) => (
+                            <option key={country.code} value={country.code}>
+                              {country.flag} {country.code}
+                            </option>
+                          ))}
+                        </select>
+                        <input
+                          type="tel"
+                          value={phoneNumber}
+                          onChange={(event) =>
+                            handlePhoneChange(countryCode, event.target.value)
+                          }
+                          className="w-full rounded-r-xl border border-[var(--border-default)] bg-[var(--bg-primary)] px-4 py-3.5 text-left outline-none transition-colors focus:border-[var(--color-primary)]"
+                          placeholder="5X XXX XXXX"
+                        />
+                      </div>
+                    </label>
+
+                    <label className="space-y-2">
+                      <span className="flex items-center gap-2 text-sm font-bold">
+                        <Mail size={16} className="text-[var(--color-primary)]" />
+                        {isEn ? "Email (Optional)" : "البريد الإلكتروني (اختياري)"}
+                      </span>
+                      <input
+                        type="email"
+                        dir="ltr"
+                        value={formData.email}
+                        onChange={(event) =>
+                          setFormData((current) => ({
+                            ...current,
+                            email: event.target.value,
+                          }))
+                        }
+                        className="w-full rounded-xl border border-[var(--border-default)] bg-[var(--bg-primary)] px-4 py-3.5 text-left outline-none transition-colors focus:border-[var(--color-primary)]"
+                        placeholder="name@example.com"
+                      />
+                    </label>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] p-5">
+                  <div className="mb-3 text-xs font-bold text-[var(--text-muted)]">
+                    {isEn ? "Your request at a glance" : "ملخص طلبك"}
+                  </div>
+                  <div className="font-black text-[var(--color-primary)]">
+                    {isEn ? selectedService?.labelEn : selectedService?.labelAr}
+                  </div>
+                  <div className="mt-2 text-sm leading-6 text-[var(--text-muted)]">
+                    {selectedGoalOptions
+                      .map((goal) => (isEn ? goal.en : goal.ar))
+                      .join(" • ")}
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setAgreedToTerms((current) => !current)}
+                  className="flex w-full items-start gap-3 rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] p-4 text-start"
+                >
+                  <div
+                    className={
+                      "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md border-2 " +
+                      (agreedToTerms
+                        ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white"
+                        : "border-[var(--border-default)] bg-[var(--bg-primary)]")
+                    }
+                  >
+                    {agreedToTerms && <Check size={14} strokeWidth={3} />}
+                  </div>
+                  <span className="text-sm font-medium leading-6">
+                    {isEn
+                      ? "I confirm the information is correct and agree to use it to review and prepare my request."
+                      : "أؤكد صحة المعلومات وأوافق على استخدامها لمراجعة وتجهيز طلبي."}
+                  </span>
+                </button>
+
+                {submitError && (
+                  <div className="flex items-start gap-3 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-red-500">
+                    <AlertCircle size={20} className="mt-0.5 shrink-0" />
+                    <span className="text-sm font-bold">{submitError}</span>
+                  </div>
+                )}
+              </div>
+            )}
+          </motion.section>
+        </AnimatePresence>
+
+        <div className="mx-auto mt-9 flex max-w-3xl flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <button
+            type="button"
+            onClick={goBack}
+            disabled={stepIndex === 0}
+            className={
+              "inline-flex items-center justify-center gap-2 rounded-xl border px-6 py-3.5 text-sm font-bold transition-all " +
+              (stepIndex === 0
+                ? "pointer-events-none opacity-0"
+                : "border-[var(--border-default)] bg-[var(--surface-secondary)]")
+            }
+          >
+            {isEn ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
+            {isEn ? "Back" : "السابق"}
+          </button>
+
+          {stepIndex < 2 ? (
+            <button
+              type="button"
+              onClick={goNext}
+              disabled={!isStepValid(stepIndex)}
+              className={
+                "inline-flex min-w-[160px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black transition-all " +
+                (isStepValid(stepIndex)
+                  ? "bg-[var(--color-primary)] text-white shadow-lg hover:scale-[1.02]"
+                  : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")
+              }
+            >
+              {isEn ? "Continue" : "متابعة"}
+              {isEn ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={!isStepValid(2) || isSubmitting}
+              className={
+                "inline-flex min-w-[180px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black transition-all " +
+                (isStepValid(2) && !isSubmitting
+                  ? "bg-[var(--color-primary)] text-white shadow-lg hover:scale-[1.02]"
+                  : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")
+              }
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  {isEn ? "Sending..." : "جاري الإرسال..."}
+                </>
+              ) : (
+                <>
+                  <Send size={18} />
+                  {isEn ? "Send request" : "إرسال الطلب"}
+                </>
+              )}
+            </button>
+          )}
         </div>
-      </div>
+      </main>
     </div>
   );
 };
