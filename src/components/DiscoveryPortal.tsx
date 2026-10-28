@@ -154,7 +154,7 @@ const CONTACT_TIME_SLOTS = Array.from({ length: 10 }, (_, index) => {
   const hour = index + 1;
   return {
     value: `${hour}:00 م`,
-    labelAr: String(hour),
+    labelAr: `${hour} م`,
     labelEn: `${hour} PM`,
   };
 });
@@ -288,12 +288,15 @@ export const DiscoveryPortal = () => {
   };
 
   const contactTimeRequired = formData.continuePath === "contact";
+  const hasSelectedContactSlot = CONTACT_TIME_SLOTS.some(
+    (slot) => slot.value === formData.preferredContactTime,
+  );
 
   const contactValid =
     formData.name.trim().length > 1 &&
     formData.phone.trim().length > 5 &&
     (formData.email.trim() === "" || formData.email.includes("@")) &&
-    (!contactTimeRequired || formData.preferredContactTime !== "") &&
+    (!contactTimeRequired || hasSelectedContactSlot) &&
     agreedToTerms;
 
   const buildWhatsAppMessage = (requestId: string, saved: boolean) => {
@@ -723,63 +726,72 @@ export const DiscoveryPortal = () => {
             )}
 
             {screen === "path" && (
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+              <div className="grid grid-cols-3 gap-2 sm:gap-4">
                 <button
                   type="button"
+                  aria-pressed={formData.continuePath === "details"}
                   onClick={() => setField("continuePath", "details")}
                   className={
-                    "relative min-h-[152px] rounded-2xl border p-4 text-start transition-all duration-200 active:translate-y-[2px] sm:min-h-[210px] sm:rounded-[26px] sm:p-6 " +
+                    "relative min-h-[116px] rounded-[18px] border p-2.5 text-start transition-all duration-200 active:translate-y-[1px] sm:min-h-[210px] sm:rounded-[26px] sm:p-6 " +
                     (formData.continuePath === "details"
-                      ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-[0_16px_45px_rgba(15,98,254,0.20)] ring-1 ring-[var(--color-primary)]"
-                      : "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-[0_14px_35px_rgba(15,98,254,0.15)] hover:-translate-y-1")
+                      ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-[0_12px_30px_rgba(15,98,254,0.20)] ring-1 ring-[var(--color-primary)]"
+                      : "border-[var(--color-primary)]/70 bg-[var(--surface-primary)] shadow-[0_8px_22px_rgba(15,98,254,0.12)] hover:-translate-y-1")
                   }
                 >
-                  <div className="absolute end-3 top-3 rounded-full bg-[var(--color-primary)] px-2 py-0.5 text-[9px] font-black text-white sm:end-5 sm:top-5 sm:px-3 sm:py-1 sm:text-xs">
-                    {isEn ? "Recommended" : "موصى به"}
+                  <div className="absolute end-2 top-2 rounded-full bg-[var(--color-primary)] px-1.5 py-0.5 text-[8px] font-black text-white sm:end-5 sm:top-5 sm:px-3 sm:py-1 sm:text-xs">
+                    {isEn ? "Top" : "موصى"}
                   </div>
-                  <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] shadow-inner sm:mb-6 sm:h-14 sm:w-14 sm:rounded-3xl">
-                    <Code2 size={30} />
+                  <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] shadow-inner sm:mb-6 sm:h-14 sm:w-14 sm:rounded-3xl">
+                    <Code2 size={20} className="sm:h-[30px] sm:w-[30px]" />
                   </div>
-                  <div className="mb-1 text-[15px] font-black leading-5 sm:mb-2 sm:text-[20px]">{isEn ? "Continue the details" : "أكمل التفاصيل"}</div>
-                  <p className="text-[11px] font-medium leading-4 text-[var(--text-muted)] sm:text-sm sm:leading-6">
+                  <div className="text-[12px] font-black leading-[1.15rem] sm:mb-2 sm:text-[20px] sm:leading-normal">
+                    {isEn ? "Continue details" : "أكمل التفاصيل"}
+                  </div>
+                  <p className="mt-1 hidden text-sm font-medium leading-6 text-[var(--text-muted)] sm:block">
                     {isEn ? "Answer a few smart questions so we can assess scope, timing and fit more accurately." : "جاوب على أسئلة ذكية قصيرة عشان نقيّم النطاق والوقت والحل بشكل أدق وأسرع."}
                   </p>
                 </button>
 
                 <button
                   type="button"
+                  aria-pressed={formData.continuePath === "contact"}
                   onClick={() => setField("continuePath", "contact")}
                   className={
-                    "min-h-[152px] rounded-2xl border p-4 text-start transition-all duration-200 active:translate-y-[2px] sm:min-h-[210px] sm:rounded-[26px] sm:p-6 " +
+                    "min-h-[116px] rounded-[18px] border p-2.5 text-start transition-all duration-200 active:translate-y-[1px] sm:min-h-[210px] sm:rounded-[26px] sm:p-6 " +
                     (formData.continuePath === "contact"
-                      ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-xl ring-1 ring-[var(--color-primary)]"
+                      ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-[0_12px_30px_rgba(15,98,254,0.18)] ring-1 ring-[var(--color-primary)]"
                       : "border-[var(--border-default)] bg-[var(--surface-primary)] hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-xl")
                   }
                 >
-                  <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--interactive-border)] bg-[var(--surface-secondary)] text-[var(--color-primary)] sm:mb-6 sm:h-14 sm:w-14 sm:rounded-3xl">
-                    <Phone size={29} />
+                  <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-xl border border-[var(--interactive-border)] bg-[var(--surface-secondary)] text-[var(--color-primary)] sm:mb-6 sm:h-14 sm:w-14 sm:rounded-3xl">
+                    <Phone size={20} className="sm:h-[29px] sm:w-[29px]" />
                   </div>
-                  <div className="mb-1 text-[15px] font-black leading-5 sm:mb-2 sm:text-[20px]">{isEn ? "Contact me" : "تواصلوا معي"}</div>
-                  <p className="text-[11px] font-medium leading-4 text-[var(--text-muted)] sm:text-sm sm:leading-6">
+                  <div className="text-[12px] font-black leading-[1.15rem] sm:mb-2 sm:text-[20px] sm:leading-normal">
+                    {isEn ? "Contact me" : "تواصلوا معي"}
+                  </div>
+                  <p className="mt-1 hidden text-sm font-medium leading-6 text-[var(--text-muted)] sm:block">
                     {isEn ? "Leave your contact details and preferred time. The team will follow up directly." : "اترك بياناتك ووقت التواصل المناسب، والفريق يتواصل معك مباشرة."}
                   </p>
                 </button>
 
                 <button
                   type="button"
+                  aria-pressed={formData.continuePath === "help"}
                   onClick={() => setField("continuePath", "help")}
                   className={
-                    "min-h-[152px] rounded-2xl border p-4 text-start transition-all duration-200 active:translate-y-[2px] sm:min-h-[210px] sm:rounded-[26px] sm:p-6 " +
+                    "min-h-[116px] rounded-[18px] border p-2.5 text-start transition-all duration-200 active:translate-y-[1px] sm:min-h-[210px] sm:rounded-[26px] sm:p-6 " +
                     (formData.continuePath === "help"
-                      ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-xl ring-1 ring-[var(--color-primary)]"
+                      ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-[0_12px_30px_rgba(15,98,254,0.18)] ring-1 ring-[var(--color-primary)]"
                       : "border-[var(--border-default)] bg-[var(--surface-primary)] hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-xl")
                   }
                 >
-                  <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--interactive-border)] bg-[var(--surface-secondary)] text-[var(--color-primary)] sm:mb-6 sm:h-14 sm:w-14 sm:rounded-3xl">
-                    <Compass size={29} />
+                  <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-xl border border-[var(--interactive-border)] bg-[var(--surface-secondary)] text-[var(--color-primary)] sm:mb-6 sm:h-14 sm:w-14 sm:rounded-3xl">
+                    <Compass size={20} className="sm:h-[29px] sm:w-[29px]" />
                   </div>
-                  <div className="mb-1 text-[15px] font-black leading-5 sm:mb-2 sm:text-[20px]">{isEn ? "Help me define the need" : "ساعدوني أحدد احتياجي"}</div>
-                  <p className="text-[11px] font-medium leading-4 text-[var(--text-muted)] sm:text-sm sm:leading-6">
+                  <div className="text-[12px] font-black leading-[1.15rem] sm:mb-2 sm:text-[20px] sm:leading-normal">
+                    {isEn ? "Help me choose" : "ساعدوني أحدد احتياجي"}
+                  </div>
+                  <p className="mt-1 hidden text-sm font-medium leading-6 text-[var(--text-muted)] sm:block">
                     {isEn ? "Use a guided path when you are not sure about the exact scope or solution yet." : "مسار استكشافي إذا الفكرة أو النطاق لسه مو واضحين وتحتاج توجيه قبل التنفيذ."}
                   </p>
                 </button>
@@ -964,7 +976,7 @@ export const DiscoveryPortal = () => {
                             {isEn ? "1 PM – 10 PM" : "من 1 ظهرًا إلى 10 مساءً"}
                           </span>
                         </div>
-                        <div className="grid grid-cols-5 gap-2" role="group" aria-label={isEn ? "Preferred contact time" : "وقت التواصل المفضل"}>
+                        <div className="grid grid-cols-5 gap-1.5 sm:gap-2" role="group" aria-label={isEn ? "Preferred contact time" : "وقت التواصل المفضل"}>
                           {CONTACT_TIME_SLOTS.map((slot) => {
                             const selected = formData.preferredContactTime === slot.value;
                             return (
@@ -974,7 +986,7 @@ export const DiscoveryPortal = () => {
                                 aria-pressed={selected}
                                 onClick={() => setField("preferredContactTime", slot.value)}
                                 className={
-                                  "min-h-11 rounded-xl border px-2 py-2 text-sm font-black transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] " +
+                                  "min-h-10 rounded-xl border px-1.5 py-2 text-xs font-black transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] sm:min-h-11 sm:px-2 sm:text-sm " +
                                   (selected
                                     ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white shadow-[0_8px_22px_rgba(15,98,254,0.24)]"
                                     : "border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-primary)] hover:border-[var(--color-primary)]")
@@ -987,7 +999,7 @@ export const DiscoveryPortal = () => {
                         </div>
                         {!isEn && (
                           <p className="text-[11px] font-medium text-[var(--text-muted)]">
-                            اختر ساعة واحدة فقط؛ كل الخيارات من بعد الظهر إلى المساء.
+                            اختر الوقت الأنسب لك، والفريق يتواصل معك في الساعة المحددة.
                           </p>
                         )}
                       </div>
