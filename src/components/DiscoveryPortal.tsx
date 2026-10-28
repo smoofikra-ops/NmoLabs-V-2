@@ -478,6 +478,25 @@ export const DiscoveryPortal = () => {
                 ? (isEn ? "Last step — only the essentials we need to follow up with you." : "باقي خطوة أخيرة فقط: بيانات بسيطة عشان نقدر نرجع لك.")
                 : "";
 
+  const encouragementAction =
+    screen === "goal" && formData.mainGoal
+      ? (isEn ? "Press Continue to see the closest options." : "اضغط متابعة عشان نعرض لك الخيارات الأقرب.")
+      : screen === "service" && formData.subService
+        ? (isEn ? "Press Continue and we will tailor the next step." : "اضغط متابعة عشان نكمّل بالمسار المناسب لك.")
+        : screen === "path" && formData.continuePath
+          ? (isEn ? "Press Continue — the next step is ready." : "اضغط متابعة — خطوتك الجاية جاهزة.")
+          : "";
+
+  const encouragementKey =
+    screen + "-" + formData.mainGoal + "-" + formData.subService + "-" + formData.continuePath;
+
+  const serviceIcon = () => {
+    if (formData.mainGoal === "ai-automation") return <Sparkles size={24} />;
+    if (formData.mainGoal === "improve-existing") return <Compass size={24} />;
+    if (formData.mainGoal === "applications" || formData.mainGoal === "systems") return <Code2 size={24} />;
+    return <WandSparkles size={24} />;
+  };
+
   const backVisible = screen !== "goal";
 
   return (
@@ -520,14 +539,62 @@ export const DiscoveryPortal = () => {
           <AnimatePresence mode="wait">
             {encouragement && (
               <motion.div
-                key={screen + "-encouragement"}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                className="mx-auto mt-4 inline-flex max-w-2xl items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/8 px-4 py-2 text-xs font-bold leading-5 text-emerald-700 dark:text-emerald-300"
+                key={encouragementKey}
+                initial={{ opacity: 0, y: 12, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -5, scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 360, damping: 24 }}
+                className="relative mx-auto mt-5 max-w-2xl overflow-visible rounded-2xl border-2 border-[var(--color-primary)]/45 bg-[var(--surface-primary)] px-5 py-4 text-start shadow-[0_16px_45px_rgba(15,98,254,0.18)]"
               >
-                <CircleCheckBig size={15} className="shrink-0" />
-                <span>{encouragement}</span>
+                {[0, 1, 2, 3, 4, 5].map((particle) => (
+                  <motion.span
+                    key={particle}
+                    className="pointer-events-none absolute left-1/2 top-1/2 h-2 w-2 rounded-full bg-[var(--color-primary)]"
+                    initial={{ opacity: 0, x: 0, y: 0, scale: 0 }}
+                    animate={{
+                      opacity: [0, 1, 0],
+                      x: [0, (particle % 2 === 0 ? 1 : -1) * (34 + particle * 8)],
+                      y: [0, (particle < 3 ? -1 : 1) * (24 + particle * 6)],
+                      scale: [0, 1, 0.3],
+                    }}
+                    transition={{ duration: 0.7, delay: particle * 0.035, ease: "easeOut" }}
+                  />
+                ))}
+                <div className="relative flex items-start gap-3">
+                  <motion.div
+                    initial={{ rotate: -18, scale: 0.6 }}
+                    animate={{ rotate: 0, scale: 1 }}
+                    transition={{ type: "spring", stiffness: 420, damping: 18 }}
+                    className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[var(--color-primary)] text-white shadow-[0_8px_20px_rgba(15,98,254,0.28)]"
+                  >
+                    <CircleCheckBig size={19} />
+                  </motion.div>
+                  <div>
+                    <div className="text-sm font-black leading-7 text-[var(--text-primary)] sm:text-[15px]">
+                      {Array.from(encouragement).map((char, index) => (
+                        <motion.span
+                          key={index}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: Math.min(index * 0.012, 1.15), duration: 0.03 }}
+                        >
+                          {char === " " ? "\u00A0" : char}
+                        </motion.span>
+                      ))}
+                    </div>
+                    {encouragementAction && (
+                      <motion.div
+                        initial={{ opacity: 0, x: isEn ? -8 : 8 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.55, duration: 0.25 }}
+                        className="mt-1.5 flex items-center gap-1.5 text-xs font-black text-[var(--color-primary)] sm:text-sm"
+                      >
+                        <Sparkles size={14} />
+                        <span>{encouragementAction}</span>
+                      </motion.div>
+                    )}
+                  </div>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
@@ -606,27 +673,46 @@ export const DiscoveryPortal = () => {
                   {selectedGoal.services.map((service) => {
                     const selected = formData.subService === service.id;
                     return (
-                      <button
+                      <motion.button
                         key={service.id}
                         type="button"
                         onClick={() => setField("subService", service.id)}
+                        whileHover={{ y: -5, scale: 1.012 }}
+                        whileTap={{ y: 1, scale: 0.99 }}
+                        aria-pressed={selected}
                         className={
-                          "rounded-2xl border p-5 text-start transition-all active:translate-y-[2px] " +
+                          "group relative overflow-hidden rounded-[24px] border p-5 text-start transition-all duration-300 [transform-style:preserve-3d] " +
                           (selected
-                            ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-lg ring-1 ring-[var(--color-primary)]"
-                            : "border-[var(--border-default)] bg-[var(--surface-primary)] hover:-translate-y-0.5 hover:border-[var(--color-primary)]")
+                            ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-[0_20px_50px_rgba(15,98,254,0.22)] ring-2 ring-[var(--color-primary)]/25"
+                            : "border-[var(--border-default)] bg-[var(--surface-primary)] shadow-[0_10px_28px_rgba(15,23,42,0.08)] hover:border-[var(--color-primary)] hover:shadow-[0_20px_45px_rgba(15,98,254,0.15)]")
                         }
                       >
-                        <div className="flex items-start gap-4">
-                          <div className={"mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border " + (selected ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white" : "border-[var(--border-default)] bg-[var(--surface-secondary)]")}>
-                            {selected && <Check size={15} strokeWidth={3} />}
-                          </div>
-                          <div>
-                            <div className="mb-1 text-lg font-black">{isEn ? service.en : service.ar}</div>
-                            <div className="text-sm leading-6 text-[var(--text-muted)]">{isEn ? service.descEn : service.descAr}</div>
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/8 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                        <div className="relative flex items-start gap-4">
+                          <motion.div
+                            animate={selected ? { y: [0, -3, 0], rotate: [0, -3, 0] } : { y: 0, rotate: 0 }}
+                            transition={selected ? { duration: 0.5, ease: "easeOut" } : {}}
+                            className={
+                              "relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border text-[var(--color-primary)] transition-all duration-300 " +
+                              (selected
+                                ? "border-[var(--color-primary)]/45 bg-[var(--color-primary)]/12 shadow-[0_12px_24px_rgba(15,98,254,0.24)]"
+                                : "border-[var(--interactive-border)] bg-[var(--surface-secondary)] shadow-[0_8px_18px_rgba(15,23,42,0.10)] group-hover:-translate-y-1 group-hover:shadow-[0_14px_26px_rgba(15,98,254,0.18)]")
+                            }
+                          >
+                            <span className="absolute inset-x-2 top-1 h-px rounded-full bg-white/45" />
+                            {serviceIcon()}
+                            {selected && (
+                              <span className="absolute -end-1.5 -top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-primary)] text-white shadow-lg">
+                                <Check size={13} strokeWidth={3} />
+                              </span>
+                            )}
+                          </motion.div>
+                          <div className="min-w-0 flex-1 pt-1">
+                            <div className="mb-1 text-lg font-black text-[var(--text-primary)]">{isEn ? service.en : service.ar}</div>
+                            <div className="text-sm font-medium leading-6 text-[var(--text-muted)]">{isEn ? service.descEn : service.descAr}</div>
                           </div>
                         </div>
-                      </button>
+                      </motion.button>
                     );
                   })}
                 </div>
@@ -922,7 +1008,7 @@ export const DiscoveryPortal = () => {
               type="button"
               disabled={!formData.mainGoal}
               onClick={() => { setScreen("service"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.mainGoal ? "bg-[var(--color-primary)] text-white shadow-lg" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
+              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.mainGoal ? "bg-[var(--color-primary)] text-white shadow-[0_12px_30px_rgba(15,98,254,0.28)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(15,98,254,0.34)] transition-all" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
             >
               {isEn ? "Continue" : "متابعة"}
               {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
@@ -934,7 +1020,7 @@ export const DiscoveryPortal = () => {
               type="button"
               disabled={!formData.subService}
               onClick={() => { setScreen("path"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.subService ? "bg-[var(--color-primary)] text-white shadow-lg" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
+              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.subService ? "bg-[var(--color-primary)] text-white shadow-[0_12px_30px_rgba(15,98,254,0.28)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(15,98,254,0.34)] transition-all" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
             >
               {isEn ? "Continue" : "متابعة"}
               {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
@@ -951,7 +1037,7 @@ export const DiscoveryPortal = () => {
                 else setScreen("contact");
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.continuePath ? "bg-[var(--color-primary)] text-white shadow-lg" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
+              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.continuePath ? "bg-[var(--color-primary)] text-white shadow-[0_12px_30px_rgba(15,98,254,0.28)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(15,98,254,0.34)] transition-all" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
             >
               {isEn ? "Continue" : "متابعة"}
               {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
@@ -963,7 +1049,7 @@ export const DiscoveryPortal = () => {
               type="button"
               disabled={!formData.description.trim()}
               onClick={() => { setScreen("contact"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.description.trim() ? "bg-[var(--color-primary)] text-white shadow-lg" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
+              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.description.trim() ? "bg-[var(--color-primary)] text-white shadow-[0_12px_30px_rgba(15,98,254,0.28)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(15,98,254,0.34)] transition-all" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
             >
               {isEn ? "Continue" : "متابعة"}
               {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
@@ -975,7 +1061,7 @@ export const DiscoveryPortal = () => {
               type="button"
               disabled={!formData.helpNeed.trim()}
               onClick={() => { setScreen("contact"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.helpNeed.trim() ? "bg-[var(--color-primary)] text-white shadow-lg" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
+              className={"inline-flex min-w-[170px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (formData.helpNeed.trim() ? "bg-[var(--color-primary)] text-white shadow-[0_12px_30px_rgba(15,98,254,0.28)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(15,98,254,0.34)] transition-all" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
             >
               {isEn ? "Continue" : "متابعة"}
               {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
@@ -987,7 +1073,7 @@ export const DiscoveryPortal = () => {
               type="button"
               onClick={handleSubmit}
               disabled={!contactValid || isSubmitting}
-              className={"inline-flex min-w-[190px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (contactValid && !isSubmitting ? "bg-[var(--color-primary)] text-white shadow-lg" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
+              className={"inline-flex min-w-[190px] items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-black " + (contactValid && !isSubmitting ? "bg-[var(--color-primary)] text-white shadow-[0_12px_30px_rgba(15,98,254,0.28)] hover:-translate-y-0.5 hover:shadow-[0_16px_38px_rgba(15,98,254,0.34)] transition-all" : "cursor-not-allowed border border-[var(--border-default)] bg-[var(--surface-secondary)] text-[var(--text-muted)]")}
             >
               {isSubmitting ? <><Loader2 size={18} className="animate-spin" />{isEn ? "Sending..." : "جاري الإرسال..."}</> : <><Send size={18} />{isEn ? "Send request" : "إرسال الطلب"}</>}
             </button>
