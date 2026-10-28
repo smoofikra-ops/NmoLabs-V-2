@@ -2,25 +2,19 @@ import React, { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import {
   AlertCircle,
-  AppWindow,
   ArrowLeft,
   ArrowRight,
-  Bot,
-  Boxes,
   Check,
   CircleCheckBig,
   Code2,
   Compass,
-  Layers3,
   Loader2,
   Mail,
   Phone,
-  Rocket,
   Send,
   Sparkles,
   UserRound,
   WandSparkles,
-  Wrench,
 } from "lucide-react";
 import { getWhatsAppUrl } from "../lib/utils";
 import {
@@ -54,7 +48,7 @@ type MainGoal = {
   en: string;
   descAr: string;
   descEn: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  image: string;
   services: SubService[];
 };
 
@@ -65,7 +59,7 @@ const MAIN_GOALS: MainGoal[] = [
     en: "Build Something New",
     descAr: "موقع، متجر، ملف تعريفي أو تجربة رقمية جديدة.",
     descEn: "A new website, store, profile or digital experience.",
-    icon: Rocket,
+    image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=1200&q=82',
     services: [
       { id: "website", ar: "موقع إلكتروني", en: "Website", descAr: "موقع شركة، خدمات، تعريفي أو صفحة هبوط.", descEn: "Corporate, service, profile or landing website." },
       { id: "ecommerce", ar: "متجر إلكتروني", en: "E-commerce Store", descAr: "متجر جديد مع الدفع والشحن وتجربة الشراء.", descEn: "A new online store with checkout, payments and shipping." },
@@ -79,7 +73,7 @@ const MAIN_GOALS: MainGoal[] = [
     en: "Improve an Existing Project",
     descAr: "تحليل وتحسين موقع، متجر، نظام أو نمو مشروع قائم.",
     descEn: "Audit and improve an existing site, store, system or growth engine.",
-    icon: Wrench,
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=82',
     services: [
       { id: "audit-improvement", ar: "تحليل شامل وتطوير", en: "Audit & Improvement", descAr: "UX/UI، أداء، تحويل، بنية تقنية وفرص تحسين.", descEn: "UX/UI, performance, conversion and technical improvement." },
       { id: "website-redesign", ar: "إعادة تصميم موقع", en: "Website Redesign", descAr: "تحسين تجربة الموقع والواجهة والمحتوى والأداء.", descEn: "Improve website experience, UI, content and performance." },
@@ -93,7 +87,7 @@ const MAIN_GOALS: MainGoal[] = [
     en: "Applications",
     descAr: "تطبيقات جوال وويب وبوابات للعملاء أو الفرق.",
     descEn: "Mobile apps, web apps and portals for customers or teams.",
-    icon: AppWindow,
+    image: 'https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&w=1200&q=82',
     services: [
       { id: "mobile-app", ar: "تطبيق جوال", en: "Mobile App", descAr: "iOS / Android لتجربة عميل أو خدمة رقمية.", descEn: "iOS / Android for a customer experience or digital service." },
       { id: "web-app", ar: "تطبيق ويب", en: "Web Application", descAr: "تطبيق يعمل من المتصفح بواجهة وتدفقات مخصصة.", descEn: "Browser-based application with custom workflows." },
@@ -107,7 +101,7 @@ const MAIN_GOALS: MainGoal[] = [
     en: "Systems & Software",
     descAr: "ERP، CRM، لوحات تحكم وأنظمة تشغيل مخصصة.",
     descEn: "ERP, CRM, dashboards and custom operating systems.",
-    icon: Boxes,
+    image: 'https://images.unsplash.com/photo-1771923082503-0a3381c46cef?auto=format&fit=crop&w=1200&q=82',
     services: [
       { id: "custom-system", ar: "نظام مخصص", en: "Custom System", descAr: "نظام مبني حسب عمليات الشركة واحتياجها.", descEn: "Software built around your company operations." },
       { id: "erp", ar: "ERP / إدارة العمليات", en: "ERP / Operations", descAr: "مبيعات، مشتريات، مخزون، مهام وتقارير.", descEn: "Sales, purchasing, inventory, tasks and reporting." },
@@ -121,7 +115,7 @@ const MAIN_GOALS: MainGoal[] = [
     en: "AI & Automation",
     descAr: "مساعدات ذكية، أتمتة عمليات وربط الأنظمة والبيانات.",
     descEn: "AI assistants, workflow automation, integrations and data intelligence.",
-    icon: Bot,
+    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=82',
     services: [
       { id: "ai-assistant", ar: "مساعد ذكي", en: "AI Assistant", descAr: "للعملاء أو الموظفين أو فرق المبيعات والدعم.", descEn: "For customers, employees, sales or support teams." },
       { id: "workflow-automation", ar: "أتمتة عمليات", en: "Workflow Automation", descAr: "ربط خطوات العمل وتقليل المهام اليدوية.", descEn: "Connect workflows and reduce manual work." },
@@ -135,7 +129,7 @@ const MAIN_GOALS: MainGoal[] = [
     en: "Integrated Project",
     descAr: "بناء + تشغيل + تسويق + نمو في مشروع واحد مترابط.",
     descEn: "Build + operations + marketing + growth in one connected engagement.",
-    icon: Layers3,
+    image: 'https://images.unsplash.com/photo-1758691737124-05c5bffe46f0?auto=format&fit=crop&w=1200&q=82',
     services: [
       { id: "end-to-end", ar: "من الفكرة إلى التشغيل", en: "Idea to Operations", descAr: "دراسة، تصميم، بناء، إطلاق وتشغيل.", descEn: "Discovery, design, build, launch and operations." },
       { id: "digital-transformation", ar: "تحول رقمي للأعمال", en: "Digital Transformation", descAr: "إعادة بناء العمليات وربط الأنظمة والتجارب الرقمية.", descEn: "Redesign operations, systems and digital experiences." },
@@ -519,29 +513,51 @@ export const DiscoveryPortal = () => {
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {MAIN_GOALS.map((goal) => {
                   const selected = formData.mainGoal === goal.id;
-                  const Icon = goal.icon;
                   return (
                     <button
                       key={goal.id}
                       type="button"
                       onClick={() => selectGoal(goal.id)}
+                      aria-pressed={selected}
                       className={
-                        "group min-h-[190px] rounded-[28px] border p-6 text-start shadow-sm transition-all duration-200 active:translate-y-[2px] " +
+                        "group relative min-h-[235px] overflow-hidden rounded-[28px] border text-start shadow-md transition-all duration-300 active:translate-y-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)] " +
                         (selected
-                          ? "border-[var(--color-primary)] bg-[var(--surface-primary)] shadow-xl ring-1 ring-[var(--color-primary)]"
-                          : "border-[var(--border-default)] bg-[var(--surface-primary)] hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-xl")
+                          ? "border-[var(--color-primary)] shadow-2xl ring-2 ring-[var(--color-primary)]"
+                          : "border-white/10 hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-2xl")
                       }
                     >
-                      <div className="mb-5 flex items-start justify-between gap-4">
-                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--interactive-border)] bg-[var(--surface-secondary)] text-[var(--color-primary)] shadow-[0_8px_20px_rgba(15,98,254,0.12)]">
-                          <Icon size={28} />
+                      <img
+                        src={goal.image}
+                        alt=""
+                        loading="lazy"
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/15 transition-colors duration-300 group-hover:from-black group-hover:via-black/55" />
+                      <div className="absolute inset-0 bg-[var(--color-primary)]/0 transition-colors duration-300 group-hover:bg-[var(--color-primary)]/10" />
+
+                      <div className="relative z-10 flex min-h-[235px] flex-col justify-between p-6">
+                        <div className="flex justify-end">
+                          <div
+                            className={
+                              "flex h-8 w-8 items-center justify-center rounded-full border backdrop-blur-md transition-all " +
+                              (selected
+                                ? "border-white bg-[var(--color-primary)] text-white shadow-lg"
+                                : "border-white/35 bg-black/25 text-white")
+                            }
+                          >
+                            {selected && <Check size={16} strokeWidth={3} />}
+                          </div>
                         </div>
-                        <div className={"flex h-7 w-7 items-center justify-center rounded-full border " + (selected ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white" : "border-[var(--border-default)] bg-[var(--surface-secondary)]")}>
-                          {selected && <Check size={15} strokeWidth={3} />}
+
+                        <div className="max-w-[92%]">
+                          <div className="mb-2 text-xl font-black text-white drop-shadow-sm sm:text-2xl">
+                            {isEn ? goal.en : goal.ar}
+                          </div>
+                          <div className="text-sm font-medium leading-6 text-white/80 drop-shadow-sm">
+                            {isEn ? goal.descEn : goal.descAr}
+                          </div>
                         </div>
                       </div>
-                      <div className="mb-2 text-xl font-black">{isEn ? goal.en : goal.ar}</div>
-                      <div className="text-sm font-medium leading-6 text-[var(--text-muted)]">{isEn ? goal.descEn : goal.descAr}</div>
                     </button>
                   );
                 })}
