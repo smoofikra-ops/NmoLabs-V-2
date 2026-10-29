@@ -174,12 +174,12 @@ export const Hero = () => {
           alt=""
           role="presentation"
           aria-hidden="true"
-          className="w-full h-full object-cover object-center opacity-[0.28] dark:opacity-[0.42] saturate-[0.82] dark:saturate-110 transition-transform duration-1000 scale-100"
+          className="nmolabs-hero-world w-full h-full object-cover object-center opacity-[0.40] dark:opacity-[0.54] saturate-[0.92] dark:saturate-110"
         />
       </div>
 
       {/* Background Gradient Field - Localized gentle contrast preservation */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC]/80 via-[#EEF3F8]/68 to-[#EEF3F8]/88 dark:from-[#070b14]/72 dark:via-[#070b14]/48 dark:to-[#070b14]/88 pointer-events-none z-[2]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC]/62 via-[#EEF3F8]/48 to-[#EEF3F8]/76 dark:from-[#070b14]/58 dark:via-[#070b14]/38 dark:to-[#070b14]/78 pointer-events-none z-[2]" />
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05] pointer-events-none z-[2]" />
 
       
@@ -248,7 +248,7 @@ export const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer text-white/95 hover:text-white transition-colors drop-shadow-[0_2px_8px_rgba(0,0,0,0.55)]"
+        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer rounded-full border border-white/20 bg-slate-950/45 px-4 py-2.5 text-white hover:bg-slate-950/60 transition-all backdrop-blur-md shadow-[0_8px_24px_rgba(2,6,23,0.18)]"
         onClick={() => {
           const nextSection = document.getElementById('about') || document.getElementById('services');
           if (nextSection) {

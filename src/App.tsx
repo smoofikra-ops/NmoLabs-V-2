@@ -84,11 +84,11 @@ const CustomSection: React.FC<{ id: string, title: string, content: string }> = 
            viewport={{ once: true }}
            className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">{title}</h2>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">{title}</h2>
           <div className="w-24 h-1 bg-brand-blue mx-auto rounded-full mb-8"></div>
         </motion.div>
         
-        <div className="bg-black/40 shadow-[inset_0_4px_12px_rgba(0,0,0,0.8),0_1px_1px_rgba(255,255,255,0.05)] border border-black/80 p-8 md:p-12 rounded-3xl text-center text-gray-300 leading-relaxed text-lg max-w-4xl mx-auto">
+        <div className="card-depth-2 bg-[var(--surface-glass)] p-8 md:p-12 rounded-3xl text-center text-[var(--text-secondary)] leading-relaxed text-lg max-w-4xl mx-auto backdrop-blur-xl">
           {content}
           
           <div className="mt-8 flex justify-center">
