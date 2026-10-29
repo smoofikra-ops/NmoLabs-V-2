@@ -70,14 +70,14 @@ export const WorkGridCard: React.FC<Props> = ({ project, isEn, updateConfig, get
           <motion.div 
             variants={isHoverable ? { hover: { scale: 1.05, rotate: 1 } } : {}}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="w-[80%] h-[80%] border border-white/10 rounded-xl flex items-center justify-center bg-[#111] shadow-xl relative overflow-hidden"
+            className="w-[80%] h-[80%] border border-[var(--border-default)] rounded-xl flex items-center justify-center bg-[var(--surface-primary)] shadow-xl relative overflow-hidden"
           >
-            <div className="absolute top-0 inset-x-0 h-6 border-b border-white/10 flex items-center px-3 gap-1.5 bg-white/5">
+            <div className="absolute top-0 inset-x-0 h-6 border-b border-[var(--border-default)] flex items-center px-3 gap-1.5 bg-[var(--surface-secondary)]">
               <div className="w-2 h-2 rounded-full bg-white/20" />
               <div className="w-2 h-2 rounded-full bg-white/20" />
               <div className="w-2 h-2 rounded-full bg-white/20" />
             </div>
-            <div className="text-4xl font-black text-white/20 mt-6">
+            <div className="text-4xl font-black text-[var(--text-muted)]/50 mt-6">
               {isEn ? project.titleEn.charAt(0) : project.titleAr.charAt(0)}
             </div>
           </motion.div>

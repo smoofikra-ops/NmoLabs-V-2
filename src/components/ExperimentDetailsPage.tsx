@@ -21,9 +21,9 @@ export const ExperimentDetailsPage = () => {
 
   if (!experiment) {
     return (
-      <div className="min-h-screen bg-[#030303] text-white flex items-center justify-center flex-col">
+      <div className="min-h-screen bg-transparent text-[var(--text-primary)] flex items-center justify-center flex-col">
         <h1 className="text-2xl font-bold mb-4">{isEn ? 'Experiment Not Found' : 'التجربة غير موجودة'}</h1>
-        <button onClick={() => updateConfig({ currentRoute: 'innovation-lab' })} className="px-6 py-2 bg-white/10 rounded-full hover:bg-white/20">
+        <button onClick={() => updateConfig({ currentRoute: 'innovation-lab' })} className="px-6 py-2 bg-[var(--surface-secondary)] rounded-full hover:bg-[var(--surface-elevated)]">
           {isEn ? 'Back to Lab' : 'العودة للمختبر'}
         </button>
       </div>
@@ -59,7 +59,7 @@ export const ExperimentDetailsPage = () => {
   };
 
   return (
-    <div className="bg-[#030303] min-h-screen text-white relative font-sans">
+    <div className="bg-transparent min-h-screen text-[var(--text-primary)] relative font-sans">
       <Helmet>
         <title>{isEn ? `${experiment.titleEn} | NmoLabs Innovation Labs` : `${experiment.titleAr} | مختبر ابتكارات NmoLabs`}</title>
         <meta name="description" content={isEn ? experiment.summaryEn : experiment.summaryAr} />
@@ -78,7 +78,7 @@ export const ExperimentDetailsPage = () => {
         {/* Breadcrumb / Back */}
         <button 
           onClick={() => updateConfig({ currentRoute: 'innovation-lab' })}
-          className="flex items-center gap-2 text-white/50 hover:text-white mb-12 transition-colors font-mono text-sm"
+          className="flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] mb-12 transition-colors font-mono text-sm"
         >
           {isEn ? <ArrowLeft size={16} /> : <ArrowRight size={16} />}
           {isEn ? 'Back to Lab' : 'العودة إلى المختبر'}
@@ -97,10 +97,10 @@ export const ExperimentDetailsPage = () => {
         {/* Header */}
         <header className="mb-16">
           <div className="flex flex-wrap items-center gap-3 mb-6">
-            <span className="px-3 py-1 rounded-full text-xs font-bold border border-white/20 bg-white/5 text-white/70">
+            <span className="px-3 py-1 rounded-full text-xs font-bold border border-[var(--border-default)] bg-[var(--surface-secondary)]/70 text-[var(--text-secondary)]">
               {categories[experiment.category as keyof typeof categories]?.[isEn ? 'en' : 'ar']}
             </span>
-            <span className="px-3 py-1 rounded-full text-xs font-bold border border-white/20 bg-white/10" style={{ color: experiment.brandColor || '#fff', borderColor: `${experiment.brandColor}40` }}>
+            <span className="px-3 py-1 rounded-full text-xs font-bold border border-[var(--border-default)] bg-[var(--surface-secondary)]" style={{ color: experiment.brandColor || '#fff', borderColor: `${experiment.brandColor}40` }}>
               {getStatusText(experiment.status)}
             </span>
           </div>
@@ -109,7 +109,7 @@ export const ExperimentDetailsPage = () => {
             {isEn ? experiment.titleEn : experiment.titleAr}
           </h1>
           
-          <p className="text-xl md:text-2xl text-white/60 leading-relaxed">
+          <p className="text-xl md:text-2xl text-[var(--text-secondary)] leading-relaxed">
             {isEn ? experiment.summaryEn : experiment.summaryAr}
           </p>
         </header>
@@ -119,12 +119,12 @@ export const ExperimentDetailsPage = () => {
           
           {/* Problem */}
           {(experiment.problemAr || experiment.problemEn) && (
-            <section className="p-8 rounded-3xl bg-[#0a0a0a] border border-white/10">
+            <section className="p-8 rounded-3xl bg-[var(--surface-primary)] border border-[var(--border-default)]">
               <div className="flex items-center gap-3 mb-4 text-red-400">
                 <Target size={24} />
                 <h2 className="text-2xl font-bold">{isEn ? 'The Problem' : 'المشكلة'}</h2>
               </div>
-              <p className="text-lg text-white/80 leading-relaxed">
+              <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
                 {isEn ? experiment.problemEn : experiment.problemAr}
               </p>
             </section>
@@ -132,12 +132,12 @@ export const ExperimentDetailsPage = () => {
 
           {/* Hypothesis */}
           {(experiment.hypothesisAr || experiment.hypothesisEn) && (
-            <section className="p-8 rounded-3xl bg-[#0a0a0a] border border-white/10">
+            <section className="p-8 rounded-3xl bg-[var(--surface-primary)] border border-[var(--border-default)]">
               <div className="flex items-center gap-3 mb-4" style={{ color: experiment.brandColor || '#3b82f6' }}>
                 <Lightbulb size={24} />
                 <h2 className="text-2xl font-bold">{isEn ? 'Hypothesis' : 'الفرضية'}</h2>
               </div>
-              <p className="text-lg text-white/80 leading-relaxed">
+              <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
                 {isEn ? experiment.hypothesisEn : experiment.hypothesisAr}
               </p>
             </section>
@@ -146,10 +146,10 @@ export const ExperimentDetailsPage = () => {
           {/* Target Audience */}
           {((experiment.targetAudienceAr?.length || 0) > 0 || (experiment.targetAudienceEn?.length || 0) > 0) && (
             <section>
-              <h2 className="text-xl font-bold mb-4 text-white/80">{isEn ? 'Target Audience' : 'الفئة المستهدفة'}</h2>
+              <h2 className="text-xl font-bold mb-4 text-[var(--text-secondary)]">{isEn ? 'Target Audience' : 'الفئة المستهدفة'}</h2>
               <div className="flex flex-wrap gap-2">
                 {(isEn ? experiment.targetAudienceEn : experiment.targetAudienceAr)?.map((aud, i) => (
-                  <span key={i} className="px-4 py-2 rounded-full bg-[#111] border border-white/10 text-sm">
+                  <span key={i} className="px-4 py-2 rounded-full bg-[var(--surface-primary)] border border-[var(--border-default)] text-sm">
                     {aud}
                   </span>
                 ))}
@@ -166,7 +166,7 @@ export const ExperimentDetailsPage = () => {
               </div>
               <ul className="space-y-3">
                 {(isEn ? experiment.learningsEn : experiment.learningsAr)?.map((learn, i) => (
-                  <li key={i} className="flex items-start gap-3 text-white/80">
+                  <li key={i} className="flex items-start gap-3 text-[var(--text-secondary)]">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 shrink-0" />
                     <span>{learn}</span>
                   </li>
@@ -178,31 +178,31 @@ export const ExperimentDetailsPage = () => {
           {/* Current & Next */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {(experiment.currentStageAr || experiment.currentStageEn) && (
-              <div className="p-6 rounded-2xl bg-[#111] border border-white/10">
-                <div className="text-xs font-mono text-white/40 mb-2">{isEn ? 'CURRENT STAGE' : 'المرحلة الحالية'}</div>
-                <div className="text-white/90">{isEn ? experiment.currentStageEn : experiment.currentStageAr}</div>
+              <div className="p-6 rounded-2xl bg-[var(--surface-primary)] border border-[var(--border-default)]">
+                <div className="text-xs font-mono text-[var(--text-muted)] mb-2">{isEn ? 'CURRENT STAGE' : 'المرحلة الحالية'}</div>
+                <div className="text-[var(--text-primary)]">{isEn ? experiment.currentStageEn : experiment.currentStageAr}</div>
               </div>
             )}
             {(experiment.nextStepAr || experiment.nextStepEn) && (
-              <div className="p-6 rounded-2xl bg-[#111] border border-white/10">
-                <div className="text-xs font-mono text-white/40 mb-2">{isEn ? 'NEXT STEP' : 'الخطوة التالية'}</div>
-                <div className="text-white/90">{isEn ? experiment.nextStepEn : experiment.nextStepAr}</div>
+              <div className="p-6 rounded-2xl bg-[var(--surface-primary)] border border-[var(--border-default)]">
+                <div className="text-xs font-mono text-[var(--text-muted)] mb-2">{isEn ? 'NEXT STEP' : 'الخطوة التالية'}</div>
+                <div className="text-[var(--text-primary)]">{isEn ? experiment.nextStepEn : experiment.nextStepAr}</div>
               </div>
             )}
           </div>
 
           {/* Related Product */}
           {experiment.relatedProductSlug && (
-            <div className="p-8 rounded-3xl bg-gradient-to-r from-[#111] to-[#1a1a1a] border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="p-8 rounded-3xl bg-gradient-to-r from-[var(--surface-primary)] to-[var(--surface-secondary)] border border-[var(--border-default)] flex flex-col md:flex-row items-center justify-between gap-6">
               <div>
-                <div className="text-sm font-bold text-white/50 mb-1">{isEn ? 'Promoted to Product' : 'تحولت إلى منتج'}</div>
+                <div className="text-sm font-bold text-[var(--text-muted)] mb-1">{isEn ? 'Promoted to Product' : 'تحولت إلى منتج'}</div>
                 <h3 className="text-2xl font-bold">
                   {experiment.relatedProductSlug.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                 </h3>
               </div>
               <button 
                 onClick={() => { updateConfig({ currentRoute: 'products' }); window.scrollTo(0,0); }}
-                className="px-6 py-3 rounded-xl bg-white text-black font-bold flex items-center gap-2 hover:bg-white/90 shrink-0"
+                className="px-6 py-3 rounded-xl bg-[var(--color-primary)] text-white font-bold flex items-center gap-2 hover:bg-[var(--color-primary-hover)] shrink-0 shadow-md"
               >
                 {isEn ? 'View Product' : 'عرض المنتج'}
                 <ArrowUpRight size={16} />
@@ -212,11 +212,11 @@ export const ExperimentDetailsPage = () => {
         </div>
 
         {/* CTA */}
-        <div className="text-center py-16 border-t border-b border-white/10 mb-10 lg:mb-20">
+        <div className="text-center py-16 border-t border-b border-[var(--border-default)] mb-10 lg:mb-20">
           <h2 className="text-2xl font-bold mb-4">{isEn ? 'Have a similar challenge?' : 'تواجه تحديًا مشابهًا؟'}</h2>
           <button 
             onClick={() => triggerBookingModal(isEn ? 'Shared Challenge from Experiment' : 'تحدي مشارك من صفحة التجربة')}
-            className="px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-white/90 transition-colors"
+            className="px-8 py-4 rounded-full bg-[var(--color-primary)] text-white font-bold hover:bg-[var(--color-primary-hover)] transition-colors shadow-md"
           >
             {isEn ? 'Share your challenge' : 'شاركنا تحديك'}
           </button>
@@ -227,12 +227,12 @@ export const ExperimentDetailsPage = () => {
           {prevExp ? (
             <button 
               onClick={() => updateConfig({ currentRoute: `innovation-lab/${prevExp.slug}` })}
-              className="flex-1 p-6 rounded-2xl bg-[#0a0a0a] border border-white/10 hover:border-white/30 text-right md:text-left group flex items-center gap-4 transition-all"
+              className="flex-1 p-6 rounded-2xl bg-[var(--surface-primary)] border border-[var(--border-default)] hover:border-[var(--border-hover)] text-right md:text-left group flex items-center gap-4 transition-all"
             >
-              <ArrowRight size={24} className={`text-white/30 group-hover:text-white ${isEn ? 'rotate-180 order-first' : 'order-last'}`} />
+              <ArrowRight size={24} className={`text-[var(--text-muted)]/70 group-hover:text-[var(--text-primary)] ${isEn ? 'rotate-180 order-first' : 'order-last'}`} />
               <div className="flex-1">
-                <div className="text-xs text-white/40 mb-1">{isEn ? 'PREVIOUS' : 'السابق'}</div>
-                <div className="font-bold text-white/90 group-hover:text-white truncate">{isEn ? prevExp.titleEn : prevExp.titleAr}</div>
+                <div className="text-xs text-[var(--text-muted)] mb-1">{isEn ? 'PREVIOUS' : 'السابق'}</div>
+                <div className="font-bold text-[var(--text-primary)] group-hover:text-[var(--text-primary)] truncate">{isEn ? prevExp.titleEn : prevExp.titleAr}</div>
               </div>
             </button>
           ) : <div className="flex-1" />}
@@ -240,13 +240,13 @@ export const ExperimentDetailsPage = () => {
           {nextExp ? (
             <button 
               onClick={() => updateConfig({ currentRoute: `innovation-lab/${nextExp.slug}` })}
-              className={`flex-1 p-6 rounded-2xl bg-[#0a0a0a] border border-white/10 hover:border-white/30 text-left md:text-right group flex items-center gap-4 transition-all ${isEn ? '' : 'flex-row-reverse'}`}
+              className={`flex-1 p-6 rounded-2xl bg-[var(--surface-primary)] border border-[var(--border-default)] hover:border-[var(--border-hover)] text-left md:text-right group flex items-center gap-4 transition-all ${isEn ? '' : 'flex-row-reverse'}`}
             >
               <div className="flex-1 text-right">
-                <div className="text-xs text-white/40 mb-1">{isEn ? 'NEXT' : 'التالي'}</div>
-                <div className="font-bold text-white/90 group-hover:text-white truncate">{isEn ? nextExp.titleEn : nextExp.titleAr}</div>
+                <div className="text-xs text-[var(--text-muted)] mb-1">{isEn ? 'NEXT' : 'التالي'}</div>
+                <div className="font-bold text-[var(--text-primary)] group-hover:text-[var(--text-primary)] truncate">{isEn ? nextExp.titleEn : nextExp.titleAr}</div>
               </div>
-              <ArrowRight size={24} className="text-white/30 group-hover:text-white" />
+              <ArrowRight size={24} className="text-[var(--text-muted)]/70 group-hover:text-[var(--text-primary)]" />
             </button>
           ) : <div className="flex-1" />}
         </div>

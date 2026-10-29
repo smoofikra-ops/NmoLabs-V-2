@@ -62,7 +62,7 @@ export const InnovationLabPage = () => {
       case 'on_hold': return 'text-gray-400 bg-gray-500/10 border-gray-500/20';
       case 'promoted': return 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20';
       case 'discontinued': return 'text-red-400 bg-red-500/10 border-red-500/20';
-      default: return 'text-white bg-white/10 border-white/20';
+      default: return 'text-[var(--text-secondary)] bg-[var(--surface-secondary)] border-[var(--border-default)]';
     }
   };
 
@@ -159,18 +159,18 @@ export const InnovationLabPage = () => {
       </section>
 
       {/* From Idea to Product Process */}
-      <section className="py-12 lg:py-24 relative z-10 bg-[#080808] border-b border-white/5">
+      <section className="py-12 lg:py-24 relative z-10 bg-[var(--surface-primary)]/48 border-b border-[var(--border-subtle)]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-black mb-4">{isEn ? 'From Idea to Product' : 'من الفكرة إلى المنتج'}</h2>
-            <p className="text-white/50 max-w-2xl mx-auto">
+            <p className="text-[var(--text-muted)] max-w-2xl mx-auto">
               {isEn ? 'The Innovation Labs is the pre-product stage. Here we research the problem, build the hypothesis, design the prototype, and test feasibility.' : 'مختبر الابتكارات هو المرحلة التي تسبق المنتج. هنا نبحث المشكلة، نبني الفرضية، نصمم النموذج الأولي، ونختبر إمكانية تحويل الفكرة إلى حل حقيقي.'}
             </p>
           </div>
 
           <div className="flex flex-col lg:flex-row items-stretch justify-between gap-4 lg:gap-2 relative">
             {/* Connection Line */}
-            <div className="hidden lg:block absolute top-1/2 left-8 right-8 h-[1px] bg-white/10 -translate-y-1/2" />
+            <div className="hidden lg:block absolute top-1/2 left-8 right-8 h-[1px] bg-[var(--surface-secondary)] -translate-y-1/2" />
             
             {[
               { num: '1', ar: 'مشكلة أو فرصة', en: 'Problem/Opportunity', icon: Search },
@@ -180,20 +180,20 @@ export const InnovationLabPage = () => {
               { num: '5', ar: 'اختبار', en: 'Testing', icon: Beaker },
               { num: '6', ar: 'قرار مصيري', en: 'Decision', icon: RefreshCw },
             ].map((step, idx) => (
-              <div key={idx} className="relative z-10 flex flex-row lg:flex-col items-center gap-4 bg-[#111] lg:bg-transparent p-4 lg:p-0 rounded-2xl border lg:border-none border-white/5">
-                <div className="w-12 h-12 rounded-xl bg-[#1a1a1a] border border-white/10 flex items-center justify-center text-white/60 shadow-lg">
+              <div key={idx} className="relative z-10 flex flex-row lg:flex-col items-center gap-4 bg-[var(--surface-primary)] lg:bg-transparent p-4 lg:p-0 rounded-2xl border lg:border-none border-[var(--border-subtle)]">
+                <div className="w-12 h-12 rounded-xl bg-[var(--surface-secondary)] border border-[var(--border-default)] flex items-center justify-center text-[var(--text-secondary)] shadow-lg">
                   <step.icon size={20} />
                 </div>
                 <div className="lg:text-center flex-1">
-                  <div className="text-xs font-mono text-white/30 mb-1">STEP 0{step.num}</div>
-                  <h4 className="font-bold text-sm lg:text-base text-white/80">{isEn ? step.en : step.ar}</h4>
+                  <div className="text-xs font-mono text-[var(--text-muted)]/70 mb-1">STEP 0{step.num}</div>
+                  <h4 className="font-bold text-sm lg:text-base text-[var(--text-secondary)]">{isEn ? step.en : step.ar}</h4>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="mt-12 bg-white/5 border border-white/10 rounded-2xl p-6 text-center max-w-lg mx-auto">
-            <h5 className="font-bold text-white/80 mb-3">{isEn ? 'Stage 6 Decisions:' : 'قرارات المرحلة السادسة:'}</h5>
+          <div className="mt-12 bg-[var(--surface-secondary)]/70 border border-[var(--border-default)] rounded-2xl p-6 text-center max-w-lg mx-auto">
+            <h5 className="font-bold text-[var(--text-secondary)] mb-3">{isEn ? 'Stage 6 Decisions:' : 'قرارات المرحلة السادسة:'}</h5>
             <div className="flex flex-wrap justify-center gap-3">
               <span className="text-xs px-3 py-1 bg-green-500/10 text-green-400 rounded-full border border-green-500/20">{isEn ? 'Develop to Product' : 'تطويرها إلى منتج'}</span>
               <span className="text-xs px-3 py-1 bg-yellow-500/10 text-yellow-400 rounded-full border border-yellow-500/20">{isEn ? 'Modify Idea' : 'تعديل الفكرة'}</span>
@@ -221,7 +221,7 @@ export const InnovationLabPage = () => {
       </div>
 
       {/* Experimental Grid - Other Experiments */}
-      <section className="py-12 lg:py-24 relative z-10 bg-[#050505] border-t border-white/5">
+      <section className="py-12 lg:py-24 relative z-10 bg-[var(--surface-primary)]/34 border-t border-[var(--border-subtle)]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
             <h2 className="text-3xl font-black">{isEn ? 'More Experiments' : 'تجارب إضافية'}</h2>
@@ -234,7 +234,7 @@ export const InnovationLabPage = () => {
                   className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
                     activeCategory === cat.id
                       ? 'bg-white text-black'
-                      : 'bg-[#111] text-white/50 hover:bg-white/10 hover:text-white border border-white/5'
+                      : 'bg-[var(--surface-primary)] text-[var(--text-muted)] hover:bg-[var(--surface-secondary)] hover:text-white border border-[var(--border-subtle)]'
                   }`}
                 >
                   {isEn ? cat.en : cat.ar}
@@ -288,7 +288,7 @@ export const InnovationLabPage = () => {
           </div>
 
           {filteredOtherExperiments.length === 0 && (
-            <div className="text-center py-20 text-white/40 font-mono text-sm border border-dashed border-white/10 rounded-3xl">
+            <div className="text-center py-20 text-[var(--text-muted)] font-mono text-sm border border-dashed border-[var(--border-default)] rounded-3xl">
               {isEn ? 'NO EXPERIMENTS FOUND IN THIS CATEGORY' : 'لا توجد تجارب في هذا التصنيف حالياً'}
             </div>
           )}
@@ -296,7 +296,7 @@ export const InnovationLabPage = () => {
       </section>
 
       {/* Lab Principles */}
-      <section className="py-12 lg:py-24 bg-[#080808] relative z-10">
+      <section className="py-12 lg:py-24 bg-[var(--surface-primary)]/48 relative z-10">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-3xl font-black mb-12 text-center">{isEn ? 'How do we work in the Lab?' : 'كيف نعمل داخل المختبر؟'}</h2>
           
@@ -311,9 +311,9 @@ export const InnovationLabPage = () => {
               { en: 'We develop what creates real value.', ar: 'نطوّر ما يحقق قيمة حقيقية.' },
               { en: 'We respect privacy and security from day one.', ar: 'نحترم الخصوصية والأمان من البداية.' }
             ].map((principle, idx) => (
-              <div key={idx} className="flex items-start gap-4 p-5 bg-[#111] rounded-2xl border border-white/5">
+              <div key={idx} className="flex items-start gap-4 p-5 bg-[var(--surface-primary)] rounded-2xl border border-[var(--border-subtle)]">
                 <div className="w-2 h-2 rounded-full mt-2 shrink-0 bg-white/20" />
-                <span className="text-white/80 font-medium">{isEn ? principle.en : principle.ar}</span>
+                <span className="text-[var(--text-secondary)] font-medium">{isEn ? principle.en : principle.ar}</span>
               </div>
             ))}
           </div>
@@ -324,7 +324,7 @@ export const InnovationLabPage = () => {
 
       {/* From Lab to Products */}
       <section className="py-12 lg:py-24 relative z-10 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#111] opacity-50 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--surface-secondary)] opacity-55 pointer-events-none" />
         <div className="max-w-6xl mx-auto px-6 relative z-10 text-center">
           <h2 className="text-3xl font-black mb-16">{isEn ? 'Some experiments become products' : 'بعض التجارب تتحول إلى منتجات'}</h2>
           
@@ -341,13 +341,13 @@ export const InnovationLabPage = () => {
       {/* Share a Challenge */}
       <section id="challenge" className="py-12 lg:py-24 relative z-10">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="bg-[#111] border border-white/10 rounded-[2.5rem] p-8 md:p-16 relative overflow-hidden">
+          <div className="bg-[var(--surface-primary)] border border-[var(--border-default)] rounded-[2.5rem] p-8 md:p-16 relative overflow-hidden">
             <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0ibm9uZSIvPgo8Y2lyY2xlIGN4PSIxIiBjeT0iMSIgcj0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPgo8L3N2Zz4=')]" />
             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[100px] rounded-full" />
             
             <div className="relative z-10 mb-10 text-center">
               <h2 className="text-3xl font-black mb-4">{isEn ? 'Best ideas start with a real problem' : 'أفضل الأفكار تبدأ من مشكلة حقيقية'}</h2>
-              <p className="text-white/60">
+              <p className="text-[var(--text-secondary)]">
                 {isEn 
                   ? 'If you have a recurring problem in your store or company and haven\'t found a suitable solution, share it with us. It might become the basis for a new experiment or product in the NmoLabs Lab.' 
                   : 'إذا كانت لديك مشكلة متكررة داخل متجرك أو شركتك ولم تجد لها حلًا مناسبًا، شاركها معنا. قد تصبح أساسًا لتجربة أو منتج جديد داخل مختبر NmoLabs.'}
@@ -357,23 +357,23 @@ export const InnovationLabPage = () => {
             <form className="relative z-10 space-y-6" onSubmit={(e) => { e.preventDefault(); triggerBookingModal(isEn ? 'Shared Challenge' : 'تحدي مشارك من المختبر'); }}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm text-white/50 mb-2">{isEn ? 'Name' : 'الاسم'}</label>
-                  <input type="text" className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-white/30" />
+                  <label className="block text-sm text-[var(--text-muted)] mb-2">{isEn ? 'Name' : 'الاسم'}</label>
+                  <input type="text" className="w-full bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-4 py-3 text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-hover)]" />
                 </div>
                 <div>
-                  <label className="block text-sm text-white/50 mb-2">{isEn ? 'Company / Business' : 'الشركة أو النشاط'}</label>
-                  <input type="text" className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-white/30" />
+                  <label className="block text-sm text-[var(--text-muted)] mb-2">{isEn ? 'Company / Business' : 'الشركة أو النشاط'}</label>
+                  <input type="text" className="w-full bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-white/30" />
                 </div>
               </div>
               <div>
-                <label className="block text-sm text-white/50 mb-2">{isEn ? 'Email or Phone' : 'البريد أو رقم التواصل'}</label>
-                <input type="text" className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-white/30" />
+                <label className="block text-sm text-[var(--text-muted)] mb-2">{isEn ? 'Email or Phone' : 'البريد أو رقم التواصل'}</label>
+                <input type="text" className="w-full bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-white/30" />
               </div>
               <div>
-                <label className="block text-sm text-white/50 mb-2">{isEn ? 'Describe the problem' : 'وصف المشكلة'}</label>
-                <textarea rows={3} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-white/30 resize-none" />
+                <label className="block text-sm text-[var(--text-muted)] mb-2">{isEn ? 'Describe the problem' : 'وصف المشكلة'}</label>
+                <textarea rows={3} className="w-full bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-xl px-4 py-3 text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-hover)] resize-none" />
               </div>
-              <button className="w-full py-4 rounded-xl bg-white text-black font-bold hover:bg-white/90 transition-colors">
+              <button className="w-full py-4 rounded-xl bg-[var(--color-primary)] text-white font-bold hover:bg-[var(--color-primary-hover)] transition-colors shadow-md">
                 {isEn ? 'Share Challenge' : 'شارك التحدي'}
               </button>
             </form>
@@ -389,7 +389,7 @@ const LabToProduct = ({ ar, en, prodAr, prodEn }: { ar: string, en: string, prod
   const isEn = config.language === 'en';
   return (
     <div className="flex flex-col items-center gap-3">
-      <div className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/60 text-sm font-mono">
+      <div className="px-4 py-2 rounded-xl bg-[var(--surface-secondary)]/70 border border-[var(--border-default)] text-[var(--text-secondary)] text-sm font-mono">
         {isEn ? en : ar}
       </div>
       <div className="w-[1px] h-6 bg-white/20" />
@@ -413,14 +413,14 @@ const FeaturedExperiment = ({ exp, index, isEn, onInView, updateConfig, getStatu
   const isEven = index % 2 === 0;
 
   return (
-    <section ref={ref} className="min-h-[80svh] flex items-center py-12 lg:py-24 relative z-10 border-b border-white/5 last:border-b-0">
+    <section ref={ref} className="min-h-[80svh] flex items-center py-12 lg:py-24 relative z-10 border-b border-[var(--border-subtle)] last:border-b-0">
       <div className="max-w-7xl mx-auto px-6 w-full">
         <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12 lg:gap-24`}>
           
           {/* Content */}
           <div className="w-full lg:w-1/2">
             <div className="mb-6 flex flex-wrap items-center gap-3">
-              <span className="font-mono text-white/30 text-2xl font-bold">0{index + 1}</span>
+              <span className="font-mono text-[var(--text-muted)]/70 text-2xl font-bold">0{index + 1}</span>
               <span className={`px-3 py-1 rounded-full text-xs font-bold border ${getStatusStyle(exp.status)}`}>
                 {getStatusText(exp.status)}
               </span>
@@ -430,19 +430,19 @@ const FeaturedExperiment = ({ exp, index, isEn, onInView, updateConfig, getStatu
               {isEn ? exp.titleEn : exp.titleAr}
             </h2>
             
-            <p className="text-xl text-white/60 mb-8 leading-relaxed">
+            <p className="text-xl text-[var(--text-secondary)] mb-8 leading-relaxed">
               {isEn ? exp.summaryEn : exp.summaryAr}
             </p>
 
-            <div className="space-y-6 mb-10 p-6 rounded-2xl bg-white/5 border border-white/10">
+            <div className="space-y-6 mb-10 p-6 rounded-2xl bg-[var(--surface-secondary)]/70 border border-[var(--border-default)]">
               <div>
-                <span className="text-xs font-bold text-white/40 uppercase tracking-widest block mb-2">{isEn ? 'The Problem' : 'المشكلة'}</span>
-                <p className="text-sm text-white/80">{isEn ? exp.problemEn : exp.problemAr}</p>
+                <span className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-widest block mb-2">{isEn ? 'The Problem' : 'المشكلة'}</span>
+                <p className="text-sm text-[var(--text-secondary)]">{isEn ? exp.problemEn : exp.problemAr}</p>
               </div>
-              <div className="h-[1px] bg-white/10" />
+              <div className="h-[1px] bg-[var(--surface-secondary)]" />
               <div>
-                <span className="text-xs font-bold text-white/40 uppercase tracking-widest block mb-2" style={{ color: exp.brandColor }}>{isEn ? 'Hypothesis' : 'الفرضية'}</span>
-                <p className="text-sm text-white/80">{isEn ? exp.hypothesisEn : exp.hypothesisAr}</p>
+                <span className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-widest block mb-2" style={{ color: exp.brandColor }}>{isEn ? 'Hypothesis' : 'الفرضية'}</span>
+                <p className="text-sm text-[var(--text-secondary)]">{isEn ? exp.hypothesisEn : exp.hypothesisAr}</p>
               </div>
             </div>
 
@@ -451,7 +451,7 @@ const FeaturedExperiment = ({ exp, index, isEn, onInView, updateConfig, getStatu
                 updateConfig({ currentRoute: `innovation-lab/${exp.slug}` });
                 window.scrollTo({top: 0, behavior: 'smooth'});
               }}
-              className="px-8 py-3 rounded-full font-bold text-white bg-white/10 hover:bg-white/20 border border-white/10 transition-all flex items-center gap-3 w-fit"
+              className="px-8 py-3 rounded-full font-bold text-[var(--text-primary)] bg-[var(--surface-secondary)] hover:bg-[var(--surface-elevated)] border border-[var(--border-default)] transition-all flex items-center gap-3 w-fit"
             >
               {isEn ? 'Explore Experiment' : 'استكشف التجربة'}
               <ArrowRight size={16} className={isEn ? '' : 'rotate-180'} />
@@ -460,22 +460,22 @@ const FeaturedExperiment = ({ exp, index, isEn, onInView, updateConfig, getStatu
 
           {/* Abstract Visual Prototype */}
           <div className="w-full lg:w-1/2">
-            <div className="aspect-square md:aspect-[4/3] rounded-[2rem] bg-[#0a0a0a] border border-white/10 p-4 relative overflow-hidden group">
+            <div className="aspect-square md:aspect-[4/3] rounded-[2rem] bg-[var(--surface-secondary)] border border-[var(--border-default)] p-4 relative overflow-hidden group">
               <div className="absolute inset-0 opacity-20 blur-[100px]" style={{ backgroundColor: exp.brandColor }} />
               
-              <div className="absolute top-4 left-4 right-4 h-8 flex items-center gap-2 px-4 bg-white/5 border border-white/10 rounded-lg">
+              <div className="absolute top-4 left-4 right-4 h-8 flex items-center gap-2 px-4 bg-[var(--surface-secondary)]/70 border border-[var(--border-default)] rounded-lg">
                 <div className="w-2 h-2 rounded-full bg-white/20" />
                 <div className="w-2 h-2 rounded-full bg-white/20" />
                 <div className="w-2 h-2 rounded-full bg-white/20" />
               </div>
 
               <div className="w-full h-full pt-12 flex flex-col items-center justify-center relative z-10">
-                <div className="w-32 h-32 rounded-3xl flex items-center justify-center bg-[#111] border border-white/10 shadow-2xl mb-6 relative">
+                <div className="w-32 h-32 rounded-3xl flex items-center justify-center bg-[var(--surface-primary)] border border-[var(--border-default)] shadow-2xl mb-6 relative">
                   <div className="absolute inset-0 bg-gradient-to-br opacity-50 rounded-3xl" style={{ from: exp.brandColor, to: 'transparent' }} />
-                  <span className="text-4xl font-black text-white/30">{exp.prototypeType?.toUpperCase() || 'CONCEPT'}</span>
+                  <span className="text-4xl font-black text-[var(--text-muted)]/70">{exp.prototypeType?.toUpperCase() || 'CONCEPT'}</span>
                 </div>
                 
-                <div className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-white/40">
+                <div className="px-4 py-2 rounded-full bg-[var(--surface-secondary)]/70 border border-[var(--border-default)] text-xs font-mono text-[var(--text-muted)]">
                   {isEn ? 'Concept Prototype' : 'تصور أولي للتجربة'}
                 </div>
               </div>

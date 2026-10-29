@@ -11,7 +11,7 @@ export const WorkPreview = () => {
   const previewProjects = projects.filter(p => p.featured).slice(0, 3);
 
   return (
-    <section className="py-10 sm:py-10 md:py-10 md:py-20 bg-[#050505] relative overflow-hidden" id="work">
+    <section className="py-10 sm:py-10 md:py-20 bg-transparent relative overflow-hidden" id="work">
       {/* Background elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[500px] opacity-20 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-primary)] to-transparent blur-[120px] rounded-full mix-blend-screen" />
@@ -21,10 +21,10 @@ export const WorkPreview = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-12 sm:mb-10 lg:mb-20">
           <div className="max-w-2xl">
-            <h2 className="text-2xl sm:text-4xl md:text-6xl font-black text-white mb-4 sm:mb-6 tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-4xl md:text-6xl font-black text-[var(--text-primary)] mb-4 sm:mb-6 tracking-tight leading-tight">
               {isEn ? 'Work built to perform, evolve and grow' : 'مشاريع بنيناها لتعمل، تتطور وتنمو'}
             </h2>
-            <p className="text-base sm:text-xl text-white/60">
+            <p className="text-base sm:text-xl text-[var(--text-secondary)]">
               {isEn ? 'From ecommerce stores to platforms and systems, we build digital solutions designed around the goals of each project.' : 'من المتاجر الإلكترونية إلى الأنظمة والمنصات، نبني حلولًا رقمية مصممة حول أهداف كل مشروع.'}
             </p>
           </div>
@@ -33,7 +33,7 @@ export const WorkPreview = () => {
               updateConfig({ currentRoute: 'work' });
               window.scrollTo({top: 0, behavior: 'smooth'});
             }}
-            className="group flex items-center gap-3 text-white font-bold hover:text-[var(--color-primary)] transition-colors whitespace-nowrap bg-white/5 px-6 py-3 rounded-full border border-white/10 hover:bg-white/10 w-full sm:w-auto justify-center"
+            className="group flex items-center gap-3 text-[var(--text-primary)] font-bold hover:text-[var(--color-primary)] transition-colors whitespace-nowrap bg-[var(--surface-primary)]/82 px-6 py-3 rounded-full border border-[var(--border-default)] hover:border-[var(--border-hover)] hover:bg-[var(--surface-elevated)] w-full sm:w-auto justify-center shadow-[var(--card-shadow-1)]"
           >
             {isEn ? 'Explore All Work' : 'استكشف جميع أعمالنا'}
             {isEn ? <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform shrink-0" /> : <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform shrink-0" />}
@@ -54,7 +54,7 @@ export const WorkPreview = () => {
                   window.scrollTo({top: 0, behavior: 'smooth'});
                 }
               }}
-              className={`group relative rounded-3xl overflow-hidden bg-[#111] border border-white/10 cursor-pointer hover:border-white/30 transition-all duration-500 aspect-[4/5] sm:aspect-square md:aspect-[4/5] flex flex-col justify-end ${idx === 2 ? 'col-span-2 lg:col-span-1 aspect-[2/1] sm:aspect-square' : ''}`}
+              className={`group relative rounded-3xl overflow-hidden bg-[var(--surface-primary)] border border-[var(--border-default)] cursor-pointer hover:border-[var(--border-hover)] transition-all duration-500 aspect-[4/5] sm:aspect-square md:aspect-[4/5] flex flex-col justify-end shadow-[var(--card-shadow-2)] hover:shadow-[var(--card-shadow-hover)] ${idx === 2 ? 'col-span-2 lg:col-span-1 aspect-[2/1] sm:aspect-square' : ''}`}
             >
               <div 
                 className="absolute inset-0 opacity-40 group-hover:opacity-60 transition-opacity duration-700 mix-blend-screen"
@@ -66,7 +66,7 @@ export const WorkPreview = () => {
                   src={project.coverImage} 
                   alt={isEn ? project.titleEn : project.titleAr}
                   referrerPolicy="no-referrer"
-                  className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105"
+                  className="absolute inset-0 w-full h-full object-cover opacity-72 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105"
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center opacity-50 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-100">
