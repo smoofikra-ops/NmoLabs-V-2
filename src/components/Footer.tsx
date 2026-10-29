@@ -264,11 +264,11 @@ export const Footer = () => {
                 </li>
               )}
               <li 
-                onClick={() => window.location.href = 'mailto:hello@nmolabs.com'}
+                onClick={() => window.location.href = 'mailto:info@nmolabs.com'}
                 className="flex items-center gap-3 px-3.5 py-2.5 bg-[var(--surface-secondary)]/70 border border-[var(--border-default)] rounded-xl transition-all hover:border-[var(--interactive-border)] cursor-pointer hover:bg-[var(--surface-secondary)]"
               >
                 <Mail size={16} className="text-[var(--color-primary)] shrink-0" />
-                <span dir="ltr" className="font-english font-bold">hello@nmolabs.com</span>
+                <span dir="ltr" className="font-english font-bold">info@nmolabs.com</span>
               </li>
             </ul>
           </div>
