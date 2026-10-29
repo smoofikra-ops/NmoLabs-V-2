@@ -184,7 +184,7 @@ export const Header = () => {
                 onClick={() => handleNavClick(item, idx)}
                 onMouseEnter={() => setHoveredNav(idx)}
                 onFocus={() => setHoveredNav(idx)}
-                className={`relative px-3.5 xl:px-4 py-2 text-[13px] xl:text-sm font-bold transition-all z-10 rounded-full flex items-center justify-center gap-1.5 ${hasLiquid ? 'text-[var(--color-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+                className={`relative px-2.5 xl:px-3.5 2xl:px-4 py-2 text-[13px] xl:text-[14px] 2xl:text-[15px] leading-none font-bold transition-all z-10 rounded-full flex items-center justify-center gap-1.5 whitespace-nowrap ${hasLiquid ? 'text-[var(--color-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
               >
                 {hasLiquid && (
                   <motion.div
@@ -221,7 +221,7 @@ export const Header = () => {
           
           <button 
             onClick={() => { updateConfig({ currentRoute: 'kyc' }); window.scrollTo(0,0); }}
-            className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full font-bold text-[13px] xl:text-sm text-white transition-all shadow-[0_4px_14px_rgba(15,98,254,0.35)] hover:shadow-[0_6px_20px_rgba(15,98,254,0.45)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+            className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full font-bold text-sm 2xl:text-[15px] text-white transition-all shadow-[0_4px_14px_rgba(15,98,254,0.35)] hover:shadow-[0_6px_20px_rgba(15,98,254,0.45)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
             style={{ backgroundColor: 'var(--color-primary)' }}
           >
             {config.language === 'en' ? 'Start Project' : 'ابدأ مشروعك'}

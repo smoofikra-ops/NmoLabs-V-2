@@ -245,7 +245,7 @@ function AppContent() {
 
   return (
     <div className="relative min-h-screen selection:bg-[var(--color-secondary)] selection:text-white pb-20 transition-colors duration-300">
-      <InteractiveBackground />
+      {config.currentRoute !== 'kyc' && <InteractiveBackground />}
       <Helmet>
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />
@@ -349,7 +349,7 @@ function AppContent() {
       {config.currentRoute !== 'kyc' && <BookingModal />}
       
       {/* Visual Effects */}
-      <MouseParticles />
+      {config.currentRoute !== 'kyc' && <MouseParticles />}
       {config.currentRoute !== 'kyc' && <WhatsAppWidget />}
       <BackToTop />
     </div>

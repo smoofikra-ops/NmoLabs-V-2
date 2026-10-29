@@ -248,12 +248,12 @@ export const Blog = () => {
       ) : (
         /* Homepage Marquee Showcase */
         <div className="relative z-10 overflow-hidden w-full" dir="ltr">
-          <div className="flex w-max animate-marquee hover:[animation-play-state:paused] gap-6">
-            {[0, 1].map((groupIndex) => (
+          <div className="nmolabs-blog-marquee hover:[animation-play-state:paused]">
+            {[0, 1, 2].map((groupIndex) => (
               <div
                 key={groupIndex}
-                className="flex shrink-0 gap-6"
-                aria-hidden={groupIndex === 1 ? 'true' : undefined}
+                className="nmolabs-blog-marquee-group"
+                aria-hidden={groupIndex > 0 ? 'true' : undefined}
               >
                 {blogPosts.map((post) => (
                   <div key={`${groupIndex}-${post.id}`} className="w-[320px] sm:w-[380px] shrink-0">

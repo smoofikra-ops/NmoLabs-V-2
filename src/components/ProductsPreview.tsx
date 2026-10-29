@@ -56,7 +56,7 @@ export const ProductsPreview = () => {
               {product.coverVisual ? (
                  <>
                    <div className="absolute inset-0 z-0">
-                     <img src={product.coverVisual} className="w-full h-full object-cover opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700" alt={isEn ? product.titleEn : product.titleAr} />
+                     <img src={product.coverVisual} loading="lazy" decoding="async" referrerPolicy="no-referrer" className="w-full h-full object-cover opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700" alt={isEn ? product.titleEn : product.titleAr} />
                    </div>
                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/72 to-slate-950/10 z-0" />
                  </>

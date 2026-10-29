@@ -1171,3 +1171,29 @@ a[class*="px-"][class*="py-"] {
     animation: none !important;
   }
 }
+
+
+/* Seamless homepage knowledge rail — three equal groups avoid the pause / empty tail. */
+.nmolabs-blog-marquee {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: nmolabsBlogMarquee 78s linear infinite;
+}
+.nmolabs-blog-marquee-group {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 1.5rem;
+  padding-inline: .75rem;
+}
+@keyframes nmolabsBlogMarquee {
+  from { transform: translate3d(0,0,0); }
+  to { transform: translate3d(-33.333333%,0,0); }
+}
+@media (max-width: 640px) {
+  .nmolabs-blog-marquee { animation-duration: 68s; }
+  .nmolabs-blog-marquee-group { gap: 1rem; padding-inline: .5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nmolabs-blog-marquee { animation-play-state: paused !important; }
+}

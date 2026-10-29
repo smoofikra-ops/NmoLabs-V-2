@@ -134,6 +134,8 @@ export const ProductDetailsPage = ({ slug }: Props) => {
                     <img 
                       src={product.coverVisual} 
                       alt={isEn ? product.titleEn : product.titleAr}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       referrerPolicy="no-referrer"
                     />

@@ -66,6 +66,8 @@ export const WorkPreview = () => {
                   src={project.coverImage} 
                   alt={isEn ? project.titleEn : project.titleAr}
                   referrerPolicy="no-referrer"
+                  loading="lazy"
+                  decoding="async"
                   className="absolute inset-0 w-full h-full object-cover opacity-72 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105"
                 />
               ) : (
