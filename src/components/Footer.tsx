@@ -142,7 +142,7 @@ export const Footer = () => {
                 : "نمو لابز هو شريكك التقني للنمو المتسارع، نصمم ونبني منظومات برمجية ذكية، حلولاً تقنية متقدمة، وأدوات رقمية تسهم في تعظيم أثر أعمالك.")}
             </p>
             <div className="flex gap-2.5 flex-wrap justify-center lg:justify-start pt-2">
-              {config.socialLinks?.map((link, idx) => (
+              {config.socialLinks?.filter((link) => Boolean(link.url)).map((link, idx) => (
                 <a 
                   key={idx} 
                   href={link.url} 

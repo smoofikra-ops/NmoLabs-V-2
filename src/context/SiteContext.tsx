@@ -355,7 +355,7 @@ const defaultConfig: SiteConfig = {
     { name: 'Facebook', url: '', icon: 'Facebook' },
     { name: 'LinkedIn', url: 'https://linkedin.com/in/nmolabs', icon: 'Linkedin' }
   ],
-  footerDescription: 'منصة وشريك نمو تقني لرواد الأعمال والمتاجر الإلكترونية في السعودية.',
+  footerDescription: 'شريك تقني واستراتيجي لبناء الأنظمة والمواقع والمتاجر والمنتجات الرقمية، من الفكرة والتخطيط إلى التشغيل والقياس والنمو.',
   currentRoute: 'home',
   logoText: 'NMOLABS',
   desktopLogoUrl: OFFICIAL_TRANSPARENT_LOGO_URL,
@@ -451,7 +451,11 @@ const getInitialConfig = () => {
         })(),
         partnerClicks: parsed.partnerClicks || [],
         socialLinks: parsed.socialLinks || defaultConfig.socialLinks,
-        footerDescription: parsed.footerDescription || defaultConfig.footerDescription,
+        footerDescription:
+          !parsed.footerDescription ||
+          parsed.footerDescription === 'منصة وشريك نمو تقني لرواد الأعمال والمتاجر الإلكترونية في السعودية.'
+            ? defaultConfig.footerDescription
+            : parsed.footerDescription,
         currentRoute: initialRoute,
         logoText: parsed.logoText || defaultConfig.logoText,
         desktopLogoUrl: !parsed.desktopLogoUrl || parsed.desktopLogoUrl === '/logo-web.jpg' ? defaultConfig.desktopLogoUrl : parsed.desktopLogoUrl,

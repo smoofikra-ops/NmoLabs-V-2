@@ -192,12 +192,12 @@ function AppContent() {
     } else if (routeKey.startsWith('products/')) {
       const slug = routeKey.split('/')[1];
       metaRaw = {
-        title: `نظام ${slug.toUpperCase()} | منتجات NMOLABS السحابية`,
-        titleAr: `نظام ${slug.toUpperCase()} | منتجات NMOLABS السحابية`,
-        titleEn: `${slug.toUpperCase()} System | NmoLabs Cloud Platforms`,
-        description: 'حل برمجي سحابي متطور مصمم خصيصاً للشركات لرفع كفاءة العمليات والمبيعات.',
-        descriptionAr: 'حل برمجي سحابي متطور مصمم خصيصاً للشركات لرفع كفاءة العمليات والمبيعات.',
-        descriptionEn: 'Advanced cloud software solution engineered by NmoLabs for enterprise scale and operational efficiency.'
+        title: `${slug.toUpperCase()} | منتجات وتقنيات NMOLABS`,
+        titleAr: `${slug.toUpperCase()} | منتجات وتقنيات NMOLABS`,
+        titleEn: `${slug.toUpperCase()} | NmoLabs Products & Systems`,
+        description: 'صفحة تعريفية لمنتج أو نظام تقني من NmoLabs، تشمل المشكلة التي يعالجها والفوائد والخصائص وحالة التطوير الحالية.',
+        descriptionAr: 'صفحة تعريفية لمنتج أو نظام تقني من NmoLabs، تشمل المشكلة التي يعالجها والفوائد والخصائص وحالة التطوير الحالية.',
+        descriptionEn: 'Product overview from NmoLabs covering the problem addressed, core benefits, features, and current development status.'
       };
     } else if (routeKey.startsWith('services/')) {
       metaRaw = pageMetadata.services;
@@ -213,7 +213,12 @@ function AppContent() {
     description: isEn ? ((metaRaw as any).descriptionEn || metaRaw.description) : ((metaRaw as any).descriptionAr || metaRaw.description)
   };
 
-  const canonicalPath = routeKey === 'home' ? '' : `/${routeKey}`;
+  const canonicalPath =
+    routeKey === 'home'
+      ? ''
+      : routeKey === 'brand-assets'
+        ? '/brand'
+        : `/${routeKey}`;
   const canonicalUrl = `${siteMetadata.url}${canonicalPath}`;
 
   // Direct DOM synchronization for robust client-side SPA navigation across all browsers

@@ -36,20 +36,20 @@ const faqCategories = [
       {
         qAr: 'هل تقدمون حلولاً مخصصة بالكامل أم باقات جاهزة؟',
         qEn: 'Do you offer custom tailored solutions or fixed packages?',
-        aAr: 'نقدم كلاً النموذجين: منتجات وأنظمة ذكية جاهزة للتشغيل الفوري مع خيارات تخصيص، بالإضافة إلى تطوير أنظمة مخصصة بالكامل (Bespoke Enterprise Engineering) حسب متطلباتك الدقيقة.',
-        aEn: 'We offer both: ready-to-deploy modular SaaS systems with configuration options, as well as 100% bespoke engineering built specifically for enterprise specifications.'
+        aAr: 'نطوّر أنظمة ومنتجات تقنية داخلية ومخصصة، ونبني حلولاً جديدة حسب متطلبات كل شركة. بعض الحلول تكون نماذج أو أنظمة قيد التطوير، لذلك نحدد حالة كل منتج ونطاقه قبل بدء أي مشروع.',
+        aEn: 'We develop internal technology products, configurable systems, and fully custom solutions for each organization. Some concepts remain prototypes or works in progress, so we confirm product status and scope before any engagement.'
       },
       {
         qAr: 'هل تتكامل أنظمتكم مع منصات التجارة مثل سلة وزد وشوبيفاي؟',
         qEn: 'Do your systems integrate with Salla, Zid, and Shopify?',
-        aAr: 'نعم بكل تأكيد. جميع منتجاتنا مصممة وفق معمارية برمجية مفتوحة وقابلة للربط السلس عبر واجهات برمجة التطبيقات (APIs) و Webhooks مع كافة المنصات الإقليمية والعالمية.',
-        aEn: 'Yes, absolutely. All our systems are built with open API architecture and webhooks, ensuring frictionless bi-directional integration with Salla, Zid, Shopify, and external ERPs.'
+        aAr: 'ننفذ التكاملات عندما توفر المنصة أو النظام واجهات API أو Webhooks وصلاحيات مناسبة. نراجع أولاً متطلبات الربط وحدود كل منصة، ثم نصمم التكامل بما يناسب السيناريو التشغيلي.',
+        aEn: 'We build integrations when the target platform provides suitable APIs, webhooks, and access permissions. We first review platform constraints and then design the integration around the actual operating workflow.'
       },
       {
         qAr: 'كيف نبدأ استشارة أو مشروعاً مع نمو لابز؟',
         qEn: 'How do we kick off a project or consultation?',
-        aAr: 'يمكنك ببساطة النقر على زر "تواصل معنا" أو "ابدأ مشروعك"، وسيقوم مستشارونا التقنيون بجدولة جلسة استكشاف وتحليل متطلبات خلال 24 ساعة.',
-        aEn: 'Simply click "Talk to Us" or "Start Project", and our senior technology consultants will schedule a discovery & scoping session within 24 hours.'
+        aAr: 'ابدأ من نموذج "ابدأ مشروعك" وشاركنا الهدف والاحتياج والبيانات الأساسية. نراجع الطلب ونحدد الخطوة الأنسب للتواصل والاستكشاف بحسب طبيعة المشروع.',
+        aEn: 'Start with the “Start Project” flow and share the goal, need, and essential context. We review the request and determine the most appropriate discovery and follow-up step for the project.'
       }
     ]
   }
@@ -85,14 +85,25 @@ export const FAQ = () => {
             <span>{isEn ? 'Clarity & Verification' : 'إجابات واضحة وشفافة'}</span>
           </motion.div>
 
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl sm:text-4xl md:text-5xl font-black mb-4 text-[var(--text-primary)] tracking-tight"
-          >
-            {isEn ? 'Frequently Asked Questions' : 'الأسئلة الشائعة'}
-          </motion.h2>
+          {isStandalone ? (
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-3xl sm:text-4xl md:text-5xl font-black mb-4 text-[var(--text-primary)] tracking-tight"
+            >
+              {isEn ? 'Frequently Asked Questions' : 'الأسئلة الشائعة'}
+            </motion.h1>
+          ) : (
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-3xl sm:text-4xl md:text-5xl font-black mb-4 text-[var(--text-primary)] tracking-tight"
+            >
+              {isEn ? 'Frequently Asked Questions' : 'الأسئلة الشائعة'}
+            </motion.h2>
+          )}
 
           <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-xl mx-auto">
             {isEn 

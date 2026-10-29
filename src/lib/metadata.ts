@@ -32,12 +32,12 @@ export const pageMetadata: Record<string, {
     descriptionEn: 'Full-cycle technology services in Saudi Arabia: digital strategy, custom web development, scalable e-commerce, ERP systems, and intelligent workflow automation.'
   },
   products: {
-    title: 'منتجاتنا وحلولنا السحابية | NMOLABS',
-    titleAr: 'منتجاتنا وحلولنا السحابية | NMOLABS',
-    titleEn: 'Our Products & Cloud Platforms | NmoLabs',
-    description: 'استكشف منتجات وأنظمة NmoLabs السحابية المتخصصة: النواة الرقمية Nucleus، نظام تشغيل الأعمال NBOS، ونظام إدارة الموارد NMO ERP المتوافق مع ZATCA.',
-    descriptionAr: 'استكشف منتجات وأنظمة NmoLabs السحابية المتخصصة: النواة الرقمية Nucleus، نظام تشغيل الأعمال NBOS، ونظام إدارة الموارد NMO ERP المتوافق مع ZATCA.',
-    descriptionEn: 'Discover NmoLabs proprietary cloud software products: Nucleus core engine, NBOS operating platform, and ZATCA-certified NMO ERP system built for enterprise scale.'
+    title: 'منتجاتنا وأنظمتنا الرقمية | NMOLABS',
+    titleAr: 'منتجاتنا وأنظمتنا الرقمية | NMOLABS',
+    titleEn: 'Our Products & Digital Systems | NmoLabs',
+    description: 'استكشف منتجات وأنظمة NmoLabs الرقمية، بما فيها Nucleus وNBOS وNMO ERP وStore Intelligence، مع توضيح حالة كل منتج ونطاق استخدامه.'
+    descriptionAr: 'استكشف منتجات وأنظمة NmoLabs الرقمية، بما فيها Nucleus وNBOS وNMO ERP وStore Intelligence، مع توضيح حالة كل منتج ونطاق استخدامه.'
+    descriptionEn: 'Explore NmoLabs digital products and systems, including Nucleus, NBOS, NMO ERP, and Store Intelligence, with clear status and use-case information for each product.'
   },
   work: {
     title: 'أعمالنا ومشاريعنا المنجزة | NMOLABS',

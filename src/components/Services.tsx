@@ -44,14 +44,25 @@ export const Services: React.FC = () => {
           >
             {isEn ? 'Our Expertise' : 'حلول نمو ذكية'}
           </motion.div>
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-2xl md:text-5xl font-black mb-4 tracking-tight text-[var(--text-primary)]"
-          >
-            {isEn ? 'Services built to scale' : 'خدمات تُبنى لتتوسع'}
-          </motion.h2>
+          {isStandalone ? (
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-3xl md:text-5xl font-black mb-4 tracking-tight text-[var(--text-primary)]"
+            >
+              {isEn ? 'Technology Services Built to Scale' : 'خدمات تقنية تُبنى لتتوسع'}
+            </motion.h1>
+          ) : (
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-2xl md:text-5xl font-black mb-4 tracking-tight text-[var(--text-primary)]"
+            >
+              {isEn ? 'Services built to scale' : 'خدمات تُبنى لتتوسع'}
+            </motion.h2>
+          )}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
