@@ -35,8 +35,8 @@ export const pageMetadata: Record<string, {
     title: 'منتجاتنا وأنظمتنا الرقمية | NMOLABS',
     titleAr: 'منتجاتنا وأنظمتنا الرقمية | NMOLABS',
     titleEn: 'Our Products & Digital Systems | NmoLabs',
-    description: 'استكشف منتجات وأنظمة NmoLabs الرقمية، بما فيها Nucleus وNBOS وNMO ERP وStore Intelligence، مع توضيح حالة كل منتج ونطاق استخدامه.'
-    descriptionAr: 'استكشف منتجات وأنظمة NmoLabs الرقمية، بما فيها Nucleus وNBOS وNMO ERP وStore Intelligence، مع توضيح حالة كل منتج ونطاق استخدامه.'
+    description: 'استكشف منتجات وأنظمة NmoLabs الرقمية، بما فيها Nucleus وNBOS وNMO ERP وStore Intelligence، مع توضيح حالة كل منتج ونطاق استخدامه.',
+    descriptionAr: 'استكشف منتجات وأنظمة NmoLabs الرقمية، بما فيها Nucleus وNBOS وNMO ERP وStore Intelligence، مع توضيح حالة كل منتج ونطاق استخدامه.',
     descriptionEn: 'Explore NmoLabs digital products and systems, including Nucleus, NBOS, NMO ERP, and Store Intelligence, with clear status and use-case information for each product.'
   },
   work: {
