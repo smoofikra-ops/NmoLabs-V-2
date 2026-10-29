@@ -43,14 +43,14 @@ export const ProjectDetailsPage = ({ slug }: Props) => {
   const textMuted = isDarkTheme ? 'text-gray-600' : 'text-white/70';
 
   return (
-    <article className="min-h-screen bg-[var(--surface-primary)]">
+    <article className="min-h-screen bg-transparent text-[var(--text-primary)]">
       <Helmet>
         <title>{isEn ? `${project.titleEn} | NmoLabs` : `${project.titleAr} | NmoLabs`}</title>
         <meta name="description" content={isEn ? project.summaryEn : project.summaryAr} />
       </Helmet>
 
       {/* Dynamic Header Section */}
-      <div className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden bg-[#0a0a0a]">
+      <div className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden bg-[var(--surface-secondary)] border-b border-[var(--border-default)]">
         <div 
           className="absolute inset-0 opacity-60 transition-colors duration-1000"
           style={{ background: project.backgroundGradient || `radial-gradient(circle at center, ${project.brandColor || '#333'} 0%, transparent 70%)` }}
@@ -70,7 +70,7 @@ export const ProjectDetailsPage = ({ slug }: Props) => {
             <div className="flex-1 w-full">
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                 <div className="flex flex-wrap items-center gap-4 mb-6">
-                  <span className={`px-4 py-1.5 rounded-full backdrop-blur-sm border border-white/20 ${textColor} text-sm font-bold bg-white/10`}>
+                  <span className={`px-4 py-1.5 rounded-full backdrop-blur-md border border-white/20 ${textColor} text-sm font-bold bg-black/10 dark:bg-white/10`}>
                     {isEn ? project.sectorEn : project.sectorAr}
                   </span>
                   {project.status === 'in_progress' && (
@@ -95,19 +95,21 @@ export const ProjectDetailsPage = ({ slug }: Props) => {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
-                className="aspect-video w-full rounded-3xl overflow-hidden bg-black/20 backdrop-blur-xl border border-white/10 relative shadow-2xl"
+                className="aspect-video w-full rounded-3xl overflow-hidden bg-[var(--surface-primary)]/75 backdrop-blur-xl border border-[var(--border-default)] relative shadow-[var(--card-shadow-3)]"
               >
                 {project.coverImage ? (
                   <img 
                     src={project.coverImage} 
                     alt={isEn ? project.titleEn : project.titleAr}
                     referrerPolicy="no-referrer"
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover"
                   />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-48 h-48 rounded-full blur-[80px]" style={{ backgroundColor: project.brandColor || 'var(--color-primary)' }} />
-                    <div className="relative z-10 w-24 h-24 rounded-full border border-white/20 flex items-center justify-center text-3xl font-bold text-white/50 backdrop-blur-md">
+                    <div className="relative z-10 w-24 h-24 rounded-full border border-[var(--border-default)] flex items-center justify-center text-3xl font-bold text-[var(--text-muted)] backdrop-blur-md bg-[var(--surface-primary)]/65">
                       {isEn ? project.titleEn.charAt(0) : project.titleAr.charAt(0)}
                     </div>
                   </div>
@@ -146,7 +148,7 @@ export const ProjectDetailsPage = ({ slug }: Props) => {
                 href={project.projectUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-white bg-[var(--text-primary)] px-5 py-2.5 rounded-full font-bold hover:bg-[var(--text-secondary)] transition-colors text-sm"
+                className="inline-flex items-center gap-2 text-white bg-[var(--color-primary)] px-5 py-2.5 rounded-full font-bold hover:bg-[var(--color-primary-hover)] transition-colors text-sm shadow-md"
               >
                 {isEn ? 'Visit Website' : 'زيارة الموقع'}
                 <ExternalLink size={16} />
@@ -198,18 +200,18 @@ export const ProjectDetailsPage = ({ slug }: Props) => {
 
       {/* CTA Section */}
       <div className="max-w-5xl mx-auto px-6 mb-24">
-        <div className="bg-[var(--text-primary)] rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
+        <div className="bg-gradient-to-br from-[var(--surface-primary)] to-[var(--surface-secondary)] border border-[var(--border-default)] rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden shadow-[var(--card-shadow-3)]">
           <div className="absolute inset-0 opacity-20" style={{ background: project.backgroundGradient || `radial-gradient(circle at center, ${project.brandColor} 0%, transparent 70%)` }} />
-          <h3 className="text-3xl md:text-5xl font-black text-[var(--surface-primary)] mb-6 relative z-10">
+          <h3 className="text-3xl md:text-5xl font-black text-[var(--text-primary)] mb-6 relative z-10">
             {isEn ? 'Have a similar project?' : 'لديك مشروع مشابه؟'}
           </h3>
-          <p className="text-xl text-[var(--surface-primary)]/80 mb-10 relative z-10">
+          <p className="text-xl text-[var(--text-secondary)] mb-10 relative z-10">
             {isEn ? 'Let\'s build your next experience.' : 'دعنا نبني تجربتك القادمة.'}
           </p>
           <button 
             onClick={() => triggerBookingModal(isEn ? 'Request Project' : 'طلب مشروع')}
             className="px-10 py-5 rounded-full font-bold text-lg transition-all hover:scale-105 relative z-10 shadow-xl"
-            style={{ backgroundColor: 'var(--surface-primary)', color: 'var(--text-primary)' }}
+            style={{ backgroundColor: 'var(--color-primary)', color: '#fff' }}
           >
             {isEn ? 'Start Your Project' : 'ابدأ مشروعك'}
           </button>

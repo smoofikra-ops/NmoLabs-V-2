@@ -44,7 +44,7 @@ const packages = [
     popular: true,
     color: 'from-[var(--color-secondary)]/30 to-[var(--color-primary)]/10',
     border: 'border-[var(--color-secondary)]',
-    buttonColor: 'bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-[var(--text-primary)] shadow-[0_0_20px_rgba(124,58,237,0.5)] animate-pulse-slow hover:shadow-[0_0_35px_rgba(124,58,237,0.8)]'
+    buttonColor: 'bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white shadow-[0_0_20px_rgba(15,98,254,0.28)] hover:shadow-[0_0_30px_rgba(15,98,254,0.38)]'
   },
   {
     id: 'full-ops',
@@ -120,7 +120,7 @@ export const EcommerceSaas = () => {
   const [hoveredPkg, setHoveredPkg] = useState<string | null>(null);
 
   return (
-    <section className="py-32 relative bg-[#07070F] overflow-hidden" id="ecommerce">
+    <section className="py-24 md:py-32 relative bg-transparent overflow-hidden border-y border-[var(--border-subtle)]" id="ecommerce">
       {/* Background Effects */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-[var(--color-secondary)]/10 rounded-full blur-[120px] opacity-50 pointer-events-none"></div>
       <div className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-[var(--color-primary)]/10 rounded-full blur-[150px] opacity-30 pointer-events-none"></div>
@@ -243,7 +243,7 @@ export const EcommerceSaas = () => {
                             <span className="w-4 h-px bg-gray-600 block mx-auto"></span>
                           )
                         ) : (
-                          <span className="text-sm font-bold text-gray-200">{value as React.ReactNode}</span>
+                          <span className="text-sm font-bold text-[var(--text-secondary)]">{value as React.ReactNode}</span>
                         )}
                       </td>
                     )
@@ -309,20 +309,18 @@ export const EcommerceSaas = () => {
             </ul>
           </div>
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] blur-[60px] opacity-20 rounded-full"></div>
-            <div className="relative glass-panel rounded-2xl p-6 border border-[var(--border-default)] flex flex-col gap-4 shadow-2xl">
-              <div className="flex justify-between items-center bg-[var(--surface-secondary)] p-4 rounded-xl border border-[var(--border-default)]">
-                <span className="text-[var(--text-muted)]">متوسط زيادة المبيعات</span>
-                <span className="text-[var(--color-accent)] font-bold text-xl">+145%</span>
-              </div>
-              <div className="flex justify-between items-center bg-[var(--surface-secondary)] p-4 rounded-xl border border-[var(--border-default)]">
-                <span className="text-[var(--text-muted)]">تحسين معدل التحويل</span>
-                <span className="text-[var(--color-primary)] font-bold text-xl">+2.4x</span>
-              </div>
-              <div className="flex justify-between items-center bg-[var(--surface-secondary)] p-4 rounded-xl border border-[var(--border-default)]">
-                <span className="text-[var(--text-muted)]">وقت الانطلاق</span>
-                <span className="text-[var(--color-secondary)] font-bold text-xl">أسرع بـ 3 أيام</span>
-              </div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] blur-[60px] opacity-15 rounded-full"></div>
+            <div className="relative glass-panel rounded-2xl p-6 border border-[var(--border-default)] flex flex-col gap-4 shadow-[var(--card-shadow-3)]">
+              {[
+                ['رحلة شراء أوضح', 'نبني تجربة متجر تقلل الاحتكاك وتسهّل وصول العميل للمنتج والطلب.'],
+                ['قياس قبل التخمين', 'نربط التتبع والتحليلات حتى تكون قرارات التطوير مبنية على البيانات الفعلية.'],
+                ['قابلية للتطوير', 'نبني الأساس التقني والتشغيلي بحيث يمكن تطوير المتجر والخدمات مع نمو النشاط.']
+              ].map(([title, description]) => (
+                <div key={title} className="bg-[var(--surface-secondary)] p-4 rounded-xl border border-[var(--border-default)]">
+                  <div className="font-black text-[var(--text-primary)] mb-1">{title}</div>
+                  <div className="text-sm leading-6 text-[var(--text-muted)]">{description}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
