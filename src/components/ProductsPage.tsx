@@ -31,7 +31,7 @@ export const ProductsPage = () => {
       case 'planning': return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
       case 'prototype': return 'bg-pink-500/20 text-pink-400 border-pink-500/30';
       case 'coming_soon': return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
-      default: return 'bg-white/10 text-white border-white/20';
+      default: return 'bg-[var(--surface-secondary)] text-[var(--text-secondary)] border-[var(--border-default)]';
     }
   };
 
@@ -158,6 +158,19 @@ export const ProductsPage = () => {
                 className="card-depth-2 group relative rounded-3xl p-8 bg-[var(--surface-secondary)] border border-[var(--border-default)] hover:border-[var(--interactive-border-active)] cursor-pointer overflow-hidden transition-all duration-300 flex flex-col h-full"
               >
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500" style={{ backgroundColor: product.brandColor }} />
+
+                {product.coverVisual && (
+                  <div className="relative z-10 -mx-8 -mt-8 mb-6 h-40 overflow-hidden border-b border-[var(--border-default)]">
+                    <img
+                      src={product.coverVisual}
+                      alt={isEn ? product.titleEn : product.titleAr}
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface-primary)] via-transparent to-transparent opacity-80" />
+                  </div>
+                )}
                 
                 <div className="flex items-center justify-between mb-8 relative z-10">
                   <span className={`px-3 py-1 rounded-full text-xs font-bold border ${getStatusStyle(product.status)}`}>
@@ -196,8 +209,8 @@ export const ProductsPage = () => {
 
           <div className="relative">
             {/* Horizontal line for desktop, vertical for mobile */}
-            <div className="hidden lg:block absolute top-12 left-0 w-full h-[2px] bg-white/10" />
-            <div className="lg:hidden absolute left-[28px] top-0 bottom-0 w-[2px] bg-white/10" />
+            <div className="hidden lg:block absolute top-12 left-0 w-full h-[2px] bg-[var(--border-default)]" />
+            <div className="lg:hidden absolute left-[28px] top-0 bottom-0 w-[2px] bg-[var(--border-default)]" />
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-4 relative">
               {[
@@ -211,14 +224,14 @@ export const ProductsPage = () => {
                 { icon: RefreshCw, titleEn: 'Iteration', titleAr: 'التحسين المستمر' },
               ].map((step, idx) => (
                 <div key={idx} className="flex flex-row lg:flex-col items-center lg:items-start gap-6 lg:gap-8 relative z-10">
-                  <div className="w-14 h-14 rounded-2xl bg-[#111] border-2 border-[var(--color-primary)]/50 flex items-center justify-center text-[var(--color-primary)] shadow-lg shadow-black shrink-0 relative lg:mx-auto">
+                  <div className="w-14 h-14 rounded-2xl bg-[var(--surface-primary)] border-2 border-[var(--color-primary)]/35 flex items-center justify-center text-[var(--color-primary)] shadow-[var(--card-shadow-2)] shrink-0 relative lg:mx-auto">
                     <step.icon size={24} />
-                    <div className="absolute -right-2 -top-2 w-6 h-6 rounded-full bg-[var(--color-primary)] text-black text-xs font-bold flex items-center justify-center">
+                    <div className="absolute -right-2 -top-2 w-6 h-6 rounded-full bg-[var(--color-primary)] text-white text-xs font-bold flex items-center justify-center">
                       {idx + 1}
                     </div>
                   </div>
                   <div className="lg:text-center">
-                    <h4 className="font-bold text-lg text-white mb-2">{isEn ? step.titleEn : step.titleAr}</h4>
+                    <h4 className="font-bold text-lg text-[var(--text-primary)] mb-2">{isEn ? step.titleEn : step.titleAr}</h4>
                   </div>
                 </div>
               ))}
@@ -228,10 +241,10 @@ export const ProductsPage = () => {
       </section>
 
       {/* Why NmoLabs Products */}
-      <section className="py-32 relative z-10 bg-black/40">
+      <section className="py-24 md:py-32 relative z-10 bg-[var(--surface-primary)]/34 border-y border-[var(--border-subtle)]">
         <div className="max-w-5xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-5xl font-black mb-8">{isEn ? 'Not off-the-shelf tools for everyone' : 'ليست أدوات جاهزة للجميع'}</h2>
-          <p className="text-xl md:text-2xl text-white/60 mb-16 leading-relaxed">
+          <p className="text-xl md:text-2xl text-[var(--text-secondary)] mb-16 leading-relaxed">
             {isEn ? 'We build our products around real problems we face with companies and stores, then transform them into practical, scalable solutions.' : 'نبني منتجاتنا حول مشكلات حقيقية نواجهها مع الشركات والمتاجر، ثم نحولها إلى حلول عملية قابلة للتطوير.'}
           </p>
 
@@ -245,7 +258,7 @@ export const ProductsPage = () => {
               { en: 'Designed for growth and scale.', ar: 'مصممة للنمو والتوسع.' },
               { en: 'Backed by operational & marketing expertise.', ar: 'مدعومة بخبرة تشغيلية وتسويقية.' }
             ].map((point, idx) => (
-              <div key={idx} className="flex items-center gap-4 bg-[#111] p-6 rounded-2xl border border-white/5">
+              <div key={idx} className="flex items-center gap-4 bg-[var(--surface-primary)]/90 p-6 rounded-2xl border border-[var(--border-default)] shadow-[var(--card-shadow-1)]">
                 <div className="w-8 h-8 rounded-full bg-[var(--color-primary)]/20 text-[var(--color-primary)] flex items-center justify-center shrink-0">
                   <CheckCircle size={16} />
                 </div>
@@ -259,13 +272,13 @@ export const ProductsPage = () => {
       {/* CTA */}
       <section className="py-32 relative z-10">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="bg-gradient-to-br from-[#111] to-black border border-white/10 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
+          <div className="bg-gradient-to-br from-[var(--surface-primary)] to-[var(--surface-secondary)] border border-[var(--border-default)] rounded-[3rem] p-10 md:p-20 text-center relative overflow-hidden shadow-[var(--card-shadow-3)]">
             <div className="absolute inset-0 bg-[var(--color-primary)]/5 opacity-50 blur-3xl" />
             
-            <h2 className="text-3xl md:text-5xl font-black mb-6 relative z-10 text-white">
+            <h2 className="text-3xl md:text-5xl font-black mb-6 relative z-10 text-[var(--text-primary)]">
               {isEn ? 'Have a problem worth a product?' : 'هل لديك مشكلة تستحق منتجاً؟'}
             </h2>
-            <p className="text-xl text-white/60 mb-12 relative z-10 max-w-2xl mx-auto">
+            <p className="text-xl text-[var(--text-secondary)] mb-12 relative z-10 max-w-2xl mx-auto">
               {isEn ? 'Your next idea could be a full system, platform, or tech product. We help you turn it from a concept into a working solution.' : 'قد تكون فكرتك القادمة نظاماً أو منصة أو منتجاً تقنياً متكاملاً. نساعدك على تحويلها من تصور أولي إلى حل يعمل.'}
             </p>
             
@@ -281,7 +294,7 @@ export const ProductsPage = () => {
                   updateConfig({ currentRoute: 'work' });
                   window.scrollTo({top: 0, behavior: 'smooth'});
                 }}
-                className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-white bg-white/10 hover:bg-white/20 border border-white/10 transition-all"
+                className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-[var(--text-primary)] bg-[var(--surface-secondary)] hover:bg-[var(--surface-elevated)] border border-[var(--border-default)] transition-all"
               >
                 {isEn ? 'Explore Our Work' : 'استكشف أعمالنا'}
               </button>
@@ -312,31 +325,31 @@ const FeaturedProductSection = ({ product, index, isEn, updateConfig, onInView, 
           
           <div className="flex-1 w-full">
             <div className="flex items-center gap-4 mb-8">
-              <span className="text-6xl font-black text-white/10">0{index + 1}</span>
-              <div className="h-[1px] flex-grow bg-white/10" />
+              <span className="text-6xl font-black text-[var(--text-muted)]/25">0{index + 1}</span>
+              <div className="h-[1px] flex-grow bg-[var(--border-default)]" />
             </div>
 
             <div className="flex flex-wrap items-center gap-3 mb-6">
               <span className={`px-4 py-1.5 rounded-full text-sm font-bold border backdrop-blur-sm ${getStatusStyle(product.status)}`}>
                 {getStatusText(product.status, isEn)}
               </span>
-              <span className="px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-sm font-bold backdrop-blur-sm">
+              <span className="px-4 py-1.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)] text-sm font-bold backdrop-blur-sm">
                 {product.category}
               </span>
             </div>
 
-            <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tight text-white">
+            <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tight text-[var(--text-primary)]">
               {isEn ? product.titleEn : product.titleAr}
             </h2>
 
-            <p className="text-xl md:text-2xl text-white/60 mb-8 leading-relaxed">
+            <p className="text-xl md:text-2xl text-[var(--text-secondary)] mb-8 leading-relaxed">
               {isEn ? product.summaryEn : product.summaryAr}
             </p>
 
             <div className="space-y-6 mb-12">
               <div>
-                <h4 className="text-sm font-bold text-white/40 mb-3 uppercase tracking-wider">{isEn ? 'Core Problem' : 'المشكلة الأساسية'}</h4>
-                <p className="text-lg font-medium text-white/80">{isEn ? product.problemsEn[0] : product.problemsAr[0]}</p>
+                <h4 className="text-sm font-bold text-[var(--text-muted)] mb-3 uppercase tracking-wider">{isEn ? 'Core Problem' : 'المشكلة الأساسية'}</h4>
+                <p className="text-lg font-medium text-[var(--text-secondary)]">{isEn ? product.problemsEn[0] : product.problemsAr[0]}</p>
               </div>
               <div>
                 <h4 className="text-sm font-bold text-white/40 mb-3 uppercase tracking-wider">{isEn ? 'Main Benefit' : 'الفائدة الرئيسية'}</h4>
@@ -351,15 +364,15 @@ const FeaturedProductSection = ({ product, index, isEn, updateConfig, onInView, 
                 onClick={() => {
                   updateConfig({ currentRoute: `products/${product.slug}` });
                 }}
-                className="px-8 py-4 rounded-full font-bold text-black transition-transform active:scale-95 text-center shadow-lg shadow-white/5"
-                style={{ backgroundColor: 'white' }}
+                className="px-8 py-4 rounded-full font-bold text-white bg-[var(--color-primary)] transition-transform active:scale-95 text-center shadow-lg shadow-[var(--color-primary)]/20"
+                
               >
                 {isEn ? 'Explore Product' : 'استكشف المنتج'}
               </button>
               {product.demoAvailable && (
                 <button 
                   onClick={() => triggerBookingModal(isEn ? `Request Demo: ${product.titleEn}` : `طلب عرض: ${product.titleAr}`)}
-                  className="px-8 py-4 rounded-full font-bold text-white bg-white/10 border border-white/20 hover:bg-white/20 transition-all text-center"
+                  className="px-8 py-4 rounded-full font-bold text-[var(--text-primary)] bg-[var(--surface-secondary)] border border-[var(--border-default)] hover:bg-[var(--surface-elevated)] transition-all text-center"
                 >
                   {isEn ? 'Request Demo' : 'طلب عرض توضيحي'}
                 </button>
@@ -369,17 +382,17 @@ const FeaturedProductSection = ({ product, index, isEn, updateConfig, onInView, 
 
           <div className="flex-1 w-full max-w-2xl">
             <div 
-              className="aspect-square md:aspect-[4/3] rounded-[2rem] p-1 border border-white/10 relative overflow-hidden group cursor-pointer shadow-2xl"
+              className="aspect-square md:aspect-[4/3] rounded-[2rem] p-1 border border-[var(--border-default)] relative overflow-hidden group cursor-pointer shadow-[var(--card-shadow-3)] bg-[var(--surface-secondary)]"
               onClick={() => {
                 updateConfig({ currentRoute: `products/${product.slug}` });
               }}
             >
-              <div className="absolute inset-0 bg-[#0a0a0a] rounded-[2rem]" />
+              <div className="absolute inset-0 bg-[var(--surface-secondary)] rounded-[2rem]" />
               <div className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-700 blur-3xl" style={{ backgroundColor: product.brandColor }} />
               
               {/* Abstract Mockup Area */}
-              <div className="absolute inset-4 rounded-[1.5rem] bg-[#111] border border-white/5 overflow-hidden flex flex-col relative group">
-                <div className="h-12 border-b border-white/5 flex items-center px-6 gap-2 bg-black/40 backdrop-blur-md z-20 absolute top-0 w-full">
+              <div className="absolute inset-4 rounded-[1.5rem] bg-[var(--surface-primary)] border border-[var(--border-default)] overflow-hidden flex flex-col relative group">
+                <div className="h-12 border-b border-white/10 flex items-center px-6 gap-2 bg-slate-950/45 backdrop-blur-md z-20 absolute top-0 w-full">
                   <div className="w-3 h-3 rounded-full bg-white/20" />
                   <div className="w-3 h-3 rounded-full bg-white/20" />
                   <div className="w-3 h-3 rounded-full bg-white/20" />

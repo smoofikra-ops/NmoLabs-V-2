@@ -25,8 +25,8 @@ export const ProductDetailsPage = ({ slug }: Props) => {
 
   if (!product) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 bg-[#050505]">
-        <h1 className="text-4xl font-bold text-white mb-4">Product Not Found</h1>
+      <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 bg-[var(--page-background)]">
+        <h1 className="text-4xl font-bold text-[var(--text-primary)] mb-4">Product Not Found</h1>
         <button 
           onClick={() => updateConfig({ currentRoute: 'products' })}
           className="text-[var(--color-primary)] font-bold flex items-center gap-2"
@@ -58,7 +58,7 @@ export const ProductDetailsPage = ({ slug }: Props) => {
       </Helmet>
 
       {/* Dynamic Header Section */}
-      <div className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden bg-[#050505] border-b border-white/5">
+      <div className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden bg-[#050505] border-b border-[var(--border-subtle)]">
         <div 
           className="absolute inset-0 opacity-20 pointer-events-none mix-blend-screen z-0"
           style={{ background: `radial-gradient(circle at 50% 0%, ${product.brandColor} 0%, transparent 70%)` }}
@@ -68,7 +68,7 @@ export const ProductDetailsPage = ({ slug }: Props) => {
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <button 
             onClick={() => updateConfig({ currentRoute: 'products' })}
-            className="font-bold flex items-center gap-2 mb-12 transition-colors w-fit text-white/60 hover:text-white"
+            className="font-bold flex items-center gap-2 mb-12 transition-colors w-fit text-[var(--text-secondary)] hover:text-white"
           >
             {isEn ? <ArrowLeft size={20} /> : <ArrowRight size={20} />}
             {isEn ? 'Back to Products' : 'العودة إلى المنتجات'}
@@ -78,10 +78,10 @@ export const ProductDetailsPage = ({ slug }: Props) => {
             <div className="flex-1 w-full">
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                 <div className="flex flex-wrap items-center gap-4 mb-6">
-                  <span className="px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-sm font-bold backdrop-blur-sm">
+                  <span className="px-4 py-1.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-white text-sm font-bold backdrop-blur-sm">
                     {product.category}
                   </span>
-                  <span className="px-4 py-1.5 rounded-full text-sm font-bold border border-white/20 bg-[#111]">
+                  <span className="px-4 py-1.5 rounded-full text-sm font-bold border border-white/20 bg-[var(--surface-primary)]">
                     {getStatusText(product.status, isEn)}
                   </span>
                 </div>
@@ -98,8 +98,8 @@ export const ProductDetailsPage = ({ slug }: Props) => {
                   {product.demoAvailable && (
                     <button 
                       onClick={() => triggerBookingModal(isEn ? `Request Demo: ${product.titleEn}` : `طلب عرض: ${product.titleAr}`)}
-                      className="px-8 py-4 rounded-full font-bold text-black transition-transform active:scale-95 text-center shadow-lg shadow-white/5"
-                      style={{ backgroundColor: 'white' }}
+                      className="px-8 py-4 rounded-full font-bold text-white transition-transform active:scale-95 text-center shadow-lg shadow-white/5"
+                      style={{ backgroundColor: 'var(--color-primary)' }}
                     >
                       {isEn ? 'Request Demo' : 'طلب عرض توضيحي'}
                     </button>
@@ -120,7 +120,7 @@ export const ProductDetailsPage = ({ slug }: Props) => {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
-                className="aspect-square w-full rounded-[2.5rem] bg-[#111] border border-white/10 relative shadow-2xl p-6 overflow-hidden flex flex-col"
+                className="aspect-square w-full rounded-[2.5rem] bg-[#111] border border-[var(--border-default)] relative shadow-2xl p-6 overflow-hidden flex flex-col"
               >
                 <div className="absolute inset-0 opacity-30 blur-[80px]" style={{ backgroundColor: product.brandColor }} />
                 
@@ -137,11 +137,11 @@ export const ProductDetailsPage = ({ slug }: Props) => {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       referrerPolicy="no-referrer"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent pointer-events-none" />
                   </div>
                 ) : (
                   <div className="flex-grow flex flex-col gap-4 relative z-10">
-                    <div className="h-32 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/20 font-black text-6xl">
+                    <div className="h-32 rounded-2xl bg-[var(--surface-secondary)]/70 border border-white/10 flex items-center justify-center text-[var(--text-muted)]/40 font-black text-6xl">
                       {isEn ? product.shortNameEn.charAt(0) : product.shortNameAr.charAt(0)}
                     </div>
                     <div className="grid grid-cols-2 gap-4 flex-grow">
@@ -161,7 +161,7 @@ export const ProductDetailsPage = ({ slug }: Props) => {
 
       <div className="max-w-4xl mx-auto px-6 mt-16">
         {/* Content Sections */}
-        <div className="space-y-20 text-lg md:text-xl text-white/70 leading-relaxed mb-32">
+        <div className="space-y-20 text-lg md:text-xl text-[var(--text-secondary)] leading-relaxed mb-32">
           
           <section>
             <h2 className="text-3xl font-bold text-white mb-6">{isEn ? 'Overview' : 'نظرة عامة'}</h2>
@@ -190,7 +190,7 @@ export const ProductDetailsPage = ({ slug }: Props) => {
                   <div className="mt-1 text-[var(--color-primary)] shrink-0" style={{ color: product.brandColor }}>
                     <CheckCircle2 size={18} />
                   </div>
-                  <span className="text-white/90">{benefit}</span>
+                  <span className="text-[var(--text-primary)]">{benefit}</span>
                 </li>
               ))}
             </ul>
@@ -211,7 +211,7 @@ export const ProductDetailsPage = ({ slug }: Props) => {
             <h2 className="text-3xl font-bold text-white mb-6">{isEn ? 'Target Audience' : 'الفئة المستهدفة'}</h2>
             <div className="flex flex-wrap gap-3">
               {(isEn ? product.targetAudienceEn : product.targetAudienceAr).map((audience, idx) => (
-                <span key={idx} className="px-5 py-3 rounded-xl bg-white/5 border border-white/5 text-white/80 text-base">
+                <span key={idx} className="px-5 py-3 rounded-xl bg-white/5 border border-white/5 text-[var(--text-secondary)] text-base">
                   {audience}
                 </span>
               ))}
@@ -263,7 +263,7 @@ export const ProductDetailsPage = ({ slug }: Props) => {
               onClick={() => updateConfig({ currentRoute: `products/${prevProduct.slug}` })}
               className="text-left group flex flex-col items-start"
             >
-              <span className="text-white/40 text-sm font-bold mb-3 flex items-center gap-2">
+              <span className="text-[var(--text-muted)] text-sm font-bold mb-3 flex items-center gap-2">
                 <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
                 {isEn ? 'Previous Product' : 'المنتج السابق'}
               </span>

@@ -11,7 +11,7 @@ export const ProductsPreview = () => {
   const previewProducts = productsData.filter(p => p.featured).slice(0, 3);
 
   return (
-    <section className="py-10 sm:py-10 md:py-10 md:py-20 bg-[#050505] relative overflow-hidden" id="products">
+    <section className="py-10 sm:py-10 md:py-20 relative overflow-hidden bg-transparent" id="products">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[500px] opacity-10 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-primary)] to-transparent blur-[120px] rounded-full mix-blend-screen" />
       </div>
@@ -20,10 +20,10 @@ export const ProductsPreview = () => {
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-12 sm:mb-10 lg:mb-20">
           <div className="max-w-2xl">
             <span className="text-[var(--color-primary)] font-bold text-xs sm:text-sm tracking-widest uppercase mb-2 sm:mb-4 block">NmoLabs Products</span>
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6 tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-[var(--text-primary)] mb-4 sm:mb-6 tracking-tight leading-tight">
               {isEn ? 'Products built to transform work' : 'منتجات نبنيها لتغيّر طريقة العمل'}
             </h2>
-            <p className="text-base sm:text-xl text-white/60">
+            <p className="text-base sm:text-xl text-[var(--text-secondary)]">
               {isEn ? 'From smart assistants to referral and analytics systems, we develop tools that help businesses sell, manage, and grow.' : 'من المساعدات الذكية إلى أنظمة الإحالات والتحليل، نطوّر أدوات تساعد الشركات على البيع والإدارة والنمو.'}
             </p>
           </div>
@@ -32,7 +32,7 @@ export const ProductsPreview = () => {
               updateConfig({ currentRoute: 'products' });
               window.scrollTo({top: 0, behavior: 'smooth'});
             }}
-            className="group flex items-center gap-3 text-white font-bold hover:text-[var(--color-primary)] transition-colors whitespace-nowrap bg-white/5 px-6 py-3 rounded-full border border-white/10 hover:bg-white/10 w-full sm:w-auto justify-center"
+            className="group flex items-center gap-3 text-[var(--text-primary)] font-bold hover:text-[var(--color-primary)] transition-colors whitespace-nowrap bg-[var(--surface-primary)]/80 px-6 py-3 rounded-full border border-[var(--border-default)] hover:border-[var(--border-hover)] hover:bg-[var(--surface-elevated)] w-full sm:w-auto justify-center shadow-[var(--card-shadow-1)]"
           >
             {isEn ? 'Explore All Products' : 'استكشف جميع المنتجات'}
             {isEn ? <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" /> : <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />}
@@ -51,14 +51,14 @@ export const ProductsPreview = () => {
                 updateConfig({ currentRoute: `products/${product.slug}` });
                 window.scrollTo({top: 0, behavior: 'smooth'});
               }}
-              className={`group relative rounded-3xl p-4 sm:p-8 bg-[#111] border border-white/10 hover:border-white/30 cursor-pointer overflow-hidden transition-all duration-300 flex flex-col h-full ${idx === 0 ? 'col-span-2 lg:col-span-1 min-h-[220px]' : 'col-span-1 min-h-[200px]'}`}
+              className={`group relative rounded-3xl p-4 sm:p-8 bg-[var(--surface-primary)] border border-[var(--border-default)] hover:border-[var(--border-hover)] cursor-pointer overflow-hidden transition-all duration-300 flex flex-col h-full shadow-[var(--card-shadow-2)] hover:shadow-[var(--card-shadow-hover)] ${idx === 0 ? 'col-span-2 lg:col-span-1 min-h-[220px]' : 'col-span-1 min-h-[200px]'}`}
             >
               {product.coverVisual ? (
                  <>
                    <div className="absolute inset-0 z-0">
                      <img src={product.coverVisual} className="w-full h-full object-cover opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700" alt={isEn ? product.titleEn : product.titleAr} />
                    </div>
-                   <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-[#111]/80 to-transparent z-0" />
+                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/72 to-slate-950/10 z-0" />
                  </>
               ) : (
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0" style={{ backgroundColor: product.brandColor }} />
