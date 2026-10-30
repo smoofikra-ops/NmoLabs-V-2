@@ -65,7 +65,7 @@ export const PinnedStoryScene: React.FC<PinnedStorySceneProps> = ({
       <div className="sticky top-0 h-[100svh] min-h-[640px] max-h-[1080px] w-full overflow-hidden flex flex-col justify-between py-4 sm:py-6 lg:py-8 z-10">
         {/* Clean story canvas: no section photography or screen imagery */}
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute inset-0" style={{ backgroundColor: 'var(--page-background)' }} />
+          <div className="absolute inset-0 nmolabs-story-scrim" />
           <div
             className="absolute inset-0 opacity-60"
             style={{

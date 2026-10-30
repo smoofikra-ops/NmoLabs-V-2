@@ -1,42 +1,65 @@
 import React from 'react';
 import { useSite } from '../context/SiteContext';
 
+// A single atmospheric layer shared by the homepage and inner routes.
+// Decorative only: no heavy WebGL, no input capture, reduced-motion friendly.
+const stars = Array.from({ length: 84 }, (_, i) => ({
+  x: (i * 73.79 + (i % 7) * 19.17) % 100,
+  y: (i * 37.31 + (i % 11) * 13.07) % 100,
+  size: i % 11 === 0 ? 3 : i % 4 === 0 ? 2 : 1,
+  delay: (i % 19) * -0.47,
+  duration: 3 + (i % 8) * 0.71,
+}));
+
+const cityLights = Array.from({ length: 78 }, (_, i) => ({
+  x: 19 + ((i * 29.71 + Math.sin(i * 2.1) * 10) % 64),
+  y: 21 + ((i * 17.93 + Math.cos(i * 1.8) * 9) % 55),
+  size: i % 8 === 0 ? 3 : 1.4,
+}));
+
 export const InteractiveBackground: React.FC = () => {
   const { config } = useSite();
-  const isDark = config.theme === 'dark';
-
   return (
-    <div
-      className="nmolabs-atmosphere fixed inset-0 pointer-events-none z-[-1] overflow-hidden"
-      aria-hidden="true"
-      data-theme={isDark ? 'dark' : 'light'}
-    >
-      <div className="nmolabs-atmosphere-base absolute inset-0" />
-
-      {/* Quiet star / data field: visible enough to give depth, never enough to compete with copy. */}
-      <div className="nmolabs-atmosphere-stars absolute inset-0" />
-      <div className="nmolabs-atmosphere-stars nmolabs-atmosphere-stars-secondary absolute inset-0" />
-
-      {/* Story thread — a subtle path that visually connects the long-form homepage journey. */}
-      <div className="nmolabs-story-thread absolute left-1/2 top-[14vh] h-[72vh] w-[min(76vw,1080px)] -translate-x-1/2">
-        <span className="nmolabs-story-orbit nmolabs-story-orbit-a" />
-        <span className="nmolabs-story-orbit nmolabs-story-orbit-b" />
-        <span className="nmolabs-story-node nmolabs-story-node-a" />
-        <span className="nmolabs-story-node nmolabs-story-node-b" />
-        <span className="nmolabs-story-node nmolabs-story-node-c" />
+    <div className="nmolabs-cosmos" aria-hidden="true" data-theme={config.theme}>
+      <div className="nmolabs-cosmos-haze" />
+      <div className="nmolabs-cosmos-stars">
+        {stars.map((star, i) => (
+          <span
+            key={i}
+            className="nmolabs-cosmos-star"
+            style={{
+              left: `${star.x}%`,
+              top: `${star.y}%`,
+              width: star.size,
+              height: star.size,
+              animationDelay: `${star.delay}s`,
+              animationDuration: `${star.duration}s`
+            }}
+          />
+        ))}
       </div>
-
-      {/* Earth / global-growth cue. Kept mostly below the fold so it reads as atmosphere, not a hero illustration. */}
-      <div className="nmolabs-earth absolute">
-        <span className="nmolabs-earth-latitude nmolabs-earth-latitude-a" />
-        <span className="nmolabs-earth-latitude nmolabs-earth-latitude-b" />
-        <span className="nmolabs-earth-longitude nmolabs-earth-longitude-a" />
-        <span className="nmolabs-earth-longitude nmolabs-earth-longitude-b" />
+      <div className="nmolabs-cosmos-nebula" />
+      <div className="nmolabs-cosmos-planet nmolabs-cosmos-planet-far" />
+      <div className="nmolabs-cosmos-earth" role="presentation">
+        <div className="nmolabs-earth-nightshade" />
+        <div className="nmolabs-earth-contours" />
+        <div className="nmolabs-earth-meridians" />
+        <div className="nmolabs-earth-citylights">
+          {cityLights.map((light,i) => (
+            <span key={i} style={{
+              left: `${light.x}%`,
+              top: `${light.y}%`,
+              width: light.size,
+              height: light.size,
+            }} />
+          ))}
+        </div>
+        <div className="nmolabs-earth-glint" />
       </div>
-
-      <div className="nmolabs-atmosphere-glow nmolabs-atmosphere-glow-a absolute" />
-      <div className="nmolabs-atmosphere-glow nmolabs-atmosphere-glow-b absolute" />
-      <div className="nmolabs-atmosphere-readability absolute inset-0" />
+      <span className="nmolabs-meteor nmolabs-meteor-one" />
+      <span className="nmolabs-meteor nmolabs-meteor-two" />
+      <span className="nmolabs-meteor nmolabs-meteor-three" />
+      <div className="nmolabs-cosmos-vignette" />
     </div>
   );
 };

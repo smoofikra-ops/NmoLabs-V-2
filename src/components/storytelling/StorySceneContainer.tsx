@@ -49,7 +49,7 @@ export const StorySceneContainer: React.FC<StorySceneContainerProps> = ({
     >
       {/* Clean story canvas: intentionally no photographic section backgrounds */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0" style={{ backgroundColor: 'var(--page-background)' }} />
+        <div className="absolute inset-0 nmolabs-story-scrim" />
         <div
           className="absolute inset-0 opacity-60"
           style={{

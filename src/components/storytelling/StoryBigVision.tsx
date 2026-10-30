@@ -98,7 +98,7 @@ export const StoryBigVision: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.6 }}
-            className="relative rounded-3xl bg-[var(--surface-primary)]/95 backdrop-blur-xl p-8 sm:p-10 shadow-xl overflow-hidden text-center mb-6 transition-all border border-[var(--border-default)]"
+            className="relative rounded-3xl bg-[var(--surface-primary)]/78 backdrop-blur-xl p-8 sm:p-10 shadow-xl overflow-hidden text-center mb-6 transition-all border border-[var(--border-default)]"
           >
             <div
               className="absolute inset-0 pointer-events-none"
