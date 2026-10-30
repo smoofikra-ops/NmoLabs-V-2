@@ -1302,3 +1302,44 @@ a[class*="px-"][class*="py-"] {
  .nmolabs-cosmos-star,.nmolabs-cosmos-nebula,.nmolabs-cosmos-earth,.nmolabs-meteor{animation:none!important;}
  .nmolabs-meteor{display:none;}
 }
+
+
+/* User-approved NBOS cinematic background — animate the actual supplied still image,
+   not a video or a synthetic substitute. Shared across all regular pages. */
+.nmolabs-cosmos-photo {
+  position: absolute;
+  inset: -7%;
+  z-index: 0;
+  background-image: url("https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/projects/nbos/welcome-nbos-screen.jpeg");
+  background-size: cover;
+  background-position: 50% 48%;
+  background-repeat: no-repeat;
+  opacity: .66;
+  transform: scale(1.09) translate3d(0, 0, 0);
+  transform-origin: center center;
+  animation: nmolabs-cinematic-photo 37s ease-in-out infinite alternate;
+  will-change: transform;
+}
+.nmolabs-cosmos-haze { z-index: 1; opacity: .68; }
+.nmolabs-cosmos-stars { z-index: 2; }
+.nmolabs-cosmos-nebula { z-index: 1; opacity: .3; }
+.nmolabs-cosmos-planet-far { z-index: 1; opacity: .25; }
+.nmolabs-meteor { z-index: 3; }
+.nmolabs-cosmos-vignette {
+  z-index: 4;
+  background: linear-gradient(180deg,rgba(2,6,16,.42),rgba(2,6,16,.10) 36%,rgba(2,6,16,.35));
+}
+.theme-light .nmolabs-cosmos-photo { opacity: .17; }
+.theme-light .nmolabs-cosmos-vignette { background: rgba(248,251,255,.50); }
+@keyframes nmolabs-cinematic-photo {
+  0% { transform: scale(1.09) translate3d(-1.4%, .4%, 0); }
+  45% { transform: scale(1.18) translate3d(1.15%, -1.15%, 0); }
+  100% { transform: scale(1.11) translate3d(-.5%, 1.3%, 0); }
+}
+@media (max-width: 700px) {
+  .nmolabs-cosmos-photo { inset: -10%; background-position: 60% 50%; opacity: .51; animation-duration: 43s; }
+  .theme-light .nmolabs-cosmos-photo { opacity: .13; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nmolabs-cosmos-photo { animation: none !important; transform: scale(1.06); will-change: auto; }
+}

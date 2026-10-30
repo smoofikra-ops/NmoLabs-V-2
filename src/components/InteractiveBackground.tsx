@@ -21,6 +21,7 @@ export const InteractiveBackground: React.FC = () => {
   const { config } = useSite();
   return (
     <div className="nmolabs-cosmos" aria-hidden="true" data-theme={config.theme}>
+      <div className="nmolabs-cosmos-photo" />
       <div className="nmolabs-cosmos-haze" />
       <div className="nmolabs-cosmos-stars">
         {stars.map((star, i) => (
@@ -40,22 +41,6 @@ export const InteractiveBackground: React.FC = () => {
       </div>
       <div className="nmolabs-cosmos-nebula" />
       <div className="nmolabs-cosmos-planet nmolabs-cosmos-planet-far" />
-      <div className="nmolabs-cosmos-earth" role="presentation">
-        <div className="nmolabs-earth-nightshade" />
-        <div className="nmolabs-earth-contours" />
-        <div className="nmolabs-earth-meridians" />
-        <div className="nmolabs-earth-citylights">
-          {cityLights.map((light,i) => (
-            <span key={i} style={{
-              left: `${light.x}%`,
-              top: `${light.y}%`,
-              width: light.size,
-              height: light.size,
-            }} />
-          ))}
-        </div>
-        <div className="nmolabs-earth-glint" />
-      </div>
       <span className="nmolabs-meteor nmolabs-meteor-one" />
       <span className="nmolabs-meteor nmolabs-meteor-two" />
       <span className="nmolabs-meteor nmolabs-meteor-three" />
