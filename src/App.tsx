@@ -12,7 +12,6 @@ import { InteractiveBackground } from './components/InteractiveBackground';
 
 import { WhatsAppWidget } from './components/WhatsAppWidget';
 import { BackToTop } from './components/BackToTop';
-import { SectionDivider } from './components/SectionDivider';
 
 const StoryCustomSolutions = lazy(() => import('./components/storytelling/StoryCustomSolutions').then(module => ({ default: module.StoryCustomSolutions })));
 const StoryEcommerce = lazy(() => import('./components/storytelling/StoryEcommerce').then(module => ({ default: module.StoryEcommerce })));
@@ -144,16 +143,13 @@ const MainContent = () => {
 
   return (
     <main>
-      {enabledSectionIds.map((id, index) => {
+      {enabledSectionIds.map((id) => {
         const sectionElement = renderSection(id);
         if (!sectionElement) return null;
 
         return (
           <React.Fragment key={id}>
             {sectionElement}
-            {index < enabledSectionIds.length - 1 && (
-              <SectionDivider key={`divider-${id}`} />
-            )}
           </React.Fragment>
         );
       })}

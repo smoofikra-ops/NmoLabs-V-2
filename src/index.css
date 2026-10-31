@@ -1343,3 +1343,18 @@ a[class*="px-"][class*="py-"] {
 @media (prefers-reduced-motion: reduce) {
   .nmolabs-cosmos-photo { animation: none !important; transform: scale(1.06); will-change: auto; }
 }
+
+
+/* Visual continuity: no edge-to-edge section rectangles over the cinematic sky. */
+.nmolabs-site-root main { background: transparent; }
+.nmolabs-site-root main > section,
+.nmolabs-site-root main > div,
+.nmolabs-site-root main section[id^="story-"] {
+  background-color: transparent !important;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+.nmolabs-site-root main > section::before { background: none !important; }
+.nmolabs-site-root .nmolabs-story-scrim { display: none !important; }
+/* Preserve individual card surfaces, readable text, navigation and CTAs. */
+.nmolabs-site-root main [class*="rounded-"] { background-clip: padding-box; }
