@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.nmolabs.com/</loc><lastmod>2026-10-28</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://www.nmolabs.com/about</loc><lastmod>2026-10-28</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.nmolabs.com/services</loc><lastmod>2026-10-28</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.nmolabs.com/work</loc><lastmod>2026-10-28</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.nmolabs.com/products</loc><lastmod>2026-10-28</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.nmolabs.com/innovation-lab</loc><lastmod>2026-10-28</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.nmolabs.com/founder</loc><lastmod>2026-10-28</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.nmolabs.com/brand</loc><lastmod>2026-10-28</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.nmolabs.com/blog</loc><lastmod>2026-10-28</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.nmolabs.com/faq</loc><lastmod>2026-10-28</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.nmolabs.com/privacy</loc><lastmod>2026-10-28</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://www.nmolabs.com/terms</loc><lastmod>2026-10-28</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap><loc>https://www.nmolabs.com/sitemap-pages.xml</loc></sitemap>
+  <sitemap><loc>https://www.nmolabs.com/sitemap-services.xml</loc></sitemap>
+  <sitemap><loc>https://www.nmolabs.com/sitemap-products.xml</loc></sitemap>
+  <sitemap><loc>https://www.nmolabs.com/sitemap-work.xml</loc></sitemap>
+  <sitemap><loc>https://www.nmolabs.com/sitemap-innovation.xml</loc></sitemap>
+  <sitemap><loc>https://www.nmolabs.com/sitemap-legal.xml</loc></sitemap>
+</sitemapindex>
