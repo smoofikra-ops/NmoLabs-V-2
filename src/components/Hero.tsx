@@ -166,9 +166,9 @@ export const Hero = () => {
     : config.heroButtonText;
 
   return (
-    <section className="relative min-h-auto pt-[calc(var(--nmolabs-header-height,105px)+1rem+env(safe-area-inset-top))] pb-14 sm:pt-[calc(var(--nmolabs-header-height,105px)+1.5rem+env(safe-area-inset-top))] sm:pb-20 md:pt-28 md:pb-16 lg:py-24 lg:min-h-screen flex items-center overflow-hidden bg-[var(--surface-brand)]" id="hero">
+    <section className="relative min-h-auto pt-[calc(var(--nmolabs-header-height,105px)+1rem+env(safe-area-inset-top))] pb-14 sm:pt-[calc(var(--nmolabs-header-height,105px)+1.5rem+env(safe-area-inset-top))] sm:pb-20 md:pt-28 md:pb-16 lg:py-24 lg:min-h-screen flex items-center overflow-hidden bg-transparent nmolabs-seamless-hero" id="hero">
       {/* STORY 01 — Background World Layer */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+      <div className="nmolabs-hero-art absolute inset-0 pointer-events-none overflow-hidden z-0">
         <img
           src={STORY_ASSETS.STORY_01_HERO}
           alt=""
@@ -179,8 +179,8 @@ export const Hero = () => {
       </div>
 
       {/* Background Gradient Field - Localized gentle contrast preservation */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#F8FAFC]/80 via-[#EEF3F8]/68 to-[#EEF3F8]/88 dark:from-[#070b14]/72 dark:via-[#070b14]/48 dark:to-[#070b14]/88 pointer-events-none z-[2]" />
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05] pointer-events-none z-[2]" />
+      <div className="nmolabs-hero-contrast absolute inset-0 pointer-events-none z-[2]" />
+      <div className="nmolabs-hero-grid absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05] pointer-events-none z-[2]" />
 
       
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 w-full flex flex-col items-center justify-center text-center">
