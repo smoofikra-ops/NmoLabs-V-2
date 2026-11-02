@@ -309,7 +309,6 @@ const defaultConfig: SiteConfig = {
     { id: 'partner_1779064216129', name: 'Rayflow Studio - ورشات عمل', nameEn: 'Rayflow Studio - Workshops', color: '#414798', imageUrl: `${PARTNER_LOGO_CDN_BASE}/Ray-flow.jpg`, linkUrl: '' },
     { id: 'partner_1779064264993', name: 'مناديل حصة', nameEn: 'Hessa Tissues', color: '#fdb700', imageUrl: `${PARTNER_LOGO_CDN_BASE}/Hessa-Tissues.jpg`, linkUrl: '' },
     { id: 'partner_1779064308309', name: 'بولي مارت - مصنع بلاستيك', nameEn: 'PolyMart - Plastics Factory', color: '', imageUrl: `${PARTNER_LOGO_CDN_BASE}/Poly-Mart.jpg`, linkUrl: '' },
-    { id: 'partner_1779064336725', name: 'شركة مقاولات', nameEn: 'Contracting Company', color: '', imageUrl: '', linkUrl: '' },
     { 
       id: 'partner_rayatnajd', 
       name: 'رايات نجد', 
