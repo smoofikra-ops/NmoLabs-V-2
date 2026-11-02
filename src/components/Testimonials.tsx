@@ -61,7 +61,7 @@ const PartnerCard: React.FC<PartnerCardProps> = ({ partner, isEn, isLight, onCli
       {/* Logo Container */}
       <div
         onClick={onClick}
-        className="w-full h-full rounded-3xl flex items-center justify-center transition-all duration-300 group-hover/partner:scale-105 overflow-hidden relative border-2 p-3 sm:p-4 bg-white dark:bg-white/[0.05] border-slate-300 dark:border-white/15 hover:border-[var(--partner-color)] shadow-[0_8px_24px_rgba(15,23,42,0.10)] hover:shadow-[0_14px_34px_rgba(15,23,42,0.16)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.28)]"
+        className="w-full h-full rounded-3xl flex items-center justify-center transition-all duration-300 group-hover/partner:scale-105 overflow-hidden relative border-2 p-3 sm:p-4 bg-white dark:bg-white/[0.05] border-slate-300 dark:border-white/15 hover:border-[var(--partner-color)] shadow-none hover:shadow-none dark:shadow-none"
       >
         {/* Subtle hover background highlight */}
         <div 
@@ -71,7 +71,7 @@ const PartnerCard: React.FC<PartnerCardProps> = ({ partner, isEn, isLight, onCli
         
         <div className="relative z-10 w-full h-full flex items-center justify-center">
           {currentSrc && !imgError ? (
-            <div className="w-full h-full flex items-center justify-center p-1.5 rounded-2xl bg-white dark:bg-white/95 shadow-2xs">
+            <div className="w-full h-full flex items-center justify-center p-1.5 rounded-2xl bg-white dark:bg-white/95 shadow-none">
               <img 
                 src={currentSrc} 
                 alt={partnerName} 
@@ -107,7 +107,7 @@ export const Testimonials = () => {
 
   if (!config.sections.testimonials) return null;
 
-  const basePartners = (config.partners || []).filter(p => !p.isHidden).sort((a, b) => (a.order || 0) - (b.order || 0));
+  const basePartners = (config.partners || []).filter(p => !p.isHidden && p.id !== 'partner_1779064336725' && p.name !== 'شركة مقاولات').sort((a, b) => (a.order || 0) - (b.order || 0));
 
   const handlePartnerClick = (partner: any) => {
     if (partner.linkUrl) {
@@ -126,8 +126,7 @@ export const Testimonials = () => {
     : (config.testimonialsSubtitle || 'شركاء النجاح الذين حققنا معهم قفزات نوعية في هندسة الأنظمة والتحويل والمبيعات.');
 
   return (
-    <section className="py-14 md:py-20 relative overflow-hidden bg-[var(--page-background)] border-y border-[var(--section-divider)]" id="testimonials">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--surface-primary)] opacity-50 pointer-events-none" />
+    <section className="py-14 md:py-20 relative overflow-hidden bg-transparent" id="testimonials">
       
       <div className="max-w-7xl mx-auto px-6 mb-8 md:mb-12 text-center relative z-10">
         <motion.h2 
@@ -143,8 +142,6 @@ export const Testimonials = () => {
 
       {/* Infinite Marquee */}
       <div className="relative w-full flex overflow-x-hidden py-4 z-10 group" dir="ltr">
-        <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-28 bg-gradient-to-r from-[var(--page-background)] to-transparent z-20 pointer-events-none" />
-        <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-28 bg-gradient-to-l from-[var(--page-background)] to-transparent z-20 pointer-events-none" />
         
         <div 
           className="flex group-hover:[animation-play-state:paused] whitespace-nowrap items-center shrink-0 w-max"
