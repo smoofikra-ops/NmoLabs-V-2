@@ -60,20 +60,10 @@ export const PinnedStoryScene: React.FC<PinnedStorySceneProps> = ({
       ref={containerRef}
       id={id}
       style={{ height: `${Math.max(200, Math.round(scrollMultiplier * 100))}vh` }}
-      className="relative border-b border-[var(--border-default)] transition-colors duration-300"
+      className="relative transition-colors duration-300"
     >
       <div className="sticky top-0 h-[100svh] min-h-[640px] max-h-[1080px] w-full overflow-hidden flex flex-col justify-between py-4 sm:py-6 lg:py-8 z-10">
-        {/* Clean story canvas: no section photography or screen imagery */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute inset-0" style={{ backgroundColor: 'var(--page-background)' }} />
-          <div
-            className="absolute inset-0 opacity-60"
-            style={{
-              background: 'radial-gradient(circle at 50% 10%, rgba(15,98,254,0.07), transparent 38%), radial-gradient(circle at 12% 76%, rgba(51,177,255,0.04), transparent 32%)'
-            }}
-          />
-        </div>
-
+        {/* Cards and text float over the uninterrupted global background. */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20 pt-16 sm:pt-14 md:pt-14">
           <motion.div
             style={{ opacity: headerOpacity, y: headerY }}

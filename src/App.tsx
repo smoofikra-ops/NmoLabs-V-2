@@ -244,8 +244,8 @@ function AppContent() {
   ];
 
   return (
-    <div className="relative min-h-screen selection:bg-[var(--color-secondary)] selection:text-white pb-20 transition-colors duration-300">
-      <InteractiveBackground />
+    <div className="nmolabs-cinematic-layout relative isolate min-h-screen selection:bg-[var(--color-secondary)] selection:text-white pb-20 transition-colors duration-300">
+      {config.currentRoute !== 'kyc' && <InteractiveBackground />}
       <Helmet>
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />

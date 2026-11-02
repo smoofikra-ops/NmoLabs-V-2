@@ -103,16 +103,12 @@ export const CinematicStageContainer: React.FC<CinematicStageContainerProps> = (
 }) => {
   return (
     <div className={`relative w-full max-w-4xl mx-auto h-[480px] sm:h-[520px] md:h-[540px] lg:h-[560px] flex items-center justify-center overflow-hidden px-3 sm:px-6 py-2 ${className}`}>
-      {/* Top stage subtle fade mask */}
-      <div className="absolute top-0 inset-x-0 h-16 bg-gradient-to-b from-[var(--surface-primary)] via-[var(--surface-primary)]/70 to-transparent pointer-events-none z-25 opacity-40 dark:opacity-60" />
       
       {/* Cards stack */}
       <div className="relative w-full h-full flex items-center justify-center">
         {children}
       </div>
 
-      {/* Bottom stage subtle fade mask */}
-      <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-[var(--surface-primary)] via-[var(--surface-primary)]/70 to-transparent pointer-events-none z-25 opacity-40 dark:opacity-60" />
     </div>
   );
 };

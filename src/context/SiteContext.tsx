@@ -194,7 +194,7 @@ const defaultConfig: SiteConfig = {
   secondaryColor: '#06B6D4',
   accentColor: '#10B981',
   backgroundColor: '#FAFBFD',
-  theme: 'light',
+  theme: 'dark',
   showThemeToggle: true,
   apiKeys: {
     pageSpeed: '',

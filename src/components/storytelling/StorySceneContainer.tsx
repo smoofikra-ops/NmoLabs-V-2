@@ -45,19 +45,9 @@ export const StorySceneContainer: React.FC<StorySceneContainerProps> = ({
     <section
       ref={containerRef}
       id={id}
-      className={`relative py-24 sm:py-28 lg:py-32 overflow-hidden border-b border-[var(--border-default)] transition-colors duration-300 ${className}`}
+      className={`relative py-24 sm:py-28 lg:py-32 overflow-hidden transition-colors duration-300 ${className}`}
     >
-      {/* Clean story canvas: intentionally no photographic section backgrounds */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0" style={{ backgroundColor: 'var(--page-background)' }} />
-        <div
-          className="absolute inset-0 opacity-60"
-          style={{
-            background: 'radial-gradient(circle at 50% 16%, rgba(15,98,254,0.07), transparent 42%), radial-gradient(circle at 86% 70%, rgba(51,177,255,0.04), transparent 34%)'
-          }}
-        />
-      </div>
-
+      {/* Transparent story section; no full-width surface or shadow. */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {children({
           scrollYProgress,
