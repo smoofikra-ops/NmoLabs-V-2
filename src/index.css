@@ -941,10 +941,15 @@ a[class*="px-"][class*="py-"] {
   pointer-events: none;
   background: #050b19;
 }
-.nmolabs-cinematic-layout > :not(.nmolabs-cinematic-backdrop) {
+.nmolabs-cinematic-layout > main,
+.nmolabs-cinematic-layout > article,
+.nmolabs-cinematic-layout > section,
+.nmolabs-cinematic-layout > footer {
   position: relative;
   z-index: 1;
 }
+/* Preserve fixed-position header, widgets and overlays. */
+.nmolabs-cinematic-layout > header { z-index: 50; }
 .nmolabs-cinematic-image {
   position: absolute;
   inset: -9%;
