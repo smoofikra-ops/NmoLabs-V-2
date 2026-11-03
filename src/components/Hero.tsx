@@ -3,6 +3,8 @@ import { useSite } from '../context/SiteContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, ArrowLeft, Monitor, ShoppingBag, Smartphone, Database, LineChart, BrainCircuit, Bot } from 'lucide-react';
 import { triggerBookingModal } from './BookingModal';
+import { ToolAnalyzerModal } from './ToolAnalyzerModal';
+import { LayoutTemplate, ScanSearch } from 'lucide-react';
 import { STORY_ASSETS } from './storytelling/storyAssets';
 
 
@@ -149,6 +151,7 @@ const InteractiveShowcase = () => {
 
 export const Hero = () => {
   const { config, updateConfig } = useSite();
+  const [showAnalyzer, setShowAnalyzer] = useState(false);
   if (!config.sections.hero) return null;
 
   const isEn = config.language === 'en';
@@ -232,6 +235,27 @@ export const Hero = () => {
               {isEn ? 'Book a Free Consultation' : 'احجز استشارة مجانية'}
             </button>
           </div>
+
+          {/* Secondary homepage actions: ready-made websites before free analysis. */}
+          <div className="mt-5 flex w-full max-w-3xl flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+            <button
+              type="button"
+              onClick={() => { updateConfig({ currentRoute: 'ready-websites' }); window.scrollTo({ top: 0, behavior: 'instant' }); }}
+              className="inline-flex min-h-12 flex-1 items-center justify-center gap-2.5 rounded-full border border-[var(--color-secondary)]/45 bg-[var(--surface-primary)]/75 px-5 py-3 text-sm font-bold text-[var(--text-primary)] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-secondary)] hover:bg-[var(--surface-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
+            >
+              <LayoutTemplate size={19} aria-hidden="true" className="shrink-0 text-[var(--color-secondary)]" />
+              <span>{isEn ? 'Ready-made professional company websites' : 'مواقع احترافية جاهزة للشركات والمؤسسات'}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowAnalyzer(true)}
+              className="inline-flex min-h-12 flex-1 items-center justify-center gap-2.5 rounded-full border border-[var(--border-default)] bg-[var(--surface-primary)]/75 px-5 py-3 text-sm font-bold text-[var(--text-primary)] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-primary)] hover:bg-[var(--surface-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
+            >
+              <ScanSearch size={19} aria-hidden="true" className="shrink-0 text-[var(--color-primary)]" />
+              <span>{isEn ? 'Analyze your store or business now' : 'حلل متجرك أو نشاطك الآن'}</span>
+            </button>
+          </div>
+          <ToolAnalyzerModal isOpen={showAnalyzer} onClose={() => setShowAnalyzer(false)} tool={{ name: 'فاحص SEO', locked: false, iconName: 'Search', iconColor: 'text-blue-400' }} />
 
           <div className="mt-8 sm:mt-10 flex items-center gap-3 text-xs sm:text-sm text-[var(--text-muted)] font-medium bg-[var(--surface-primary)]/80 dark:bg-[var(--surface-secondary)]/80 border border-[var(--border-default)] px-4 py-2.5 rounded-full shadow-sm backdrop-blur-md max-w-full">
             <div className="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse shrink-0" />

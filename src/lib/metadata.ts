@@ -71,6 +71,14 @@ export const pageMetadata: Record<string, {
     descriptionAr: 'رؤى وتحليلات تقنية عملية لأصحاب المتاجر والشركات حول التحول الرقمي، تحسين معدلات التحويل، وأنظمة إدارة العمليات في السعودية.',
     descriptionEn: 'Actionable technology insights for business leaders and founders on digital transformation, conversion optimization, and ERP architecture.'
   },
+  'ready-websites': {
+    title: 'مواقع جاهزة للشركات — اختر موقعك وابدأ بسرعة | NmoLabs',
+    titleAr: 'مواقع جاهزة للشركات — اختر موقعك وابدأ بسرعة | NmoLabs',
+    titleEn: 'Ready-Made Company Websites | Preview, Customize & Launch | NmoLabs',
+    description: 'مواقع احترافية جاهزة للشركات والمؤسسات في السعودية. شاهد الموقع قبل الشراء، خصّص الهوية والخدمات والدومين، واختر باقة الموقع الجاهز أو الإطلاق الرقمي المتكامل.',
+    descriptionAr: 'مواقع احترافية جاهزة للشركات والمؤسسات في السعودية. شاهد الموقع قبل الشراء، خصّص الهوية والخدمات والدومين، واختر باقة الموقع الجاهز أو الإطلاق الرقمي المتكامل.',
+    descriptionEn: 'Preview a professionally built business website before buying. Customize your brand, services and content, then launch with NmoLabs website or full digital launch package.'
+  },
   'start-project': {
     title: 'ابدأ مشروعك الرقمي | NMOLABS',
     titleAr: 'ابدأ مشروعك الرقمي | NMOLABS',
