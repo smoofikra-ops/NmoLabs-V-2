@@ -7,6 +7,7 @@ import { MouseParticles } from './components/MouseParticles';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { COMMON_SCHEMAS, generateWebPageSchema, siteMetadata } from './lib/schemas';
 import { pageMetadata } from './lib/metadata';
+import { findReadyWebsite } from './data/readyWebsites';
 import { Helmet } from 'react-helmet-async';
 import { InteractiveBackground } from './components/InteractiveBackground';
 
@@ -53,6 +54,8 @@ const BrandAssetsPage = lazy(() => import('./components/BrandAssetsPage').then(m
 const InnovationLabPage = lazy(() => import('./components/InnovationLabPage').then(module => ({ default: module.InnovationLabPage })));const ExperimentDetailsPage = lazy(() => import('./components/ExperimentDetailsPage').then(module => ({ default: module.ExperimentDetailsPage })));
 const StartProjectPage = lazy(() => import('./components/StartProjectPage').then(module => ({ default: module.StartProjectPage })));
 const ReadyWebsitesPage = lazy(() => import('./components/ReadyWebsitesPage').then(module => ({ default: module.ReadyWebsitesPage })));
+const ReadyWebsiteDetailsPage = lazy(() => import('./components/ReadyWebsiteDetailsPage').then(module => ({ default: module.ReadyWebsiteDetailsPage })));
+
 const DiscoveryPortal = lazy(() => import('./components/DiscoveryPortal').then(module => ({ default: module.DiscoveryPortal })));
 const NotFoundPage = lazy(() => import('./components/NotFoundPage').then(module => ({ default: module.NotFoundPage })));
 const ScrollProgress = () => {
@@ -180,7 +183,17 @@ function AppContent() {
 
   // Dynamic fallback for sub-routes (e.g. work/slug, products/slug, services/slug)
   if (!metaRaw) {
-    if (routeKey.startsWith('work/')) {
+    if (routeKey.startsWith('ready-websites/')) {
+      const website = findReadyWebsite(routeKey.split('/')[1]);
+      metaRaw = website ? {
+        title: `تصميم ${website.nameAr} | موقع جاهز قابل للتخصيص | نمو لابز`,
+        titleAr: `تصميم ${website.nameAr} | موقع جاهز قابل للتخصيص | نمو لابز`,
+        titleEn: `${website.nameEn} | Ready-Made Website | NmoLabs`,
+        description: website.descriptionAr,
+        descriptionAr: website.descriptionAr,
+        descriptionEn: website.descriptionEn
+      } : pageMetadata['ready-websites'];
+    } else if (routeKey.startsWith('work/')) {
       const slug = routeKey.split('/')[1];
       metaRaw = {
         title: `تفاصيل المشروع (${slug}) | أعمال NMOLABS`,
@@ -320,6 +333,10 @@ function AppContent() {
       ) : config.currentRoute === 'ready-websites' ? (
         <Suspense fallback={<div className="min-h-screen pt-32 text-center text-[var(--text-secondary)]">جاري تحميل المواقع الجاهزة…</div>}>
           <ReadyWebsitesPage />
+        </Suspense>
+      ) : config.currentRoute?.startsWith('ready-websites/') ? (
+        <Suspense fallback={<div className="min-h-screen pt-32 text-center">جاري تحميل تفاصيل الموقع…</div>}>
+          <ReadyWebsiteDetailsPage slug={config.currentRoute.split('/')[1]} />
         </Suspense>
       ) : config.currentRoute === 'start-project' ? (
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
