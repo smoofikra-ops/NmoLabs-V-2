@@ -28,7 +28,7 @@ export const readyWebsites: ReadyWebsite[] = [
     previewUrl: 'https://rent.nmolabs.com/ar', serviceType: 'corporate'
   },
   {
-    slug: 'real-estate', nameAr: 'حصاد العقار', nameEn: 'Hasad Real Estate',
+    slug: 'real-estate', nameAr: 'موقع العقارات والمطورين العقاريين', nameEn: 'Real Estate & Property Developers Website',
     sectorAr: 'شركات التطوير العقاري', sectorEn: 'Real Estate Development',
     taglineAr: 'حضور رقمي احترافي للمطورين والشركات العقارية', taglineEn: 'Modern web presence for property developers',
     descriptionAr: 'نموذج موقع مخصص للشركات العقارية والمطورين العقاريين، يتيح معاينة التصميم الحالي قبل طلب تكييفه لهوية الشركة ومشاريعها وخدماتها.',
@@ -50,7 +50,7 @@ export const readyWebsites: ReadyWebsite[] = [
     previewUrl: 'https://car-wash.nmolabs.com', serviceType: 'commerce'
   },
   {
-    slug: 'stories', nameAr: 'واحة القصص', nameEn: 'Stories Platform',
+    slug: 'stories', nameAr: 'موقع القصص والمحتوى الرقمي', nameEn: 'Digital Stories & Content Website',
     sectorAr: 'القصص والمحتوى الرقمي', sectorEn: 'Digital Stories & Content',
     taglineAr: 'منصة رقمية لعرض القصص والمحتوى', taglineEn: 'Digital platform for stories and content',
     descriptionAr: 'نموذج منصة للقصص والمحتوى الإلكتروني. يمكن معاينة التجربة الحالية وطلب تطوير نسخة تتناسب مع طبيعة المحتوى والجمهور وآلية النشر المطلوبة.',
