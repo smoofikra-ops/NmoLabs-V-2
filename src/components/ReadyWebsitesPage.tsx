@@ -5,7 +5,6 @@ import { getWhatsAppUrl } from '../lib/utils';
 import { readyWebsites } from '../data/readyWebsites';
 import { ArrowLeft, ArrowUpLeft, Check, Globe2, LayoutTemplate, MonitorSmartphone, Rocket, SearchCheck, SlidersHorizontal, TrendingUp, Zap, ShieldCheck, MessageCircle, Eye } from 'lucide-react';
 
-const DEMO_URL = 'https://rent.nmolabs.com/ar';
 const process = [
   { title: 'اختر الموقع', desc: 'تصفح المواقع الجاهزة وشاهد التصميم والصفحات وتجربة الجوال قبل اتخاذ القرار.' },
   { title: 'أرسل بيانات شركتك', desc: 'شاركنا اسم الشركة والشعار ونبذة النشاط والخدمات والصور ووسائل التواصل.' },
@@ -60,7 +59,6 @@ export const ReadyWebsitesPage: React.FC = () => {
   const { config, updateConfig } = useSite();
   const isEn = config.language === 'en';
   const contactUrl = getWhatsAppUrl(config.contactNumber, 'مرحبًا NmoLabs، أرغب في الاستفسار عن المواقع الجاهزة وتخصيص موقع مناسب لشركتي. أرجو تزويدي بالتفاصيل والخطوات.');
-  const openPreview = () => window.open(DEMO_URL, '_blank', 'noopener,noreferrer');
   const whatsapp = (packageName?: string) => window.open(packageName ? getWhatsAppUrl(config.contactNumber, `مرحبًا NmoLabs، أرغب في باقة ${packageName} للمواقع الجاهزة، وأريد بدء التخصيص.`) : contactUrl, '_blank', 'noopener,noreferrer');
   const enter = { initial: {opacity:0,y:18}, whileInView:{opacity:1,y:0}, viewport:{once:true,amount:0.13}, transition:{duration:0.55} };
   return (
@@ -69,36 +67,15 @@ export const ReadyWebsitesPage: React.FC = () => {
         <motion.header {...enter} className="mx-auto max-w-4xl text-center mb-14 sm:mb-20">
           <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[var(--color-secondary)]/40 bg-[var(--surface-primary)]/75 px-4 py-2 text-xs sm:text-sm font-bold text-[var(--color-secondary)]"><LayoutTemplate size={16}/> {isEn ? 'Ready-Made Business Websites' : 'مواقع جاهزة للشركات والمؤسسات'}</span>
           <h1 className="text-3xl leading-[1.3] sm:text-5xl lg:text-6xl font-black tracking-tight mb-6">
-            {isEn ? 'Launch a professional website for your business — faster.' : 'إنشاء موقع احترافي لشركتك أصبح أسهل وأسرع'}
+            {isEn ? 'Launch a professional website for your business — faster.' : 'إنشاء موقع احترافي لشركتك أصبح أسهل'}
           </h1>
           <p className="mx-auto max-w-3xl text-base leading-8 sm:text-lg text-[var(--text-secondary)] mb-5">هل تبحث عن <strong className="text-[var(--text-primary)]">إنشاء موقع إلكتروني احترافي لشركتك</strong> دون رحلة طويلة من التصميم والبرمجة وكتابة المحتوى والمراجعات؟ مع المواقع الجاهزة من NmoLabs تختار موقعًا مبنيًا مسبقًا، ثم نخصصه باسم شركتك وهويتها وخدماتها ليكون جاهزًا للإطلاق خلال وقت أقصر.</p>
           <p className="text-sm sm:text-base font-bold text-[var(--text-primary)] mb-8">شاهد الموقع أولًا، اختر ما يناسب نشاطك، ثم اترك لنا مهمة التجهيز والإطلاق.</p>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
-            <a href="#ready-catalog" className="inline-flex justify-center items-center gap-2 rounded-full bg-[var(--color-primary)] px-7 py-4 text-white font-bold hover:brightness-110 transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"><Eye size={19}/> استعرض المواقع الجاهزة <ArrowUpLeft size={17}/></a>
-            <a href={contactUrl} target="_blank" rel="noopener noreferrer" className="inline-flex justify-center items-center gap-2 rounded-full bg-[var(--surface-primary)]/85 px-7 py-4 border border-[var(--border-default)] font-bold hover:border-[var(--color-primary)] transition-colors"><MessageCircle size={19}/> اطلب تخصيص الموقع لشركتك</a>
+            <a href="#ready-catalog" className="inline-flex justify-center items-center gap-2 rounded-full bg-[var(--color-primary)] px-7 py-4 text-white font-bold hover:brightness-110 transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"><Eye size={19}/> استعراض المواقع الجاهزة <ArrowUpLeft size={17}/></a>
+            <a href={contactUrl} target="_blank" rel="noopener noreferrer" className="inline-flex justify-center items-center gap-2 rounded-full bg-[var(--surface-primary)]/85 px-7 py-4 border border-[var(--border-default)] font-bold hover:border-[var(--color-primary)] transition-colors"><MessageCircle size={19}/> اطلب تخصيص موقع لشركتك</a>
           </div>
         </motion.header>
-
-        <motion.section {...enter} aria-labelledby="ready-preview-title" className="mb-20 sm:mb-28">
-          <Surface className="overflow-hidden">
-            <div className="grid lg:grid-cols-2 gap-0">
-              <div className="p-7 sm:p-10 lg:p-12 flex flex-col items-start justify-center">
-                <span className="text-xs font-bold tracking-wider text-[var(--color-secondary)] mb-3">نموذج مميز من المواقع الجاهزة</span>
-                <h2 id="ready-preview-title" className="text-2xl sm:text-3xl font-black mb-5">شاهد الموقع الفعلي قبل الشراء</h2>
-                <p className="text-[var(--text-secondary)] leading-8 mb-6">لا تعتمد على الصور أو التصاميم الأولية. افتح الموقع الحالي واطّلع على الواجهة الرئيسية وصفحات الخدمات وتجربة الجوال ونماذج التواصل، ثم تخيّله بشعارك واسم شركتك.</p>
-                <a href={DEMO_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-bold text-[var(--color-primary)] hover:underline" dir="ltr">rent.nmolabs.com/ar <ArrowUpLeft size={18}/></a>
-              </div>
-              <div className="min-h-[280px] sm:min-h-[360px] bg-gradient-to-br from-[#0b2754] via-[#0a1733] to-[#06101c] p-7 sm:p-10 flex items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 opacity-20" style={{backgroundImage:'radial-gradient(circle at 15% 30%, #67d9fd 0 2px, transparent 3px), radial-gradient(circle at 74% 48%, #fff 0 1px, transparent 2px)',backgroundSize:'80px 100px'}} aria-hidden="true"/>
-                <div className="relative w-full max-w-md overflow-hidden rounded-2xl border border-white/25 bg-white/5 shadow-2xl backdrop-blur-lg">
-                  <div className="flex items-center gap-1.5 border-b border-white/15 px-4 py-3"><span className="h-2.5 w-2.5 rounded-full bg-rose-400"/><span className="h-2.5 w-2.5 rounded-full bg-amber-400"/><span className="h-2.5 w-2.5 rounded-full bg-emerald-400"/><span className="mr-3 text-[11px] text-white/75" dir="ltr">rent.nmolabs.com/ar</span></div>
-                  <div className="p-7 sm:p-10 text-center"><Globe2 className="mx-auto mb-4 text-cyan-300" size={58} strokeWidth={1.3}/><h3 className="mb-3 text-xl font-bold text-white">موقع شركتك القادم</h3><p className="text-white/75 text-sm leading-7 mb-5">موقع جاهز للتخصيص بهويتك ومحتواك وخدماتك</p><button onClick={openPreview} className="rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-bold text-slate-950 hover:bg-cyan-300">فتح المعاينة الفعلية</button></div>
-                </div>
-              </div>
-            </div>
-          </Surface>
-        </motion.section>
-
 
         <motion.section {...enter} id="ready-catalog" className="mb-20 sm:mb-28" aria-labelledby="ready-catalog-title">
           <div className="max-w-3xl mx-auto text-center mb-10">
@@ -188,7 +165,7 @@ export const ReadyWebsitesPage: React.FC = () => {
           <Surface className="relative overflow-hidden px-6 py-12 sm:px-12 sm:py-16">
             <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-tr from-[var(--color-primary)]/10 via-transparent to-[var(--color-secondary)]/10 pointer-events-none"/>
             <div className="relative z-10"><Rocket size={36} className="mx-auto text-[var(--color-secondary)] mb-5"/><h2 className="text-2xl sm:text-4xl font-black mb-5">اختر موقعك الآن، وشاهده قبل أن تشتريه</h2><p className="mx-auto max-w-2xl text-[var(--text-secondary)] leading-8 mb-8">موقع احترافي، وقت تنفيذ أسرع، وخطوات أقل للوصول إلى عملائك. شاهد الموقع الجاهز الآن ثم اطلب تخصيصه بهويتك وخدماتك.</p>
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3"><a href={DEMO_URL} target="_blank" rel="noopener noreferrer" className="flex justify-center items-center gap-2 rounded-full bg-[var(--color-primary)] text-white px-7 py-4 font-bold"><Eye size={19}/>شاهد الموقع الآن <ArrowUpLeft size={18}/></a><a href={contactUrl} target="_blank" rel="noopener noreferrer" className="flex justify-center items-center gap-2 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] px-7 py-4 font-bold"><MessageCircle size={18}/>اطلب تخصيص الموقع لشركتك</a></div>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3"><a href="#ready-catalog" className="flex justify-center items-center gap-2 rounded-full bg-[var(--color-primary)] text-white px-7 py-4 font-bold"><Eye size={19}/>استعراض المواقع الجاهزة <ArrowUpLeft size={18}/></a><a href={contactUrl} target="_blank" rel="noopener noreferrer" className="flex justify-center items-center gap-2 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] px-7 py-4 font-bold"><MessageCircle size={18}/>اطلب تخصيص الموقع لشركتك</a></div>
             </div>
           </Surface>
         </motion.section>
