@@ -8,6 +8,8 @@ import { motion, useScroll, useSpring } from 'motion/react';
 import { COMMON_SCHEMAS, generateWebPageSchema, siteMetadata } from './lib/schemas';
 import { pageMetadata } from './lib/metadata';
 import { findReadyWebsite } from './data/readyWebsites';
+import { productsData } from './data/products';
+import { projects } from './data/projects';
 import { Helmet } from 'react-helmet-async';
 import { InteractiveBackground } from './components/InteractiveBackground';
 
@@ -195,7 +197,11 @@ function AppContent() {
       } : pageMetadata['ready-websites'];
     } else if (routeKey.startsWith('work/')) {
       const slug = routeKey.split('/')[1];
-      metaRaw = {
+      const project = projects.find(p => p.slug === slug);
+      metaRaw = project ? {
+        title: `${project.titleAr} | أعمال نمو لابز`, titleAr: `${project.titleAr} | أعمال نمو لابز`, titleEn: `${project.titleEn} | NmoLabs Portfolio`,
+        description: project.summaryAr, descriptionAr: project.summaryAr, descriptionEn: project.summaryEn
+      } : {
         title: `تفاصيل المشروع (${slug}) | أعمال NMOLABS`,
         titleAr: `تفاصيل المشروع (${slug}) | أعمال NMOLABS`,
         titleEn: `Project Details (${slug}) | NmoLabs Portfolio`,
@@ -205,7 +211,15 @@ function AppContent() {
       };
     } else if (routeKey.startsWith('products/')) {
       const slug = routeKey.split('/')[1];
-      metaRaw = {
+      const product = productsData.find(p => p.slug === slug);
+      metaRaw = product ? {
+        title: product.seo?.titleAr || `${product.titleAr} | أنظمة نمو لابز`,
+        titleAr: product.seo?.titleAr || `${product.titleAr} | أنظمة نمو لابز`,
+        titleEn: product.seo?.titleEn || `${product.titleEn} | NmoLabs Solutions`,
+        description: product.seo?.descriptionAr || product.summaryAr,
+        descriptionAr: product.seo?.descriptionAr || product.summaryAr,
+        descriptionEn: product.seo?.descriptionEn || product.summaryEn
+      } : {
         title: `نظام ${slug.toUpperCase()} | منتجات NMOLABS السحابية`,
         titleAr: `نظام ${slug.toUpperCase()} | منتجات NMOLABS السحابية`,
         titleEn: `${slug.toUpperCase()} System | NmoLabs Cloud Platforms`,
