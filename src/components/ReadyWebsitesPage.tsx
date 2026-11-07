@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { useSite } from '../context/SiteContext';
 import { getWhatsAppUrl } from '../lib/utils';
+import { readyWebsites } from '../data/readyWebsites';
 import { ArrowLeft, ArrowUpLeft, Check, Globe2, LayoutTemplate, MonitorSmartphone, Rocket, SearchCheck, SlidersHorizontal, TrendingUp, Zap, ShieldCheck, MessageCircle, Eye } from 'lucide-react';
 
 const DEMO_URL = 'https://rent.nmolabs.com/ar';
@@ -56,9 +57,9 @@ const Surface: React.FC<{children:React.ReactNode,className?:string}> = ({childr
 );
 
 export const ReadyWebsitesPage: React.FC = () => {
-  const { config } = useSite();
+  const { config, updateConfig } = useSite();
   const isEn = config.language === 'en';
-  const contactUrl = getWhatsAppUrl(config.contactNumber, 'مرحبًا NmoLabs، أرغب في تخصيص الموقع الجاهز المعروض على rent.nmolabs.com لشركتي. أرجو تزويدي بالتفاصيل والخطوات.');
+  const contactUrl = getWhatsAppUrl(config.contactNumber, 'مرحبًا NmoLabs، أرغب في الاستفسار عن المواقع الجاهزة وتخصيص موقع مناسب لشركتي. أرجو تزويدي بالتفاصيل والخطوات.');
   const openPreview = () => window.open(DEMO_URL, '_blank', 'noopener,noreferrer');
   const whatsapp = (packageName?: string) => window.open(packageName ? getWhatsAppUrl(config.contactNumber, `مرحبًا NmoLabs، أرغب في باقة ${packageName} للمواقع الجاهزة، وأريد بدء التخصيص.`) : contactUrl, '_blank', 'noopener,noreferrer');
   const enter = { initial: {opacity:0,y:18}, whileInView:{opacity:1,y:0}, viewport:{once:true,amount:0.13}, transition:{duration:0.55} };
@@ -73,7 +74,7 @@ export const ReadyWebsitesPage: React.FC = () => {
           <p className="mx-auto max-w-3xl text-base leading-8 sm:text-lg text-[var(--text-secondary)] mb-5">هل تبحث عن <strong className="text-[var(--text-primary)]">إنشاء موقع إلكتروني احترافي لشركتك</strong> دون رحلة طويلة من التصميم والبرمجة وكتابة المحتوى والمراجعات؟ مع المواقع الجاهزة من NmoLabs تختار موقعًا مبنيًا مسبقًا، ثم نخصصه باسم شركتك وهويتها وخدماتها ليكون جاهزًا للإطلاق خلال وقت أقصر.</p>
           <p className="text-sm sm:text-base font-bold text-[var(--text-primary)] mb-8">شاهد الموقع أولًا، اختر ما يناسب نشاطك، ثم اترك لنا مهمة التجهيز والإطلاق.</p>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
-            <a href={DEMO_URL} target="_blank" rel="noopener noreferrer" className="inline-flex justify-center items-center gap-2 rounded-full bg-[var(--color-primary)] px-7 py-4 text-white font-bold hover:brightness-110 transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"><Eye size={19}/> شاهد الموقع الآن <ArrowUpLeft size={17}/></a>
+            <a href="#ready-catalog" className="inline-flex justify-center items-center gap-2 rounded-full bg-[var(--color-primary)] px-7 py-4 text-white font-bold hover:brightness-110 transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"><Eye size={19}/> استعرض المواقع الجاهزة <ArrowUpLeft size={17}/></a>
             <a href={contactUrl} target="_blank" rel="noopener noreferrer" className="inline-flex justify-center items-center gap-2 rounded-full bg-[var(--surface-primary)]/85 px-7 py-4 border border-[var(--border-default)] font-bold hover:border-[var(--color-primary)] transition-colors"><MessageCircle size={19}/> اطلب تخصيص الموقع لشركتك</a>
           </div>
         </motion.header>
@@ -82,7 +83,7 @@ export const ReadyWebsitesPage: React.FC = () => {
           <Surface className="overflow-hidden">
             <div className="grid lg:grid-cols-2 gap-0">
               <div className="p-7 sm:p-10 lg:p-12 flex flex-col items-start justify-center">
-                <span className="text-xs font-bold tracking-wider text-[var(--color-secondary)] mb-3">نموذج جاهز للمعاينة</span>
+                <span className="text-xs font-bold tracking-wider text-[var(--color-secondary)] mb-3">نموذج مميز من المواقع الجاهزة</span>
                 <h2 id="ready-preview-title" className="text-2xl sm:text-3xl font-black mb-5">شاهد الموقع الفعلي قبل الشراء</h2>
                 <p className="text-[var(--text-secondary)] leading-8 mb-6">لا تعتمد على الصور أو التصاميم الأولية. افتح الموقع الحالي واطّلع على الواجهة الرئيسية وصفحات الخدمات وتجربة الجوال ونماذج التواصل، ثم تخيّله بشعارك واسم شركتك.</p>
                 <a href={DEMO_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-bold text-[var(--color-primary)] hover:underline" dir="ltr">rent.nmolabs.com/ar <ArrowUpLeft size={18}/></a>
@@ -96,6 +97,45 @@ export const ReadyWebsitesPage: React.FC = () => {
               </div>
             </div>
           </Surface>
+        </motion.section>
+
+
+        <motion.section {...enter} id="ready-catalog" className="mb-20 sm:mb-28" aria-labelledby="ready-catalog-title">
+          <div className="max-w-3xl mx-auto text-center mb-10">
+            <span className="text-sm font-bold text-[var(--color-secondary)]">{isEn ? 'Live website previews' : 'نماذج حقيقية قابلة للمعاينة'}</span>
+            <h2 id="ready-catalog-title" className="text-2xl sm:text-4xl font-black mt-3 mb-5">{isEn ? 'Choose a website for your business' : 'اختر الموقع الجاهز المناسب لنشاطك'}</h2>
+            <p className="text-[var(--text-secondary)] leading-8">{isEn ? 'Explore each concept and open its current live preview. Specialized platforms are quoted according to required features.' : 'استعرض النماذج المتاحة وافتح المعاينة المباشرة لكل موقع. تُحدد تكلفة المتاجر والمنصات المتخصصة حسب الوظائف المطلوبة.'}</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {readyWebsites.map(site => (
+              <article key={site.slug} className="overflow-hidden rounded-[28px] border border-[var(--border-default)] bg-[var(--surface-primary)]/80 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-primary)]/60">
+                <div className="border-b border-[var(--border-default)] bg-[var(--surface-secondary)]/75">
+                  <div className="px-5 py-3 flex items-center gap-2 text-[var(--text-muted)] text-xs" dir="ltr">
+                    <span className="h-2.5 w-2.5 rounded-full bg-rose-400"/><span className="h-2.5 w-2.5 rounded-full bg-amber-400"/><span className="h-2.5 w-2.5 rounded-full bg-emerald-400"/>
+                    <span className="truncate ml-2">{site.previewUrl.replace('https://','')}</span>
+                  </div>
+                  {site.screenshotUrl ? (
+                    <img src={site.screenshotUrl} alt={`واجهة ${site.nameAr}`} loading="lazy" className="w-full aspect-video object-cover object-top"/>
+                  ) : (
+                    <div className="aspect-video flex flex-col items-center justify-center gap-3 px-6 bg-gradient-to-br from-[var(--surface-primary)] to-[var(--surface-secondary)]">
+                      <Globe2 size={48} className="text-[var(--color-secondary)]"/>
+                      <span className="font-black text-xl sm:text-2xl text-center">{isEn ? site.nameEn : site.nameAr}</span>
+                      <span className="text-xs text-[var(--text-secondary)]">{isEn ? 'Open live website for actual preview' : 'شاهد التصميم الفعلي عبر رابط المعاينة'}</span>
+                    </div>
+                  )}
+                </div>
+                <div className="p-6 sm:p-8">
+                  <span className="text-xs font-bold text-[var(--color-secondary)]">{isEn ? site.sectorEn : site.sectorAr}</span>
+                  <h3 className="text-2xl font-black mt-2 mb-3">{isEn ? site.nameEn : site.nameAr}</h3>
+                  <p className="text-[var(--text-secondary)] leading-7 text-sm mb-6 min-h-[56px]">{isEn ? site.taglineEn : site.taglineAr}</p>
+                  <div className="flex flex-wrap gap-3">
+                    <button onClick={() => { updateConfig({ currentRoute: `ready-websites/${site.slug}` }); window.scrollTo({top:0,behavior:'smooth'}); }} className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--color-primary)] px-5 py-3 text-white text-sm font-bold">{isEn ? 'Details' : 'التفاصيل والمميزات'} <ArrowLeft size={16}/></button>
+                    <a href={site.previewUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--border-default)] px-5 py-3 text-sm font-bold hover:border-[var(--color-primary)]">{isEn ? 'Live preview' : 'معاينة مباشرة'}<ArrowUpLeft size={16}/></a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
         </motion.section>
 
         <motion.section {...enter} className="mb-20 sm:mb-28" aria-labelledby="why-not-from-scratch">
