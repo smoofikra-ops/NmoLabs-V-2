@@ -499,7 +499,7 @@ export const productsData: Product[] = [
     brandColor: '#8B5CF6',
     secondaryColor: '#7C3AED',
     demoAvailable: false,
-  }
+  },
   {
     id: '11',
     slug: 'analysis',
