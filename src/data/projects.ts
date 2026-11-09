@@ -40,6 +40,45 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'proj_safaqat_profile',
+    slug: 'safaqatcom-profile',
+    titleAr: 'الملف التعريفي لصفقات كوم',
+    titleEn: 'Safaqatcom Company Profile',
+    category: 'corporate',
+    sectorAr: 'الصفحات التعريفية للشركات',
+    sectorEn: 'Corporate Profile Websites',
+    summaryAr: 'صفحة تعريفية رقمية لمشروع صفقات كوم، ضمن أعمال نمو لابز التي تم تسليمها للعميل.',
+    summaryEn: 'A digital company profile for Safaqatcom, developed and delivered as an NmoLabs client project.',
+    status: 'completed',
+    featured: false,
+    size: 'standard',
+    cardSize: 'standard',
+    services: ['تصميم الصفحة التعريفية', 'تطوير واجهة ويب'],
+    projectUrl: 'https://profile-safaqatcom.nmolabs.com',
+    resultsAvailable: false,
+    brandColor: '#0288A6'
+  },
+  {
+    id: 'proj_heavy_rental',
+    slug: 'heavy-rental',
+    titleAr: 'مواكبة الحدث لتأجير المعدات الثقيلة',
+    titleEn: 'Heavy Equipment Rental Website',
+    category: 'corporate',
+    sectorAr: 'تأجير المعدات الثقيلة',
+    sectorEn: 'Heavy Equipment Rental',
+    summaryAr: 'موقع تعريفي وخدمي لقطاع تأجير المعدات الثقيلة، أنجزته نمو لابز وهو جاهز لمرحلة التسليم للعميل.',
+    summaryEn: 'A business website for heavy equipment rental services, developed by NmoLabs and ready for client handover.',
+    status: 'in_progress',
+    featured: false,
+    size: 'standard',
+    cardSize: 'standard',
+    services: ['تطوير موقع الشركات', 'تصميم واجهة المستخدم'],
+    projectUrl: 'https://heavy-rental.nmolabs.com',
+    resultsAvailable: false,
+    brandColor: '#66C2B3'
+  },
+
+  {
     id: 'proj_rayatnajd',
     slug: 'rayatnajd',
     coverImage: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/rayat-najd-sustainability.jpeg',
