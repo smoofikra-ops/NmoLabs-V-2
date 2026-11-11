@@ -12,6 +12,7 @@ interface Props {
 
 export const WorkGridCard: React.FC<Props> = ({ project, isEn, updateConfig, getGridClass }) => {
   const [isHoverable, setIsHoverable] = useState(true);
+  const [imageFailed, setImageFailed] = useState(false);
   
   useEffect(() => {
     const mediaQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
@@ -56,11 +57,12 @@ export const WorkGridCard: React.FC<Props> = ({ project, isEn, updateConfig, get
         }}
       />
       
-      {project.coverImage ? (
+      {project.coverImage && !imageFailed ? (
         <motion.img 
           src={project.coverImage} 
           alt={isEn ? project.titleEn : project.titleAr}
           referrerPolicy="no-referrer"
+          onError={() => setImageFailed(true)}
           variants={isHoverable ? { hover: { scale: 1.05 } } : {}}
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
@@ -90,8 +92,8 @@ export const WorkGridCard: React.FC<Props> = ({ project, isEn, updateConfig, get
           initial={isHoverable ? { y: 16 } : { y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <div className="text-sm font-bold text-white/70 mb-2 flex items-center gap-2">
-            {project.year && <span className="text-[var(--color-primary)] animate-pulse">{project.year}</span>}
+          <div className="text-sm font-bold text-white mb-2 flex items-center gap-2">
+            {project.year && <span className="text-white font-bold">{project.year}</span>}
             <span>{isEn ? project.sectorEn : project.sectorAr}</span>
           </div>
           <h3 className="text-base sm:text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-[var(--color-primary)] to-[var(--color-secondary)] mb-1 sm:mb-2 line-clamp-2">
@@ -101,7 +103,7 @@ export const WorkGridCard: React.FC<Props> = ({ project, isEn, updateConfig, get
             variants={isHoverable ? { hover: { opacity: 1, height: 'auto' } } : {}}
             initial={isHoverable ? { opacity: 0, height: 0 } : { opacity: 1, height: 'auto' }}
             transition={{ duration: 0.3 }}
-            className="text-sm text-white/60 line-clamp-2 overflow-hidden mb-4"
+            className="text-sm sm:text-base text-white/90 line-clamp-2 overflow-hidden mb-4"
           >
             {isEn ? project.summaryEn : project.summaryAr}
           </motion.p>
@@ -133,7 +135,7 @@ export const WorkGridCard: React.FC<Props> = ({ project, isEn, updateConfig, get
                 {isEn ? <ArrowRight size={14} /> : <ArrowLeft size={14} />}
               </button>
             ) : (
-              <span className="inline-block text-xs font-bold text-white/40 px-4 py-2 rounded-lg border border-white/5 bg-white/5 cursor-not-allowed">
+              <span className="inline-block text-sm font-bold text-white/80 px-4 py-2 rounded-lg border border-white/20 bg-black/50">
                 {isEn ? 'Details Coming Soon' : 'التفاصيل قريباً'}
               </span>
             )}
