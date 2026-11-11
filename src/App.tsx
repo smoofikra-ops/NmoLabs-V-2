@@ -21,6 +21,7 @@ const StoryGrowthCampaigns = lazy(() => import('./components/storytelling/StoryG
 const StorySocialPresence = lazy(() => import('./components/storytelling/StorySocialPresence').then(module => ({ default: module.StorySocialPresence })));
 const StoryBigVision = lazy(() => import('./components/storytelling/StoryBigVision').then(module => ({ default: module.StoryBigVision })));
 
+const HomeEssentials = lazy(() => import('./components/HomeEssentials').then(m => ({ default:m.HomeEssentials })));
 const HomeServices = lazy(() => import('./components/HomeServices').then(m => ({ default:m.HomeServices })));
 const ServicesPortal = lazy(() => import('./components/ServicesPortal').then(m => ({ default:m.ServicesPortal })));
 const Services = lazy(() => import('./components/Services').then(module => ({ default: module.Services })));
@@ -108,7 +109,7 @@ const CustomSection: React.FC<{ id: string, title: string, content: string }> = 
 const MainContent = () => {
   const { config } = useSite();
 
-  const homeOrder = ['hero','homeServices','workPreview','productsPreview','whyUs','faq'];
+  const homeOrder = ['hero','homeServices','workPreview','productsPreview','whyUs','homeEssentials'];
   const enabledSectionIds = homeOrder.filter(id => {
     if (config.sections[id] === false) return false;
     return true;
@@ -120,6 +121,7 @@ const MainContent = () => {
     switch (id) {
       case 'hero': return <Hero key={id} />;
       case 'homeServices': return <Suspense key={id} fallback={<div className="h-72" />}><HomeServices /></Suspense>;
+      case 'homeEssentials': return <Suspense key={id} fallback={<div className="h-72" />}><HomeEssentials /></Suspense>;
       case 'storySolutions': return <Suspense key={id} fallback={<div className="h-96" />}><StoryCustomSolutions /></Suspense>;
       case 'storyEcommerce': return <Suspense key={id} fallback={<div className="h-96" />}><StoryEcommerce /></Suspense>;
       case 'storyWebsites': return <Suspense key={id} fallback={<div className="h-96" />}><StoryWebsites /></Suspense>;
