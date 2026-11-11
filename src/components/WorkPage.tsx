@@ -32,6 +32,7 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
   }, [isInView, project.id, onInView]);
 
   const isEven = index % 2 === 0;
+  const [imageFailed, setImageFailed] = useState(false);
 
   return (
     <section 
@@ -116,9 +117,10 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
               }}
             >
               <div className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-700 blur-3xl" style={{ backgroundColor: project.brandColor }} />
-              {project.coverImage ? (
+              {project.coverImage && !imageFailed ? (
                 <img 
                   src={project.coverImage} 
+                  onError={() => setImageFailed(true)}
                   alt={isEn ? project.titleEn : project.titleAr} 
                   referrerPolicy="no-referrer"
                   className="relative z-10 w-full h-full object-cover object-top group-hover:object-bottom transition-all duration-[8000ms] ease-in-out" 
@@ -126,8 +128,8 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
               ) : (
                 <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
                    <div className="w-32 h-32 rounded-3xl blur-[40px] absolute opacity-30" style={{ backgroundColor: project.brandColor }} />
-                   <div className="text-[var(--text-muted)] font-black text-8xl relative z-10 group-hover:scale-110 transition-transform duration-700">
-                     {isEn ? project.titleEn.charAt(0) : project.titleAr.charAt(0)}
+                   <div className="text-[var(--text-primary)] font-black text-5xl relative z-10 group-hover:scale-110 transition-transform duration-700 text-center px-5">
+                     {isEn ? project.titleEn : project.titleAr}
                    </div>
                 </div>
               )}
