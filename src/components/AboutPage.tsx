@@ -79,7 +79,7 @@ export const AboutPage: React.FC = () => {
       <section 
         id="about-hero" 
         className="relative flex items-center justify-center px-6 overflow-hidden border-b border-[var(--border-default)]/30"
-        style={{ minHeight: '78svh', maxHeight: '900px' }}
+        style={{ minHeight: '58svh', maxHeight: '900px' }}
       >
         {/* Ambient Subtle Glow & Grid Backdrops */}
         <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none" />
@@ -165,7 +165,7 @@ export const AboutPage: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-sm text-[var(--text-primary)]">{isEn ? 'Technology' : 'التقنية'}</h3>
-                    <p className="text-[var(--text-muted)] text-[10px] mt-1">{isEn ? 'Custom scalable infrastructure' : 'بنية تحتية مخصصة وقابلة للتوسع'}</p>
+                    <p className="text-[var(--text-muted)] text-xs mt-1">{isEn ? 'Custom scalable infrastructure' : 'بنية تحتية مخصصة وقابلة للتوسع'}</p>
                   </div>
                 </motion.div>
 
@@ -180,7 +180,7 @@ export const AboutPage: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-sm text-[var(--text-primary)]">{isEn ? 'Business' : 'الأعمال'}</h3>
-                    <p className="text-[var(--text-muted)] text-[10px] mt-1">{isEn ? 'Strategic alignment & models' : 'مواءمة استراتيجية ونماذج ربحية'}</p>
+                    <p className="text-[var(--text-muted)] text-xs mt-1">{isEn ? 'Strategic alignment & models' : 'مواءمة استراتيجية ونماذج ربحية'}</p>
                   </div>
                 </motion.div>
 
@@ -195,7 +195,7 @@ export const AboutPage: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-sm text-[var(--text-primary)]">{isEn ? 'Marketing' : 'التسويق'}</h3>
-                    <p className="text-[var(--text-muted)] text-[10px] mt-1">{isEn ? 'Growth, SEO & acquisition' : 'النمو والانتشار وجلب العملاء'}</p>
+                    <p className="text-[var(--text-muted)] text-xs mt-1">{isEn ? 'Growth, SEO & acquisition' : 'النمو والانتشار وجلب العملاء'}</p>
                   </div>
                 </motion.div>
 
@@ -210,7 +210,7 @@ export const AboutPage: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-sm text-[var(--text-primary)]">{isEn ? 'Products & UX' : 'المنتجات وتجربة العميل'}</h3>
-                    <p className="text-[var(--text-muted)] text-[10px] mt-1">{isEn ? 'Fluid, conversion-focused flow' : 'مسار شراء سلس ومثالي للتحويل'}</p>
+                    <p className="text-[var(--text-muted)] text-xs mt-1">{isEn ? 'Fluid, conversion-focused flow' : 'مسار شراء سلس ومثالي للتحويل'}</p>
                   </div>
                 </motion.div>
                 
@@ -228,7 +228,7 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 1: WHO IS NMOLABS (من هي NmoLabs؟) */}
-      <section id="about-who-we-are" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/10">
+      <section id="about-who-we-are" className="py-12 lg:py-14 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
@@ -296,9 +296,9 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 2: WHAT WE BUILD (ما الذي نبنيه؟) */}
-      <section id="about-what-we-build" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30">
+      <section id="about-what-we-build" className="py-12 lg:py-14 border-b border-[var(--border-default)]/30">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <div className="text-center max-w-3xl mx-auto mb-8 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
               {isEn ? 'We Transform Needs into Integrated Digital Solutions' : 'نحوّل الاحتياج إلى حل رقمي متكامل'}
             </h2>
@@ -323,7 +323,7 @@ export const AboutPage: React.FC = () => {
                   <h3 className="font-black text-base text-[var(--text-primary)] group-hover:text-[var(--color-primary)] transition-colors">
                     {isEn ? area.titleEn : area.titleAr}
                   </h3>
-                  <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
                     {isEn ? area.descEn : area.descAr}
                   </p>
                 </div>
@@ -354,7 +354,7 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 3: HOW WE DIFFER (كيف نختلف؟) */}
-      <section id="about-how-we-differ" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/15">
+      <section id="about-how-we-differ" className="py-12 lg:py-14 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/15">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
@@ -428,9 +428,9 @@ export const AboutPage: React.FC = () => {
 
       
       {/* SECTION 4: NMOLABS ECOSYSTEM (منظومة NmoLabs) */}
-      <section id="about-ecosystem" className="py-8 lg:py-24 border-b border-[var(--border-default)]/30 overflow-hidden relative">
+      <section id="about-ecosystem" className="py-8 lg:py-14 border-b border-[var(--border-default)]/30 overflow-hidden relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-16 space-y-4">
+          <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-8 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
               {isEn ? 'NmoLabs Ecosystem: Four Cohesive Paths' : 'منظومة NmoLabs: أربع مسارات تعمل معاً'}
             </h2>
@@ -611,7 +611,7 @@ export const AboutPage: React.FC = () => {
 
 
       {/* SECTION 5: VISION AND MISSION (الرؤية والرسالة) */}
-      <section id="about-vision-mission" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/5">
+      <section id="about-vision-mission" className="py-12 lg:py-14 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/5">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
           
           {/* Vision card */}
@@ -648,9 +648,9 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 6: VALUES (قيم تحكم طريقة عملنا) */}
-      <section id="about-values" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30">
+      <section id="about-values" className="py-12 lg:py-14 border-b border-[var(--border-default)]/30">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <div className="text-center max-w-3xl mx-auto mb-8 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
               {isEn ? 'Values That Govern Our Work' : 'قيم تحكم طريقة عملنا'}
             </h2>
@@ -683,9 +683,9 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 7: WORKFLOW (كيف نعمل؟) - Interactive quiet timeline */}
-      <section id="about-workflow" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/10">
+      <section id="about-workflow" className="py-12 lg:py-14 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/10">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <div className="text-center max-w-3xl mx-auto mb-8 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
               {isEn ? 'From Idea to Operating Solution' : 'من الفكرة إلى حل يعمل'}
             </h2>
@@ -795,9 +795,9 @@ export const AboutPage: React.FC = () => {
 </section>
 
       {/* SECTION 8: SECTORS (القطاعات التي عملنا معها) */}
-      <section id="about-sectors" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30">
+      <section id="about-sectors" className="py-12 lg:py-14 border-b border-[var(--border-default)]/30">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <div className="text-center max-w-3xl mx-auto mb-8 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
               {isEn ? 'Experience Across Diverse Sectors' : 'خبرة عبر قطاعات متنوعة'}
             </h2>
@@ -822,7 +822,7 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 9: EVOLUTION (نبذة عن تطور NmoLabs) */}
-      <section id="about-evolution" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/15">
+      <section id="about-evolution" className="py-12 lg:py-14 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/15">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
@@ -862,7 +862,7 @@ export const AboutPage: React.FC = () => {
                     <h4 className="font-black text-sm text-[var(--text-primary)] group-hover:text-[var(--color-primary)] transition-colors">
                       {isEn ? stage.titleEn : stage.titleAr}
                     </h4>
-                    <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+                    <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
                       {isEn ? stage.descEn : stage.descAr}
                     </p>
                   </div>
@@ -875,9 +875,9 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 10: TEAM AND COLLABORATION (الفريق وطريقة التعاون) */}
-      <section id="about-team" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30">
+      <section id="about-team" className="py-12 lg:py-14 border-b border-[var(--border-default)]/30">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <div className="text-center max-w-3xl mx-auto mb-8 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
               {isEn ? 'Expertise Integrating as Project Needs' : 'خبرات تتكامل حسب احتياج المشروع'}
             </h2>
@@ -917,9 +917,9 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 11: TRUST LINKS (روابط الثقة) */}
-      <section id="about-trust-links" className="py-12 lg:py-8 lg:py-24 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/5">
+      <section id="about-trust-links" className="py-12 lg:py-14 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/5">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <div className="text-center max-w-3xl mx-auto mb-8 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
               {isEn ? 'Discover NmoLabs Through What We Build' : 'اكتشف NmoLabs من خلال ما نبنيه'}
             </h2>
@@ -975,7 +975,7 @@ export const AboutPage: React.FC = () => {
                   <h3 className="font-black text-base text-[var(--text-primary)]">
                     {isEn ? linkCard.titleEn : linkCard.titleAr}
                   </h3>
-                  <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
                     {isEn ? linkCard.descEn : linkCard.descAr}
                   </p>
                 </div>
