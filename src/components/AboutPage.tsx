@@ -116,7 +116,7 @@ export const AboutPage: React.FC = () => {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-base md:text-lg text-[var(--text-muted)] leading-relaxed max-w-2xl"
+              className="text-base md:text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl"
             >
               {isEn ? companyData.shortDescriptionEn : companyData.shortDescriptionAr}
             </motion.p>
@@ -144,7 +144,7 @@ export const AboutPage: React.FC = () => {
           </div>
 
           {/* Hero visual representation: Glass panels, connected nodes, modular, ambient glow, grid */}
-          <div className="lg:col-span-5 hidden lg:block relative h-[420px]">
+          <div className="lg:col-span-5 hidden lg:block relative h-[340px]">
             <div className="absolute inset-0 flex items-center justify-center">
               
               {/* Outer Glow Circle */}
@@ -165,7 +165,7 @@ export const AboutPage: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-sm text-[var(--text-primary)]">{isEn ? 'Technology' : 'التقنية'}</h3>
-                    <p className="text-[var(--text-muted)] text-xs mt-1">{isEn ? 'Custom scalable infrastructure' : 'بنية تحتية مخصصة وقابلة للتوسع'}</p>
+                    <p className="text-[var(--text-secondary)] text-xs mt-1">{isEn ? 'Custom scalable infrastructure' : 'بنية تحتية مخصصة وقابلة للتوسع'}</p>
                   </div>
                 </motion.div>
 
@@ -180,7 +180,7 @@ export const AboutPage: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-sm text-[var(--text-primary)]">{isEn ? 'Business' : 'الأعمال'}</h3>
-                    <p className="text-[var(--text-muted)] text-xs mt-1">{isEn ? 'Strategic alignment & models' : 'مواءمة استراتيجية ونماذج ربحية'}</p>
+                    <p className="text-[var(--text-secondary)] text-xs mt-1">{isEn ? 'Strategic alignment & models' : 'مواءمة استراتيجية ونماذج ربحية'}</p>
                   </div>
                 </motion.div>
 
@@ -195,7 +195,7 @@ export const AboutPage: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-sm text-[var(--text-primary)]">{isEn ? 'Marketing' : 'التسويق'}</h3>
-                    <p className="text-[var(--text-muted)] text-xs mt-1">{isEn ? 'Growth, SEO & acquisition' : 'النمو والانتشار وجلب العملاء'}</p>
+                    <p className="text-[var(--text-secondary)] text-xs mt-1">{isEn ? 'Growth, SEO & acquisition' : 'النمو والانتشار وجلب العملاء'}</p>
                   </div>
                 </motion.div>
 
@@ -210,7 +210,7 @@ export const AboutPage: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-sm text-[var(--text-primary)]">{isEn ? 'Products & UX' : 'المنتجات وتجربة العميل'}</h3>
-                    <p className="text-[var(--text-muted)] text-xs mt-1">{isEn ? 'Fluid, conversion-focused flow' : 'مسار شراء سلس ومثالي للتحويل'}</p>
+                    <p className="text-[var(--text-secondary)] text-xs mt-1">{isEn ? 'Fluid, conversion-focused flow' : 'مسار شراء سلس ومثالي للتحويل'}</p>
                   </div>
                 </motion.div>
                 
@@ -239,7 +239,7 @@ export const AboutPage: React.FC = () => {
                 {isEn ? companyData.positioningEn : companyData.positioningAr}
               </h2>
               
-              <div className="space-y-4 text-base text-[var(--text-muted)] leading-relaxed">
+              <div className="space-y-4 text-base text-[var(--text-secondary)] leading-relaxed">
                 {isEn ? (
                   companyData.fullDescriptionEn.split('\n\n').map((paragraph, idx) => (
                     <p key={idx}>{paragraph}</p>
@@ -253,7 +253,7 @@ export const AboutPage: React.FC = () => {
             </div>
 
             {/* Right side: Schematic Diagram representing Integration */}
-            <div className="lg:col-span-5 bg-[var(--surface-secondary)]/30 border border-[var(--border-default)] rounded-3xl p-8 relative overflow-hidden backdrop-blur-sm min-h-[350px] flex flex-col justify-between">
+            <div className="lg:col-span-5 bg-[var(--surface-secondary)]/30 border border-[var(--border-default)] rounded-3xl p-8 relative overflow-hidden backdrop-blur-sm min-h-[280px] flex flex-col justify-between">
               <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />
               
@@ -261,7 +261,7 @@ export const AboutPage: React.FC = () => {
                 <span className="text-xs font-bold text-[var(--color-primary)] tracking-widest uppercase">
                   {isEn ? 'The Integration Formula' : 'معادلة التكامل الرقمي'}
                 </span>
-                <p className="text-sm text-[var(--text-muted)]">
+                <p className="text-sm text-[var(--text-secondary)]">
                   {isEn ? 'We combine four pillars into one unified growth system:' : 'نجمع 4 ركائز حيوية في منظومة نمو واحدة:'}
                 </p>
               </div>
@@ -281,7 +281,7 @@ export const AboutPage: React.FC = () => {
                 ))}
               </div>
 
-              <div className="border-t border-[var(--border-default)]/60 pt-4 flex items-center justify-between text-xs text-[var(--text-muted)]">
+              <div className="border-t border-[var(--border-default)]/60 pt-4 flex items-center justify-between text-xs text-[var(--text-secondary)]">
                 <span>{isEn ? 'Result: True Digital Leverage' : 'النتيجة: أثر حقيقي ونمو مستمر'}</span>
                 <div className="flex gap-1">
                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -302,7 +302,7 @@ export const AboutPage: React.FC = () => {
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
               {isEn ? 'We Transform Needs into Integrated Digital Solutions' : 'نحوّل الاحتياج إلى حل رقمي متكامل'}
             </h2>
-            <p className="text-base text-[var(--text-muted)]">
+            <p className="text-base text-[var(--text-secondary)]">
               {isEn ? 'Five key pathways designed to serve different stages and needs of your digital operations.' : 'خمسة مسارات مدروسة تخدم مختلف مراحل أعمالك وتضمن تكاملها الرقمي.'}
             </p>
           </div>
@@ -364,7 +364,7 @@ export const AboutPage: React.FC = () => {
               <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
                 {isEn ? 'More Than Just Service Execution' : 'أكثر من تنفيذ خدمة'}
               </h2>
-              <p className="text-sm md:text-base text-[var(--text-muted)] leading-relaxed">
+              <p className="text-sm md:text-base text-[var(--text-secondary)] leading-relaxed">
                 {isEn ? 'We do not view a website or application as a standalone order. We build with its operational role, user conversion flow, and technical longevity in mind.' : 'نحن لا نتعامل مع الموقع أو المتجر أو النظام كطلب منفصل، بل نبحث عن دوره داخل المشروع وكيف يمكن أن يدعم المبيعات والتشغيل وتجربة العميل والنمو.'}
               </p>
             </div>
@@ -387,7 +387,7 @@ export const AboutPage: React.FC = () => {
                     { labelAr: 'تسليم ملفات أو منصة خام دون تدريب أو ضبط تشغيلي', labelEn: 'Delivering raw files with no operational onboarding' },
                     { labelAr: 'انتهاء العلاقة والمسؤولية بمجرد تسليم المفاتيح', labelEn: 'The relationship and support ends upon project hand-off' }
                   ].map((item, index) => (
-                    <li key={index} className="flex gap-3 text-sm text-[var(--text-muted)] items-start">
+                    <li key={index} className="flex gap-3 text-sm text-[var(--text-secondary)] items-start">
                       <span className="font-bold text-gray-400 mt-1 shrink-0">✕</span>
                       <span>{isEn ? item.labelEn : item.labelAr}</span>
                     </li>
@@ -434,7 +434,7 @@ export const AboutPage: React.FC = () => {
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
               {isEn ? 'NmoLabs Ecosystem: Four Cohesive Paths' : 'منظومة NmoLabs: أربع مسارات تعمل معاً'}
             </h2>
-            <p className="text-sm sm:text-base text-[var(--text-muted)] max-w-xl mx-auto">
+            <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-xl mx-auto">
               {isEn ? 'Our pathways feed into one central hub to catalyze true growth.' : 'تتكامل مساراتنا التقنية والتجريبية لتشكل منظومة متناغمة تصنع حلول الغد.'}
             </p>
           </div>
@@ -446,7 +446,7 @@ export const AboutPage: React.FC = () => {
               
               {/* Center Hub */}
               <div className="absolute z-20 w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[var(--surface-primary)] border-2 border-[var(--color-primary)] flex flex-col items-center justify-center text-center shadow-[0_0_30px_rgba(79,142,247,0.3)] transition-all duration-300 overflow-hidden">
-                <span className="font-black text-[10px] sm:text-sm tracking-widest font-english text-[var(--text-primary)]">NMOLABS</span>
+                <span className="font-black text-xs sm:text-sm tracking-widest font-english text-[var(--text-primary)]">NMOLABS</span>
                 <div className="h-4 flex items-center justify-center mt-1 w-full">
                   <AnimatePresence mode="wait">
                     <motion.span 
@@ -455,7 +455,7 @@ export const AboutPage: React.FC = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
                       transition={{ duration: 0.2 }}
-                      className="text-[9px] sm:text-[10px] text-[var(--color-primary)] font-bold uppercase tracking-wider block"
+                      className="text-xs sm:text-xs text-[var(--color-primary)] font-bold uppercase tracking-wider block"
                     >
                       {hoveredPath ? hoveredPath : (isEn ? 'Ecosystem' : 'المنظومة')}
                     </motion.span>
@@ -493,10 +493,10 @@ export const AboutPage: React.FC = () => {
                       top: `${topPos}%`
                     }}
                   >
-                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shadow-lg transition-colors border ${isActive ? `${node.bg}/10 border-${node.bg.split('-')[1]}-500 ${node.color}` : 'bg-[var(--surface-secondary)] border-[var(--border-default)] text-[var(--text-muted)]'}`}>
+                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shadow-lg transition-colors border ${isActive ? `${node.bg}/10 border-${node.bg.split('-')[1]}-500 ${node.color}` : 'bg-[var(--surface-secondary)] border-[var(--border-default)] text-[var(--text-secondary)]'}`}>
                       {node.icon}
                     </div>
-                    <span className={`text-[10px] sm:text-xs font-bold px-2 py-1 rounded-full ${isActive ? `${node.bg}/20 ${node.color}` : 'bg-[var(--surface-secondary)] text-[var(--text-muted)]'}`}>
+                    <span className={`text-xs sm:text-xs font-bold px-2 py-1 rounded-full ${isActive ? `${node.bg}/20 ${node.color}` : 'bg-[var(--surface-secondary)] text-[var(--text-secondary)]'}`}>
                       {node.title}
                     </span>
                   </button>
@@ -548,7 +548,7 @@ export const AboutPage: React.FC = () => {
                         <Layers size={20} />
                       </div>
                       <h3 className="text-xl font-black text-[var(--text-primary)] mb-3">{isEn ? 'Services' : 'الخدمات'}</h3>
-                      <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6">
+                      <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
                         {isEn ? 'Digital services executed with deep operational understanding. From setup to marketing.' : 'تطوير وتنفيذ الخدمات المباشرة يكشف لنا الاحتياجات والمشاكل الحقيقية التي تواجه المتاجر.'}
                       </p>
                       <button onClick={() => navigateToRoute('services')} className="text-xs font-bold text-blue-500 hover:underline flex items-center gap-1">
@@ -563,7 +563,7 @@ export const AboutPage: React.FC = () => {
                         <Briefcase size={20} />
                       </div>
                       <h3 className="text-xl font-black text-[var(--text-primary)] mb-3">{isEn ? 'Work' : 'الأعمال'}</h3>
-                      <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6">
+                      <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
                         {isEn ? 'Digital projects built by NmoLabs that drive tangible business results and scaling.' : 'مشاريع وتجارب رقمية بنيناها مع عملائنا لتحقيق نمو ملموس ونتائج قابلة للقياس.'}
                       </p>
                       <button onClick={() => navigateToRoute('work')} className="text-xs font-bold text-emerald-500 hover:underline flex items-center gap-1">
@@ -578,7 +578,7 @@ export const AboutPage: React.FC = () => {
                         <ShoppingBag size={20} />
                       </div>
                       <h3 className="text-xl font-black text-[var(--text-primary)] mb-3">{isEn ? 'Products' : 'المنتجات'}</h3>
-                      <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6">
+                      <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
                         {isEn ? 'Proprietary platforms owned or engineered by us to solve specific market gaps.' : 'نحوّل المشاكل إلى أنظمة ومُنتجات جاهزة لتوفير الجهد البشري والتقني في السوق.'}
                       </p>
                       <button onClick={() => navigateToRoute('products')} className="text-xs font-bold text-purple-500 hover:underline flex items-center gap-1">
@@ -593,7 +593,7 @@ export const AboutPage: React.FC = () => {
                         <Cpu size={20} />
                       </div>
                       <h3 className="text-xl font-black text-[var(--text-primary)] mb-3">{isEn ? 'Innovation Lab' : 'مختبر الابتكارات'}</h3>
-                      <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6">
+                      <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
                         {isEn ? 'Pioneering experiments testing the edge of AI, automation, and advanced software models.' : 'يعمل كمظلة لصياغة تجارب الغد وأتمتة نماذج العمل المتقدمة عبر الذكاء الاصطناعي.'}
                       </p>
                       <button onClick={() => navigateToRoute('innovation-lab')} className="text-xs font-bold text-amber-500 hover:underline flex items-center gap-1">
@@ -624,7 +624,7 @@ export const AboutPage: React.FC = () => {
             <h3 className="text-xl md:text-2xl font-black text-[var(--text-primary)] mb-4">
               {isEn ? 'Our Vision' : 'رؤيتنا'}
             </h3>
-            <p className="text-sm md:text-base text-[var(--text-muted)] leading-relaxed">
+            <p className="text-sm md:text-base text-[var(--text-secondary)] leading-relaxed">
               {isEn ? companyData.visionEn : companyData.visionAr}
             </p>
           </div>
@@ -639,7 +639,7 @@ export const AboutPage: React.FC = () => {
             <h3 className="text-xl md:text-2xl font-black text-[var(--text-primary)] mb-4">
               {isEn ? 'Our Mission' : 'رسالتنا'}
             </h3>
-            <p className="text-sm md:text-base text-[var(--text-muted)] leading-relaxed">
+            <p className="text-sm md:text-base text-[var(--text-secondary)] leading-relaxed">
               {isEn ? companyData.missionEn : companyData.missionAr}
             </p>
           </div>
@@ -654,7 +654,7 @@ export const AboutPage: React.FC = () => {
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
               {isEn ? 'Values That Govern Our Work' : 'قيم تحكم طريقة عملنا'}
             </h2>
-            <p className="text-base text-[var(--text-muted)]">
+            <p className="text-base text-[var(--text-secondary)]">
               {isEn ? 'Underlying principles that steer every design, line of code, and communication decision we make.' : 'ثوابت وقناعات مهنية لا نتنازل عنها تصنع جودة العمل وتضمن راحة الشركاء.'}
             </p>
           </div>
@@ -672,7 +672,7 @@ export const AboutPage: React.FC = () => {
                   <h3 className="font-black text-base text-[var(--text-primary)]">
                     {isEn ? val.titleEn : val.titleAr}
                   </h3>
-                  <p className="text-xs md:text-sm text-[var(--text-muted)] leading-relaxed">
+                  <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
                     {isEn ? val.descEn : val.descAr}
                   </p>
                 </div>
@@ -689,7 +689,7 @@ export const AboutPage: React.FC = () => {
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
               {isEn ? 'From Idea to Operating Solution' : 'من الفكرة إلى حل يعمل'}
             </h2>
-            <p className="text-base text-[var(--text-muted)]">
+            <p className="text-base text-[var(--text-secondary)]">
               {isEn ? 'A structured seven-step cycle engineered to eliminate guesswork and align with project scope.' : 'منهجية من سبع خطوات واضحة تضمن دقة المسار وخلو الإطلاق من العقبات.'}
             </p>
           </div>
@@ -714,7 +714,7 @@ export const AboutPage: React.FC = () => {
                     </span>
                     {isActive && <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-ping" />}
                   </div>
-                  <h4 className={`font-black text-sm ${isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-muted)]'}`}>
+                  <h4 className={`font-black text-sm ${isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
                     {isEn ? step.titleEn : step.titleAr}
                   </h4>
                 </button>
@@ -741,7 +741,7 @@ export const AboutPage: React.FC = () => {
                 <h3 className="font-black text-xl text-[var(--text-primary)]">
                   {isEn ? companyData.workProcess[activeStep].titleEn : companyData.workProcess[activeStep].titleAr}
                 </h3>
-                <p className="text-base text-[var(--text-muted)] leading-relaxed max-w-xl mx-auto">
+                <p className="text-base text-[var(--text-secondary)] leading-relaxed max-w-xl mx-auto">
                   {isEn ? companyData.workProcess[activeStep].descEn : companyData.workProcess[activeStep].descAr}
                 </p>
               </motion.div>
@@ -760,10 +760,10 @@ export const AboutPage: React.FC = () => {
                     onClick={() => setActiveStep(idx)}
                     className={`shrink-0 snap-center px-5 py-4 rounded-2xl border transition-all duration-300 min-w-[140px] text-center ${isActive ? 'bg-[var(--surface-primary)] border-[var(--color-primary)] shadow-md' : 'bg-[var(--surface-secondary)]/60 border-[var(--border-default)]'}`}
                   >
-                    <span className={`text-xs font-bold font-english block mb-2 ${isActive ? 'text-[var(--color-primary)]' : 'text-[var(--text-muted)]'}`}>
+                    <span className={`text-xs font-bold font-english block mb-2 ${isActive ? 'text-[var(--color-primary)]' : 'text-[var(--text-secondary)]'}`}>
                       {step.step}
                     </span>
-                    <h4 className={`font-black text-sm ${isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-muted)]'}`}>
+                    <h4 className={`font-black text-sm ${isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
                       {isEn ? step.titleEn : step.titleAr}
                     </h4>
                   </button>
@@ -784,7 +784,7 @@ export const AboutPage: React.FC = () => {
                   <h3 className="font-black text-lg text-[var(--color-primary)]">
                     {isEn ? companyData.workProcess[activeStep].titleEn : companyData.workProcess[activeStep].titleAr}
                   </h3>
-                  <p className="text-sm text-[var(--text-muted)] leading-relaxed">
+                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
                     {isEn ? companyData.workProcess[activeStep].descEn : companyData.workProcess[activeStep].descAr}
                   </p>
                 </motion.div>
@@ -801,7 +801,7 @@ export const AboutPage: React.FC = () => {
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
               {isEn ? 'Experience Across Diverse Sectors' : 'خبرة عبر قطاعات متنوعة'}
             </h2>
-            <p className="text-base text-[var(--text-muted)]">
+            <p className="text-base text-[var(--text-secondary)]">
               {isEn ? 'We deploy tailored platforms fitted exactly to sector-specific constraints.' : 'قمنا بدراسة وبناء حلول ذكية لخدمة أعمال وقطاعات متنوعة.'}
             </p>
           </div>
@@ -832,10 +832,10 @@ export const AboutPage: React.FC = () => {
               <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
                 {isEn ? 'From Service Delivery to Product Engineering' : 'من تنفيذ المشاريع إلى بناء المنتجات'}
               </h2>
-              <p className="text-sm md:text-base text-[var(--text-muted)] leading-relaxed">
+              <p className="text-sm md:text-base text-[var(--text-secondary)] leading-relaxed">
                 {isEn ? 'Our journey started from directly operating stores, tracking performance, and consulting, which evolved naturally into building robust automated products.' : 'بدأت خبرة NmoLabs من العمل المباشر على التجارة الإلكترونية والمواقع والتسويق وتجربة العملاء، ثم تطورت إلى بناء الأنظمة المخصصة والمنصات والمنتجات التقنية.'}
               </p>
-              <p className="text-xs md:text-sm text-[var(--text-muted)] leading-relaxed">
+              <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
                 {isEn ? 'This evolution allows us to build with empathy and direct knowledge of the real-world friction businesses encounter.' : 'هذا التطور مكّن الشركة من الجمع بين فهم التحديات اليومية للمشاريع وبين القدرة على تصميم حلول رقمية تعالجها بشكل عملي.'}
               </p>
 
@@ -881,7 +881,7 @@ export const AboutPage: React.FC = () => {
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
               {isEn ? 'Expertise Integrating as Project Needs' : 'خبرات تتكامل حسب احتياج المشروع'}
             </h2>
-            <p className="text-base text-[var(--text-muted)]">
+            <p className="text-base text-[var(--text-secondary)]">
               {isEn ? 'We assemble focused technical and design teams custom-fitted to your project scope.' : 'تعمل NmoLabs من خلال خبرات متخصصة في التصميم والتطوير والتجارة الإلكترونية والتسويق والمحتوى وتجربة المستخدم وإدارة المشاريع، ويتم تشكيل نطاق العمل والفريق المناسب وفق طبيعة كل مشروع.'}
             </p>
           </div>
@@ -904,7 +904,7 @@ export const AboutPage: React.FC = () => {
                 className="bg-[var(--surface-secondary)] border border-[var(--border-default)] p-5 rounded-2xl text-center flex flex-col items-center justify-center gap-3 shadow-inner group hover:border-[var(--color-primary)]/30 transition-all"
               >
                 {/* Abstract Vector Icon / Avatar representing Role */}
-                <div className="w-10 h-10 rounded-full bg-[var(--surface-tertiary)] flex items-center justify-center text-[var(--text-muted)] group-hover:text-[var(--color-primary)] group-hover:bg-blue-500/5 transition-all">
+                <div className="w-10 h-10 rounded-full bg-[var(--surface-tertiary)] flex items-center justify-center text-[var(--text-secondary)] group-hover:text-[var(--color-primary)] group-hover:bg-blue-500/5 transition-all">
                   <span className="text-xs font-bold font-english">0{idx + 1}</span>
                 </div>
                 <h4 className="font-bold text-xs md:text-sm text-[var(--text-primary)] leading-relaxed">
@@ -923,7 +923,7 @@ export const AboutPage: React.FC = () => {
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
               {isEn ? 'Discover NmoLabs Through What We Build' : 'اكتشف NmoLabs من خلال ما نبنيه'}
             </h2>
-            <p className="text-base text-[var(--text-muted)]">
+            <p className="text-base text-[var(--text-secondary)]">
               {isEn ? 'Explore our systems, previous projects, custom tools and experimental labs.' : 'الروابط التي تترجم خبراتنا العملية وتثبت دقة وجودة مخرجاتنا التقنية.'}
             </p>
           </div>
@@ -1022,7 +1022,7 @@ export const AboutPage: React.FC = () => {
             <h2 className="text-3xl md:text-5xl font-black text-[var(--text-primary)] leading-tight">
               {isEn ? 'Do Not Start with Technology, Start with Outcomes' : 'لا تبدأ بالتقنية، ابدأ بما تريد تحقيقه'}
             </h2>
-            <p className="text-base md:text-lg text-[var(--text-muted)] max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base md:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
               {isEn ? 'Share your strategic hurdles or desired business goals, and let us help architect the correct digital leverage before writing a single line of code.' : 'شاركنا هدفك أو التحدي الذي تواجهه، وسنساعدك على تحديد الحل الرقمي المناسب قبل البدء في التنفيذ.'}
             </p>
           </motion.div>
