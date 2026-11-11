@@ -40,7 +40,7 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
       className="py-10 lg:py-16 flex items-center relative z-10"
     >
       <div className="max-w-7xl mx-auto px-6 w-full">
-        <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12 lg:gap-16`}>
+        <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-7 lg:gap-10`}>
           
           {/* Content */}
           <div className="w-full lg:w-1/2 flex flex-col justify-center">
@@ -51,7 +51,7 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
               transition={{ duration: 0.6 }}
             >
               <div className="flex items-center gap-3 sm:gap-4 mb-6">
-                <span className="text-4xl sm:text-5xl font-black text-[var(--color-primary)]/40">0{index + 1}</span>
+                <span className="text-4xl sm:text-5xl font-black text-[var(--text-secondary)]">0{index + 1}</span>
                 <div className="h-[1px] flex-grow bg-[var(--border-default)]" />
                 {project.year && (
                   <span className="px-3.5 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--color-primary)] text-xs sm:text-sm font-bold">
@@ -73,7 +73,7 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
 
               <div className="flex flex-wrap gap-2 mb-8">
                 {project.services.slice(0, 4).map((srv, idx) => (
-                  <span key={idx} className="px-3 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-muted)] text-xs sm:text-sm">
+                  <span key={idx} className="px-3 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)] text-sm sm:text-base">
                     {srv}
                   </span>
                 ))}
@@ -216,7 +216,7 @@ export const WorkPage = () => {
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-xs font-bold text-[var(--color-primary)] mb-6">
               <span>{isEn ? 'Selected Portfolio' : 'أعمال ومشاريع مختارة'}</span>
             </div>
-            <h1 className="text-4xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight text-[var(--text-primary)]">
+            <h1 className="text-4xl md:text-7xl lg:text-8xl font-black mb-4 tracking-tight text-[var(--text-primary)]">
               {isEn ? (
                 <>Our <span className="text-[var(--color-primary)]">Work</span></>
               ) : (
