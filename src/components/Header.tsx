@@ -158,12 +158,12 @@ export const Header = () => {
       <div className="px-4 md:px-6 py-2.5 pointer-events-auto">
         <div className="w-full lg:w-fit mx-auto flex items-center justify-between lg:justify-center gap-3 lg:gap-8 bg-[var(--surface-primary)]/90 dark:bg-[var(--surface-primary)]/85 shadow-[var(--card-shadow-2)] border border-[var(--border-default)] rounded-full px-4 md:px-6 py-2 transition-all backdrop-blur-xl">
         <button 
-          className="lg:hidden text-[var(--text-secondary)] hover:text-[var(--color-primary)] transition-colors p-2 rounded-xl hover:bg-[var(--surface-secondary)]"
+          className="lg:hidden text-[var(--text-secondary)] hover:text-[var(--color-primary)] transition-colors p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl hover:bg-[var(--surface-secondary)]"
           onClick={() => setIsMobileMenuOpen(true)}
           aria-label={isEn ? "Open main menu" : "فتح القائمة الرئيسية"}
           aria-expanded={isMobileMenuOpen}
         >
-          <Menu size={22} />
+          <Menu size={26} strokeWidth={2.4} />
         </button>
 
         <div className="flex items-center justify-center absolute left-1/2 -translate-x-1/2 lg:relative lg:left-0 lg:translate-x-0 gap-2 cursor-pointer transition-transform hover:scale-[1.02]" onClick={() => handleScroll('hero')}>
@@ -201,18 +201,18 @@ export const Header = () => {
           <div className="flex items-center gap-2 sm:gap-3 sm:mr-2 sm:border-r rtl:sm:border-r-0 rtl:sm:border-l border-[var(--border-default)] sm:pr-3 rtl:sm:pr-0 rtl:sm:pl-3">
             <button 
               onClick={handleToggleLanguage}
-              className="p-2 text-[var(--text-secondary)] hover:text-[var(--color-primary)] hover:bg-[var(--surface-secondary)] rounded-full transition-colors cursor-pointer"
+              className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--color-primary)] hover:bg-[var(--surface-secondary)] rounded-full transition-colors cursor-pointer"
               aria-label={isEn ? "Toggle Language" : "تغيير اللغة"}
             >
-               <Globe size={18} />
+               <Globe size={23} strokeWidth={2.3} />
             </button>
             {config.showThemeToggle && (
               <button 
                 onClick={toggleTheme} 
-                className="p-2 text-[var(--text-secondary)] hover:text-[var(--color-primary)] hover:bg-[var(--surface-secondary)] rounded-full transition-colors cursor-pointer" 
+                className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--color-primary)] hover:bg-[var(--surface-secondary)] rounded-full transition-colors cursor-pointer" 
                 aria-label={isEn ? "Toggle Theme" : "تغيير المظهر"}
               >
-                {config.theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                {config.theme === 'dark' ? <Sun size={23} strokeWidth={2.3} /> : <Moon size={23} strokeWidth={2.3} />}
               </button>
             )}
           </div>
@@ -284,7 +284,7 @@ export const Header = () => {
                     onClick={handleToggleLanguage}
                     className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors font-english text-sm font-bold flex items-center justify-center gap-2 p-3 bg-[var(--surface-secondary)] rounded-xl flex-1 cursor-pointer border border-[var(--border-default)]"
                   >
-                    <Globe size={18} />
+                    <Globe size={23} strokeWidth={2.3} />
                     {config.language === 'en' ? 'عربي' : 'English'}
                   </button>
                 </div>
