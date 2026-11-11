@@ -135,7 +135,7 @@ export const WorkGridCard: React.FC<Props> = ({ project, isEn, updateConfig, get
                 {isEn ? <ArrowRight size={14} /> : <ArrowLeft size={14} />}
               </button>
             ) : (
-              <span className="inline-block text-sm font-bold text-white/80 px-4 py-2 rounded-lg border border-white/20 bg-black/50">
+              <button onClick={(e) => { e.stopPropagation(); updateConfig({ currentRoute: 'kyc' }); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="inline-block text-sm font-bold text-white px-4 py-2 rounded-lg border border-white/20 bg-[var(--color-primary)] hover:brightness-110 transition">
                 {isEn ? 'Ask about this project' : 'استفسر عن المشروع'}
               </button>
             )}
