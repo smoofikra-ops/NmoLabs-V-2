@@ -65,7 +65,7 @@ export const FAQ = () => {
   if (!isStandalone && config.sections?.faq === false) return null;
 
   return (
-    <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden" id="faq">
+    <section className="py-10 sm:py-12 md:py-16 relative overflow-hidden" id="faq">
       {isStandalone && (
         <Helmet>
           <title>{isEn ? 'Frequently Asked Questions | NmoLabs' : 'الأسئلة الشائعة | نمو لابز'}</title>
@@ -94,7 +94,7 @@ export const FAQ = () => {
             {isEn ? 'Frequently Asked Questions' : 'الأسئلة الشائعة'}
           </motion.h2>
 
-          <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-xl mx-auto">
+          <p className="text-base sm:text-lg text-[var(--text-secondary)] max-w-xl mx-auto">
             {isEn 
               ? 'Everything you need to know about our technology systems, development workflows, and partnership models.' 
               : 'كل ما تحتاج لمعرفته حول حلولنا التقنية، نماذج التكامل، ومراحل بناء المنتجات.'}
@@ -173,7 +173,7 @@ export const FAQ = () => {
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <div className="p-5 pt-0 text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed border-t border-[var(--border-default)]/50 mx-5 mt-1">
+                          <div className="p-5 pt-0 text-base text-[var(--text-secondary)] leading-relaxed border-t border-[var(--border-default)]/50 mx-5 mt-1">
                             {answerText}
                           </div>
                         </motion.div>
