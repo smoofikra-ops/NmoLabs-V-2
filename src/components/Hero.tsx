@@ -208,8 +208,8 @@ export const Hero = () => {
             {heroTitle}
           </h1>
           
-          <div className="mb-5 sm:mb-7 min-h-[3.8rem] sm:min-h-[4.6rem] flex items-center justify-center w-full px-2">
-            <div className="hero-intelligence-badge inline-flex items-center justify-center px-4 sm:px-6 py-3 sm:py-3.5 rounded-2xl border text-white text-[15px] sm:text-lg md:text-xl font-extrabold max-w-3xl text-center leading-relaxed transition-all duration-300 shadow-[var(--card-shadow-2)]">
+          <div className="mb-5 sm:mb-7 min-h-[4.5rem] sm:min-h-[4.6rem] flex items-center justify-center w-full px-2">
+            <div className="hero-intelligence-badge inline-flex items-center justify-center px-4 sm:px-6 py-3 sm:py-3.5 rounded-2xl border text-white bg-[#071a39]/95 text-[15px] sm:text-lg md:text-xl font-extrabold max-w-3xl text-center leading-relaxed transition-all duration-300 shadow-[var(--card-shadow-2)]">
               <DynamicTypewriter isEn={isEn} />
             </div>
           </div>
@@ -257,9 +257,9 @@ export const Hero = () => {
           </div>
           <ToolAnalyzerModal isOpen={showAnalyzer} onClose={() => setShowAnalyzer(false)} tool={{ name: 'فاحص SEO', locked: false, iconName: 'Search', iconColor: 'text-blue-400' }} />
 
-          <div className="mt-8 sm:mt-10 flex items-center gap-3 text-xs sm:text-sm text-[var(--text-muted)] font-medium bg-[var(--surface-primary)]/80 dark:bg-[var(--surface-secondary)]/80 border border-[var(--border-default)] px-4 py-2.5 rounded-full shadow-sm backdrop-blur-md max-w-full">
+          <div className="mt-6 sm:mt-7 flex items-center gap-3 text-sm sm:text-base text-[var(--text-secondary)] font-medium bg-[var(--surface-primary)]/80 dark:bg-[var(--surface-secondary)]/80 border border-[var(--border-default)] px-4 py-2.5 rounded-full shadow-sm backdrop-blur-md max-w-full">
             <div className="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse shrink-0" />
-            <span className="truncate">{isEn ? 'Full team for design, development, systems, and growth.' : 'فريق متكامل للتصميم، التطوير، الأنظمة والنمو.'}</span>
+            <span className="whitespace-normal">{isEn ? 'Full team for design, development, systems, and growth.' : 'فريق متكامل للتصميم، التطوير، الأنظمة والنمو.'}</span>
           </div>
         </motion.div>
 
