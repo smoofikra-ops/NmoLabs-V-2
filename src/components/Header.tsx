@@ -17,12 +17,10 @@ export const Header = () => {
   const mainNavItems = [
     { nameAr: 'الرئيسية', nameEn: 'Home', act: 'hero' },
     { nameAr: 'من نحن', nameEn: 'About Us', route: 'about' },
-    { nameAr: 'ماذا نبني؟', nameEn: 'What We Build', act: 'story-solutions' },
     { nameAr: 'خدماتنا', nameEn: 'Services', route: 'services' },
     { nameAr: 'أعمالنا', nameEn: 'Work', route: 'work' },
     { nameAr: 'منتجاتنا', nameEn: 'Products', route: 'products' },
     { nameAr: 'مختبر الابتكارات', nameEn: 'Innovation Labs', route: 'innovation-lab' },
-    { nameAr: 'كيف نعمل؟', nameEn: 'Workflow', route: 'about' },
     { nameAr: 'المدونة', nameEn: 'Blog', route: 'blog' },
     { nameAr: 'تواصل معنا', nameEn: 'Contact', act: 'contact' },
   ];
