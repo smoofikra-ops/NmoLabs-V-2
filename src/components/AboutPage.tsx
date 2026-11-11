@@ -73,13 +73,13 @@ export const AboutPage: React.FC = () => {
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
 
   return (
-    <div id="about-page-container" className="pt-28 pb-12 overflow-x-hidden text-[var(--text-primary)]">
+    <div id="about-page-container" className="pt-28 pb-8 overflow-x-hidden text-[var(--text-primary)] about-readable-page">
       
       {/* SECTION 0: HERO (Corporate and professional, max-height 900px, 78svh min-height) */}
       <section 
         id="about-hero" 
-        className="relative flex items-center justify-center px-6 overflow-hidden border-b border-[var(--border-default)]/30"
-        style={{ minHeight: '58svh', maxHeight: '900px' }}
+        className="relative flex items-center justify-center px-6 py-10 lg:py-14 overflow-hidden border-b border-[var(--border-default)]/30"
+        style={{ minHeight: 'auto' }}
       >
         {/* Ambient Subtle Glow & Grid Backdrops */}
         <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none" />
@@ -94,7 +94,7 @@ export const AboutPage: React.FC = () => {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-xs font-bold text-[var(--color-primary)]"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-sm font-bold text-[var(--color-primary)]"
             >
               <Sparkles size={14} />
               <span>{isEn ? 'About NmoLabs' : 'عن NmoLabs'}</span>
@@ -428,7 +428,7 @@ export const AboutPage: React.FC = () => {
 
       
       {/* SECTION 4: NMOLABS ECOSYSTEM (منظومة NmoLabs) */}
-      <section id="about-ecosystem" className="py-8 lg:py-14 border-b border-[var(--border-default)]/30 overflow-hidden relative">
+      <section id="about-ecosystem" className="py-8 lg:py-10 border-b border-[var(--border-default)]/30 overflow-hidden relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-8 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
@@ -455,7 +455,7 @@ export const AboutPage: React.FC = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
                       transition={{ duration: 0.2 }}
-                      className="text-xs sm:text-xs text-[var(--color-primary)] font-bold uppercase tracking-wider block"
+                      className="text-sm text-[var(--color-primary)] font-bold uppercase tracking-wider block"
                     >
                       {hoveredPath ? hoveredPath : (isEn ? 'Ecosystem' : 'المنظومة')}
                     </motion.span>
@@ -477,7 +477,7 @@ export const AboutPage: React.FC = () => {
               ].map((node) => {
                 const isActive = hoveredPath === node.id || (!hoveredPath && node.id === 'services');
                 
-                const radiusPct = 35; // 35% from center
+                const radiusPct = 32; // keep node labels inside the orbital visual
                 const rad = (node.angle * Math.PI) / 180;
                 const leftPos = 50 + (radiusPct * Math.cos(rad));
                 const topPos = 50 + (radiusPct * Math.sin(rad));
@@ -486,17 +486,17 @@ export const AboutPage: React.FC = () => {
                   <button
                     key={node.id}
                     onClick={() => setHoveredPath(node.id)}
-                    className={`absolute z-30 flex flex-col items-center gap-2 cursor-pointer transition-all duration-300 ${isActive ? 'scale-110' : 'scale-95 opacity-70 hover:opacity-100'}`}
+                    className={`absolute z-30 flex flex-col items-center gap-2 cursor-pointer transition-all duration-300 ${isActive ? 'scale-105' : 'scale-100'}`}
                     style={{
                       transform: 'translate(-50%, -50%)',
                       left: `${leftPos}%`,
                       top: `${topPos}%`
                     }}
                   >
-                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shadow-lg transition-colors border ${isActive ? `${node.bg}/10 border-${node.bg.split('-')[1]}-500 ${node.color}` : 'bg-[var(--surface-secondary)] border-[var(--border-default)] text-[var(--text-secondary)]'}`}>
+                    <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shadow-lg transition-colors border ${isActive ? `${node.bg}/10 border-${node.bg.split('-')[1]}-500 ${node.color}` : 'bg-[var(--surface-secondary)] border-[var(--border-default)] text-[var(--text-secondary)]'}`}>
                       {node.icon}
                     </div>
-                    <span className={`text-xs sm:text-xs font-bold px-2 py-1 rounded-full ${isActive ? `${node.bg}/20 ${node.color}` : 'bg-[var(--surface-secondary)] text-[var(--text-secondary)]'}`}>
+                    <span className={`text-sm font-bold px-3 py-1.5 rounded-full ${isActive ? `${node.bg}/20 ${node.color}` : 'bg-[var(--surface-secondary)] text-[var(--text-secondary)]'}`}>
                       {node.title}
                     </span>
                   </button>
@@ -551,7 +551,7 @@ export const AboutPage: React.FC = () => {
                       <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
                         {isEn ? 'Digital services executed with deep operational understanding. From setup to marketing.' : 'تطوير وتنفيذ الخدمات المباشرة يكشف لنا الاحتياجات والمشاكل الحقيقية التي تواجه المتاجر.'}
                       </p>
-                      <button onClick={() => navigateToRoute('services')} className="text-xs font-bold text-blue-500 hover:underline flex items-center gap-1">
+                      <button onClick={() => navigateToRoute('services')} className="text-sm font-bold text-blue-500 hover:underline flex items-center gap-1">
                         {isEn ? 'View Services' : 'استكشف الخدمات'} {isEn ? <ArrowRight size={12} /> : <ArrowLeft size={12} />}
                       </button>
                     </>
@@ -566,7 +566,7 @@ export const AboutPage: React.FC = () => {
                       <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
                         {isEn ? 'Digital projects built by NmoLabs that drive tangible business results and scaling.' : 'مشاريع وتجارب رقمية بنيناها مع عملائنا لتحقيق نمو ملموس ونتائج قابلة للقياس.'}
                       </p>
-                      <button onClick={() => navigateToRoute('work')} className="text-xs font-bold text-emerald-500 hover:underline flex items-center gap-1">
+                      <button onClick={() => navigateToRoute('work')} className="text-sm font-bold text-emerald-500 hover:underline flex items-center gap-1">
                         {isEn ? 'View Work' : 'استكشف الأعمال'} {isEn ? <ArrowRight size={12} /> : <ArrowLeft size={12} />}
                       </button>
                     </>
@@ -581,7 +581,7 @@ export const AboutPage: React.FC = () => {
                       <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
                         {isEn ? 'Proprietary platforms owned or engineered by us to solve specific market gaps.' : 'نحوّل المشاكل إلى أنظمة ومُنتجات جاهزة لتوفير الجهد البشري والتقني في السوق.'}
                       </p>
-                      <button onClick={() => navigateToRoute('products')} className="text-xs font-bold text-purple-500 hover:underline flex items-center gap-1">
+                      <button onClick={() => navigateToRoute('products')} className="text-sm font-bold text-purple-500 hover:underline flex items-center gap-1">
                         {isEn ? 'Explore Products' : 'اكتشف المنتجات'} {isEn ? <ArrowRight size={12} /> : <ArrowLeft size={12} />}
                       </button>
                     </>
@@ -596,7 +596,7 @@ export const AboutPage: React.FC = () => {
                       <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
                         {isEn ? 'Pioneering experiments testing the edge of AI, automation, and advanced software models.' : 'يعمل كمظلة لصياغة تجارب الغد وأتمتة نماذج العمل المتقدمة عبر الذكاء الاصطناعي.'}
                       </p>
-                      <button onClick={() => navigateToRoute('innovation-lab')} className="text-xs font-bold text-amber-500 hover:underline flex items-center gap-1">
+                      <button onClick={() => navigateToRoute('innovation-lab')} className="text-sm font-bold text-amber-500 hover:underline flex items-center gap-1">
                         {isEn ? 'Enter the Lab' : 'دخول المختبر'} {isEn ? <ArrowRight size={12} /> : <ArrowLeft size={12} />}
                       </button>
                     </>
@@ -672,7 +672,7 @@ export const AboutPage: React.FC = () => {
                   <h3 className="font-black text-base text-[var(--text-primary)]">
                     {isEn ? val.titleEn : val.titleAr}
                   </h3>
-                  <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
+                  <p className="text-sm md:text-base text-[var(--text-secondary)] leading-relaxed">
                     {isEn ? val.descEn : val.descAr}
                   </p>
                 </div>
@@ -709,7 +709,7 @@ export const AboutPage: React.FC = () => {
                   className={`text-right px-4 py-6 rounded-2xl border transition-all duration-300 relative z-10 cursor-pointer ${isActive ? 'bg-[var(--surface-primary)] border-[var(--color-primary)] shadow-md' : 'bg-[var(--surface-secondary)]/60 border-[var(--border-default)] hover:border-gray-400'}`}
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <span className={`text-xs font-bold font-english px-2 py-0.5 rounded-full ${isActive ? 'bg-blue-500/10 text-blue-500' : 'bg-gray-400/10 text-gray-400'}`}>
+                    <span className={`text-sm font-bold font-english px-2 py-0.5 rounded-full ${isActive ? 'bg-blue-500/10 text-blue-500' : 'bg-gray-400/10 text-gray-400'}`}>
                       {step.step}
                     </span>
                     {isActive && <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-ping" />}
@@ -812,7 +812,7 @@ export const AboutPage: React.FC = () => {
               <motion.div
                 key={index}
                 whileHover={{ scale: 1.02 }}
-                className="bg-[var(--surface-secondary)]/60 border border-[var(--border-default)] rounded-xl px-4 py-2.5 text-xs md:text-sm font-semibold hover:border-blue-500/40 hover:bg-[var(--surface-secondary)] transition-all cursor-default shadow-sm text-[var(--text-primary)]"
+                className="bg-[var(--surface-secondary)]/60 border border-[var(--border-default)] rounded-xl px-4 py-2.5 text-sm md:text-base font-semibold hover:border-blue-500/40 hover:bg-[var(--surface-secondary)] transition-all cursor-default shadow-sm text-[var(--text-primary)]"
               >
                 {isEn ? sector.nameEn : sector.nameAr}
               </motion.div>
@@ -875,7 +875,7 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 10: TEAM AND COLLABORATION (الفريق وطريقة التعاون) */}
-      <section id="about-team" className="py-12 lg:py-14 border-b border-[var(--border-default)]/30">
+      <section id="about-team" className="py-8 lg:py-10 border-b border-[var(--border-default)]/30">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-8 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
@@ -907,7 +907,7 @@ export const AboutPage: React.FC = () => {
                 <div className="w-10 h-10 rounded-full bg-[var(--surface-tertiary)] flex items-center justify-center text-[var(--text-secondary)] group-hover:text-[var(--color-primary)] group-hover:bg-blue-500/5 transition-all">
                   <span className="text-xs font-bold font-english">0{idx + 1}</span>
                 </div>
-                <h4 className="font-bold text-xs md:text-sm text-[var(--text-primary)] leading-relaxed">
+                <h4 className="font-bold text-sm md:text-base text-[var(--text-primary)] leading-relaxed">
                   {isEn ? role.roleEn : role.roleAr}
                 </h4>
               </div>
@@ -917,7 +917,7 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* SECTION 11: TRUST LINKS (روابط الثقة) */}
-      <section id="about-trust-links" className="py-12 lg:py-14 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/5">
+      <section id="about-trust-links" className="py-8 lg:py-10 border-b border-[var(--border-default)]/30 bg-[var(--surface-secondary)]/5">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-8 space-y-4">
             <h2 className="text-2xl md:text-4xl font-black text-[var(--text-primary)]">
@@ -944,7 +944,7 @@ export const AboutPage: React.FC = () => {
                 descAr: 'حلول مخصصة نضبط بها مبيعاتك وتواجدك الرقمي بدقة.',
                 descEn: 'Tailored implementations designed to scale your operations.',
                 icon: <Layers className="w-6 h-6 text-emerald-500" />,
-                act: 'services'
+                route: 'services'
               },
               {
                 titleAr: 'منتجاتنا التقنية',
