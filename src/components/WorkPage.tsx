@@ -37,7 +37,7 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
     <section 
       ref={ref}
       id={`featured-${project.id}`}
-      className="min-h-[80svh] py-12 lg:py-24 flex items-center relative z-10"
+      className="py-10 lg:py-16 flex items-center relative z-10"
     >
       <div className="max-w-7xl mx-auto px-6 w-full">
         <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12 lg:gap-16`}>
@@ -206,7 +206,7 @@ export const WorkPage = () => {
       <div className="fixed inset-0 bg-grid-pattern opacity-10 pointer-events-none z-0" />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-16 relative z-10">
+      <section className="pt-28 pb-6 relative z-10">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -234,7 +234,7 @@ export const WorkPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="mt-12 flex justify-center text-[var(--text-muted)] animate-bounce"
+            className="mt-5 flex justify-center text-[var(--text-secondary)]"
           >
             <ArrowDown size={28} />
           </motion.div>
@@ -256,7 +256,7 @@ export const WorkPage = () => {
       </div>
 
       {/* Other Projects Grid */}
-      <div className="py-24 relative z-10 bg-[var(--surface-secondary)]/50 border-t border-[var(--border-default)] backdrop-blur-xl">
+      <div className="py-12 lg:py-16 relative z-10 bg-[var(--surface-secondary)]/50 border-t border-[var(--border-default)] backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6">
           
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
@@ -283,7 +283,7 @@ export const WorkPage = () => {
 
           <motion.div 
             layout
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 auto-rows-[minmax(180px,auto)] sm:auto-rows-[minmax(250px,auto)]"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 auto-rows-[minmax(180px,auto)] sm:auto-rows-[minmax(250px,auto)]"
           >
             <AnimatePresence mode="popLayout">
               {filteredOtherProjects.map((project) => (
