@@ -25,7 +25,7 @@ export const ServicesPortal=({kind}:{kind:Kind})=>{
  const toggle=(x:string)=>setChecked(old=>old.includes(x)?old.filter(t=>t!==x):[...old,x]);
  const send=(label:string,selected:string[])=>{
   const cleanName=name.trim(),cleanPhone=phone.replace(/[\s()-]/g,''),cleanCity=city.trim();
-  if(!cleanName||!cleanCity||!/^((\\+|00)\\d{8,15}|0\\d{8,12})$/.test(cleanPhone)){
+  if(!cleanName||!cleanCity||!/^((\+|00)\d{8,15}|0\d{8,12})$/.test(cleanPhone)){
    setFormError('يرجى إدخال الاسم والمدينة ورقم جوال صحيح قبل إرسال الطلب.');
    document.getElementById('rfq-heading')?.scrollIntoView({behavior:'smooth',block:'start'});
    return;
