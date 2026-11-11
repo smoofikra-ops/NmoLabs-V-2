@@ -21,6 +21,8 @@ const StoryGrowthCampaigns = lazy(() => import('./components/storytelling/StoryG
 const StorySocialPresence = lazy(() => import('./components/storytelling/StorySocialPresence').then(module => ({ default: module.StorySocialPresence })));
 const StoryBigVision = lazy(() => import('./components/storytelling/StoryBigVision').then(module => ({ default: module.StoryBigVision })));
 
+const HomeServices = lazy(() => import('./components/HomeServices').then(m => ({ default:m.HomeServices })));
+const ServicesPortal = lazy(() => import('./components/ServicesPortal').then(m => ({ default:m.ServicesPortal })));
 const Services = lazy(() => import('./components/Services').then(module => ({ default: module.Services })));
 const WhyChooseUs = lazy(() => import('./components/WhyChooseUs').then(module => ({ default: module.WhyChooseUs })));
 const Solutions = lazy(() => import('./components/Solutions').then(module => ({ default: module.Solutions })));
@@ -106,7 +108,8 @@ const CustomSection: React.FC<{ id: string, title: string, content: string }> = 
 const MainContent = () => {
   const { config } = useSite();
 
-  const enabledSectionIds = config.sectionOrder.filter(id => {
+  const homeOrder = ['hero','homeServices','workPreview','productsPreview','whyUs','faq'];
+  const enabledSectionIds = homeOrder.filter(id => {
     if (config.sections[id] === false) return false;
     return true;
   });
@@ -116,6 +119,7 @@ const MainContent = () => {
 
     switch (id) {
       case 'hero': return <Hero key={id} />;
+      case 'homeServices': return <Suspense key={id} fallback={<div className="h-72" />}><HomeServices /></Suspense>;
       case 'storySolutions': return <Suspense key={id} fallback={<div className="h-96" />}><StoryCustomSolutions /></Suspense>;
       case 'storyEcommerce': return <Suspense key={id} fallback={<div className="h-96" />}><StoryEcommerce /></Suspense>;
       case 'storyWebsites': return <Suspense key={id} fallback={<div className="h-96" />}><StoryWebsites /></Suspense>;
@@ -300,6 +304,10 @@ function AppContent() {
           <div className="pt-24 min-h-screen">
             <Services />
           </div>
+        </Suspense>
+      ) : ['services/ecommerce','services/websites','services/software'].includes(config.currentRoute || '') ? (
+        <Suspense fallback={<div className="min-h-screen pt-32 text-center">جاري تحميل الخدمات…</div>}>
+          <ServicesPortal key={config.currentRoute} kind={config.currentRoute!.split('/')[1] as 'ecommerce' | 'websites' | 'software'} />
         </Suspense>
       ) : config.currentRoute?.startsWith('services/') ? (
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
