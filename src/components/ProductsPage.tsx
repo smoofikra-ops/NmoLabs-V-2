@@ -389,6 +389,7 @@ const FeaturedProductSection = ({ product, index, isEn, updateConfig, onInView, 
                     <>
                       <img 
                         src={product.coverVisual} 
+                        onError={event => { event.currentTarget.style.display = "none"; }}
                         className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" 
                         alt={isEn ? product.titleEn : product.titleAr}
                         referrerPolicy="no-referrer" 
