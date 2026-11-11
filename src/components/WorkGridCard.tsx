@@ -136,8 +136,8 @@ export const WorkGridCard: React.FC<Props> = ({ project, isEn, updateConfig, get
               </button>
             ) : (
               <span className="inline-block text-sm font-bold text-white/80 px-4 py-2 rounded-lg border border-white/20 bg-black/50">
-                {isEn ? 'Details Coming Soon' : 'التفاصيل قريباً'}
-              </span>
+                {isEn ? 'Ask about this project' : 'استفسر عن المشروع'}
+              </button>
             )}
           </div>
         </motion.div>
