@@ -18,8 +18,9 @@ export const ServicesPortal=({kind}:{kind:Kind})=>{
  const title=kind==='ecommerce'?'المتاجر الإلكترونية':kind==='websites'?'المواقع والصفحات التعريفية':'التطبيقات والبرامج والأنظمة الذكية';
  const base=kind==='ecommerce'?(mode==='new'?basicStore:basicStoreExisting):(mode==='new'?basicWebsite:existingWebsite);
  const references=kind==='software'?[]:packageReferenceV13[kind][mode];
- const packs=[{title:mode==='new'?'باقة الإطلاق الأساسية':'باقة التطوير الأساسية',features:base},{title:mode==='new'?'باقة الإطلاق والنمو':'باقة التطوير والنمو',features:[...base,...growth]}];
+ const packs=[{title:mode==='new'?'باقة الإطلاق الأساسية':'باقة التطوير الأساسية',features:base},{title:mode==='new'?'باقة الإطلاق والنمو':'باقة التطوير والنمو',features:growth}];
  const sar=(n:number)=>new Intl.NumberFormat('ar-SA',{maximumFractionDigits:0}).format(n);
+ const approvedGrowth=kind==='ecommerce'&&mode==='new';
  const groups:[string,string[]][]=kind==='software'?[['نوع النظام أو التطبيق',software]]:groupItems[kind][mode];
  const toggle=(x:string)=>setChecked(old=>old.includes(x)?old.filter(t=>t!==x):[...old,x]);
  const send=(label:string,selected:string[])=>{
@@ -30,20 +31,21 @@ export const ServicesPortal=({kind}:{kind:Kind})=>{
   <div className="max-w-6xl mx-auto">
    <button onClick={()=>updateConfig({currentRoute:'services'})} className="text-[var(--color-primary)] flex items-center gap-2 mb-8"><ArrowRight size={18}/> العودة إلى الخدمات</button>
    <h1 className="text-3xl md:text-5xl font-black text-[var(--text-primary)] mb-4">{title}</h1>
-   <p className="text-[var(--text-muted)] leading-relaxed max-w-3xl mb-10">{kind==='software'?'نطوّر برمجيات وأدوات أعمال حسب متطلباتك. صف احتياجك ليقوم فريقنا بدراسة الحل وإعداد عرض مخصص.':'اختر مشروعًا جديدًا أو قائمًا، ثم قارن الباقات والأسعار المرجعية قبل طلب العرض النهائي، أو خصص خدماتك بنفسك. جميع الأسعار المرجعية قبل الضريبة وتحتاج اعتمادًا لنطاق V1.3.'}</p>
+   <p className="text-[var(--text-muted)] leading-relaxed max-w-3xl mb-10">{kind==='software'?'نطوّر برمجيات وأدوات أعمال حسب متطلباتك. صف احتياجك ليقوم فريقنا بدراسة الحل وإعداد عرض مخصص.':'اختر مشروعًا جديدًا أو قائمًا، ثم قارن الخدمات والباقات أو خصص طلبك. الأسعار غير المعتمدة موضحة بوصفها أسعارًا مرجعية قبل الضريبة.'}</p>
    {kind!=='software'&&<div className="flex flex-wrap gap-3 mb-8" role="group" aria-label="نوع المشروع">
       {(['new','existing'] as Mode[]).map(m=><button key={m} onClick={()=>{setMode(m);setChecked([]);}} aria-pressed={mode===m} className={`px-6 py-3 rounded-xl border font-bold transition-colors ${mode===m?'bg-[var(--color-primary)] text-white':'bg-[var(--surface-secondary)] text-[var(--text-primary)] border-[var(--border-default)]'}`}>{m==='new'?'إنشاء مشروع جديد':'تطوير مشروع قائم'}</button>)}
     </div>}
    <div className="grid lg:grid-cols-3 gap-5 mb-12">
     {kind!=='software'?packs.map((p,i)=><article key={p.title} className="rounded-3xl border border-[var(--border-default)] bg-[var(--surface-secondary)]/85 backdrop-blur p-6 flex flex-col">
       <h2 className="font-bold text-xl text-[var(--text-primary)] mb-2">{p.title}</h2>
-      <div className="mb-5 rounded-xl border border-[var(--border-default)] bg-[var(--surface-primary)] p-3">
-        <span className="text-xs text-[var(--text-muted)] block mb-1">سعر مرجعي مقترح من الكتالوج — قبل الضريبة</span>
-        <strong className="text-2xl font-black text-[var(--color-primary)]">{sar(references[i].amount)} <span className="text-base">ر.س</span></strong>
-        <p className="text-[11px] text-[var(--text-muted)] mt-2 leading-relaxed">غير معتمد للبيع النهائي؛ يخضع لمراجعة نطاق وتكلفة الباقة V1.3. المرجع: {references[i].source}</p>
-      </div>
+      {i===1&&<p className="text-sm text-[var(--text-secondary)] mb-4 font-medium">تشمل جميع خدمات {mode==='new'?'باقة الإطلاق الأساسية':'باقة التطوير الأساسية'}، بالإضافة إلى الخدمات التالية:</p>}
       <ul className="space-y-3 flex-1">{p.features.map((f,j)=><li key={j} className="flex gap-2 text-sm leading-relaxed text-[var(--text-secondary)]"><CheckCircle2 size={16} className="shrink-0 text-[var(--color-primary)] mt-1"/>{f}</li>)}</ul>
-      <button onClick={()=>send(p.title+' — سعر مرجعي غير معتمد '+sar(references[i].amount)+' ريال قبل الضريبة',p.features)} className="mt-7 bg-[var(--color-primary)] text-white rounded-xl p-3 font-semibold">اطلب عرض السعر النهائي</button>
+      <div className="mt-6 rounded-xl border border-[var(--border-default)] bg-[var(--surface-primary)] p-4">
+        <span className="text-xs text-[var(--text-muted)] block mb-1">{approvedGrowth&&i===1?'سعر الباقة قبل الضريبة':'سعر مرجعي مقترح من الكتالوج — قبل الضريبة'}</span>
+        <strong className="text-2xl font-black text-[var(--color-primary)]">{sar(references[i].amount)} <span className="text-base">ر.س</span></strong>
+        {approvedGrowth&&i===1?<div className="mt-3 border-t border-[var(--border-default)] pt-3 text-sm text-[var(--text-secondary)]"><p>ضريبة القيمة المضافة 15%: 600 ر.س</p><p className="font-bold mt-1 text-[var(--text-primary)]">الإجمالي شامل الضريبة: 4,600 ر.س</p><p className="text-xs mt-2">الميزانية الإعلانية غير مشمولة. لا يُعرض سعر مشطوب حتى تُراجع أسعار الخدمات الفردية.</p></div>:<p className="text-[11px] text-[var(--text-muted)] mt-2 leading-relaxed">غير معتمد للبيع النهائي؛ يحتاج مراجعة نطاق الباقة V1.3.</p>}
+      </div>
+      <button onClick={()=>send(p.title+' — '+(approvedGrowth&&i===1?'السعر المعتمد ':'سعر مرجعي غير معتمد ')+sar(references[i].amount)+' ريال قبل الضريبة',i===1?[...base,...growth]:p.features)} className="mt-7 bg-[var(--color-primary)] text-white rounded-xl p-3 font-semibold">اطلب عرض السعر النهائي</button>
      </article>):<article className="lg:col-span-2 rounded-3xl border border-[var(--border-default)] bg-[var(--surface-secondary)] p-7"><h2 className="text-xl font-bold mb-4 text-[var(--text-primary)]">تطوير حلول برمجية حسب الطلب</h2><p className="text-[var(--text-muted)] leading-8">تطبيقات الجوال، المحاسبة وERP وCRM وإدارة المخزون ولوحات البيانات والأتمتة. كل مشروع يخضع لتحديد نطاق المتطلبات والصلاحيات والتكاملات والجدول الزمني قبل عرض السعر.</p><p className="mt-4 text-[var(--color-primary)]">عرض سعر مخصص — بدون باقات ثابتة</p></article>}
     <article className="rounded-3xl border border-[var(--color-primary)]/40 bg-[var(--surface-secondary)]/85 backdrop-blur p-6 flex flex-col">
       <h2 className="font-bold text-xl text-[var(--text-primary)] mb-2">{kind==='software'?'صف نظامك أو تطبيقك':'خصص خدماتك'}</h2>
