@@ -35,7 +35,7 @@ const MarqueeSection=({items,title,titleEn,desc,descEn,route,direction,icon:Icon
  className="nmo-showcase-card group text-start shrink-0 w-[240px] sm:w-[290px] lg:w-[335px] rounded-2xl overflow-hidden border border-[var(--border-default)] bg-[var(--surface-secondary)]/85 hover:border-[var(--color-primary)] hover:shadow-xl transition duration-300 focus-visible:outline-2 focus-visible:outline-[var(--color-primary)]">
   <div className="relative h-[145px] sm:h-[175px] lg:h-[194px] overflow-hidden bg-[var(--surface-primary)]">
    <ProjectThumbnail src={item.image} title={en?item.titleEn:item.title}/>
-   {statusLabel(item.status,en)&&<span className="absolute top-2 end-2 text-[10px] rounded-full px-2 py-1 bg-black/75 text-white">{statusLabel(item.status,en)}</span>}
+   {statusLabel(item.status,en)&&<span className="absolute top-2 end-2 text-xs rounded-full px-2 py-1 bg-black/75 text-white">{statusLabel(item.status,en)}</span>}
   </div>
   <div className="px-4 py-3 flex items-center justify-between gap-3">
    <span className="font-semibold text-sm text-[var(--text-primary)] truncate">{en?item.titleEn:item.title}</span>
@@ -46,7 +46,7 @@ const MarqueeSection=({items,title,titleEn,desc,descEn,route,direction,icon:Icon
   <div className="max-w-7xl mx-auto px-5 flex flex-wrap items-center justify-between gap-3 mb-5">
     <div className="flex items-center gap-3 min-w-0"><span className="shrink-0 rounded-xl p-2 bg-[var(--color-primary)]/10 text-[var(--color-primary)]"><Icon size={21}/></span>
       <div className="min-w-0"><h2 className="font-black text-[clamp(1.05rem,2.3vw,1.75rem)] lg:whitespace-nowrap leading-snug text-[var(--text-primary)]">{en?titleEn:title}</h2>
-       <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">{en?descEn:desc}</p></div></div>
+       <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">{en?descEn:desc}</p></div></div>
     <button onClick={()=>go(route)} className="text-[var(--color-primary)] font-semibold text-xs sm:text-sm whitespace-nowrap flex gap-1 items-center">{en?'View all':'عرض الكل'}<ArrowUpLeft size={16}/></button>
   </div>
   <div className="nmo-marquee-viewport overflow-hidden" dir="ltr">
@@ -73,7 +73,7 @@ export const HomeShowcases=()=>{
    .nmo-marquee-viewport:hover .nmo-marquee-track,.nmo-marquee-viewport:focus-within .nmo-marquee-track{animation-play-state:paused}
    @keyframes nmo-marquee{to{transform:translateX(-50%)}}
    .nmo-marquee-viewport{-webkit-mask-image:linear-gradient(to right,transparent,black 5%,black 95%,transparent);mask-image:linear-gradient(to right,transparent,black 5%,black 95%,transparent)}
-   @media(max-width:640px){.nmo-marquee-track{animation-duration:43s}}
+   .nmo-marquee-viewport{scrollbar-width:none}\n   .nmo-marquee-viewport::-webkit-scrollbar{display:none}\n   @media(max-width:640px){.nmo-marquee-track{animation-duration:43s}}
    @media(prefers-reduced-motion:reduce){.nmo-marquee-viewport{overflow-x:auto!important;-webkit-mask-image:none;mask-image:none}.nmo-marquee-track{animation:none!important}.nmo-marquee-set[aria-hidden=true]{display:none}}
   `}</style>
  </div>;
