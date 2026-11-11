@@ -169,7 +169,7 @@ export const Hero = () => {
     : config.heroButtonText;
 
   return (
-    <section className="relative min-h-auto pt-[calc(var(--nmolabs-header-height,105px)+1rem+env(safe-area-inset-top))] pb-14 sm:pt-[calc(var(--nmolabs-header-height,105px)+1.5rem+env(safe-area-inset-top))] sm:pb-20 md:pt-28 md:pb-16 lg:py-24 lg:min-h-screen flex items-center overflow-hidden bg-transparent nmolabs-seamless-hero" id="hero">
+    <section className="relative min-h-auto pt-[calc(var(--nmolabs-header-height,105px)+1rem+env(safe-area-inset-top))] pb-12 sm:pt-[calc(var(--nmolabs-header-height,105px)+1.5rem+env(safe-area-inset-top))] sm:pb-14 md:pt-28 md:pb-14 lg:pt-36 lg:pb-20 flex items-center overflow-hidden bg-transparent nmolabs-seamless-hero" id="hero">
       {/* STORY 01 — Background World Layer */}
       <div className="nmolabs-hero-art absolute inset-0 pointer-events-none overflow-hidden z-0">
         <img
@@ -272,9 +272,9 @@ export const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer text-white/95 hover:text-white transition-colors drop-shadow-[0_2px_8px_rgba(0,0,0,0.55)]"
+        className="hidden sm:flex absolute bottom-2 left-1/2 -translate-x-1/2 flex-col items-center cursor-pointer text-[var(--text-primary)] hover:text-[var(--color-primary)] transition-colors"
         onClick={() => {
-          const nextSection = document.getElementById('about') || document.getElementById('services');
+          const nextSection = document.getElementById('home-services');
           if (nextSection) {
             nextSection.scrollIntoView({ behavior: 'smooth' });
           } else {
