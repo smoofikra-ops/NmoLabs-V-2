@@ -12,14 +12,14 @@ export const HomeServices = () => {
     <div className="max-w-7xl mx-auto">
       <div className="text-center mb-9">
         <p className="text-sm font-semibold text-[var(--color-primary)] mb-3">{en?'Our Services':'خدماتنا'}</p>
-        <h2 id="home-services-title" className="text-3xl md:text-5xl font-black text-[var(--text-primary)] mb-4">{en?'Choose the right solution':'كل ما يحتاجه مشروعك الرقمي'}</h2>
+        <h2 id="home-services-title" className="text-[clamp(1.35rem,3.3vw,2.35rem)] lg:whitespace-nowrap font-black text-[var(--text-primary)] mb-4">{en?'Choose the right solution':'كل ما يحتاجه مشروعك الرقمي'}</h2>
         <p className="text-[var(--text-muted)] max-w-2xl mx-auto">{en?'Choose a category to explore packages or request tailored services.':'ثلاثة مسارات واضحة: اختر خدمتك واستعرض الباقات أو خصص طلبك حسب احتياجك.'}</p>
       </div>
-      <div className="grid md:grid-cols-3 gap-5">
-        {cards.map(({slug,ar,en:enTitle,desc,descEn,Icon})=><button key={slug} onClick={()=>{updateConfig({currentRoute:'services/'+slug});window.scrollTo(0,0);}} className="text-start group p-7 md:p-8 rounded-3xl border border-[var(--border-default)] bg-[var(--surface-secondary)]/80 backdrop-blur-md hover:border-[var(--color-primary)] hover:-translate-y-1 transition-all shadow-lg min-h-[235px] flex flex-col">
-          <span className="w-14 h-14 flex items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] mb-6"><Icon size={28}/></span>
-          <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3">{en?enTitle:ar}</h3>
-          <p className="text-[var(--text-muted)] text-sm leading-relaxed flex-1">{en?descEn:desc}</p>
+      <div className="grid md:grid-cols-3 gap-3 md:gap-5">
+        {cards.map(({slug,ar,en:enTitle,desc,descEn,Icon})=><button key={slug} onClick={()=>{updateConfig({currentRoute:'services/'+slug});window.scrollTo(0,0);}} className="text-start group p-5 sm:p-6 lg:p-7 rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)]/85 backdrop-blur-xl hover:border-[var(--color-primary)] hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(0,0,0,.2)] focus-visible:outline-2 focus-visible:outline-[var(--color-primary)] transition-all shadow-md min-h-[195px] md:min-h-[215px] flex flex-col">
+          <span className="w-12 h-12 flex items-center justify-center rounded-xl bg-[var(--color-primary)]/12 border border-[var(--color-primary)]/20 text-[var(--color-primary)] mb-4 group-hover:scale-105 transition-transform"><Icon size={28}/></span>
+          <h3 className="text-[clamp(1rem,1.8vw,1.22rem)] font-bold text-[var(--text-primary)] mb-2 leading-snug">{en?enTitle:ar}</h3>
+          <p className="text-[var(--text-muted)] text-[13px] sm:text-sm leading-relaxed flex-1">{en?descEn:desc}</p>
           <span className="mt-5 flex items-center gap-2 text-[var(--color-primary)] font-semibold text-sm">{en?'Explore services':'استعرض الخدمات والباقات'} <ArrowUpLeft size={16}/></span>
         </button>)}
       </div>
