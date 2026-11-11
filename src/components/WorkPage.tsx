@@ -32,15 +32,16 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
   }, [isInView, project.id, onInView]);
 
   const isEven = index % 2 === 0;
+  const [imageFailed, setImageFailed] = useState(false);
 
   return (
     <section 
       ref={ref}
       id={`featured-${project.id}`}
-      className="min-h-[80svh] py-12 lg:py-24 flex items-center relative z-10"
+      className="py-10 lg:py-16 flex items-center relative z-10"
     >
       <div className="max-w-7xl mx-auto px-6 w-full">
-        <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12 lg:gap-16`}>
+        <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-7 lg:gap-10`}>
           
           {/* Content */}
           <div className="w-full lg:w-1/2 flex flex-col justify-center">
@@ -51,7 +52,7 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
               transition={{ duration: 0.6 }}
             >
               <div className="flex items-center gap-3 sm:gap-4 mb-6">
-                <span className="text-4xl sm:text-5xl font-black text-[var(--color-primary)]/40">0{index + 1}</span>
+                <span className="text-4xl sm:text-5xl font-black text-[var(--text-secondary)]">0{index + 1}</span>
                 <div className="h-[1px] flex-grow bg-[var(--border-default)]" />
                 {project.year && (
                   <span className="px-3.5 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--color-primary)] text-xs sm:text-sm font-bold">
@@ -73,7 +74,7 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
 
               <div className="flex flex-wrap gap-2 mb-8">
                 {project.services.slice(0, 4).map((srv, idx) => (
-                  <span key={idx} className="px-3 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-muted)] text-xs sm:text-sm">
+                  <span key={idx} className="px-3 py-1 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-[var(--text-secondary)] text-sm sm:text-base">
                     {srv}
                   </span>
                 ))}
@@ -116,9 +117,10 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
               }}
             >
               <div className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-700 blur-3xl" style={{ backgroundColor: project.brandColor }} />
-              {project.coverImage ? (
+              {project.coverImage && !imageFailed ? (
                 <img 
                   src={project.coverImage} 
+                  onError={() => setImageFailed(true)}
                   alt={isEn ? project.titleEn : project.titleAr} 
                   referrerPolicy="no-referrer"
                   className="relative z-10 w-full h-full object-cover object-top group-hover:object-bottom transition-all duration-[8000ms] ease-in-out" 
@@ -126,8 +128,8 @@ const FeaturedProjectSection: React.FC<FeaturedProjectProps> = ({
               ) : (
                 <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
                    <div className="w-32 h-32 rounded-3xl blur-[40px] absolute opacity-30" style={{ backgroundColor: project.brandColor }} />
-                   <div className="text-[var(--text-muted)] font-black text-8xl relative z-10 group-hover:scale-110 transition-transform duration-700">
-                     {isEn ? project.titleEn.charAt(0) : project.titleAr.charAt(0)}
+                   <div className="text-[var(--text-primary)] font-black text-5xl relative z-10 group-hover:scale-110 transition-transform duration-700 text-center px-5">
+                     {isEn ? project.titleEn : project.titleAr}
                    </div>
                 </div>
               )}
@@ -206,7 +208,7 @@ export const WorkPage = () => {
       <div className="fixed inset-0 bg-grid-pattern opacity-10 pointer-events-none z-0" />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-16 relative z-10">
+      <section className="pt-28 pb-6 relative z-10">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -216,7 +218,7 @@ export const WorkPage = () => {
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-secondary)] border border-[var(--border-default)] text-xs font-bold text-[var(--color-primary)] mb-6">
               <span>{isEn ? 'Selected Portfolio' : 'أعمال ومشاريع مختارة'}</span>
             </div>
-            <h1 className="text-4xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight text-[var(--text-primary)]">
+            <h1 className="text-4xl md:text-7xl lg:text-8xl font-black mb-4 tracking-tight text-[var(--text-primary)]">
               {isEn ? (
                 <>Our <span className="text-[var(--color-primary)]">Work</span></>
               ) : (
@@ -234,7 +236,7 @@ export const WorkPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="mt-12 flex justify-center text-[var(--text-muted)] animate-bounce"
+            className="mt-5 flex justify-center text-[var(--text-secondary)]"
           >
             <ArrowDown size={28} />
           </motion.div>
@@ -256,7 +258,7 @@ export const WorkPage = () => {
       </div>
 
       {/* Other Projects Grid */}
-      <div className="py-24 relative z-10 bg-[var(--surface-secondary)]/50 border-t border-[var(--border-default)] backdrop-blur-xl">
+      <div className="py-12 lg:py-16 relative z-10 bg-[var(--surface-secondary)]/50 border-t border-[var(--border-default)] backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6">
           
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
@@ -283,7 +285,7 @@ export const WorkPage = () => {
 
           <motion.div 
             layout
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 auto-rows-[minmax(180px,auto)] sm:auto-rows-[minmax(250px,auto)]"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 auto-rows-[minmax(180px,auto)] sm:auto-rows-[minmax(250px,auto)]"
           >
             <AnimatePresence mode="popLayout">
               {filteredOtherProjects.map((project) => (

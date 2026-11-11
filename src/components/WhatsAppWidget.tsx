@@ -21,14 +21,14 @@ export const WhatsAppWidget = () => {
   if (!config.contactNumber) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-[90]">
+    <div className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-[45] nmo-whatsapp-floating">
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="absolute bottom-16 right-0 w-80 bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-2xl shadow-2xl overflow-hidden mb-4"
+            className="absolute bottom-14 sm:bottom-16 right-0 w-[min(20rem,calc(100vw-1.5rem))] bg-[var(--surface-secondary)] border border-[var(--border-default)] rounded-2xl shadow-2xl overflow-hidden mb-4"
           >
             <div className="bg-[#25D366] text-white p-4 flex justify-between items-center">
               <div className="flex items-center gap-3">
@@ -69,10 +69,10 @@ export const WhatsAppWidget = () => {
 
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-[0_4px_15px_rgba(37,211,102,0.4)] hover:scale-110 transition-transform duration-300 relative"
+        className="w-10 h-10 sm:w-14 sm:h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-[0_4px_15px_rgba(37,211,102,0.4)] hover:scale-110 transition-transform duration-300 relative"
       >
-        <MessageCircle size={28} />
-        <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-red-500 border-2 border-white rounded-full animate-pulse" />
+        <MessageCircle className="w-5 h-5 sm:w-7 sm:h-7" />
+        <span className="absolute top-0 right-0 w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 bg-red-500 border-2 border-white rounded-full animate-pulse" />
       </button>
     </div>
   );

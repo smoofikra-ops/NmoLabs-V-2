@@ -21,6 +21,10 @@ const StoryGrowthCampaigns = lazy(() => import('./components/storytelling/StoryG
 const StorySocialPresence = lazy(() => import('./components/storytelling/StorySocialPresence').then(module => ({ default: module.StorySocialPresence })));
 const StoryBigVision = lazy(() => import('./components/storytelling/StoryBigVision').then(module => ({ default: module.StoryBigVision })));
 
+const HomeEssentials = lazy(() => import('./components/HomeEssentials').then(m => ({ default:m.HomeEssentials })));
+const HomeShowcases = lazy(() => import('./components/HomeShowcases').then(m => ({ default:m.HomeShowcases })));
+const HomeServices = lazy(() => import('./components/HomeServices').then(m => ({ default:m.HomeServices })));
+const ServicesPortal = lazy(() => import('./components/ServicesPortal').then(m => ({ default:m.ServicesPortal })));
 const Services = lazy(() => import('./components/Services').then(module => ({ default: module.Services })));
 const WhyChooseUs = lazy(() => import('./components/WhyChooseUs').then(module => ({ default: module.WhyChooseUs })));
 const Solutions = lazy(() => import('./components/Solutions').then(module => ({ default: module.Solutions })));
@@ -106,7 +110,8 @@ const CustomSection: React.FC<{ id: string, title: string, content: string }> = 
 const MainContent = () => {
   const { config } = useSite();
 
-  const enabledSectionIds = config.sectionOrder.filter(id => {
+  const homeOrder = ['hero','homeServices','homeShowcases','whyUs','homeEssentials'];
+  const enabledSectionIds = homeOrder.filter(id => {
     if (config.sections[id] === false) return false;
     return true;
   });
@@ -116,6 +121,9 @@ const MainContent = () => {
 
     switch (id) {
       case 'hero': return <Hero key={id} />;
+      case 'homeServices': return <Suspense key={id} fallback={<div className="h-72" />}><HomeServices /></Suspense>;
+      case 'homeShowcases': return <Suspense key={id} fallback={<div className="h-72" />}><HomeShowcases /></Suspense>;
+      case 'homeEssentials': return <Suspense key={id} fallback={<div className="h-72" />}><HomeEssentials /></Suspense>;
       case 'storySolutions': return <Suspense key={id} fallback={<div className="h-96" />}><StoryCustomSolutions /></Suspense>;
       case 'storyEcommerce': return <Suspense key={id} fallback={<div className="h-96" />}><StoryEcommerce /></Suspense>;
       case 'storyWebsites': return <Suspense key={id} fallback={<div className="h-96" />}><StoryWebsites /></Suspense>;
@@ -200,6 +208,14 @@ function AppContent() {
         descriptionAr: 'حل برمجي سحابي متطور مصمم خصيصاً للشركات لرفع كفاءة العمليات والمبيعات.',
         descriptionEn: 'Advanced cloud software solution engineered by NmoLabs for enterprise scale and operational efficiency.'
       };
+    } else if (['services/ecommerce','services/websites','services/software'].includes(routeKey)) {
+      const entries: Record<string, {ar:string,en:string,arDesc:string,enDesc:string}> = {
+        'services/ecommerce': {ar:'إنشاء وتطوير المتاجر الإلكترونية | نمو لابز',en:'E-commerce Store Development | NmoLabs',arDesc:'إنشاء وتطوير المتاجر الإلكترونية على سلة وزد في السعودية. باقات تأسيس ونمو وخدمات مخصصة حسب احتياجك.',enDesc:'Build and improve online stores in Saudi Arabia with custom services and growth packages.'},
+        'services/websites': {ar:'تصميم مواقع الشركات والصفحات التعريفية | نمو لابز',en:'Corporate Websites & Landing Pages | NmoLabs',arDesc:'تصميم وتطوير مواقع المؤسسات والشركات وصفحات الهبوط في السعودية، مع باقات إنشاء وتطوير وخدمات حسب الطلب.',enDesc:'Custom corporate websites and landing pages for businesses in Saudi Arabia.'},
+        'services/software': {ar:'برمجة التطبيقات والأنظمة المخصصة للشركات | نمو لابز',en:'Custom Software & Mobile Applications | NmoLabs',arDesc:'تطوير تطبيقات الجوال وبرمجيات الأعمال والأنظمة المحاسبية وERP وCRM والتكاملات والأتمتة في السعودية.',enDesc:'Tailored business systems, ERP, CRM, mobile apps and automation in Saudi Arabia.'}
+      };
+      const e=entries[routeKey];
+      metaRaw={title:e.ar,titleAr:e.ar,titleEn:e.en,description:e.arDesc,descriptionAr:e.arDesc,descriptionEn:e.enDesc};
     } else if (routeKey.startsWith('services/')) {
       metaRaw = pageMetadata.services;
     } else if (routeKey.startsWith('innovation-lab/')) {
@@ -297,9 +313,11 @@ function AppContent() {
         </Suspense>
       ) : config.currentRoute === 'services' ? (
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
-          <div className="pt-24 min-h-screen">
-            <Services />
-          </div>
+          <div className="pt-24 min-h-screen"><HomeServices /></div>
+        </Suspense>
+      ) : ['services/ecommerce','services/websites','services/software'].includes(config.currentRoute || '') ? (
+        <Suspense fallback={<div className="min-h-screen pt-32 text-center">جاري تحميل الخدمات…</div>}>
+          <ServicesPortal key={config.currentRoute} kind={config.currentRoute!.split('/')[1] as 'ecommerce' | 'websites' | 'software'} />
         </Suspense>
       ) : config.currentRoute?.startsWith('services/') ? (
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center pt-24"><div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div></div>}>
