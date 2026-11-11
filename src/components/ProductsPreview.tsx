@@ -11,13 +11,13 @@ export const ProductsPreview = () => {
   const previewProducts = productsData.filter(p => p.featured).slice(0, 3);
 
   return (
-    <section className="py-10 sm:py-10 md:py-10 md:py-20 bg-[#050505] relative overflow-hidden" id="products">
+    <section className="py-8 sm:py-10 md:py-12 bg-[#050505] relative overflow-hidden" id="products">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[500px] opacity-10 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-primary)] to-transparent blur-[120px] rounded-full mix-blend-screen" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-12 sm:mb-10 lg:mb-20">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-8 sm:mb-10 lg:mb-12">
           <div className="max-w-2xl">
             <span className="text-[var(--color-primary)] font-bold text-xs sm:text-sm tracking-widest uppercase mb-2 sm:mb-4 block">NmoLabs Products</span>
             <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6 tracking-tight leading-tight">
@@ -56,7 +56,7 @@ export const ProductsPreview = () => {
               {product.coverVisual ? (
                  <>
                    <div className="absolute inset-0 z-0">
-                     <img src={product.coverVisual} className="w-full h-full object-cover opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700" alt={isEn ? product.titleEn : product.titleAr} />
+                     <img src={product.coverVisual} onError={event => { event.currentTarget.style.display = "none"; }} loading="lazy" className="w-full h-full object-cover opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700" alt={isEn ? product.titleEn : product.titleAr} />
                    </div>
                    <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-[#111]/80 to-transparent z-0" />
                  </>
@@ -77,13 +77,13 @@ export const ProductsPreview = () => {
                 <h3 className="text-lg sm:text-2xl font-black mb-2 sm:mb-4 group-hover:text-transparent group-hover:bg-clip-text transition-all text-white" style={{ backgroundImage: `linear-gradient(to right, #fff, ${product.brandColor})` }}>
                   {isEn ? product.titleEn : product.titleAr}
                 </h3>
-                <p className="text-white/60 leading-relaxed mb-6 line-clamp-3 text-xs sm:text-base">
+                <p className="text-white/90 leading-relaxed mb-6 line-clamp-3 text-sm sm:text-base">
                   {isEn ? product.summaryEn : product.summaryAr}
                 </p>
               </div>
               
               <div className="relative z-10 pt-6 border-t border-white/10 mt-auto">
-                <span className="text-sm font-bold text-white/40">{product.category}</span>
+                <span className="text-sm font-bold text-white/80">{product.category}</span>
               </div>
             </motion.div>
           ))}
