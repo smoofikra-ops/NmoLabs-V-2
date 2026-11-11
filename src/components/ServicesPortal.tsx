@@ -14,7 +14,7 @@ const groupItems:Record<'ecommerce'|'websites',Record<Mode,[string,string[]][]>>
 const software=['تطبيقات Android وiOS','نظام محاسبة وفوترة','نظام ERP','نظام CRM','إدارة المخزون والمستودعات','نقاط البيع POS','الموارد البشرية والرواتب','إدارة المشاريع والمهام','تطبيق ويب ولوحة إدارة','الحجوزات والمواعيد','التوصيل والعمليات الميدانية','الأتمتة والذكاء الاصطناعي','API وتكامل الأنظمة','لوحات البيانات والتقارير','الصيانة وتطوير الأنظمة','برمجيات SaaS سحابية'];
 export const ServicesPortal=({kind}:{kind:Kind})=>{
  const {config,updateConfig}=useSite(); const en=config.language==='en';
- const [mode,setMode]=useState<Mode>('new');const [checked,setChecked]=useState<string[]>([]);const [note,setNote]=useState('');const [name,setName]=useState('');const [phone,setPhone]=useState('');const [expanded,setExpanded]=useState<string[]>([]);
+ const [mode,setMode]=useState<Mode>('new');const [checked,setChecked]=useState<string[]>([]);const [note,setNote]=useState('');const [name,setName]=useState('');const [phone,setPhone]=useState('');const [city,setCity]=useState('');const [formError,setFormError]=useState('');const [expanded,setExpanded]=useState<string[]>([]);
  const title=kind==='ecommerce'?'المتاجر الإلكترونية':kind==='websites'?'المواقع والصفحات التعريفية':'التطبيقات والبرامج والأنظمة الذكية';
  const base=kind==='ecommerce'?(mode==='new'?basicStore:basicStoreExisting):(mode==='new'?basicWebsite:existingWebsite);
  const references=kind==='software'?[]:packageReferenceV13[kind][mode];
@@ -24,8 +24,38 @@ export const ServicesPortal=({kind}:{kind:Kind})=>{
  const groups:[string,string[]][]=kind==='software'?[['نوع النظام أو التطبيق',software]]:groupItems[kind][mode];
  const toggle=(x:string)=>setChecked(old=>old.includes(x)?old.filter(t=>t!==x):[...old,x]);
  const send=(label:string,selected:string[])=>{
-  const details=[`طلب من موقع NmoLabs — ${title}`,`نوع الطلب: ${label}`,kind==='software'?'نظام مخصص':`الحالة: ${mode==='new'?'مشروع جديد':'مشروع قائم'}`,`الاسم: ${name||'لم يذكر'}`,`الجوال: ${phone||'لم يذكر'}`,`المطلوب: ${selected.join('، ')||'استشارة أولية'}`,`ملاحظات: ${note||'لا يوجد'}`, 'يرجى إعداد عرض سعر رسمي بعد مراجعة الطلب.'].join('\n');
+  const cleanName=name.trim(),cleanPhone=phone.replace(/[\s()-]/g,''),cleanCity=city.trim();
+  if(!cleanName||!cleanCity||!/^((\\+|00)\\d{8,15}|0\\d{8,12})$/.test(cleanPhone)){
+   setFormError('يرجى إدخال الاسم والمدينة ورقم جوال صحيح قبل إرسال الطلب.');
+   document.getElementById('rfq-heading')?.scrollIntoView({behavior:'smooth',block:'start'});
+   return;
+  }
+  setFormError('');
+  // This identifier travels with the WhatsApp request for manual entry into NBOS.
+  // It is not a server-issued NBOS record or proof of receipt.
+  const date=new Date();
+  const stamp=[date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('');
+  const reference='NML-RFQ-'+stamp+'-'+crypto.randomUUID().slice(0,8).toUpperCase();
+  const details=[
+   'طلب عرض سعر — NmoLabs | KYC مبدئي',
+   'الرقم المرجعي: '+reference,
+   'تاريخ الطلب: '+date.toLocaleString('ar-SA',{timeZone:'Asia/Riyadh'}),
+   'القسم: '+title,
+   'نوع الطلب: '+label,
+   kind==='software'?'نظام مخصص':'حالة المشروع: '+(mode==='new'?'مشروع جديد':'مشروع قائم'),
+   'اسم العميل: '+cleanName,
+   'رقم الجوال: '+cleanPhone,
+   'المدينة: '+cleanCity,
+   'الخدمات المطلوبة:',
+   ...(selected.length?selected.map((item,i)=>(i+1)+'. '+item):['استشارة أولية']),
+   'ملاحظات: '+(note.trim()||'لا يوجد'),
+   'الحالة: طلب جديد — يحتاج مراجعة وإدخال الرقم المرجعي في NBOS'
+  ].join('\\n');
   window.open(getWhatsAppUrl(config.contactNumber,details),'_blank','noopener,noreferrer');
+ };
+ const goToRequest=()=>{
+  setFormError('');
+  document.getElementById('rfq-heading')?.scrollIntoView({behavior:'smooth',block:'start'});
  };
  return <main className="relative z-10 min-h-screen px-5 pt-36 pb-24">
   <div className="max-w-6xl mx-auto">
@@ -56,18 +86,24 @@ export const ServicesPortal=({kind}:{kind:Kind})=>{
           {(expanded.includes(heading)||kind==='software')&&<div className="px-3 pb-3 space-y-2">{items.map(item=><label key={item} className="flex gap-2 text-sm text-[var(--text-secondary)] cursor-pointer"><input type="checkbox" checked={checked.includes(item)} onChange={()=>toggle(item)} className="accent-blue-600"/>{item}</label>)}</div>}
        </div>)}
       </div>
+      <div className="mt-5 border-t border-[var(--border-default)] pt-4">
+       <p className="text-sm text-[var(--text-secondary)] mb-3" aria-live="polite">تم اختيار {checked.length} خدمة</p>
+       <button type="button" onClick={goToRequest} disabled={!checked.length} className="w-full bg-[var(--color-primary)] text-white rounded-xl px-4 py-3 font-semibold disabled:opacity-50 flex items-center justify-center gap-2"><MessageCircle size={18}/> اطلب عرض السعر الآن</button>
+      </div>
      </article>
    </div>
    <section className="rounded-3xl border border-[var(--border-default)] bg-[var(--surface-secondary)]/90 p-6 md:p-9 max-w-3xl mx-auto" aria-labelledby="rfq-heading">
     <h2 id="rfq-heading" className="text-2xl font-bold text-[var(--text-primary)] mb-3">أرسل طلبك أو اطلب استشارة مجانية</h2>
-    <p className="text-[var(--text-muted)] mb-6 text-sm">عدد الخدمات المحددة: {checked.length}. أدخل رقم التواصل ليجهز فريق نمو لابز عرض السعر. الاستشارة الأولية مجانية ولا تشترط اختيار خدمات مدفوعة.</p>
-    <div className="grid sm:grid-cols-2 gap-4 mb-4">
-      <label className="text-sm text-[var(--text-primary)]">الاسم<input value={name} onChange={e=>setName(e.target.value)} placeholder="اسم العميل" className="mt-2 w-full border border-[var(--border-default)] bg-[var(--surface-primary)] p-3 rounded-xl"/></label>
-      <label className="text-sm text-[var(--text-primary)]">رقم الجوال<input value={phone} onChange={e=>setPhone(e.target.value)} placeholder="05xxxxxxxx" inputMode="tel" className="mt-2 w-full border border-[var(--border-default)] bg-[var(--surface-primary)] p-3 rounded-xl"/></label>
+    <p className="text-[var(--text-muted)] mb-6 text-sm">عدد الخدمات المحددة: {checked.length}. أدخل الاسم والجوال والمدينة، ثم أرسل الطلب إلى واتساب. سيُرفق رقم مرجعي لسهولة تسجيله في NBOS، ولا يُنشأ سجل في النظام تلقائيًا.</p>
+    <div className="grid sm:grid-cols-3 gap-4 mb-4">
+      <label className="text-sm text-[var(--text-primary)]">الاسم *<input required autoComplete="name" value={name} onChange={e=>setName(e.target.value)} placeholder="اسم العميل" className="mt-2 w-full border border-[var(--border-default)] bg-[var(--surface-primary)] p-3 rounded-xl"/></label>
+      <label className="text-sm text-[var(--text-primary)]">رقم الجوال *<input required type="tel" autoComplete="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="05xxxxxxxx" inputMode="tel" className="mt-2 w-full border border-[var(--border-default)] bg-[var(--surface-primary)] p-3 rounded-xl"/></label>
+      <label className="text-sm text-[var(--text-primary)]">المدينة *<input required autoComplete="address-level2" value={city} onChange={e=>setCity(e.target.value)} placeholder="الرياض" className="mt-2 w-full border border-[var(--border-default)] bg-[var(--surface-primary)] p-3 rounded-xl"/></label>
     </div>
     <label className="block text-sm text-[var(--text-primary)] mb-5">تفاصيل إضافية<textarea value={note} onChange={e=>setNote(e.target.value)} rows={3} placeholder="صف احتياجك أو رابط المشروع الحالي" className="mt-2 w-full border border-[var(--border-default)] bg-[var(--surface-primary)] p-3 rounded-xl"/></label>
+    {formError&&<p role="alert" className="text-red-500 text-sm mb-4">{formError}</p>}
     <div className="flex flex-wrap gap-3">
-      <button onClick={()=>send('خدمات مخصصة',checked)} disabled={!checked.length&&!note.trim()} className="bg-[var(--color-primary)] text-white px-6 py-3 rounded-xl disabled:opacity-50">إرسال الخدمات المختارة عبر واتساب</button>
+      <button onClick={()=>send('خدمات مخصصة',checked)} disabled={!checked.length&&!note.trim()} className="bg-[var(--color-primary)] text-white px-6 py-3 rounded-xl disabled:opacity-50">اطلب عرض السعر عبر واتساب</button>
       <button onClick={()=>send('استشارة أولية مجانية',checked)} className="border border-[var(--border-default)] text-[var(--text-primary)] px-6 py-3 rounded-xl flex items-center gap-2"><MessageCircle size={17}/> استشارة مجانية</button>
     </div>
    </section>
