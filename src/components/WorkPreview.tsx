@@ -19,7 +19,7 @@ export const WorkPreview = () => {
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-20 mix-blend-overlay" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-12 sm:mb-10 lg:mb-20">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-8 sm:mb-10 lg:mb-12">
           <div className="max-w-2xl">
             <h2 className="text-2xl sm:text-4xl md:text-6xl font-black text-white mb-4 sm:mb-6 tracking-tight leading-tight">
               {isEn ? 'Work built to perform, evolve and grow' : 'مشاريع بنيناها لتعمل، تتطور وتنمو'}
@@ -80,7 +80,7 @@ export const WorkPreview = () => {
               <div className="relative z-10 p-5 sm:p-8 md:translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                 <div className="flex items-center gap-3 mb-4">
                   {project.year && (
-                    <span className="text-xs font-bold text-[var(--color-primary)] px-3 py-1 rounded-full bg-white/10 border border-white/10 backdrop-blur-md animate-pulse">
+                    <span className="text-sm font-bold text-white px-3 py-1 rounded-full bg-white/10 border border-white/10 backdrop-blur-md animate-pulse">
                       {project.year}
                     </span>
                   )}
@@ -91,7 +91,7 @@ export const WorkPreview = () => {
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-[var(--color-primary)] to-[var(--color-secondary)] mb-2 transition-colors">
                   {isEn ? project.titleEn : project.titleAr}
                 </h3>
-                <p className="text-white/70 line-clamp-2 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:h-0 group-hover:h-auto text-sm sm:text-base">
+                <p className="text-white/90 line-clamp-2 group-hover:opacity-100 transition-opacity duration-300 text-sm sm:text-base">
                   {isEn ? project.summaryEn : project.summaryAr}
                 </p>
               </div>
