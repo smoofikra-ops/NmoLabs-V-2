@@ -62,7 +62,7 @@ export const ProductsPage = () => {
       <div className="fixed inset-0 bg-grid-pattern opacity-10 pointer-events-none z-0" />
 
       {/* Hero Section */}
-      <section className="relative min-h-[650px] max-h-[980px] h-[100svh] flex flex-col justify-center overflow-hidden z-10 pt-20">
+      <section className="relative min-h-[470px] md:min-h-[570px] max-h-[800px] h-auto flex flex-col justify-center overflow-hidden z-10 pt-20">
         <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none">
           {/* Abstract Tech Visuals */}
           <motion.div 
@@ -119,7 +119,7 @@ export const ProductsPage = () => {
       </section>
 
       {/* Featured Products */}
-      <div id="featured-products" className="relative z-10 flex flex-col gap-32 py-24">
+      <div id="featured-products" className="relative z-10 flex flex-col gap-14 md:gap-20 py-12 md:py-16">
         {featuredProducts.map((product, index) => (
           <FeaturedProductSection 
             key={product.id} 
@@ -135,9 +135,9 @@ export const ProductsPage = () => {
       </div>
 
       {/* Other Products Grid */}
-      <section className="py-24 relative z-10 bg-[var(--surface-secondary)]/40 border-t border-[var(--border-default)]">
+      <section className="py-12 md:py-16 relative z-10 bg-[var(--surface-secondary)]/40 border-t border-[var(--border-default)]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16">
+          <div className="mb-9">
             <h2 className="text-3xl md:text-5xl font-black mb-6 text-[var(--text-primary)]">{isEn ? 'More Solutions' : 'حلول إضافية'}</h2>
             <p className="text-xl text-[var(--text-secondary)] max-w-2xl">
               {isEn ? 'Discover our other internal tools and on-demand systems designed for specialized operations.' : 'اكتشف أدواتنا الداخلية وأنظمتنا المخصصة المصممة للعمليات المتخصصة.'}
@@ -163,7 +163,7 @@ export const ProductsPage = () => {
                   <span className={`px-3 py-1 rounded-full text-xs font-bold border ${getStatusStyle(product.status)}`}>
                     {getStatusText(product.status, isEn)}
                   </span>
-                  <div className="w-10 h-10 rounded-full bg-[var(--surface-primary)] border border-[var(--border-default)] flex items-center justify-center text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors">
+                  <div className="w-10 h-10 rounded-full bg-[var(--surface-primary)] border border-[var(--border-default)] flex items-center justify-center text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">
                     {isEn ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
                   </div>
                 </div>
@@ -178,7 +178,7 @@ export const ProductsPage = () => {
                 </div>
                 
                 <div className="relative z-10 pt-6 border-t border-[var(--border-default)] mt-auto">
-                  <span className="text-sm font-bold text-[var(--text-muted)]">{isEn ? product.category : product.category}</span>
+                  <span className="text-sm font-bold text-[var(--text-secondary)]">{isEn ? product.category : product.category}</span>
                 </div>
               </motion.div>
             ))}
@@ -187,9 +187,9 @@ export const ProductsPage = () => {
       </section>
 
       {/* Product Journey Timeline */}
-      <section className="py-32 relative z-10">
+      <section className="py-16 md:py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-24">
+          <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-black mb-6">{isEn ? 'From Idea to Working Product' : 'من الفكرة إلى منتج يعمل'}</h2>
             <div className="w-24 h-1 bg-[var(--color-primary)] mx-auto rounded-full"></div>
           </div>
@@ -228,10 +228,10 @@ export const ProductsPage = () => {
       </section>
 
       {/* Why NmoLabs Products */}
-      <section className="py-32 relative z-10 bg-black/40">
+      <section className="py-16 md:py-20 relative z-10 bg-black/40">
         <div className="max-w-5xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-5xl font-black mb-8">{isEn ? 'Not off-the-shelf tools for everyone' : 'ليست أدوات جاهزة للجميع'}</h2>
-          <p className="text-xl md:text-2xl text-white/60 mb-16 leading-relaxed">
+          <p className="text-xl md:text-2xl text-white/60 mb-9 leading-relaxed">
             {isEn ? 'We build our products around real problems we face with companies and stores, then transform them into practical, scalable solutions.' : 'نبني منتجاتنا حول مشكلات حقيقية نواجهها مع الشركات والمتاجر، ثم نحولها إلى حلول عملية قابلة للتطوير.'}
           </p>
 
@@ -257,7 +257,7 @@ export const ProductsPage = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-32 relative z-10">
+      <section className="py-16 md:py-20 relative z-10">
         <div className="max-w-4xl mx-auto px-6">
           <div className="bg-gradient-to-br from-[#111] to-black border border-white/10 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
             <div className="absolute inset-0 bg-[var(--color-primary)]/5 opacity-50 blur-3xl" />
