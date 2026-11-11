@@ -50,7 +50,7 @@ export const ServicesPortal=({kind}:{kind:Kind})=>{
    ...(selected.length?selected.map((item,i)=>(i+1)+'. '+item):['استشارة أولية']),
    'ملاحظات: '+(note.trim()||'لا يوجد'),
    'الحالة: طلب جديد — يحتاج مراجعة وإدخال الرقم المرجعي في NBOS'
-  ].join('\\n');
+  ].join('\n');
   window.open(getWhatsAppUrl(config.contactNumber,details),'_blank','noopener,noreferrer');
  };
  const goToRequest=()=>{
