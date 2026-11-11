@@ -4,16 +4,22 @@ import { projects, type Project } from '../data/projects';
 import { productsData, type Product } from '../data/products';
 import { ArrowUpLeft, Monitor, Boxes, ShoppingBag, ImageOff } from 'lucide-react';
 
-type Item={key:string;title:string;titleEn:string;image?:string;route:string;status?:string;kind:'project'|'product'};
+type Item={key:string;title:string;titleEn:string;image?:string;route:string;externalUrl?:string;status?:string;kind:'project'|'product'};
 const authentic=(src?:string)=>src&&src.startsWith('https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/')?src:undefined;
 const asProject=(p:Project):Item=>({key:'project-'+p.slug,title:p.titleAr,titleEn:p.titleEn,image:authentic(p.coverImage),route:'work/'+p.slug,status:p.status,kind:'project'});
 const asProduct=(p:Product):Item=>({key:'product-'+p.slug,title:p.titleAr,titleEn:p.titleEn,image:authentic(p.coverVisual)||p.screenshots?.find(x=>!!authentic(x)),route:'products/'+p.slug,status:p.status,kind:'product'});
 const unique=(items:Item[])=>items.filter((v,i,a)=>a.findIndex(z=>z.title===v.title)===i);
 const websites=unique(projects.filter(p=>p.category==='corporate'&&p.status!=='needs_documentation'&&!!authentic(p.coverImage)).map(asProject));
 const stores=unique(projects.filter(p=>p.category==='ecommerce'&&p.status!=='needs_documentation'&&!!authentic(p.coverImage)).map(asProject));
+const additionalSystems:Item[]=[
+  {key:'extra-netgate',title:'بوابة الشبكات — النظام الإداري',titleEn:'Network Gateway Business System',route:'',externalUrl:'https://netgate.nmolabs.com',kind:'product'},
+  {key:'extra-tflow',title:'TFlow — المساعد المالي التشغيلي',titleEn:'TFlow Operations & Finance',route:'',externalUrl:'https://tflow.nmolabs.com',kind:'product'},
+  {key:'extra-analysis',title:'نظام التحليلات',titleEn:'Business Analytics',route:'',externalUrl:'https://analysis.nmolabs.com',kind:'product'}
+];
 const systems=unique([
  ...projects.filter(p=>p.category==='systems'&&p.status!=='needs_documentation'&&!!authentic(p.coverImage)).map(asProject),
- ...productsData.filter(p=>!['on_demand'].includes(p.status)).map(asProduct)
+ ...productsData.filter(p=>!['on_demand'].includes(p.status)).map(asProduct),
+ ...additionalSystems
 ]);
 const statusLabel=(status?:string,en=false)=>{
  if(status==='planning'||status==='coming_soon')return en?'Planned':'قيد التخطيط';
@@ -23,8 +29,8 @@ const statusLabel=(status?:string,en=false)=>{
 const MarqueeSection=({items,title,titleEn,desc,descEn,route,direction,icon:Icon}:{items:Item[];title:string;titleEn:string;desc:string;descEn:string;route:string;direction:'left'|'right';icon:React.ComponentType<{size?:number;className?:string}>})=>{
  const {config,updateConfig}=useSite();const en=config.language==='en';
  if(!items.length)return null;
- const go=(path:string)=>{updateConfig({currentRoute:path});window.scrollTo({top:0,behavior:'smooth'});};
- const cards=(clone:boolean)=>items.map(item=><button key={item.key+(clone?'-clone':'')} type="button" tabIndex={clone?-1:0} aria-hidden={clone?'true':undefined} onClick={()=>go(item.route)}
+ const go=(path:string,externalUrl?:string)=>{if(externalUrl){window.open(externalUrl,'_blank','noopener,noreferrer');return;}updateConfig({currentRoute:path});window.scrollTo({top:0,behavior:'smooth'});};
+ const cards=(clone:boolean)=>items.map(item=><button key={item.key+(clone?'-clone':'')} type="button" tabIndex={clone?-1:0} aria-hidden={clone?'true':undefined} onClick={()=>go(item.route,item.externalUrl)}
  className="nmo-showcase-card group text-start shrink-0 w-[240px] sm:w-[290px] lg:w-[335px] rounded-2xl overflow-hidden border border-[var(--border-default)] bg-[var(--surface-secondary)]/85 hover:border-[var(--color-primary)] hover:shadow-xl transition duration-300 focus-visible:outline-2 focus-visible:outline-[var(--color-primary)]">
   <div className="relative h-[145px] sm:h-[175px] lg:h-[194px] overflow-hidden bg-[var(--surface-primary)]">
    {item.image?<img src={item.image} alt={en?`Preview: ${item.titleEn}`:`صورة مشروع ${item.title}`} className="w-full h-full object-cover object-top group-hover:scale-[1.035] transition-transform duration-700" loading="lazy" decoding="async" onError={e=>{e.currentTarget.style.display='none';}}/>:
