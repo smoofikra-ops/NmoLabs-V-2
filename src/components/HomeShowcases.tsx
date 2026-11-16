@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSite } from '../context/SiteContext';
 import { projects, type Project } from '../data/projects';
 import { productsData, type Product } from '../data/products';
@@ -40,9 +40,50 @@ const statusLabel=(status?:string,en=false)=>{
 };
 const MarqueeSection=({items,title,titleEn,desc,descEn,route,direction,icon:Icon}:{items:Item[];title:string;titleEn:string;desc:string;descEn:string;route:string;direction:'left'|'right';icon:React.ComponentType<{size?:number;className?:string}>})=>{
  const {config,updateConfig}=useSite();const en=config.language==='en';
+ const trackRef=useRef<HTMLDivElement>(null);
+ const positionRef=useRef(0);
+ const draggingRef=useRef(false);
+ const movedRef=useRef(false);
+ const pointerXRef=useRef(0);
+ const hoveringRef=useRef(false);
+ useEffect(()=>{
+   const track=trackRef.current;
+   if(!track)return;
+   const media=window.matchMedia('(prefers-reduced-motion: reduce)');
+   let frame=0,last=0;
+   const tick=(now:number)=>{
+     const delta=last?Math.min(50,now-last):0;last=now;
+     const half=track.scrollWidth/2;
+     if(half>0){
+       if(!draggingRef.current&&!hoveringRef.current&&!media.matches)
+         positionRef.current+=(direction==='right'?-1:1)*half*delta/(window.innerWidth<640?43000:55000);
+       positionRef.current=((positionRef.current%half)+half)%half;
+       track.style.transform='translate3d('+(-positionRef.current)+'px,0,0)';
+     }
+     frame=requestAnimationFrame(tick);
+   };
+   frame=requestAnimationFrame(tick);
+   return ()=>cancelAnimationFrame(frame);
+ },[direction,items]);
+ const onPointerDown=(event:React.PointerEvent<HTMLDivElement>)=>{
+   if(event.pointerType==='mouse'&&event.button!==0)return;
+   draggingRef.current=true;movedRef.current=false;pointerXRef.current=event.clientX;
+   event.currentTarget.setPointerCapture(event.pointerId);
+ };
+ const onPointerMove=(event:React.PointerEvent<HTMLDivElement>)=>{
+   if(!draggingRef.current)return;
+   const dx=event.clientX-pointerXRef.current;
+   pointerXRef.current=event.clientX;
+   if(Math.abs(dx)>3)movedRef.current=true;
+   positionRef.current-=dx;
+ };
+ const onPointerEnd=(event:React.PointerEvent<HTMLDivElement>)=>{
+   draggingRef.current=false;
+   if(event.currentTarget.hasPointerCapture(event.pointerId))event.currentTarget.releasePointerCapture(event.pointerId);
+ };
  if(!items.length)return null;
  const go=(path:string,externalUrl?:string)=>{if(externalUrl){window.open(externalUrl,'_blank','noopener,noreferrer');return;}if(!path)return;updateConfig({currentRoute:path});window.scrollTo({top:0,behavior:'smooth'});};
- const cards=(clone:boolean)=>items.map(item=><button key={item.key+(clone?'-clone':'')} type="button" tabIndex={clone?-1:0} aria-hidden={clone?'true':undefined} onClick={()=>go(item.route,item.externalUrl)}
+ const cards=(clone:boolean)=>items.map(item=><button key={item.key+(clone?'-clone':'')} type="button" tabIndex={clone?-1:0} aria-hidden={clone?'true':undefined} onClick={event=>{if(movedRef.current){event.preventDefault();event.stopPropagation();movedRef.current=false;return;}go(item.route,item.externalUrl);}}
  className="nmo-showcase-card group text-start shrink-0 w-[240px] sm:w-[290px] lg:w-[335px] rounded-2xl overflow-hidden border border-[var(--border-default)] bg-[var(--surface-secondary)]/85 hover:border-[var(--color-primary)] hover:shadow-xl transition duration-300 focus-visible:outline-2 focus-visible:outline-[var(--color-primary)]">
   <div className="relative h-[145px] sm:h-[175px] lg:h-[194px] overflow-hidden bg-[var(--surface-primary)]">
    <ProjectThumbnail src={item.image} title={en?item.titleEn:item.title}/>
@@ -60,8 +101,8 @@ const MarqueeSection=({items,title,titleEn,desc,descEn,route,direction,icon:Icon
        <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">{en?descEn:desc}</p></div></div>
     <button onClick={()=>go(route)} className="text-[var(--color-primary)] font-semibold text-xs sm:text-sm whitespace-nowrap flex gap-1 items-center">{en?'View all':'عرض الكل'}<ArrowUpLeft size={16}/></button>
   </div>
-  <div className="nmo-marquee-viewport overflow-hidden" dir="ltr">
-    <div className={`nmo-marquee-track ${direction==='right'?'nmo-marquee-reverse':''}`}>
+  <div className="nmo-marquee-viewport overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y select-none" dir="ltr" onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerEnd} onPointerCancel={onPointerEnd} onPointerEnter={()=>{hoveringRef.current=true;}} onPointerLeave={()=>{hoveringRef.current=false;}}>
+    <div ref={trackRef} className="nmo-marquee-track">
       <div className="nmo-marquee-set" dir="rtl">{cards(false)}</div><div className="nmo-marquee-set" aria-hidden="true" dir="rtl">{cards(true)}</div>
     </div>
   </div>
@@ -78,14 +119,10 @@ export const HomeShowcases=()=>{
   <MarqueeSection items={systems} title="أنظمة ذكية لتنظيم أعمالك" titleEn="Business systems that work smarter" desc="حلولنا الرقمية وتجارب المنتجات، بحالتها الحالية" descEn="Business systems and product concepts with status labels" direction="right" route="products" icon={Boxes}/>
   <MarqueeSection items={stores} title="متاجر إلكترونية صممناها وطوّرناها" titleEn="Online stores we built and improved" desc="نماذج من أعمالنا في التجارة الإلكترونية" descEn="E-commerce projects from our portfolio" direction="left" route="work" icon={ShoppingBag}/>
   <style>{`
-   .nmo-marquee-track{display:flex;width:max-content;animation:nmo-marquee 55s linear infinite;will-change:transform}
+   .nmo-marquee-track{display:flex;width:max-content;will-change:transform}
    .nmo-marquee-set{display:flex;gap:16px;padding-inline-end:16px;flex-shrink:0}
-   .nmo-marquee-reverse{animation-direction:reverse}
-   .nmo-marquee-viewport:hover .nmo-marquee-track,.nmo-marquee-viewport:focus-within .nmo-marquee-track{animation-play-state:paused}
-   @keyframes nmo-marquee{to{transform:translateX(-50%)}}
    .nmo-marquee-viewport{-webkit-mask-image:linear-gradient(to right,transparent,black 5%,black 95%,transparent);mask-image:linear-gradient(to right,transparent,black 5%,black 95%,transparent)}
-   .nmo-marquee-viewport{scrollbar-width:none}\n   .nmo-marquee-viewport::-webkit-scrollbar{display:none}\n   @media(max-width:640px){.nmo-marquee-track{animation-duration:43s}}
-   @media(prefers-reduced-motion:reduce){.nmo-marquee-viewport{overflow-x:auto!important;-webkit-mask-image:none;mask-image:none}.nmo-marquee-track{animation:none!important}.nmo-marquee-set[aria-hidden=true]{display:none}}
+   .nmo-marquee-viewport{scrollbar-width:none}\n   .nmo-marquee-viewport::-webkit-scrollbar{display:none}\n   @media(prefers-reduced-motion:reduce){.nmo-marquee-viewport{-webkit-mask-image:none;mask-image:none}}
   `}</style>
  </div>;
 };
