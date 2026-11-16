@@ -13,8 +13,8 @@ const unique=(items:Item[])=>items.filter((v,i,a)=>a.findIndex(z=>z.title===v.ti
 const websites=unique(projects.filter(p=>p.category==='corporate'&&p.status!=='needs_documentation'&&!!authentic(p.coverImage)).map(asProject));
 const stores=unique(projects.filter(p=>p.category==='ecommerce'&&p.status!=='needs_documentation'&&!!authentic(p.coverImage)).map(asProject));
 const additionalSystems:Item[]=[
-  {key:'extra-netgate',title:'بوابة الشبكات — النظام الإداري',titleEn:'Network Gateway Business System',route:'',externalUrl:'https://netgate.nmolabs.com',kind:'product'},
-  {key:'extra-tflow',title:'TFlow — المساعد المالي التشغيلي',titleEn:'TFlow Operations & Finance',route:'',externalUrl:'https://tflow.nmolabs.com',kind:'product'},
+  {key:'extra-netgate',title:'بوابة الشبكات — النظام الإداري',titleEn:'Network Gateway Business System',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-netgate-login.webp',route:'',externalUrl:'https://netgate.nmolabs.com',kind:'product'},
+  {key:'extra-tflow',title:'TFlow — المساعد المالي التشغيلي',titleEn:'TFlow Operations & Finance',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-tflow-login.webp',route:'',externalUrl:'https://tflow.nmolabs.com',kind:'product'},
   {key:'extra-analysis',title:'نظام التحليلات',titleEn:'Business Analytics',route:'',externalUrl:'https://analysis.nmolabs.com',kind:'product'}
 ];
 const systems=unique([
