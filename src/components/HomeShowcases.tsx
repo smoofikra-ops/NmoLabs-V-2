@@ -12,16 +12,27 @@ const asProduct=(p:Product):Item=>({key:'product-'+p.slug,title:p.titleAr,titleE
 const unique=(items:Item[])=>items.filter((v,i,a)=>a.findIndex(z=>z.title===v.title)===i);
 const websites=unique(projects.filter(p=>p.category==='corporate'&&p.status!=='needs_documentation'&&!!authentic(p.coverImage)).map(asProject));
 const stores=unique(projects.filter(p=>p.category==='ecommerce'&&p.status!=='needs_documentation'&&!!authentic(p.coverImage)).map(asProject));
-const additionalSystems:Item[]=[
-  {key:'extra-netgate',title:'بوابة الشبكات — النظام الإداري',titleEn:'Network Gateway Business System',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-netgate-login.webp',route:'',externalUrl:'https://netgate.nmolabs.com',kind:'product'},
-  {key:'extra-tflow',title:'TFlow — المساعد المالي التشغيلي',titleEn:'TFlow Operations & Finance',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-tflow-login.webp',route:'',externalUrl:'https://tflow.nmolabs.com',kind:'product'},
-  {key:'extra-analysis',title:'نظام التحليلات',titleEn:'Business Analytics',route:'',externalUrl:'https://analysis.nmolabs.com',kind:'product'}
+// Systems shown once per actual product. Do not merge overlapping Project/Product records.
+// The smart seller is listed once; branch/e-commerce are delivery channels, not extra cards.
+const coverRoot='https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/';
+const fromCatalog=(slug:string,overrideImage?:string):Item|undefined=>{
+ const p=productsData.find(product=>product.slug===slug);
+ return p?{...asProduct(p),image:overrideImage||authentic(p.coverVisual)||p.screenshots?.find(x=>!!authentic(x))}:undefined;
+};
+const curatedProducts=[
+ fromCatalog('nbos',coverRoot+'nmo-nbos-login.webp'),
+ fromCatalog('nmo-erp',coverRoot+'nmo-erp-login.webp'),
+ fromCatalog('nucleus',coverRoot+'nmo-nucleus-login.webp'),
+ fromCatalog('smart-seller-ecommerce'),
+ fromCatalog('ads-intelligence'),
+ fromCatalog('nomu-trader'),
+ fromCatalog('growth-ambassador'),
+].filter((item):item is Item=>Boolean(item));
+const otherSystems:Item[]=[
+ {key:'system-tflow',title:'TFlow — المساعد المالي التشغيلي',titleEn:'TFlow — Operations & Finance',image:coverRoot+'nmo-tflow-login.webp',route:'',externalUrl:'https://tflow.nmolabs.com',kind:'product'},
+ {key:'system-netgate',title:'بوابة الشبكات — النظام الإداري',titleEn:'Network Gateway Business System',image:coverRoot+'nmo-netgate-login.webp',route:'',externalUrl:'https://netgate.nmolabs.com',kind:'product'}
 ];
-const systems=unique([
- ...projects.filter(p=>p.category==='systems'&&p.status!=='needs_documentation'&&!!authentic(p.coverImage)).map(asProject),
- ...productsData.filter(p=>!['on_demand'].includes(p.status)).map(asProduct),
- ...additionalSystems
-]);
+const systems=[...curatedProducts,...otherSystems];
 const statusLabel=(status?:string,en=false)=>{
  if(status==='planning'||status==='coming_soon')return en?'Planned':'قيد التخطيط';
  if(status==='in_progress'||status==='prototype')return en?'In development':'قيد التطوير';
@@ -30,7 +41,7 @@ const statusLabel=(status?:string,en=false)=>{
 const MarqueeSection=({items,title,titleEn,desc,descEn,route,direction,icon:Icon}:{items:Item[];title:string;titleEn:string;desc:string;descEn:string;route:string;direction:'left'|'right';icon:React.ComponentType<{size?:number;className?:string}>})=>{
  const {config,updateConfig}=useSite();const en=config.language==='en';
  if(!items.length)return null;
- const go=(path:string,externalUrl?:string)=>{if(externalUrl){window.open(externalUrl,'_blank','noopener,noreferrer');return;}updateConfig({currentRoute:path});window.scrollTo({top:0,behavior:'smooth'});};
+ const go=(path:string,externalUrl?:string)=>{if(externalUrl){window.open(externalUrl,'_blank','noopener,noreferrer');return;}if(!path)return;updateConfig({currentRoute:path});window.scrollTo({top:0,behavior:'smooth'});};
  const cards=(clone:boolean)=>items.map(item=><button key={item.key+(clone?'-clone':'')} type="button" tabIndex={clone?-1:0} aria-hidden={clone?'true':undefined} onClick={()=>go(item.route,item.externalUrl)}
  className="nmo-showcase-card group text-start shrink-0 w-[240px] sm:w-[290px] lg:w-[335px] rounded-2xl overflow-hidden border border-[var(--border-default)] bg-[var(--surface-secondary)]/85 hover:border-[var(--color-primary)] hover:shadow-xl transition duration-300 focus-visible:outline-2 focus-visible:outline-[var(--color-primary)]">
   <div className="relative h-[145px] sm:h-[175px] lg:h-[194px] overflow-hidden bg-[var(--surface-primary)]">
