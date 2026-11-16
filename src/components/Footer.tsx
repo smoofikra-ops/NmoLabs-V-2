@@ -141,7 +141,7 @@ export const Footer = () => {
                 ? "NmoLabs is your dedicated technology growth partner, engineering bespoke enterprise software, digital systems, and AI-powered growth engines."
                 : "نمو لابز هو شريكك التقني للنمو المتسارع، نصمم ونبني منظومات برمجية ذكية، حلولاً تقنية متقدمة، وأدوات رقمية تسهم في تعظيم أثر أعمالك.")}
             </p>
-            <div className="flex gap-2.5 flex-wrap justify-center lg:justify-start pt-2">
+            <div className="flex flex-nowrap gap-2 sm:gap-2.5 justify-center lg:justify-start pt-2">
               {config.socialLinks?.map((link, idx) => (
                 <a 
                   key={idx} 
@@ -149,7 +149,7 @@ export const Footer = () => {
                   target="_blank" 
                   rel="noreferrer" 
                   title={link.name} 
-                  className="w-10 h-10 rounded-full border border-black/10 dark:border-white/15 flex items-center justify-center text-white hover:-translate-y-1 hover:shadow-lg transition-all duration-200"
+                  className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-full border border-black/10 dark:border-white/15 flex items-center justify-center text-white hover:-translate-y-1 hover:shadow-lg transition-all duration-200"
                   style={getSocialBrandStyle(link.icon)}
                 >
                   {getSocialSvg(link.icon)}
@@ -275,13 +275,13 @@ export const Footer = () => {
         </div>
 
         {/* Copyright & Footnote */}
-        <div className="pt-6 border-t border-[var(--border-default)] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[var(--text-muted)] font-medium">
+        <div className="pt-6 border-t border-[var(--border-default)] flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[var(--text-secondary)] font-medium">
           <p>© {currentYear} {isEn ? 'NmoLabs. All rights reserved.' : 'نمو لابز. جميع الحقوق محفوظة.'}</p>
           <div className="flex items-center gap-2">
             <span>{isEn ? 'Built with precision by' : 'صُنع بشغف وابتكار في'}</span>
             <span 
               onClick={handleNmoLabsClick}
-              className="text-[var(--text-primary)] font-black tracking-widest font-english text-xs bg-[var(--surface-secondary)] px-2.5 py-1 rounded-md border border-[var(--border-default)] select-none touch-manipulation cursor-pointer"
+              className="text-[var(--text-primary)] font-black tracking-widest font-english text-sm bg-[var(--surface-secondary)] px-2.5 py-1 rounded-md border border-[var(--border-default)] select-none touch-manipulation cursor-pointer"
             >
               NMOLABS
             </span>

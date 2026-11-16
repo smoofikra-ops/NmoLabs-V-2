@@ -95,13 +95,15 @@ export const ProjectDetailsPage = ({ slug }: Props) => {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
-                className="aspect-video w-full rounded-3xl overflow-hidden bg-black/20 backdrop-blur-xl border border-white/10 relative shadow-2xl"
+                className="aspect-video w-full rounded-3xl overflow-hidden bg-gradient-to-br from-[#102341] to-[#174779] backdrop-blur-xl border border-white/10 relative shadow-2xl"
               >
+                <div className="absolute inset-0 flex items-center justify-center px-8 text-white/70 text-2xl font-bold text-center">{isEn ? project.titleEn : project.titleAr}</div>
                 {project.coverImage ? (
                   <img 
                     src={project.coverImage} 
                     alt={isEn ? project.titleEn : project.titleAr}
                     referrerPolicy="no-referrer"
+                    onError={event => { event.currentTarget.style.display = "none"; }}
                     className="w-full h-full object-cover"
                   />
                 ) : (

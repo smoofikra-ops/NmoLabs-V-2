@@ -1,134 +1,61 @@
-import { getWhatsAppUrl } from '../lib/utils';
 import React from 'react';
 import { motion } from 'motion/react';
-import { CheckCircle2, Zap, Brain, Shield, Rocket, ArrowLeft } from 'lucide-react';
+import { Brain, Zap, Shield, Rocket, ArrowLeft, CheckCircle2, TrendingUp } from 'lucide-react';
+import { getWhatsAppUrl } from '../lib/utils';
 import { useSite } from '../context/SiteContext';
 
-export const WhyChooseUs = () => {
-  const { config } = useSite();
+const advantages = [
+  {title:'تقنية تخدم أهدافك',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-technology-solutions.webp',desc:'نبني الحل المناسب لاحتياج مشروعك، بدون تعقيد أو إضافات غير ضرورية.', Icon:Brain},
+  {title:'خدمات مترابطة',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-connected-services.webp',desc:'الموقع والمتجر والأنظمة والتسويق ضمن رحلة عمل واضحة.', Icon:Zap},
+  {title:'أداء وموثوقية',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-performance-reliability.webp',desc:'نراجع الجودة والأداء والأمان قبل التسليم.', Icon:Shield},
+  {title:'تطوير مستمر',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-continuous-development.webp',desc:'نقيس النتائج ونتابع فرص التحسين بعد الإطلاق.', Icon:TrendingUp}
+];
+const advantagesEn = [
+  {title:'Purpose-built technology',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-technology-solutions.webp',desc:'Solutions designed around your business goals.',Icon:Brain},
+  {title:'Connected services',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-connected-services.webp',desc:'Websites, stores, systems and marketing in one journey.',Icon:Zap},
+  {title:'Quality and reliability',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-performance-reliability.webp',desc:'Performance, security and usability are reviewed.',Icon:Shield},
+  {title:'Continuous improvement',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-continuous-development.webp',desc:'We measure outcomes and identify opportunities.',Icon:TrendingUp}
+];
+const highlights=[
+  {ar:'تحليل ذكي',en:'Smart analysis',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-smart-analytics.webp',Icon:Brain},
+  {ar:'أداء محسّن',en:'Better performance',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-performance-improvement.webp',Icon:Rocket},
+  {ar:'نمو مستدام',en:'Sustainable growth',Icon:TrendingUp},
+  {ar:'حماية وشراكة',en:'Security & partnership',Icon:Shield}
+];
 
-  const features = [
-    {
-      title: 'استراتيجيات نمو بالذكاء الاصطناعي',
-      desc: 'نستخدم أدوات ذكاء اصطناعي ذكية عشان نحلل السلوك ونتوقع ترندات السوق ونرفع لك العائد.',
-      icon: <Brain className="w-6 h-6 text-[var(--color-secondary)]" />
-    },
-    {
-      title: 'حلول متكاملة بمكان واحد',
-      desc: 'من بناء متجرك لهويتك لإدارة حملاتك، نضبط لك الشغل كله بمكان واحد بدون تشتت.',
-      icon: <Zap className="w-6 h-6 text-[var(--color-primary)]" />
-    },
-    {
-      title: 'بنية تحتية سريعة وآمنة',
-      desc: 'نبني متاجر وأنظمة سريعة وتتحمل ضغط، وتحفظ بيانات عملائك بأمان.',
-      icon: <Shield className="w-6 h-6 text-[var(--color-accent)]" />
-    },
-    {
-      title: 'نتائج مدعومة بالأرقام',
-      desc: 'ما عندنا شغل تخمين. كل خطوة نسويها مبنية على تحليل أرقام عشان نضمن لك نمو مستدام.',
-      icon: <Rocket className="w-6 h-6 text-orange-400" />
-    }
-  ];
-
-  return (
-    <section className="py-16 md:py-32 relative overflow-hidden" id="why-us">
-      {/* Background decorations */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[var(--color-secondary)]/5 max-w-full rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[var(--color-primary)]/5 max-w-full rounded-full blur-[100px] pointer-events-none" />
-      
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          
-          {/* Content Side */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-[var(--border-default)] text-sm font-medium mb-6 text-[var(--text-muted)]">
-              ليش تختارنا؟
-            </div>
-            
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-8 leading-tight font-tajawal text-[var(--text-primary)]">
-              ليش تختار <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]">{config.logoText || 'NMOLABS'}</span>؟
-            </h2>
-            
-            <p className="text-lg text-[var(--text-muted)] mb-10 leading-relaxed font-light">
-              إحنا مو مجرد وكالة تسويق عادية، إحنا شريك نجاح تقني ندمج لك التكنولوجيا المتقدمة مع أحدث استراتيجيات النمو عشان تكتسح السوق.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-10">
-              {features.map((feature, idx) => (
-                <div key={idx} className="flex flex-col sm:flex-row items-start gap-4 p-5 rounded-2xl bg-[var(--surface-primary)]/20 border border-[var(--border-default)] hover:border-[var(--color-primary)]/30 transition-all duration-300 group cursor-default h-full">
-                  <div className="p-3 bg-[var(--surface-secondary)] rounded-xl border border-[var(--border-default)] group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
-                    {feature.icon}
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-bold mb-2 text-[var(--text-primary)] group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[var(--color-primary)] transition-colors duration-300">{feature.title}</h4>
-                    <p className="text-sm text-[var(--text-muted)] font-light leading-relaxed group-hover:text-[var(--text-secondary)] transition-colors duration-300">{feature.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <button 
-              onClick={() => {
-                if(config.contactNumber) {
-                   window.open(getWhatsAppUrl(config.contactNumber), '_blank');
-                } else {
-                   document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-              className="px-8 py-4 rounded-xl text-[var(--text-primary)] font-bold inline-flex items-center gap-3 transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(79,142,247,0.3)] hover:shadow-[0_0_30px_rgba(79,142,247,0.5)]"
-              style={{ backgroundColor: config.primaryColor }}
-            >
-              ابدأ الاستشارة المجانية الآن
-              <ArrowLeft size={20} className="animate-bounce-x" />
-            </button>
-          </motion.div>
-
-          {/* Image/Visual Side */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="relative"
-          >
-            <div className="absolute inset-0 bg-gradient-to-tr from-[var(--color-primary)]/20 to-[var(--color-secondary)]/20 blur-[60px] rounded-full" />
-            <div className="relative border border-[var(--border-default)] bg-[var(--surface-secondary)] backdrop-blur-xl p-8 rounded-3xl shadow-2xl overflow-hidden aspect-square flex flex-col justify-center">
-              
-              {/* Abstract Nodes/Network graphic */}
-              <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[var(--color-primary)] via-transparent to-transparent pointer-events-none" />
-              
-              <div className="grid grid-cols-2 gap-4 relative z-10 w-full">
-                 <div className="bg-[var(--surface-primary)]/60 border border-[var(--border-default)] p-6 rounded-2xl flex flex-col items-center justify-center gap-4 hover:border-[var(--color-primary)]/50 transition-colors">
-                    <Brain className="w-10 h-10 text-[var(--color-secondary)]" />
-                    <span className="font-bold text-lg">تحليل ذكي</span>
-                 </div>
-                 <div className="bg-[var(--surface-primary)]/60 border border-[var(--border-default)] p-6 rounded-2xl flex flex-col items-center justify-center gap-4 hover:border-[var(--color-primary)]/50 transition-colors translate-y-8">
-                    <Rocket className="w-10 h-10 text-[var(--color-primary)]" />
-                    <span className="font-bold text-lg">أداء مضاعف</span>
-                 </div>
-                 <div className="bg-[var(--surface-primary)]/60 border border-[var(--border-default)] p-6 rounded-2xl flex flex-col items-center justify-center gap-4 hover:border-[var(--color-primary)]/50 transition-colors">
-                    <CheckCircle2 className="w-10 h-10 text-[var(--color-accent)]" />
-                    <span className="font-bold text-lg">نمو مستدام</span>
-                 </div>
-                 <div className="bg-[var(--surface-primary)]/60 border border-[var(--border-default)] p-6 rounded-2xl flex flex-col items-center justify-center gap-4 hover:border-[var(--color-primary)]/50 transition-colors translate-y-8">
-                    <Shield className="w-10 h-10 text-orange-400" />
-                    <span className="font-bold text-lg">حماية وشراكة</span>
-                 </div>
-              </div>
-
-              {/* Connecting SVG Lines */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" style={{ opacity: 0.2 }}>
-                <line x1="25%" y1="25%" x2="75%" y2="75%" stroke="white" strokeWidth="2" strokeDasharray="5,5" />
-                <line x1="25%" y1="75%" x2="75%" y2="25%" stroke="white" strokeWidth="2" strokeDasharray="5,5" />
-              </svg>
-            </div>
-          </motion.div>
-
-        </div>
-      </div>
-    </section>
-  );
+export const WhyChooseUs=()=>{
+ const {config}=useSite();
+ const en=config.language==='en';
+ return <section id="why-us" className="relative z-10 px-4 sm:px-6 py-10 md:py-16 overflow-hidden" aria-labelledby="why-title">
+  <div className="max-w-7xl mx-auto">
+   <div className="text-center mb-5 md:mb-10">
+    <span className="inline-flex px-4 py-1.5 rounded-full border border-white/15 bg-[#10223b] text-white text-sm font-semibold">{en?'Why us?':'ليش تختارنا؟'}</span>
+    <h2 id="why-title" className="mt-4 text-[clamp(1.4rem,4vw,2.7rem)] font-black text-[var(--text-primary)]">{en?'Why choose NmoLabs?':'ليش تختار نمو لابس؟'}</h2>
+    <p className="mt-3 max-w-3xl mx-auto text-white text-sm sm:text-base md:text-lg leading-relaxed rounded-xl bg-[#10223b]/95 border border-white/15 px-4 py-3">
+     {en?'We combine practical technology and clear execution to help your business grow.':'نجمع التقنية والتنفيذ والمتابعة في مكان واحد، عشان يتطور مشروعك بخطوات واضحة.'}
+    </p>
+   </div>
+   <div className="grid lg:grid-cols-[1.4fr_1fr] gap-4 lg:gap-7 items-stretch">
+    <div className="grid grid-cols-2 gap-2 sm:gap-4">
+     {(en?advantagesEn:advantages).map(({title,desc,image,Icon},i)=><motion.article key={title} initial={false} whileHover={{y:-3}} className="min-w-0 rounded-2xl bg-[var(--surface-secondary)]/95 border border-[var(--border-default)] p-3 sm:p-5 shadow-lg">
+      <div className="relative w-full h-24 sm:h-32 overflow-hidden rounded-xl mb-3 bg-[#10223b]"><img src={image} alt="" loading="lazy" className="w-full h-full object-cover" onError={e=>{e.currentTarget.style.display="none";}} /></div><div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl bg-[#153963] border border-blue-300/20 text-sky-200 mb-2 sm:mb-3"><Icon className="w-5 h-5 sm:w-7 sm:h-7"/></div>
+      <h3 className="font-bold text-[var(--text-primary)] text-[13px] sm:text-lg leading-snug">{title}</h3>
+      <p className="mt-2 text-[var(--text-secondary)] text-xs sm:text-sm md:text-base leading-relaxed">{desc}</p>
+     </motion.article>)}
+    </div>
+    <div className="rounded-2xl bg-[#0d203b]/95 border border-sky-300/20 px-3 py-5 sm:p-7 flex flex-col justify-center">
+     <h3 className="text-white text-center font-bold text-base sm:text-xl mb-4">{en?'The value we deliver':'قيم نطبقها في كل مشروع'}</h3>
+     <div className="grid grid-cols-2 gap-3">
+      {highlights.map(({ar,en:enTitle,image,Icon})=><div key={ar} className="rounded-xl border border-white/15 bg-white/10 min-h-[86px] sm:min-h-[110px] px-2 py-3 flex flex-col items-center justify-center text-center gap-2 hover:bg-white/15 transition-colors">
+       {image?<img src={image} alt="" loading="lazy" className="w-full h-14 sm:h-20 object-cover rounded-lg" onError={e=>{e.currentTarget.style.display="none";}} />:<Icon className="text-sky-200 w-6 h-6 sm:w-8 sm:h-8"/>}
+       <span className="text-white text-xs sm:text-base font-bold">{en?enTitle:ar}</span>
+      </div>)}
+     </div>
+     <button onClick={()=>config.contactNumber?window.open(getWhatsAppUrl(config.contactNumber),'_blank','noopener,noreferrer'):document.getElementById('footer')?.scrollIntoView({behavior:'smooth'})} className="mt-5 w-full sm:w-auto self-center px-5 py-3 rounded-xl bg-[var(--color-primary)] text-white text-sm sm:text-base font-bold flex items-center justify-center gap-2 hover:brightness-110 transition">
+      {en?'Free consultation':'اطلب استشارة مجانية'} <ArrowLeft size={18}/>
+     </button>
+    </div>
+   </div>
+  </div>
+ </section>;
 };

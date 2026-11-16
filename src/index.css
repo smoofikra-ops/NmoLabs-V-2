@@ -1065,3 +1065,36 @@ a[class*="px-"][class*="py-"] {
 @media (prefers-reduced-motion: reduce) {
   .nmolabs-cinematic-meteor { display: none !important; }
 }
+
+
+/* About page: readable cards and content over the animated Earth background.
+   Scoped to this page; preserves the global cinematic backdrop. */
+#about-page-container.about-readable-page > section {
+  position: relative;
+  background: rgba(5, 14, 31, .66) !important;
+  border-bottom: 1px solid rgba(180, 209, 251, .15) !important;
+}
+#about-page-container.about-readable-page > section:nth-of-type(even) {
+  background: rgba(7, 20, 42, .75) !important;
+}
+#about-page-container.about-readable-page > section p,
+#about-page-container.about-readable-page > section li {
+  text-shadow: 0 1px 4px rgba(0, 0, 0, .12);
+}
+#about-page-container.about-readable-page .text-\\[var\\(--text-muted\\)\\] {
+  color: var(--text-secondary);
+}
+#about-page-container.about-readable-page #about-ecosystem button,
+#about-page-container.about-readable-page #about-ecosystem [role="button"] {
+  min-height: 44px;
+}
+.theme-light #about-page-container.about-readable-page > section {
+  background: rgba(246, 250, 255, .88) !important;
+  border-bottom-color: rgba(15, 23, 42, .13) !important;
+}
+.theme-light #about-page-container.about-readable-page > section:nth-of-type(even) {
+  background: rgba(237, 244, 254, .92) !important;
+}
+@media (max-width: 640px) {
+  #about-page-container.about-readable-page > section { padding-top: 2.25rem; padding-bottom: 2.25rem; }
+}
