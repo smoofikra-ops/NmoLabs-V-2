@@ -5,20 +5,20 @@ import { getWhatsAppUrl } from '../lib/utils';
 import { useSite } from '../context/SiteContext';
 
 const advantages = [
-  {title:'تقنية تخدم أهدافك',desc:'نبني الحل المناسب لاحتياج مشروعك، بدون تعقيد أو إضافات غير ضرورية.', Icon:Brain},
-  {title:'خدمات مترابطة',desc:'الموقع والمتجر والأنظمة والتسويق ضمن رحلة عمل واضحة.', Icon:Zap},
-  {title:'أداء وموثوقية',desc:'نراجع الجودة والأداء والأمان قبل التسليم.', Icon:Shield},
-  {title:'تطوير مستمر',desc:'نقيس النتائج ونتابع فرص التحسين بعد الإطلاق.', Icon:TrendingUp}
+  {title:'تقنية تخدم أهدافك',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-technology-solutions.webp',desc:'نبني الحل المناسب لاحتياج مشروعك، بدون تعقيد أو إضافات غير ضرورية.', Icon:Brain},
+  {title:'خدمات مترابطة',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-connected-services.webp',desc:'الموقع والمتجر والأنظمة والتسويق ضمن رحلة عمل واضحة.', Icon:Zap},
+  {title:'أداء وموثوقية',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-performance-reliability.webp',desc:'نراجع الجودة والأداء والأمان قبل التسليم.', Icon:Shield},
+  {title:'تطوير مستمر',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-continuous-development.webp',desc:'نقيس النتائج ونتابع فرص التحسين بعد الإطلاق.', Icon:TrendingUp}
 ];
 const advantagesEn = [
-  {title:'Purpose-built technology',desc:'Solutions designed around your business goals.',Icon:Brain},
-  {title:'Connected services',desc:'Websites, stores, systems and marketing in one journey.',Icon:Zap},
-  {title:'Quality and reliability',desc:'Performance, security and usability are reviewed.',Icon:Shield},
-  {title:'Continuous improvement',desc:'We measure outcomes and identify opportunities.',Icon:TrendingUp}
+  {title:'Purpose-built technology',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-technology-solutions.webp',desc:'Solutions designed around your business goals.',Icon:Brain},
+  {title:'Connected services',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-connected-services.webp',desc:'Websites, stores, systems and marketing in one journey.',Icon:Zap},
+  {title:'Quality and reliability',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-performance-reliability.webp',desc:'Performance, security and usability are reviewed.',Icon:Shield},
+  {title:'Continuous improvement',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-continuous-development.webp',desc:'We measure outcomes and identify opportunities.',Icon:TrendingUp}
 ];
 const highlights=[
-  {ar:'تحليل ذكي',en:'Smart analysis',Icon:Brain},
-  {ar:'أداء محسّن',en:'Better performance',Icon:Rocket},
+  {ar:'تحليل ذكي',en:'Smart analysis',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-smart-analytics.webp',Icon:Brain},
+  {ar:'أداء محسّن',en:'Better performance',image:'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-performance-improvement.webp',Icon:Rocket},
   {ar:'نمو مستدام',en:'Sustainable growth',Icon:TrendingUp},
   {ar:'حماية وشراكة',en:'Security & partnership',Icon:Shield}
 ];
@@ -37,8 +37,8 @@ export const WhyChooseUs=()=>{
    </div>
    <div className="grid lg:grid-cols-[1.4fr_1fr] gap-4 lg:gap-7 items-stretch">
     <div className="grid grid-cols-2 gap-2 sm:gap-4">
-     {(en?advantagesEn:advantages).map(({title,desc,Icon},i)=><motion.article key={title} initial={false} whileHover={{y:-3}} className="min-w-0 rounded-2xl bg-[var(--surface-secondary)]/95 border border-[var(--border-default)] p-3 sm:p-5 shadow-lg">
-      <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl bg-[#153963] border border-blue-300/20 text-sky-200 mb-2 sm:mb-3"><Icon className="w-5 h-5 sm:w-7 sm:h-7"/></div>
+     {(en?advantagesEn:advantages).map(({title,desc,image,Icon},i)=><motion.article key={title} initial={false} whileHover={{y:-3}} className="min-w-0 rounded-2xl bg-[var(--surface-secondary)]/95 border border-[var(--border-default)] p-3 sm:p-5 shadow-lg">
+      <div className="relative w-full h-24 sm:h-32 overflow-hidden rounded-xl mb-3 bg-[#10223b]"><img src={image} alt="" loading="lazy" className="w-full h-full object-cover" onError={e=>{e.currentTarget.style.display="none";}} /></div><div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl bg-[#153963] border border-blue-300/20 text-sky-200 mb-2 sm:mb-3"><Icon className="w-5 h-5 sm:w-7 sm:h-7"/></div>
       <h3 className="font-bold text-[var(--text-primary)] text-[13px] sm:text-lg leading-snug">{title}</h3>
       <p className="mt-2 text-[var(--text-secondary)] text-xs sm:text-sm md:text-base leading-relaxed">{desc}</p>
      </motion.article>)}
@@ -46,8 +46,8 @@ export const WhyChooseUs=()=>{
     <div className="rounded-2xl bg-[#0d203b]/95 border border-sky-300/20 px-3 py-5 sm:p-7 flex flex-col justify-center">
      <h3 className="text-white text-center font-bold text-base sm:text-xl mb-4">{en?'The value we deliver':'قيم نطبقها في كل مشروع'}</h3>
      <div className="grid grid-cols-2 gap-3">
-      {highlights.map(({ar,en:enTitle,Icon})=><div key={ar} className="rounded-xl border border-white/15 bg-white/10 min-h-[86px] sm:min-h-[110px] px-2 py-3 flex flex-col items-center justify-center text-center gap-2 hover:bg-white/15 transition-colors">
-       <Icon className="text-sky-200 w-6 h-6 sm:w-8 sm:h-8"/>
+      {highlights.map(({ar,en:enTitle,image,Icon})=><div key={ar} className="rounded-xl border border-white/15 bg-white/10 min-h-[86px] sm:min-h-[110px] px-2 py-3 flex flex-col items-center justify-center text-center gap-2 hover:bg-white/15 transition-colors">
+       {image?<img src={image} alt="" loading="lazy" className="w-full h-14 sm:h-20 object-cover rounded-lg" onError={e=>{e.currentTarget.style.display="none";}} />:<Icon className="text-sky-200 w-6 h-6 sm:w-8 sm:h-8"/>}
        <span className="text-white text-xs sm:text-base font-bold">{en?enTitle:ar}</span>
       </div>)}
      </div>
