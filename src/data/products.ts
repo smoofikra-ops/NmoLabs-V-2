@@ -416,7 +416,7 @@ export const productsData: Product[] = [
   {
     id: '8',
     slug: 'nucleus',
-    coverVisual: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/nucleus.png',
+    coverVisual: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-nucleus-login.webp',
     titleAr: 'نوكليوس (Nucleus)',
     titleEn: 'Nucleus Business Engine',
     shortNameAr: 'نوكليوس',
@@ -445,7 +445,7 @@ export const productsData: Product[] = [
   {
     id: '9',
     slug: 'nbos',
-    coverVisual: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/nbos.png',
+    coverVisual: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-nbos-login.webp',
     titleAr: 'نظام إن بي أو إس (NBOS)',
     titleEn: 'NBOS Business Operating System',
     shortNameAr: 'NBOS',
@@ -474,7 +474,7 @@ export const productsData: Product[] = [
   {
     id: '10',
     slug: 'nmo-erp',
-    coverVisual: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/nmo-erp.png',
+    coverVisual: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-erp-login.webp',
     titleAr: 'نظام نيمو لإدارة الموارد (NMO ERP)',
     titleEn: 'NMO ERP System',
     shortNameAr: 'NMO ERP',
