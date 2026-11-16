@@ -146,8 +146,9 @@ export const WorkPage = () => {
   const { config, updateConfig } = useSite();
   const isEn = config.language === 'en';
   
-  const featuredProjects = projects.filter(p => p.featured).sort((a, b) => (a.featuredOrder || 99) - (b.featuredOrder || 99));
-  const otherProjects = projects.filter(p => !p.featured);
+  const uniqueProjects = projects.filter((project, index, all) => all.findIndex(other => other.titleAr.trim() === project.titleAr.trim()) === index);
+  const featuredProjects = uniqueProjects.filter(p => p.featured).sort((a, b) => (a.featuredOrder || 99) - (b.featuredOrder || 99));
+  const otherProjects = uniqueProjects.filter(p => !p.featured);
 
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [activeColor, setActiveColor] = useState<string>('var(--color-primary)');
