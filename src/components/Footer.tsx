@@ -274,6 +274,34 @@ export const Footer = () => {
           </div>
         </div>
 
+        {/* Official NmoLabs Google Maps location */}
+        <section aria-labelledby="nmolabs-location-heading" className="mb-10 md:mb-12">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div>
+              <h3 id="nmolabs-location-heading" className="text-[var(--text-primary)] text-lg md:text-xl font-bold">
+                {isEn ? 'Find NmoLabs on Google Maps' : 'موقع نمو لابز على خرائط Google'}
+              </h3>
+              <p className="text-[var(--text-secondary)] text-sm mt-1">
+                {isEn ? 'Riyadh, Saudi Arabia' : 'الرياض، المملكة العربية السعودية'}
+              </p>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=24.6619195%2C46.7254685" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-2.5 text-[var(--text-primary)] font-semibold text-sm hover:border-[var(--color-primary)] transition-colors">
+              <MapPin size={16} className="text-[var(--color-primary)]" />
+              {isEn ? 'Open in Google Maps' : 'افتح الموقع على خرائط Google'}
+            </a>
+          </div>
+          <div className="w-full overflow-hidden rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] shadow-lg">
+            <iframe
+              title={isEn ? 'NmoLabs location in Riyadh' : 'موقع نمو لابز في الرياض'}
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4239.647247215092!2d46.725468500000005!3d24.6619195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f05001f397231%3A0xe03f22dfc63993d!2z2YbZhdmIINmE2KfYqNiyINmE2YTYqtmC2YbZitipINmI2KfZhNiq2LPZiNmK2YI!5e1!3m2!1sar!2ssa!4v1795420094620!5m2!1sar!2ssa"
+              className="block w-full h-[280px] sm:h-[350px] md:h-[400px] border-0"
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </div>
+        </section>
+
         {/* Copyright & Footnote */}
         <div className="pt-6 border-t border-[var(--border-default)] flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[var(--text-secondary)] font-medium">
           <p>© {currentYear} {isEn ? 'NmoLabs. All rights reserved.' : 'نمو لابز. جميع الحقوق محفوظة.'}</p>
