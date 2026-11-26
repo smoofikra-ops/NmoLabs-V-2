@@ -3,7 +3,7 @@ import { useSite } from '../context/SiteContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, ArrowLeft, Monitor, ShoppingBag, Smartphone, Database, LineChart, BrainCircuit, Bot } from 'lucide-react';
 import { triggerBookingModal } from './BookingModal';
-import { ToolAnalyzerModal } from './ToolAnalyzerModal';
+import { SmartAuditModal } from './SmartAuditModal';
 import { LayoutTemplate, ScanSearch } from 'lucide-react';
 import { STORY_ASSETS } from './storytelling/storyAssets';
 
@@ -152,6 +152,7 @@ const InteractiveShowcase = () => {
 export const Hero = () => {
   const { config, updateConfig } = useSite();
   const [showAnalyzer, setShowAnalyzer] = useState(false);
+  useEffect(() => { const open = () => setShowAnalyzer(true); window.addEventListener("nmolabs-open-audit", open); return () => window.removeEventListener("nmolabs-open-audit", open); }, []);
   if (!config.sections.hero) return null;
 
   const isEn = config.language === 'en';
@@ -249,13 +250,13 @@ export const Hero = () => {
             <button
               type="button"
               onClick={() => setShowAnalyzer(true)}
-              className="inline-flex min-h-12 flex-1 items-center justify-center gap-2.5 rounded-full border border-[var(--border-default)] bg-[var(--surface-primary)]/75 px-5 py-3 text-sm font-bold text-[var(--text-primary)] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-primary)] hover:bg-[var(--surface-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
+              className="inline-flex min-h-12 flex-1 items-center justify-center gap-2.5 rounded-full border border-sky-400/45 bg-[#0d4262]/95 px-5 py-3 text-sm font-bold text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-primary)] hover:bg-[var(--surface-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
             >
               <ScanSearch size={19} aria-hidden="true" className="shrink-0 text-[var(--color-primary)]" />
               <span>{isEn ? 'Analyze your store or business now' : 'حلل متجرك أو نشاطك الآن'}</span>
             </button>
           </div>
-          <ToolAnalyzerModal isOpen={showAnalyzer} onClose={() => setShowAnalyzer(false)} tool={{ name: 'فاحص SEO', locked: false, iconName: 'Search', iconColor: 'text-blue-400' }} />
+          <SmartAuditModal open={showAnalyzer} onClose={() => setShowAnalyzer(false)} />
 
           <div className="mt-6 sm:mt-7 flex items-center gap-3 text-sm sm:text-base text-[var(--text-secondary)] font-medium bg-[var(--surface-primary)]/80 dark:bg-[var(--surface-secondary)]/80 border border-[var(--border-default)] px-4 py-2.5 rounded-full shadow-sm backdrop-blur-md max-w-full">
             <div className="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse shrink-0" />
