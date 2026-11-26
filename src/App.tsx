@@ -24,6 +24,7 @@ const StoryBigVision = lazy(() => import('./components/storytelling/StoryBigVisi
 const HomeEssentials = lazy(() => import('./components/HomeEssentials').then(m => ({ default:m.HomeEssentials })));
 const HomeShowcases = lazy(() => import('./components/HomeShowcases').then(m => ({ default:m.HomeShowcases })));
 const HomeServices = lazy(() => import('./components/HomeServices').then(m => ({ default:m.HomeServices })));
+const HomeAuditCTA = lazy(() => import('./components/HomeAuditCTA').then(m => ({ default:m.HomeAuditCTA })));
 const ServicesPortal = lazy(() => import('./components/ServicesPortal').then(m => ({ default:m.ServicesPortal })));
 const Services = lazy(() => import('./components/Services').then(module => ({ default: module.Services })));
 const WhyChooseUs = lazy(() => import('./components/WhyChooseUs').then(module => ({ default: module.WhyChooseUs })));
@@ -110,7 +111,7 @@ const CustomSection: React.FC<{ id: string, title: string, content: string }> = 
 const MainContent = () => {
   const { config } = useSite();
 
-  const homeOrder = ['hero','homeServices','homeShowcases','whyUs','homeEssentials'];
+  const homeOrder = ['hero','auditCTA','homeServices','homeShowcases','whyUs','homeEssentials'];
   const enabledSectionIds = homeOrder.filter(id => {
     if (config.sections[id] === false) return false;
     return true;
@@ -121,6 +122,7 @@ const MainContent = () => {
 
     switch (id) {
       case 'hero': return <Hero key={id} />;
+      case 'auditCTA': return <Suspense key={id} fallback={null}><HomeAuditCTA /></Suspense>;
       case 'homeServices': return <Suspense key={id} fallback={<div className="h-72" />}><HomeServices /></Suspense>;
       case 'homeShowcases': return <Suspense key={id} fallback={<div className="h-72" />}><HomeShowcases /></Suspense>;
       case 'homeEssentials': return <Suspense key={id} fallback={<div className="h-72" />}><HomeEssentials /></Suspense>;
