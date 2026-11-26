@@ -568,7 +568,7 @@ export const projects: Project[] = [
   {
     id: 'sys_nucleus',
     slug: 'nucleus',
-    coverImage: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/nucleus.png',
+    coverImage: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-nucleus-login.webp',
     year: '2024',
     titleAr: 'نوكليوس (Nucleus)',
     titleEn: 'Nucleus',
@@ -589,7 +589,7 @@ export const projects: Project[] = [
   {
     id: 'sys_nbos',
     slug: 'nbos',
-    coverImage: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/nbos.png',
+    coverImage: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-nbos-login.webp',
     year: '2024',
     titleAr: 'نظام إن بي أو إس (NBOS)',
     titleEn: 'NBOS',
@@ -610,7 +610,7 @@ export const projects: Project[] = [
   {
     id: 'sys_nmo_erp',
     slug: 'nmo-erp',
-    coverImage: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/portfolio/projects/nmo-erp.png',
+    coverImage: 'https://nmolabs-cdn.b-cdn.net/NmoLabs-official-website/pages/card-covers/nmo-erp-login.webp',
     year: '2024',
     titleAr: 'نظام نيمو لإدارة الموارد (NMO ERP)',
     titleEn: 'NMO ERP',

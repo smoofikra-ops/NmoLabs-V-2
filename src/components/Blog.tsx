@@ -154,7 +154,7 @@ export const BlogCard: React.FC<{ post: BlogPost; isEn: boolean }> = ({ post, is
       {/* Content */}
       <div className="p-5 flex-1 flex flex-col justify-between">
         <div>
-          <div className="flex items-center gap-3 text-xs text-[var(--text-muted)] font-medium mb-3">
+          <div className="flex items-center gap-3 text-sm text-[var(--text-secondary)] font-medium mb-3">
             <span className="flex items-center gap-1.5">
               <Calendar size={13} className="text-[var(--color-primary)]" />
               {post.date}
@@ -171,7 +171,7 @@ export const BlogCard: React.FC<{ post: BlogPost; isEn: boolean }> = ({ post, is
             {isEn ? (post.titleEn || post.title) : post.title}
           </h3>
 
-          <p className="text-xs sm:text-sm text-[var(--text-secondary)] line-clamp-3 leading-relaxed mb-4">
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] line-clamp-3 leading-relaxed mb-4">
             {isEn ? (post.excerptEn || post.excerpt) : post.excerpt}
           </p>
         </div>
@@ -193,7 +193,7 @@ export const Blog = () => {
   if (!isStandalone && config.sections?.blog === false) return null;
 
   return (
-    <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden" id="blog">
+    <section className="py-10 sm:py-12 md:py-16 relative overflow-hidden" id="blog">
       {isStandalone && (
         <Helmet>
           <title>{isEn ? 'Articles & Insights | NmoLabs' : 'المدونة والمقالات | نمو لابز'}</title>

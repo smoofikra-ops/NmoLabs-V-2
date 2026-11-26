@@ -169,7 +169,7 @@ export const Hero = () => {
     : config.heroButtonText;
 
   return (
-    <section className="relative min-h-auto pt-[calc(var(--nmolabs-header-height,105px)+1rem+env(safe-area-inset-top))] pb-14 sm:pt-[calc(var(--nmolabs-header-height,105px)+1.5rem+env(safe-area-inset-top))] sm:pb-20 md:pt-28 md:pb-16 lg:py-24 lg:min-h-screen flex items-center overflow-hidden bg-transparent nmolabs-seamless-hero" id="hero">
+    <section className="relative min-h-auto pt-[calc(var(--nmolabs-header-height,105px)+1rem+env(safe-area-inset-top))] pb-12 sm:pt-[calc(var(--nmolabs-header-height,105px)+1.5rem+env(safe-area-inset-top))] sm:pb-14 md:pt-28 md:pb-14 lg:pt-36 lg:pb-20 flex items-center overflow-hidden bg-transparent nmolabs-seamless-hero" id="hero">
       {/* STORY 01 — Background World Layer */}
       <div className="nmolabs-hero-art absolute inset-0 pointer-events-none overflow-hidden z-0">
         <img
@@ -208,8 +208,8 @@ export const Hero = () => {
             {heroTitle}
           </h1>
           
-          <div className="mb-5 sm:mb-7 min-h-[3.8rem] sm:min-h-[4.6rem] flex items-center justify-center w-full px-2">
-            <div className="hero-intelligence-badge inline-flex items-center justify-center px-4 sm:px-6 py-3 sm:py-3.5 rounded-2xl border text-white text-[15px] sm:text-lg md:text-xl font-extrabold max-w-3xl text-center leading-relaxed transition-all duration-300 shadow-[var(--card-shadow-2)]">
+          <div className="mb-5 sm:mb-7 min-h-[4.5rem] sm:min-h-[4.6rem] flex items-center justify-center w-full px-2">
+            <div className="hero-intelligence-badge inline-flex items-center justify-center px-4 sm:px-6 py-3 sm:py-3.5 rounded-2xl border text-white bg-[#071a39]/95 text-[15px] sm:text-lg md:text-xl font-extrabold max-w-3xl text-center leading-relaxed transition-all duration-300 shadow-[var(--card-shadow-2)]">
               <DynamicTypewriter isEn={isEn} />
             </div>
           </div>
@@ -257,9 +257,9 @@ export const Hero = () => {
           </div>
           <ToolAnalyzerModal isOpen={showAnalyzer} onClose={() => setShowAnalyzer(false)} tool={{ name: 'فاحص SEO', locked: false, iconName: 'Search', iconColor: 'text-blue-400' }} />
 
-          <div className="mt-8 sm:mt-10 flex items-center gap-3 text-xs sm:text-sm text-[var(--text-muted)] font-medium bg-[var(--surface-primary)]/80 dark:bg-[var(--surface-secondary)]/80 border border-[var(--border-default)] px-4 py-2.5 rounded-full shadow-sm backdrop-blur-md max-w-full">
+          <div className="mt-6 sm:mt-7 flex items-center gap-3 text-sm sm:text-base text-[var(--text-secondary)] font-medium bg-[var(--surface-primary)]/80 dark:bg-[var(--surface-secondary)]/80 border border-[var(--border-default)] px-4 py-2.5 rounded-full shadow-sm backdrop-blur-md max-w-full">
             <div className="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse shrink-0" />
-            <span className="truncate">{isEn ? 'Full team for design, development, systems, and growth.' : 'فريق متكامل للتصميم، التطوير، الأنظمة والنمو.'}</span>
+            <span className="whitespace-normal">{isEn ? 'Full team for design, development, systems, and growth.' : 'فريق متكامل للتصميم، التطوير، الأنظمة والنمو.'}</span>
           </div>
         </motion.div>
 
@@ -272,9 +272,9 @@ export const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer text-white/95 hover:text-white transition-colors drop-shadow-[0_2px_8px_rgba(0,0,0,0.55)]"
+        className="hidden sm:flex absolute bottom-2 left-1/2 -translate-x-1/2 flex-col items-center cursor-pointer text-[var(--text-primary)] hover:text-[var(--color-primary)] transition-colors"
         onClick={() => {
-          const nextSection = document.getElementById('about') || document.getElementById('services');
+          const nextSection = document.getElementById('home-services');
           if (nextSection) {
             nextSection.scrollIntoView({ behavior: 'smooth' });
           } else {

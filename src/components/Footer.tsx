@@ -141,7 +141,7 @@ export const Footer = () => {
                 ? "NmoLabs is your dedicated technology growth partner, engineering bespoke enterprise software, digital systems, and AI-powered growth engines."
                 : "نمو لابز هو شريكك التقني للنمو المتسارع، نصمم ونبني منظومات برمجية ذكية، حلولاً تقنية متقدمة، وأدوات رقمية تسهم في تعظيم أثر أعمالك.")}
             </p>
-            <div className="flex gap-2.5 flex-wrap justify-center lg:justify-start pt-2">
+            <div className="flex flex-nowrap gap-2 sm:gap-2.5 justify-center lg:justify-start pt-2">
               {config.socialLinks?.map((link, idx) => (
                 <a 
                   key={idx} 
@@ -149,7 +149,7 @@ export const Footer = () => {
                   target="_blank" 
                   rel="noreferrer" 
                   title={link.name} 
-                  className="w-10 h-10 rounded-full border border-black/10 dark:border-white/15 flex items-center justify-center text-white hover:-translate-y-1 hover:shadow-lg transition-all duration-200"
+                  className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-full border border-black/10 dark:border-white/15 flex items-center justify-center text-white hover:-translate-y-1 hover:shadow-lg transition-all duration-200"
                   style={getSocialBrandStyle(link.icon)}
                 >
                   {getSocialSvg(link.icon)}
@@ -274,14 +274,42 @@ export const Footer = () => {
           </div>
         </div>
 
+        {/* Official NmoLabs Google Maps location */}
+        <section aria-labelledby="nmolabs-location-heading" className="mb-10 md:mb-12">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div>
+              <h3 id="nmolabs-location-heading" className="text-[var(--text-primary)] text-lg md:text-xl font-bold">
+                {isEn ? 'Find NmoLabs on Google Maps' : 'موقع نمو لابز على خرائط Google'}
+              </h3>
+              <p className="text-[var(--text-secondary)] text-sm mt-1">
+                {isEn ? 'Riyadh, Saudi Arabia' : 'الرياض، المملكة العربية السعودية'}
+              </p>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=24.6619195%2C46.7254685" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--surface-secondary)] px-4 py-2.5 text-[var(--text-primary)] font-semibold text-sm hover:border-[var(--color-primary)] transition-colors">
+              <MapPin size={16} className="text-[var(--color-primary)]" />
+              {isEn ? 'Open in Google Maps' : 'افتح الموقع على خرائط Google'}
+            </a>
+          </div>
+          <div className="w-full overflow-hidden rounded-2xl border border-[var(--border-default)] bg-[var(--surface-secondary)] shadow-lg">
+            <iframe
+              title={isEn ? 'NmoLabs location in Riyadh' : 'موقع نمو لابز في الرياض'}
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4239.647247215092!2d46.725468500000005!3d24.6619195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f05001f397231%3A0xe03f22dfc63993d!2z2YbZhdmIINmE2KfYqNiyINmE2YTYqtmC2YbZitipINmI2KfZhNiq2LPZiNmK2YI!5e1!3m2!1sar!2ssa!4v1795420094620!5m2!1sar!2ssa"
+              className="block w-full h-[280px] sm:h-[350px] md:h-[400px] border-0"
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </div>
+        </section>
+
         {/* Copyright & Footnote */}
-        <div className="pt-6 border-t border-[var(--border-default)] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[var(--text-muted)] font-medium">
+        <div className="pt-6 border-t border-[var(--border-default)] flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[var(--text-secondary)] font-medium">
           <p>© {currentYear} {isEn ? 'NmoLabs. All rights reserved.' : 'نمو لابز. جميع الحقوق محفوظة.'}</p>
           <div className="flex items-center gap-2">
             <span>{isEn ? 'Built with precision by' : 'صُنع بشغف وابتكار في'}</span>
             <span 
               onClick={handleNmoLabsClick}
-              className="text-[var(--text-primary)] font-black tracking-widest font-english text-xs bg-[var(--surface-secondary)] px-2.5 py-1 rounded-md border border-[var(--border-default)] select-none touch-manipulation cursor-pointer"
+              className="text-[var(--text-primary)] font-black tracking-widest font-english text-sm bg-[var(--surface-secondary)] px-2.5 py-1 rounded-md border border-[var(--border-default)] select-none touch-manipulation cursor-pointer"
             >
               NMOLABS
             </span>

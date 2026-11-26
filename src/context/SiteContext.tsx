@@ -202,6 +202,7 @@ const defaultConfig: SiteConfig = {
   },
   sections: {
     hero: true,
+    homeServices: true,
     storySolutions: true,
     storyEcommerce: true,
     storyWebsites: true,
@@ -223,19 +224,7 @@ const defaultConfig: SiteConfig = {
     analyzer: true,
     blog: true
   },
-  sectionOrder: [
-    'hero',
-    'testimonials',
-    'storyBigVision',
-    'storySolutions',
-    'storyEcommerce',
-    'storyWebsites',
-    'storyGrowth',
-    'storySocial',
-    'workflow',
-    'faq',
-    'blog'
-  ],
+  sectionOrder: ['hero','homeServices','workPreview','productsPreview','whyUs','faq'],
   apiLinks: {
     semrush: '',
     hotjar: '',
