@@ -1,3 +1,4 @@
+import { SmartAuditModal } from './SmartAuditModal';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Search, Activity, Zap, CheckCircle2, Bot, Lock } from 'lucide-react';
@@ -10,6 +11,10 @@ export const ToolAnalyzerModal = ({ isOpen, onClose, tool }) => {
   const [results, setResults] = useState<any>(null);
 
   if (!isOpen || !tool) return null;
+  // Public site audit tools share the same real PageSpeed engine instead of synthetic results.
+  if (['فاحص SEO', 'فاحص السرعة', 'محلل UX', 'فاحص شامل'].includes(tool.name)) {
+    return <SmartAuditModal open={isOpen} onClose={onClose} />;
+  }
 
   const renderInputs = () => {
     switch (tool.name) {
