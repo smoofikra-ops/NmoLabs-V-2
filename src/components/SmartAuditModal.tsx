@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useSite } from '../context/SiteContext';
 import { X, Search, Gauge, ShieldCheck, Eye, Sparkles, ChartNoAxesCombined, ChevronDown, ChevronUp, Download, MessageCircle, ArrowUpLeft, Monitor, Smartphone, Info, CircleAlert, CheckCircle2, RefreshCw, FileText } from 'lucide-react';
 
 type ScanResult={success:boolean;url:string;checkedAt:string;strategy:'mobile'|'desktop';source:string;categories:Record<string,number|null>;issues:{id:string;title:string;summary:string;score:number;url:string}[];fieldDataAvailable:boolean;fieldMetricCount:number};
@@ -45,10 +46,7 @@ export function SmartAuditModal({open,onClose,initialUrl=''}:AuditModalProps){
  try{const response=await fetch('/api/public-audit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:parsed.href,strategy})});const data=await response.json();if(!response.ok||!data.success)throw Error(data.message||'تعذر الفحص');setResult(data);setReportId('NMO-'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'-'+Math.random().toString(36).slice(2,7).toUpperCase());}catch(e:any){setError(e?.message||'ما قدرنا نفحص الرابط، جرب مرة ثانية.');}finally{setBusy(false);}};
  const toggle=(key:string)=>setOpenKeys(keys=>keys.includes(key)?keys.filter(x=>x!==key):[...keys,key]);
  const whatsappMessage=()=>['السلام عليكم، أبغى أراجع نتيجة فحص موقعي مع نمو لابز.','رقم التقرير: '+reportId,'رابط الموقع: '+result?.url,'نوع الفحص: '+(result?.strategy==='mobile'?'الجوال':'الكمبيوتر'),overall===null?'':'درجة الفحص التقني: '+overall+'/100',clientName?'الاسم: '+clientName:'',phone?'الجوال: '+phone:'','عندي نسخة PDF من التقرير وأقدر أرفقها هنا.'].filter(Boolean).join('\n');
- const wa=()=>window.open('https://wa.me/966'+ ' '+''.replace(/ /g,'') ,'_blank');
- // The official number is read from the current site config by the host widget;
- // avoid shipping a guessed sales phone: use the configured public contact here.
- const {config}=requireSite();
+ const {config}=useSite();
  const openWhatsapp=()=>{const number=String(config.contactNumber||'').replace(/\D/g,'');if(!number)return;const waNumber=number.startsWith('0')?'966'+number.slice(1):number;window.open('https://wa.me/'+waNumber+'?text='+encodeURIComponent(whatsappMessage()),'_blank','noopener,noreferrer')};
  if(!open)return null;
  return <div className="fixed inset-0 z-[1001] bg-[#061024]/90 backdrop-blur-md p-2 sm:p-5 flex items-center justify-center" dir="rtl" role="dialog" aria-modal="true" aria-label="فحص نشاطك الرقمي">
@@ -94,7 +92,7 @@ export function SmartAuditModal({open,onClose,initialUrl=''}:AuditModalProps){
       <section data-print-card className="rounded-xl bg-[#153352] border border-sky-300/25 p-4 sm:p-6 space-y-4">
        <h3 className="font-black text-lg">تبغى تطوّر موقعك؟ خلّنا نكمل من هنا</h3><p className="text-sm text-slate-200">حمّل التقرير وشاركنا رقمه على واتساب. نراجع الملاحظات معك ونحدد وش يحتاج نشاطك، بدون ما تعيد الفحص من البداية.</p>
        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 nmo-no-print"><label className="space-y-1 text-xs text-slate-200"><span>اسمك (اختياري)</span><input value={clientName} onChange={e=>setClientName(e.target.value)} className="w-full bg-[#0b1b35] rounded-lg border border-white/20 p-3 text-white" placeholder="الاسم"/></label><label className="space-y-1 text-xs text-slate-200"><span>رقم جوالك (اختياري)</span><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} className="w-full bg-[#0b1b35] rounded-lg border border-white/20 p-3 text-white" placeholder="05xxxxxxxx" dir="ltr"/></label></div>
-       <div className="nmo-no-print flex flex-col sm:flex-row gap-2"><button type="button" onClick={()=>window.print()} className="flex-1 rounded-xl px-4 py-3 bg-white text-[#10213c] font-bold flex items-center justify-center gap-2"><Download size={18}/>حفظ التقرير PDF</button><button type="button" disabled={!config.contactNumber} onClick={openWhatsapp} className="flex-1 rounded-xl px-4 py-3 bg-[#159c75] disabled:opacity-50 font-bold flex items-center justify-center gap-2"><MessageCircle size={18}/>أرسل التقرير لنمو لابز</button></div>
+       <div className="nmo-no-print flex flex-col sm:flex-row gap-2"><button type="button" onClick={()=>{setOpenKeys(reportSections.map(x=>x.key));setShowUnknown(true);setTimeout(()=>window.print(),120)}} className="flex-1 rounded-xl px-4 py-3 bg-white text-[#10213c] font-bold flex items-center justify-center gap-2"><Download size={18}/>حفظ التقرير PDF</button><button type="button" disabled={!config.contactNumber} onClick={openWhatsapp} className="flex-1 rounded-xl px-4 py-3 bg-[#159c75] disabled:opacity-50 font-bold flex items-center justify-center gap-2"><MessageCircle size={18}/>أرسل التقرير لنمو لابز</button></div>
        <p className="text-xs text-slate-300">واتساب يفتح برسالة جاهزة فيها رقم التقرير والنتيجة. لإرسال PDF نفسه، أرفقه يدويًا في المحادثة بعد حفظه. التقرير لا يُحفظ تلقائيًا في أنظمة نمو لابز.</p>
        <a className="text-sm text-sky-300 underline break-all" href={config.contactNumber?'https://wa.me/'+String(config.contactNumber).replace(/\D/g,'').replace(/^0/,'966'):undefined}>واتساب نمو لابز: {config.contactNumber||'متاح عبر الموقع'}</a>
       </section>
@@ -105,5 +103,3 @@ export function SmartAuditModal({open,onClose,initialUrl=''}:AuditModalProps){
   </div>
  </div>;
 }
-// Separate hook wrapper to keep the component independently reusable in the site.
-import { useSite as requireSite } from '../context/SiteContext';
