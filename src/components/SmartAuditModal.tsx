@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useSite } from '../context/SiteContext';
 import { X, Search, Gauge, ShieldCheck, Eye, Sparkles, ChartNoAxesCombined, ChevronDown, ChevronUp, Download, MessageCircle, ArrowUpLeft, Monitor, Smartphone, Info, CircleAlert, CheckCircle2, RefreshCw, FileText } from 'lucide-react';
 
@@ -49,7 +50,7 @@ export function SmartAuditModal({open,onClose,initialUrl=''}:AuditModalProps){
  const {config}=useSite();
  const openWhatsapp=()=>{const number=String(config.contactNumber||'').replace(/\D/g,'');if(!number)return;const waNumber=number.startsWith('0')?'966'+number.slice(1):number;window.open('https://wa.me/'+waNumber+'?text='+encodeURIComponent(whatsappMessage()),'_blank','noopener,noreferrer')};
  if(!open)return null;
- return <div className="fixed inset-0 z-[1001] bg-[#061024]/90 backdrop-blur-md p-2 sm:p-5 flex items-center justify-center" dir="rtl" role="dialog" aria-modal="true" aria-label="فحص نشاطك الرقمي">
+ return createPortal(<div className="fixed inset-0 z-[1001] bg-[#061024]/90 backdrop-blur-md p-2 sm:p-5 flex items-center justify-center" dir="rtl" role="dialog" aria-modal="true" aria-label="فحص نشاطك الرقمي">
   <div className="w-full max-w-5xl h-[min(96dvh,900px)] flex flex-col rounded-2xl sm:rounded-3xl overflow-hidden bg-[#0b1731] text-white border border-sky-300/20 shadow-2xl">
    <div className="flex shrink-0 items-center justify-between gap-3 px-4 sm:px-7 py-3 sm:py-4 border-b border-white/10 bg-[#102143]">
     <div className="min-w-0"><p className="text-sky-300 text-xs font-bold tracking-wider">NMOLABS SMART AUDIT</p><h2 className="font-black text-base sm:text-xl">افحص متجرك أو موقع نشاطك</h2></div>
@@ -101,5 +102,5 @@ export function SmartAuditModal({open,onClose,initialUrl=''}:AuditModalProps){
     </div>}
    </div>
   </div>
- </div>;
+ </div>,document.body);
 }
